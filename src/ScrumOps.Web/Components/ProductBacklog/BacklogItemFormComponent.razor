@@ -1,0 +1,211 @@
+@page "/backlog/{BacklogId}/add-item"
+@page "/backlog/{BacklogId}/items/{ItemId}/edit"
+@using System.ComponentModel.DataAnnotations
+@using ScrumOps.Shared.Contracts.ProductBacklog
+@using ScrumOps.Web.Services
+@inject IProductBacklogService ProductBacklogService
+@inject NavigationManager Navigation
+@inject ILogger<BacklogItemFormComponent> Logger
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">@(IsEditMode ? "Edit Backlog Item" : "Add New Backlog Item")</h4>
+                </div>
+                <div class="card-body">
+                    <EditForm Model="formModel" OnValidSubmit="HandleSubmit">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary class="alert alert-danger" />
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <label for="itemTitle" class="form-label">Title *</label>
+                                    <InputText id="itemTitle" class="form-control" @bind-Value="formModel.Title" placeholder="Enter item title" />
+                                    <ValidationMessage For="@(() => formModel.Title)" class="text-danger" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="itemDescription" class="form-label">Description *</label>
+                                    <InputTextArea id="itemDescription" class="form-control" rows="4" @bind-Value="formModel.Description" 
+                                                   placeholder="As a [user type], I want [functionality] so that [benefit]" />
+                                    <ValidationMessage For="@(() => formModel.Description)" class="text-danger" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="acceptanceCriteria" class="form-label">Acceptance Criteria *</label>
+                                    <InputTextArea id="acceptanceCriteria" class="form-control" rows="4" @bind-Value="formModel.AcceptanceCriteria" 
+                                                   placeholder="Given [context], when [action], then [outcome]" />
+                                    <ValidationMessage For="@(() => formModel.AcceptanceCriteria)" class="text-danger" />
+                                    <div class="form-text">Define the conditions that must be met for this item to be considered complete</div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="itemType" class="form-label">Type *</label>
+                                    <InputSelect id="itemType" class="form-select" @bind-Value="formModel.Type">
+                                        <option value="">Select type</option>
+                                        <option value="UserStory">User Story</option>
+                                        <option value="Bug">Bug</option>
+                                        <option value="Epic">Epic</option>
+                                        <option value="Task">Task</option>
+                                        <option value="Spike">Spike</option>
+                                    </InputSelect>
+                                    <ValidationMessage For="@(() => formModel.Type)" class="text-danger" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="priority" class="form-label">Priority *</label>
+                                    <InputNumber id="priority" class="form-control" @bind-Value="formModel.Priority" min="1" max="1000" />
+                                    <ValidationMessage For="@(() => formModel.Priority)" class="text-danger" />
+                                    <div class="form-text">Lower numbers = higher priority</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="storyPoints" class="form-label">Story Points</label>
+                                    <InputSelect id="storyPoints" class="form-select" @bind-Value="formModel.StoryPoints">
+                                        <option value="">Not estimated</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="5">5</option>
+                                        <option value="8">8</option>
+                                        <option value="13">13</option>
+                                        <option value="21">21</option>
+                                        <option value="34">34</option>
+                                        <option value="55">55</option>
+                                        <option value="89">89</option>
+                                    </InputSelect>
+                                    <ValidationMessage For="@(() => formModel.StoryPoints)" class="text-danger" />
+                                    <div class="form-text">Fibonacci sequence for estimation</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <button type="button" class="btn btn-secondary" @onclick="Cancel">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </button>
+                            <button type="submit" class="btn btn-primary" disabled="@isSubmitting">
+                                @if (isSubmitting)
+                                {
+                                    <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                                }
+                                <i class="bi bi-@(IsEditMode ? "check-circle" : "plus-circle")"></i>
+                                @(IsEditMode ? "Update Item" : "Add Item")
+                            </button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string BacklogId { get; set; } = string.Empty;
+    [Parameter] public string? ItemId { get; set; }
+
+    private BacklogItemFormModel formModel = new();
+    private bool isSubmitting = false;
+    private bool IsEditMode => !string.IsNullOrEmpty(ItemId);
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (IsEditMode && !string.IsNullOrEmpty(ItemId))
+        {
+            // In a real implementation, you would load the existing item
+            // For now, we'll just set default values
+            formModel = new BacklogItemFormModel
+            {
+                Title = "Sample Item Title",
+                Description = "Sample description for editing",
+                AcceptanceCriteria = "Sample acceptance criteria",
+                Priority = 10,
+                StoryPoints = 5,
+                Type = "UserStory"
+            };
+        }
+    }
+
+    private async Task HandleSubmit()
+    {
+        try
+        {
+            isSubmitting = true;
+
+            if (IsEditMode && !string.IsNullOrEmpty(ItemId))
+            {
+                var updateRequest = new UpdateBacklogItemRequest
+                {
+                    Title = formModel.Title,
+                    Description = formModel.Description,
+                    AcceptanceCriteria = formModel.AcceptanceCriteria,
+                    Priority = formModel.Priority,
+                    StoryPoints = formModel.StoryPoints,
+                    Type = formModel.Type
+                };
+
+                await ProductBacklogService.UpdateBacklogItemAsync(BacklogId, ItemId, updateRequest);
+            }
+            else
+            {
+                var addRequest = new AddBacklogItemRequest
+                {
+                    Title = formModel.Title,
+                    Description = formModel.Description,
+                    AcceptanceCriteria = formModel.AcceptanceCriteria,
+                    Priority = formModel.Priority,
+                    StoryPoints = formModel.StoryPoints,
+                    Type = formModel.Type
+                };
+
+                await ProductBacklogService.AddBacklogItemAsync(BacklogId, addRequest);
+            }
+
+            Navigation.NavigateTo($"/backlog/{BacklogId}");
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to {Action} backlog item", IsEditMode ? "update" : "add");
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+
+    private void Cancel()
+    {
+        Navigation.NavigateTo($"/backlog/{BacklogId}");
+    }
+
+    public class BacklogItemFormModel
+    {
+        [Required]
+        [StringLength(200, MinimumLength = 3)]
+        public string Title { get; set; } = string.Empty;
+
+        [Required]
+        [StringLength(2000, MinimumLength = 10)]
+        public string Description { get; set; } = string.Empty;
+
+        [Required]
+        [StringLength(1000, MinimumLength = 5)]
+        public string AcceptanceCriteria { get; set; } = string.Empty;
+
+        [Required]
+        [Range(1, 1000)]
+        public int Priority { get; set; } = 1;
+
+        [Range(1, 100)]
+        public int? StoryPoints { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string Type { get; set; } = string.Empty;
+    }
+}

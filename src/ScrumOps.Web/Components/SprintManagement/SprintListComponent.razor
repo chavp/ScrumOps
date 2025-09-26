@@ -1,0 +1,241 @@
+@using ScrumOps.Shared.Contracts.Sprints
+@using ScrumOps.Web.Services
+@inject ISprintService SprintService
+@inject NavigationManager Navigation
+@inject ILogger<SprintListComponent> Logger
+
+<div class="container-fluid">
+    <div class="row mb-3">
+        <div class="col">
+            <h2>Sprints</h2>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-primary" @onclick="NavigateToCreate">
+                <i class="bi bi-plus-circle"></i> Create Sprint
+            </button>
+        </div>
+    </div>
+
+    @if (isLoading)
+    {
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+    else if (sprints?.Any() == true)
+    {
+        <div class="row">
+            @foreach (var sprint in sprints)
+            {
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100 @GetSprintCardClass(sprint.Status)">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title mb-0">@sprint.TeamName</h5>
+                                <span class="badge @GetStatusBadgeClass(sprint.Status)">
+                                    @GetStatusDisplayText(sprint.Status)
+                                </span>
+                            </div>
+                            <h6 class="card-subtitle mb-2 text-muted">@sprint.Goal</h6>
+                            
+                            <div class="row text-sm mb-2">
+                                <div class="col">
+                                    <small class="text-muted">
+                                        <i class="bi bi-calendar3"></i> 
+                                        @sprint.StartDate.ToString("MMM dd") - @sprint.EndDate.ToString("MMM dd")
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="row text-sm mb-3">
+                                <div class="col-6">
+                                    <small class="text-muted">
+                                        <i class="bi bi-list-check"></i> @sprint.TaskCount tasks
+                                    </small>
+                                </div>
+                                <div class="col-6">
+                                    <small class="text-muted">
+                                        <i class="bi bi-check-circle"></i> @sprint.CompletedTaskCount done
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- Progress Bar -->
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <small class="text-muted">Progress</small>
+                                    <small class="text-muted">@sprint.ProgressPercentage.ToString("F0")%</small>
+                                </div>
+                                <div class="progress" style="height: 6px;">
+                                    <div class="progress-bar @GetProgressBarClass(sprint.Status)" 
+                                         role="progressbar" 
+                                         style="width: @sprint.ProgressPercentage.ToString("F0")%">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Story Points -->
+                            <div class="row text-sm">
+                                <div class="col-6">
+                                    <small class="text-muted">
+                                        <i class="bi bi-star"></i> @sprint.CommittedStoryPoints committed
+                                    </small>
+                                </div>
+                                <div class="col-6">
+                                    <small class="text-muted">
+                                        <i class="bi bi-star-fill"></i> @sprint.CompletedStoryPoints completed
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="btn-group w-100" role="group">
+                                <button class="btn btn-outline-primary btn-sm" @onclick="() => NavigateToDetails(sprint.Id)">
+                                    <i class="bi bi-eye"></i> View
+                                </button>
+                                @if (sprint.Status == "Planned")
+                                {
+                                    <button class="btn btn-outline-success btn-sm" @onclick="() => StartSprint(sprint.Id)">
+                                        <i class="bi bi-play"></i> Start
+                                    </button>
+                                }
+                                else if (sprint.Status == "Active")
+                                {
+                                    <button class="btn btn-outline-warning btn-sm" @onclick="() => CompleteSprint(sprint.Id)">
+                                        <i class="bi bi-check2-square"></i> Complete
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <h4>No sprints found</h4>
+            <p class="text-muted">Create a sprint to start organizing your development work into time-boxed iterations.</p>
+            <button class="btn btn-primary" @onclick="NavigateToCreate">
+                <i class="bi bi-plus-circle"></i> Create First Sprint
+            </button>
+        </div>
+    }
+</div>
+
+@code {
+    private IEnumerable<SprintSummary>? sprints;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadSprints();
+    }
+
+    private async Task LoadSprints()
+    {
+        try
+        {
+            isLoading = true;
+            var response = await SprintService.GetSprintsAsync();
+            sprints = response.Sprints;
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to load sprints");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task StartSprint(string sprintId)
+    {
+        try
+        {
+            var success = await SprintService.StartSprintAsync(sprintId);
+            if (success)
+            {
+                await LoadSprints(); // Refresh the list
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to start sprint {SprintId}", sprintId);
+        }
+    }
+
+    private async Task CompleteSprint(string sprintId)
+    {
+        try
+        {
+            var success = await SprintService.CompleteSprintAsync(sprintId);
+            if (success)
+            {
+                await LoadSprints(); // Refresh the list
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to complete sprint {SprintId}", sprintId);
+        }
+    }
+
+    private void NavigateToCreate()
+    {
+        Navigation.NavigateTo("/sprints/create");
+    }
+
+    private void NavigateToDetails(string sprintId)
+    {
+        Navigation.NavigateTo($"/sprints/{sprintId}");
+    }
+
+    private static string GetSprintCardClass(string status)
+    {
+        return status switch
+        {
+            "Active" => "border-success",
+            "Completed" => "border-info",
+            "Planned" => "border-warning",
+            _ => ""
+        };
+    }
+
+    private static string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Active" => "bg-success",
+            "Completed" => "bg-info",
+            "Planned" => "bg-warning",
+            _ => "bg-secondary"
+        };
+    }
+
+    private static string GetProgressBarClass(string status)
+    {
+        return status switch
+        {
+            "Active" => "bg-success",
+            "Completed" => "bg-info",
+            "Planned" => "bg-warning",
+            _ => "bg-secondary"
+        };
+    }
+
+    private static string GetStatusDisplayText(string status)
+    {
+        return status switch
+        {
+            "Active" => "In Progress",
+            "Completed" => "Completed",
+            "Planned" => "Planned",
+            _ => status
+        };
+    }
+}

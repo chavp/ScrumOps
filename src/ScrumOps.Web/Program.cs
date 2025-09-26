@@ -13,6 +13,16 @@ builder.Services.AddHttpClient<ITeamService, TeamService>(client =>
     client.BaseAddress = new Uri("http://localhost:5225");
 });
 
+builder.Services.AddHttpClient<IProductBacklogService, ProductBacklogService>(client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5225");
+});
+
+builder.Services.AddHttpClient<ISprintService, SprintService>(client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5225");
+});
+
 // Add logging
 builder.Services.AddLogging();
 
