@@ -1,0 +1,60 @@
+2025-09-26 13:21:01.775 +07:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-09-26 13:21:01.799 +07:00 [INF] Starting ScrumOps API
+2025-09-26 13:21:02.099 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams/1/members - application/json; charset=utf-8 69
+2025-09-26 13:21:02.117 +07:00 [WRN] Failed to determine the https port for redirect.
+2025-09-26 13:21:02.121 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams/1/members - 404 null null 24.1274ms
+2025-09-26 13:21:02.123 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST http://localhost/api/teams/1/members, Response status code: 404
+2025-09-26 13:21:02.133 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 94
+2025-09-26 13:21:02.134 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams - 404 null null 1.1605ms
+2025-09-26 13:21:02.134 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST http://localhost/api/teams, Response status code: 404
+2025-09-26 13:21:02.226 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams/1/velocity - null null
+2025-09-26 13:21:02.232 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams/1/velocity - 404 null null 5.1872ms
+2025-09-26 13:21:02.232 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost/api/teams/1/velocity, Response status code: 404
+2025-09-26 13:21:02.233 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-26 13:21:02.234 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 404 null null 0.8431ms
+2025-09-26 13:21:02.234 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost/api/teams, Response status code: 404
+2025-09-26 13:21:02.236 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-26 13:21:02.237 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 404 null null 0.5343ms
+2025-09-26 13:21:02.237 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost/api/teams, Response status code: 404
+2025-09-26 13:21:02.238 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams/1 - null null
+2025-09-26 13:21:02.239 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams/1 - 404 null null 0.2864ms
+2025-09-26 13:21:02.239 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost/api/teams/1, Response status code: 404
+2025-09-26 13:21:02.240 +07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost/api/teams - null null
+2025-09-26 13:21:02.241 +07:00 [INF] CORS policy execution successful.
+2025-09-26 13:21:02.242 +07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost/api/teams - 204 null null 1.355ms
+2025-09-26 13:21:02.243 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 59
+2025-09-26 13:21:02.243 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams - 404 null null 0.1951ms
+2025-09-26 13:21:02.243 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST http://localhost/api/teams, Response status code: 404
+2025-09-26 13:21:02.246 +07:00 [INF] Request starting HTTP/1.1 PUT http://localhost/api/teams/1 - application/json; charset=utf-8 86
+2025-09-26 13:21:02.246 +07:00 [INF] Request finished HTTP/1.1 PUT http://localhost/api/teams/1 - 404 null null 0.3233ms
+2025-09-26 13:21:02.246 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: PUT http://localhost/api/teams/1, Response status code: 404
+2025-09-26 15:57:23.277 +07:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-09-26 15:57:23.298 +07:00 [INF] Starting ScrumOps API
+2025-09-26 15:57:23.598 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams/1/members - application/json; charset=utf-8 69
+2025-09-26 15:57:23.616 +07:00 [WRN] Failed to determine the https port for redirect.
+2025-09-26 15:57:23.620 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams/1/members - 404 null null 22.6534ms
+2025-09-26 15:57:23.623 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST http://localhost/api/teams/1/members, Response status code: 404
+2025-09-26 15:57:23.631 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 94
+2025-09-26 15:57:23.632 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams - 404 null null 1.1124ms
+2025-09-26 15:57:23.632 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST http://localhost/api/teams, Response status code: 404
+2025-09-26 15:57:23.646 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams/1/velocity - null null
+2025-09-26 15:57:23.649 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams/1/velocity - 404 null null 3.355ms
+2025-09-26 15:57:23.649 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost/api/teams/1/velocity, Response status code: 404
+2025-09-26 15:57:23.651 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-26 15:57:23.651 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 404 null null 0.5278ms
+2025-09-26 15:57:23.651 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost/api/teams, Response status code: 404
+2025-09-26 15:57:23.654 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-26 15:57:23.654 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 404 null null 0.3282ms
+2025-09-26 15:57:23.654 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost/api/teams, Response status code: 404
+2025-09-26 15:57:23.656 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams/1 - null null
+2025-09-26 15:57:23.656 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams/1 - 404 null null 0.2955ms
+2025-09-26 15:57:23.656 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost/api/teams/1, Response status code: 404
+2025-09-26 15:57:23.658 +07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost/api/teams - null null
+2025-09-26 15:57:23.658 +07:00 [INF] CORS policy execution successful.
+2025-09-26 15:57:23.659 +07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost/api/teams - 204 null null 1.3023ms
+2025-09-26 15:57:23.661 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 59
+2025-09-26 15:57:23.661 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams - 404 null null 0.2688ms
+2025-09-26 15:57:23.661 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST http://localhost/api/teams, Response status code: 404
+2025-09-26 15:57:23.665 +07:00 [INF] Request starting HTTP/1.1 PUT http://localhost/api/teams/1 - application/json; charset=utf-8 86
+2025-09-26 15:57:23.665 +07:00 [INF] Request finished HTTP/1.1 PUT http://localhost/api/teams/1 - 404 null null 0.4072ms
+2025-09-26 15:57:23.665 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: PUT http://localhost/api/teams/1, Response status code: 404

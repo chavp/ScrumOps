@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="f76f057a-060e-4efe-bf5c-8f6a82a7eb1c" name="Parinya.c@AIT0023139 2025-09-26 13:20:58" runUser="PHAINSURE\Parinya.c" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2025-09-26T13:20:58.9939898+07:00" queuing="2025-09-26T13:20:58.9939907+07:00" start="2025-09-26T13:20:57.6634074+07:00" finish="2025-09-26T13:20:58.9979592+07:00" />
+  <TestSettings name="default" id="2346b19c-4f6b-4f3f-8162-bdeb4975f57a">
+    <Deployment runDeploymentRoot="Parinya.c_AIT0023139_2025-09-26_13_20_58" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="24c05de6-3dbc-4bbe-8d8e-8a7a413d638a" testId="ac01b794-9357-aca7-fecf-47198850ae6b" testName="ScrumOps.Infrastructure.Tests.UnitTest1.Test1" computerName="AIT0023139" duration="00:00:00.0022968" startTime="2025-09-26T13:20:58.8385981+07:00" endTime="2025-09-26T13:20:58.8386207+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="24c05de6-3dbc-4bbe-8d8e-8a7a413d638a" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="ScrumOps.Infrastructure.Tests.UnitTest1.Test1" storage="c:\data\scrumops\tests\scrumops.infrastructure.tests\bin\debug\net8.0\scrumops.infrastructure.tests.dll" id="ac01b794-9357-aca7-fecf-47198850ae6b">
+      <Execution id="24c05de6-3dbc-4bbe-8d8e-8a7a413d638a" />
+      <TestMethod codeBase="C:\data\ScrumOps\tests\ScrumOps.Infrastructure.Tests\bin\Debug\net8.0\ScrumOps.Infrastructure.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="ScrumOps.Infrastructure.Tests.UnitTest1" name="Test1" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="ac01b794-9357-aca7-fecf-47198850ae6b" executionId="24c05de6-3dbc-4bbe-8d8e-8a7a413d638a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="1" executed="1" passed="1" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.3.1+6b60a9e56a (64-bit .NET 8.0.20)&#xD;
+[xUnit.net 00:00:00.14]   Discovering: ScrumOps.Infrastructure.Tests&#xD;
+[xUnit.net 00:00:00.19]   Discovered:  ScrumOps.Infrastructure.Tests&#xD;
+[xUnit.net 00:00:00.20]   Starting:    ScrumOps.Infrastructure.Tests&#xD;
+[xUnit.net 00:00:00.26]   Finished:    ScrumOps.Infrastructure.Tests&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

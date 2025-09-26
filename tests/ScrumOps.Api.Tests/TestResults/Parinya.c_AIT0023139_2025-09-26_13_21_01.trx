@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="e3bb7931-d844-4021-9359-0931aab6aba8" name="Parinya.c@AIT0023139 2025-09-26 13:21:01" runUser="PHAINSURE\Parinya.c" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2025-09-26T13:21:01.1409151+07:00" queuing="2025-09-26T13:21:01.1409156+07:00" start="2025-09-26T13:20:59.1596172+07:00" finish="2025-09-26T13:21:02.3098021+07:00" />
+  <TestSettings name="default" id="49934292-c232-4533-878c-4adc3bec428e">
+    <Deployment runDeploymentRoot="Parinya.c_AIT0023139_2025-09-26_13_21_01" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="25ebdbc7-f4ba-420c-8a8d-cb03c99597cb" testId="9bcadabc-e71e-49db-2f80-d33b09b40321" testName="ScrumOps.Api.Tests.Controllers.TeamsControllerTests.ApiEndpoints_ShouldHaveCorrectContentType" computerName="AIT0023139" duration="00:00:00.0016881" startTime="2025-09-26T13:21:02.2384516+07:00" endTime="2025-09-26T13:21:02.2384516+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="25ebdbc7-f4ba-420c-8a8d-cb03c99597cb">
+      <Output>
+        <ErrorInfo>
+          <Message>System.Net.Http.HttpRequestException : Response status code does not indicate success: 404 (Not Found).</Message>
+          <StackTrace>   at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()&#xD;
+   at ScrumOps.Api.Tests.Controllers.TeamsControllerTests.ApiEndpoints_ShouldHaveCorrectContentType() in C:\data\ScrumOps\tests\ScrumOps.Api.Tests\Controllers\TeamsControllerTests.cs:line 194&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="b420a14f-4806-4a1f-9b4c-f8e01f7abf40" testId="569d2fd9-5048-991f-5de7-95a6cb668aed" testName="ScrumOps.Api.Tests.Controllers.TeamsControllerTests.AddTeamMember_WithValidData_ShouldReturnSuccess" computerName="AIT0023139" duration="00:00:02.3255167" startTime="2025-09-26T13:21:02.1281119+07:00" endTime="2025-09-26T13:21:02.1281125+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b420a14f-4806-4a1f-9b4c-f8e01f7abf40" />
+    <UnitTestResult executionId="bff689c0-0c5e-480b-af4e-4b218cc039d9" testId="476b18ac-4793-78e9-3045-707778b8c8d6" testName="ScrumOps.Api.Tests.UnitTest1.Test1" computerName="AIT0023139" duration="00:00:00.0011620" startTime="2025-09-26T13:20:59.7929728+07:00" endTime="2025-09-26T13:20:59.7929919+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bff689c0-0c5e-480b-af4e-4b218cc039d9" />
+    <UnitTestResult executionId="ec3f838f-bea9-45c0-9f17-250869d86343" testId="45c3def7-7fd6-4f0b-40d8-11ccaf2f2133" testName="ScrumOps.Api.Tests.Controllers.TeamsControllerTests.UpdateTeam_WithValidData_ShouldReturnUpdatedTeam" computerName="AIT0023139" duration="00:00:00.0025339" startTime="2025-09-26T13:21:02.2468542+07:00" endTime="2025-09-26T13:21:02.2468544+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ec3f838f-bea9-45c0-9f17-250869d86343" />
+    <UnitTestResult executionId="6e29d85b-4014-46a3-8acc-b467b609aa49" testId="c20d042e-4017-3216-7fa3-555fde23ddc5" testName="ScrumOps.Api.Tests.Controllers.TeamsControllerTests.CreateTeam_WithInvalidData_ShouldReturnBadRequest" computerName="AIT0023139" duration="00:00:00.0010347" startTime="2025-09-26T13:21:02.2449586+07:00" endTime="2025-09-26T13:21:02.2449587+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6e29d85b-4014-46a3-8acc-b467b609aa49">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Equal() Failure: Values differ&#xD;
+Expected: BadRequest&#xD;
+Actual:   NotFound</Message>
+          <StackTrace>   at ScrumOps.Api.Tests.Controllers.TeamsControllerTests.CreateTeam_WithInvalidData_ShouldReturnBadRequest() in C:\data\ScrumOps\tests\ScrumOps.Api.Tests\Controllers\TeamsControllerTests.cs:line 103&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="779629d4-1ee5-4d1d-9717-d1f02cbcaf86" testId="a9d1dea2-89fc-4eac-674c-03c1682f567b" testName="ScrumOps.Api.Tests.Controllers.TeamsControllerTests.GetTeams_ShouldReturnTeamsList" computerName="AIT0023139" duration="00:00:00.0028057" startTime="2025-09-26T13:21:02.2371337+07:00" endTime="2025-09-26T13:21:02.2371341+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="779629d4-1ee5-4d1d-9717-d1f02cbcaf86">
+      <Output>
+        <ErrorInfo>
+          <Message>System.Net.Http.HttpRequestException : Response status code does not indicate success: 404 (Not Found).</Message>
+          <StackTrace>   at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()&#xD;
+   at ScrumOps.Api.Tests.Controllers.TeamsControllerTests.GetTeams_ShouldReturnTeamsList() in C:\data\ScrumOps\tests\ScrumOps.Api.Tests\Controllers\TeamsControllerTests.cs:line 31&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="ff73d349-3246-4b4b-8789-a7b6cf129144" testId="eaa4391d-a4d0-54af-bb36-26c822e26edc" testName="ScrumOps.Api.Tests.Controllers.TeamsControllerTests.CreateTeam_WithValidData_ShouldReturnCreatedTeam" computerName="AIT0023139" duration="00:00:00.0100169" startTime="2025-09-26T13:21:02.2301966+07:00" endTime="2025-09-26T13:21:02.2301974+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ff73d349-3246-4b4b-8789-a7b6cf129144">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Equal() Failure: Values differ&#xD;
+Expected: Created&#xD;
+Actual:   NotFound</Message>
+          <StackTrace>   at ScrumOps.Api.Tests.Controllers.TeamsControllerTests.CreateTeam_WithValidData_ShouldReturnCreatedTeam() in C:\data\ScrumOps\tests\ScrumOps.Api.Tests\Controllers\TeamsControllerTests.cs:line 79&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d1163cc3-457e-49d9-9115-37a5e9307e06" testId="1a4b5b27-da41-6c03-3d71-f99439dd61d8" testName="ScrumOps.Api.Tests.Controllers.TeamsControllerTests.ApiEndpoints_ShouldSupportCors" computerName="AIT0023139" duration="00:00:00.0029692" startTime="2025-09-26T13:21:02.2428506+07:00" endTime="2025-09-26T13:21:02.2428507+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d1163cc3-457e-49d9-9115-37a5e9307e06" />
+    <UnitTestResult executionId="488a5ce8-d9e9-45a5-92d0-6cf68bdd0cf1" testId="3ed55ae2-fa71-1a9b-b8be-f45e1bb810ed" testName="ScrumOps.Api.Tests.Controllers.TeamsControllerTests.GetTeam_WithValidId_ShouldReturnTeamDetails" computerName="AIT0023139" duration="00:00:00.0014631" startTime="2025-09-26T13:21:02.2396684+07:00" endTime="2025-09-26T13:21:02.2396685+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="488a5ce8-d9e9-45a5-92d0-6cf68bdd0cf1" />
+    <UnitTestResult executionId="2168e3ef-c163-414f-875b-feb28512b931" testId="a91e2740-7ddf-5a24-9848-d87f9c8ff1a8" testName="ScrumOps.Api.Tests.Controllers.TeamsControllerTests.GetTeamVelocity_WithValidId_ShouldReturnVelocityData" computerName="AIT0023139" duration="00:00:00.0062175" startTime="2025-09-26T13:21:02.2324527+07:00" endTime="2025-09-26T13:21:02.2324528+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2168e3ef-c163-414f-875b-feb28512b931" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="ScrumOps.Api.Tests.Controllers.TeamsControllerTests.GetTeam_WithValidId_ShouldReturnTeamDetails" storage="c:\data\scrumops\tests\scrumops.api.tests\bin\debug\net8.0\scrumops.api.tests.dll" id="3ed55ae2-fa71-1a9b-b8be-f45e1bb810ed">
+      <Execution id="488a5ce8-d9e9-45a5-92d0-6cf68bdd0cf1" />
+      <TestMethod codeBase="C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Api.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="ScrumOps.Api.Tests.Controllers.TeamsControllerTests" name="GetTeam_WithValidId_ShouldReturnTeamDetails" />
+    </UnitTest>
+    <UnitTest name="ScrumOps.Api.Tests.Controllers.TeamsControllerTests.UpdateTeam_WithValidData_ShouldReturnUpdatedTeam" storage="c:\data\scrumops\tests\scrumops.api.tests\bin\debug\net8.0\scrumops.api.tests.dll" id="45c3def7-7fd6-4f0b-40d8-11ccaf2f2133">
+      <Execution id="ec3f838f-bea9-45c0-9f17-250869d86343" />
+      <TestMethod codeBase="C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Api.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="ScrumOps.Api.Tests.Controllers.TeamsControllerTests" name="UpdateTeam_WithValidData_ShouldReturnUpdatedTeam" />
+    </UnitTest>
+    <UnitTest name="ScrumOps.Api.Tests.Controllers.TeamsControllerTests.ApiEndpoints_ShouldSupportCors" storage="c:\data\scrumops\tests\scrumops.api.tests\bin\debug\net8.0\scrumops.api.tests.dll" id="1a4b5b27-da41-6c03-3d71-f99439dd61d8">
+      <Execution id="d1163cc3-457e-49d9-9115-37a5e9307e06" />
+      <TestMethod codeBase="C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Api.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="ScrumOps.Api.Tests.Controllers.TeamsControllerTests" name="ApiEndpoints_ShouldSupportCors" />
+    </UnitTest>
+    <UnitTest name="ScrumOps.Api.Tests.Controllers.TeamsControllerTests.AddTeamMember_WithValidData_ShouldReturnSuccess" storage="c:\data\scrumops\tests\scrumops.api.tests\bin\debug\net8.0\scrumops.api.tests.dll" id="569d2fd9-5048-991f-5de7-95a6cb668aed">
+      <Execution id="b420a14f-4806-4a1f-9b4c-f8e01f7abf40" />
+      <TestMethod codeBase="C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Api.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="ScrumOps.Api.Tests.Controllers.TeamsControllerTests" name="AddTeamMember_WithValidData_ShouldReturnSuccess" />
+    </UnitTest>
+    <UnitTest name="ScrumOps.Api.Tests.Controllers.TeamsControllerTests.CreateTeam_WithValidData_ShouldReturnCreatedTeam" storage="c:\data\scrumops\tests\scrumops.api.tests\bin\debug\net8.0\scrumops.api.tests.dll" id="eaa4391d-a4d0-54af-bb36-26c822e26edc">
+      <Execution id="ff73d349-3246-4b4b-8789-a7b6cf129144" />
+      <TestMethod codeBase="C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Api.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="ScrumOps.Api.Tests.Controllers.TeamsControllerTests" name="CreateTeam_WithValidData_ShouldReturnCreatedTeam" />
+    </UnitTest>
+    <UnitTest name="ScrumOps.Api.Tests.Controllers.TeamsControllerTests.CreateTeam_WithInvalidData_ShouldReturnBadRequest" storage="c:\data\scrumops\tests\scrumops.api.tests\bin\debug\net8.0\scrumops.api.tests.dll" id="c20d042e-4017-3216-7fa3-555fde23ddc5">
+      <Execution id="6e29d85b-4014-46a3-8acc-b467b609aa49" />
+      <TestMethod codeBase="C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Api.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="ScrumOps.Api.Tests.Controllers.TeamsControllerTests" name="CreateTeam_WithInvalidData_ShouldReturnBadRequest" />
+    </UnitTest>
+    <UnitTest name="ScrumOps.Api.Tests.Controllers.TeamsControllerTests.GetTeamVelocity_WithValidId_ShouldReturnVelocityData" storage="c:\data\scrumops\tests\scrumops.api.tests\bin\debug\net8.0\scrumops.api.tests.dll" id="a91e2740-7ddf-5a24-9848-d87f9c8ff1a8">
+      <Execution id="2168e3ef-c163-414f-875b-feb28512b931" />
+      <TestMethod codeBase="C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Api.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="ScrumOps.Api.Tests.Controllers.TeamsControllerTests" name="GetTeamVelocity_WithValidId_ShouldReturnVelocityData" />
+    </UnitTest>
+    <UnitTest name="ScrumOps.Api.Tests.Controllers.TeamsControllerTests.ApiEndpoints_ShouldHaveCorrectContentType" storage="c:\data\scrumops\tests\scrumops.api.tests\bin\debug\net8.0\scrumops.api.tests.dll" id="9bcadabc-e71e-49db-2f80-d33b09b40321">
+      <Execution id="25ebdbc7-f4ba-420c-8a8d-cb03c99597cb" />
+      <TestMethod codeBase="C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Api.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="ScrumOps.Api.Tests.Controllers.TeamsControllerTests" name="ApiEndpoints_ShouldHaveCorrectContentType" />
+    </UnitTest>
+    <UnitTest name="ScrumOps.Api.Tests.Controllers.TeamsControllerTests.GetTeams_ShouldReturnTeamsList" storage="c:\data\scrumops\tests\scrumops.api.tests\bin\debug\net8.0\scrumops.api.tests.dll" id="a9d1dea2-89fc-4eac-674c-03c1682f567b">
+      <Execution id="779629d4-1ee5-4d1d-9717-d1f02cbcaf86" />
+      <TestMethod codeBase="C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Api.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="ScrumOps.Api.Tests.Controllers.TeamsControllerTests" name="GetTeams_ShouldReturnTeamsList" />
+    </UnitTest>
+    <UnitTest name="ScrumOps.Api.Tests.UnitTest1.Test1" storage="c:\data\scrumops\tests\scrumops.api.tests\bin\debug\net8.0\scrumops.api.tests.dll" id="476b18ac-4793-78e9-3045-707778b8c8d6">
+      <Execution id="bff689c0-0c5e-480b-af4e-4b218cc039d9" />
+      <TestMethod codeBase="C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Api.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="ScrumOps.Api.Tests.UnitTest1" name="Test1" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="9bcadabc-e71e-49db-2f80-d33b09b40321" executionId="25ebdbc7-f4ba-420c-8a8d-cb03c99597cb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="569d2fd9-5048-991f-5de7-95a6cb668aed" executionId="b420a14f-4806-4a1f-9b4c-f8e01f7abf40" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="476b18ac-4793-78e9-3045-707778b8c8d6" executionId="bff689c0-0c5e-480b-af4e-4b218cc039d9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="45c3def7-7fd6-4f0b-40d8-11ccaf2f2133" executionId="ec3f838f-bea9-45c0-9f17-250869d86343" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c20d042e-4017-3216-7fa3-555fde23ddc5" executionId="6e29d85b-4014-46a3-8acc-b467b609aa49" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a9d1dea2-89fc-4eac-674c-03c1682f567b" executionId="779629d4-1ee5-4d1d-9717-d1f02cbcaf86" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="eaa4391d-a4d0-54af-bb36-26c822e26edc" executionId="ff73d349-3246-4b4b-8789-a7b6cf129144" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1a4b5b27-da41-6c03-3d71-f99439dd61d8" executionId="d1163cc3-457e-49d9-9115-37a5e9307e06" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3ed55ae2-fa71-1a9b-b8be-f45e1bb810ed" executionId="488a5ce8-d9e9-45a5-92d0-6cf68bdd0cf1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a91e2740-7ddf-5a24-9848-d87f9c8ff1a8" executionId="2168e3ef-c163-414f-875b-feb28512b931" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="10" executed="10" passed="6" failed="4" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.3.1+6b60a9e56a (64-bit .NET 8.0.20)&#xD;
+[xUnit.net 00:00:00.11]   Discovering: ScrumOps.Api.Tests&#xD;
+[xUnit.net 00:00:00.13]   Discovered:  ScrumOps.Api.Tests&#xD;
+[xUnit.net 00:00:00.13]   Starting:    ScrumOps.Api.Tests&#xD;
+[13:21:01 INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts&#xD;
+[13:21:01 INF] Starting ScrumOps API&#xD;
+[13:21:02 INF] Request starting HTTP/1.1 POST http://localhost/api/teams/1/members - application/json; charset=utf-8 69&#xD;
+[13:21:02 WRN] Failed to determine the https port for redirect.&#xD;
+[13:21:02 INF] Request finished HTTP/1.1 POST http://localhost/api/teams/1/members - 404 null null 24.1274ms&#xD;
+[13:21:02 INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST http://localhost/api/teams/1/members, Response status code: 404&#xD;
+[13:21:02 INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 94&#xD;
+[13:21:02 INF] Request finished HTTP/1.1 POST http://localhost/api/teams - 404 null null 1.1605ms&#xD;
+[13:21:02 INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST http://localhost/api/teams, Response status code: 404&#xD;
+[13:21:02 INF] Request starting HTTP/1.1 GET http://localhost/api/teams/1/velocity - null null&#xD;
+[xUnit.net 00:00:02.60]       Assert.Equal() Failure: Values differ&#xD;
+[xUnit.net 00:00:02.60]       Expected: Created&#xD;
+[xUnit.net 00:00:02.60]       Actual:   NotFound&#xD;
+[xUnit.net 00:00:02.60]       Stack Trace:&#xD;
+[xUnit.net 00:00:02.60]         C:\data\ScrumOps\tests\ScrumOps.Api.Tests\Controllers\TeamsControllerTests.cs(79,0): at ScrumOps.Api.Tests.Controllers.TeamsControllerTests.CreateTeam_WithValidData_ShouldReturnCreatedTeam()&#xD;
+[xUnit.net 00:00:02.60]         --- End of stack trace from previous location ---&#xD;
+[13:21:02 INF] Request finished HTTP/1.1 GET http://localhost/api/teams/1/velocity - 404 null null 5.1872ms&#xD;
+[13:21:02 INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost/api/teams/1/velocity, Response status code: 404&#xD;
+[13:21:02 INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null&#xD;
+[13:21:02 INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 404 null null 0.8431ms&#xD;
+[13:21:02 INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost/api/teams, Response status code: 404&#xD;
+[xUnit.net 00:00:02.61]       System.Net.Http.HttpRequestException : Response status code does not indicate success: 404 (Not Found).&#xD;
+[13:21:02 INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null&#xD;
+[xUnit.net 00:00:02.61]       Stack Trace:&#xD;
+[xUnit.net 00:00:02.61]            at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()&#xD;
+[xUnit.net 00:00:02.61]         C:\data\ScrumOps\tests\ScrumOps.Api.Tests\Controllers\TeamsControllerTests.cs(31,0): at ScrumOps.Api.Tests.Controllers.TeamsControllerTests.GetTeams_ShouldReturnTeamsList()&#xD;
+[xUnit.net 00:00:02.61]         --- End of stack trace from previous location ---&#xD;
+[13:21:02 INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 404 null null 0.5343ms&#xD;
+[13:21:02 INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost/api/teams, Response status code: 404&#xD;
+[xUnit.net 00:00:02.61]       System.Net.Http.HttpRequestException : Response status code does not indicate success: 404 (Not Found).&#xD;
+[xUnit.net 00:00:02.61]       Stack Trace:&#xD;
+[xUnit.net 00:00:02.61]            at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()&#xD;
+[xUnit.net 00:00:02.61]         C:\data\ScrumOps\tests\ScrumOps.Api.Tests\Controllers\TeamsControllerTests.cs(194,0): at ScrumOps.Api.Tests.Controllers.TeamsControllerTests.ApiEndpoints_ShouldHaveCorrectContentType()&#xD;
+[xUnit.net 00:00:02.61]         --- End of stack trace from previous location ---&#xD;
+[13:21:02 INF] Request starting HTTP/1.1 GET http://localhost/api/teams/1 - null null&#xD;
+[13:21:02 INF] Request finished HTTP/1.1 GET http://localhost/api/teams/1 - 404 null null 0.2864ms&#xD;
+[13:21:02 INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost/api/teams/1, Response status code: 404&#xD;
+[13:21:02 INF] Request starting HTTP/1.1 OPTIONS http://localhost/api/teams - null null&#xD;
+[13:21:02 INF] CORS policy execution successful.&#xD;
+[13:21:02 INF] Request finished HTTP/1.1 OPTIONS http://localhost/api/teams - 204 null null 1.355ms&#xD;
+[13:21:02 INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 59&#xD;
+[13:21:02 INF] Request finished HTTP/1.1 POST http://localhost/api/teams - 404 null null 0.1951ms&#xD;
+[13:21:02 INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST http://localhost/api/teams, Response status code: 404&#xD;
+[xUnit.net 00:00:02.62]       Assert.Equal() Failure: Values differ&#xD;
+[xUnit.net 00:00:02.62]       Expected: BadRequest&#xD;
+[xUnit.net 00:00:02.62]       Actual:   NotFound&#xD;
+[xUnit.net 00:00:02.62]       Stack Trace:&#xD;
+[xUnit.net 00:00:02.62]         C:\data\ScrumOps\tests\ScrumOps.Api.Tests\Controllers\TeamsControllerTests.cs(103,0): at ScrumOps.Api.Tests.Controllers.TeamsControllerTests.CreateTeam_WithInvalidData_ShouldReturnBadRequest()&#xD;
+[xUnit.net 00:00:02.62]         --- End of stack trace from previous location ---&#xD;
+[13:21:02 INF] Request starting HTTP/1.1 PUT http://localhost/api/teams/1 - application/json; charset=utf-8 86&#xD;
+[13:21:02 INF] Request finished HTTP/1.1 PUT http://localhost/api/teams/1 - 404 null null 0.3233ms&#xD;
+[13:21:02 INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: PUT http://localhost/api/teams/1, Response status code: 404&#xD;
+[xUnit.net 00:00:02.62]   Finished:    ScrumOps.Api.Tests&#xD;
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="AIT0023139" outcome="Error" timestamp="2025-09-26T13:21:02.2282158+07:00">
+        <Text>[xUnit.net 00:00:02.60]     ScrumOps.Api.Tests.Controllers.TeamsControllerTests.CreateTeam_WithValidData_ShouldReturnCreatedTeam [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="AIT0023139" outcome="Error" timestamp="2025-09-26T13:21:02.2367036+07:00">
+        <Text>[xUnit.net 00:00:02.61]     ScrumOps.Api.Tests.Controllers.TeamsControllerTests.GetTeams_ShouldReturnTeamsList [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="AIT0023139" outcome="Error" timestamp="2025-09-26T13:21:02.2384240+07:00">
+        <Text>[xUnit.net 00:00:02.61]     ScrumOps.Api.Tests.Controllers.TeamsControllerTests.ApiEndpoints_ShouldHaveCorrectContentType [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="AIT0023139" outcome="Error" timestamp="2025-09-26T13:21:02.2446472+07:00">
+        <Text>[xUnit.net 00:00:02.62]     ScrumOps.Api.Tests.Controllers.TeamsControllerTests.CreateTeam_WithInvalidData_ShouldReturnBadRequest [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>
