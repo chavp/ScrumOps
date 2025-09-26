@@ -1,0 +1,9 @@
+/constitution Create principles focused on code quality, testing standards, user experience consistency, and performance requirements
+
+/specify Build requirement from url https://goodagile.com/scrumprimer/scrumprimer20.pdf
+
+/plan The application uses technology stack C#.NET Build Web User Interface by Blazor. Use ASP.NET Core for API Microservices. Use Domain Drivent Design for modeling design. Use Entity Framework Code first stored in a local SQLite database.
+
+/tasks
+
+/implement
