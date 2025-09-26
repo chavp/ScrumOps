@@ -3,6 +3,7 @@ using ScrumOps.Domain.ProductBacklog.Entities;
 using ScrumOps.Domain.SprintManagement.Entities;
 using ScrumOps.Domain.TeamManagement.Entities;
 using ScrumOps.Infrastructure.Persistence.Configurations;
+using DomainTask = ScrumOps.Domain.SprintManagement.Entities.Task;
 
 namespace ScrumOps.Infrastructure.Persistence;
 
@@ -27,7 +28,7 @@ public class ScrumOpsDbContext : DbContext
     // Sprint Management Bounded Context
     public DbSet<Sprint> Sprints { get; set; } = null!;
     public DbSet<SprintBacklogItem> SprintBacklogItems { get; set; } = null!;
-    public DbSet<Task> Tasks { get; set; } = null!;
+    public DbSet<DomainTask> Tasks { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -86,7 +87,7 @@ public class ScrumOpsDbContext : DbContext
         // Sprint Management schema
         modelBuilder.Entity<Sprint>().ToTable("Sprints", "SprintManagement");
         modelBuilder.Entity<SprintBacklogItem>().ToTable("SprintBacklogItems", "SprintManagement");
-        modelBuilder.Entity<Task>().ToTable("Tasks", "SprintManagement");
+        modelBuilder.Entity<DomainTask>().ToTable("Tasks", "SprintManagement");
     }
 
     /// <summary>

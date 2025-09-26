@@ -1,6 +1,8 @@
 using MediatR;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using ScrumOps.Application;
+using ScrumOps.Infrastructure;
 
 // Configure Serilog
 Log.Logger = new LoggerConfiguration()
@@ -16,14 +18,11 @@ builder.Host.UseSerilog();
 // Add services to the container.
 builder.Services.AddControllers();
 
-// Add MediatR
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+// Add Application layer services
+builder.Services.AddApplication();
 
-// Add Application layer services (will be implemented later)
-// builder.Services.AddApplication();
-
-// Add Infrastructure layer services (will be implemented later)  
-// builder.Services.AddInfrastructure(builder.Configuration);
+// Add Infrastructure layer services
+builder.Services.AddInfrastructure(builder.Configuration);
 
 // Configure OpenAPI/Swagger
 builder.Services.AddEndpointsApiExplorer();

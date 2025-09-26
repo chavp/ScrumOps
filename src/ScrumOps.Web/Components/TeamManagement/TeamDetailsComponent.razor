@@ -1,0 +1,257 @@
+@page "/teams/{TeamId:int}"
+@using ScrumOps.Shared.Contracts.Teams
+@using ScrumOps.Web.Services
+@inject ITeamService TeamService
+@inject NavigationManager Navigation
+@inject ILogger<TeamDetailsComponent> Logger
+
+<div class="container-fluid">
+    @if (isLoading)
+    {
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+    else if (team != null)
+    {
+        <div class="row mb-3">
+            <div class="col">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/teams">Teams</a></li>
+                        <li class="breadcrumb-item active">@team.Name</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1>@team.Name</h1>
+                        <p class="text-muted">@team.Description</p>
+                    </div>
+                    <div>
+                        <span class="badge @(team.IsActive ? "bg-success" : "bg-secondary") fs-6">
+                            @(team.IsActive ? "Active" : "Inactive")
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Sprint Length</h5>
+                        <h2 class="text-primary">@team.SprintLengthWeeks</h2>
+                        <small class="text-muted">weeks</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Team Velocity</h5>
+                        <h2 class="text-success">@team.Velocity.ToString("F1")</h2>
+                        <small class="text-muted">story points</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Team Size</h5>
+                        <h2 class="text-info">@team.Members.Count()</h2>
+                        <small class="text-muted">members</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Created</h5>
+                        <h6 class="text-warning">@team.CreatedDate.ToString("MMM dd, yyyy")</h6>
+                        <small class="text-muted">@((DateTime.UtcNow - team.CreatedDate).Days) days ago</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Team Members</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (team.Members.Any())
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var member in team.Members)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="avatar-circle me-2">
+                                                            @member.Name.Substring(0, 1).ToUpper()
+                                                        </div>
+                                                        @member.Name
+                                                    </div>
+                                                </td>
+                                                <td>@member.Email</td>
+                                                <td>
+                                                    <span class="badge bg-@GetRoleBadgeColor(member.Role)">
+                                                        @FormatRole(member.Role)
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge @(member.IsActive ? "bg-success" : "bg-secondary")">
+                                                        @(member.IsActive ? "Active" : "Inactive")
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-muted">No team members found.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Quick Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary" @onclick="NavigateToEdit">
+                                <i class="bi bi-pencil"></i> Edit Team
+                            </button>
+                            <button class="btn btn-success">
+                                <i class="bi bi-person-plus"></i> Add Member
+                            </button>
+                            <button class="btn btn-info">
+                                <i class="bi bi-calendar-plus"></i> Start Sprint
+                            </button>
+                            <button class="btn btn-secondary">
+                                <i class="bi bi-list-check"></i> View Backlog
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <h4>Team not found</h4>
+            <p class="text-muted">The requested team could not be found.</p>
+            <button class="btn btn-primary" @onclick="NavigateToTeams">
+                <i class="bi bi-arrow-left"></i> Back to Teams
+            </button>
+        </div>
+    }
+</div>
+
+<style>
+    .avatar-circle {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: #007bff;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 14px;
+    }
+</style>
+
+@code {
+    [Parameter] public int TeamId { get; set; }
+
+    private TeamDetailsResponse? team;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadTeam();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadTeam();
+    }
+
+    private async Task LoadTeam()
+    {
+        try
+        {
+            isLoading = true;
+            team = await TeamService.GetTeamAsync(TeamId);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to load team {TeamId}", TeamId);
+            team = null;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void NavigateToEdit()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/edit");
+    }
+
+    private void NavigateToTeams()
+    {
+        Navigation.NavigateTo("/teams");
+    }
+
+    private string GetRoleBadgeColor(string role)
+    {
+        return role.ToLower() switch
+        {
+            "productowner" => "primary",
+            "scrummaster" => "success",
+            "developer" => "info",
+            _ => "secondary"
+        };
+    }
+
+    private string FormatRole(string role)
+    {
+        return role switch
+        {
+            "ProductOwner" => "Product Owner",
+            "ScrumMaster" => "Scrum Master",
+            "Developer" => "Developer",
+            _ => role
+        };
+    }
+}

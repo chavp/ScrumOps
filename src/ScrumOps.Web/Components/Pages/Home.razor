@@ -1,7 +1,105 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+<PageTitle>ScrumOps - Scrum Framework Management System</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="hero-section text-center py-5 mb-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px;">
+    <div class="container">
+        <h1 class="display-4 fw-bold mb-3">Welcome to ScrumOps</h1>
+        <p class="lead mb-4">Your comprehensive Scrum Framework Management System</p>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <p class="mb-4">Streamline your Scrum processes with powerful tools for team management, sprint planning, and backlog organization.</p>
+                <a href="/teams" class="btn btn-light btn-lg me-3">
+                    <i class="bi bi-people"></i> Manage Teams
+                </a>
+                <a href="/backlog" class="btn btn-outline-light btn-lg">
+                    <i class="bi bi-list-check"></i> View Backlog
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
-Welcome to your new app.
+<div class="container">
+    <div class="row mb-5">
+        <div class="col text-center">
+            <h2 class="mb-4">Key Features</h2>
+        </div>
+    </div>
+    
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card h-100 text-center border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="bi bi-people-fill text-primary" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="card-title">Team Management</h5>
+                    <p class="card-text">Create and manage Scrum teams with proper role assignments and member tracking.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card h-100 text-center border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="bi bi-calendar-check text-success" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="card-title">Sprint Planning</h5>
+                    <p class="card-text">Plan and track sprints with velocity calculations and burndown charts.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card h-100 text-center border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="bi bi-list-task text-info" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="card-title">Backlog Management</h5>
+                    <p class="card-text">Organize and prioritize your product backlog with user stories and acceptance criteria.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 text-center border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="bi bi-graph-up text-warning" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="card-title">Analytics & Reports</h5>
+                    <p class="card-text">Track team performance with velocity trends and sprint metrics.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card h-100 text-center border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="bi bi-kanban text-danger" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="card-title">Task Board</h5>
+                    <p class="card-text">Visual task management with customizable workflow states and drag-and-drop functionality.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card h-100 text-center border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="bi bi-clock-history text-secondary" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="card-title">Time Tracking</h5>
+                    <p class="card-text">Monitor sprint progress with daily stand-ups and impediment tracking.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

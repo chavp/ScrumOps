@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\data\\ScrumOps\\tests\\ScrumOps.Web.Tests\\ScrumOps.Web.Tests.csproj": {}
+    "D:\\ScrumOps\\tests\\ScrumOps.Web.Tests\\ScrumOps.Web.Tests.csproj": {}
   },
   "projects": {
-    "C:\\data\\ScrumOps\\tests\\ScrumOps.Web.Tests\\ScrumOps.Web.Tests.csproj": {
+    "D:\\ScrumOps\\tests\\ScrumOps.Web.Tests\\ScrumOps.Web.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\data\\ScrumOps\\tests\\ScrumOps.Web.Tests\\ScrumOps.Web.Tests.csproj",
+        "projectUniqueName": "D:\\ScrumOps\\tests\\ScrumOps.Web.Tests\\ScrumOps.Web.Tests.csproj",
         "projectName": "ScrumOps.Web.Tests",
-        "projectPath": "C:\\data\\ScrumOps\\tests\\ScrumOps.Web.Tests\\ScrumOps.Web.Tests.csproj",
-        "packagesPath": "C:\\Users\\Parinya.c\\.nuget\\packages\\",
-        "outputPath": "C:\\data\\ScrumOps\\tests\\ScrumOps.Web.Tests\\obj\\",
+        "projectPath": "D:\\ScrumOps\\tests\\ScrumOps.Web.Tests\\ScrumOps.Web.Tests.csproj",
+        "packagesPath": "C:\\Users\\mypar\\.nuget\\packages\\",
+        "outputPath": "D:\\ScrumOps\\tests\\ScrumOps.Web.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Parinya.c\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\mypar\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

@@ -1,7 +1,7 @@
 {
-  "ScrumOps.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\data\\ScrumOps\\src\\ScrumOps.Api",
-  "ScrumOps.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\data\\ScrumOps\\src\\ScrumOps.Application",
-  "ScrumOps.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\data\\ScrumOps\\src\\ScrumOps.Domain",
-  "ScrumOps.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\data\\ScrumOps\\src\\ScrumOps.Infrastructure",
-  "ScrumOps.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\data\\ScrumOps\\src\\ScrumOps.Shared"
+  "ScrumOps.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "D:\\ScrumOps\\src\\ScrumOps.Api",
+  "ScrumOps.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "D:\\ScrumOps\\src\\ScrumOps.Application",
+  "ScrumOps.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "D:\\ScrumOps\\src\\ScrumOps.Domain",
+  "ScrumOps.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "D:\\ScrumOps\\src\\ScrumOps.Infrastructure",
+  "ScrumOps.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "D:\\ScrumOps\\src\\ScrumOps.Shared"
 }

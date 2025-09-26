@@ -1,4 +1,6 @@
 using ScrumOps.Domain.SharedKernel;
+using ScrumOps.Domain.SharedKernel.Interfaces;
+using ScrumOps.Domain.SharedKernel.Events;
 using ScrumOps.Domain.EventManagement.ValueObjects;
 using ScrumOps.Domain.SprintManagement.ValueObjects;
 using ScrumOps.Domain.SharedKernel.ValueObjects;
@@ -12,6 +14,7 @@ namespace ScrumOps.Domain.EventManagement.Entities;
 public class SprintEvent : Entity<SprintEventId>, IAggregateRoot
 {
     private readonly List<EventParticipant> _participants = new();
+    private readonly List<IDomainEvent> _domainEvents = new();
 
     public SprintId SprintId { get; private set; }
     public EventType EventType { get; private set; }
@@ -26,6 +29,8 @@ public class SprintEvent : Entity<SprintEventId>, IAggregateRoot
     public string? CancellationReason { get; private set; }
 
     public IReadOnlyCollection<EventParticipant> Participants => _participants.AsReadOnly();
+
+    public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
     private SprintEvent(
         SprintEventId id,
@@ -166,4 +171,14 @@ public class SprintEvent : Entity<SprintEventId>, IAggregateRoot
     public bool IsActive(DateTime currentTime) => TimeBox.IsActive(currentTime) && !IsCancelled;
     public bool HasStarted(DateTime currentTime) => TimeBox.HasStarted(currentTime);
     public bool HasEnded(DateTime currentTime) => TimeBox.HasEnded(currentTime);
+
+    public void ClearDomainEvents()
+    {
+        _domainEvents.Clear();
+    }
+
+    protected void AddDomainEvent(IDomainEvent domainEvent)
+    {
+        _domainEvents.Add(domainEvent);
+    }
 }

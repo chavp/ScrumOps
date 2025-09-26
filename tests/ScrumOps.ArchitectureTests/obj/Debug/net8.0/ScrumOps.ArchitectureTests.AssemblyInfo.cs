@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ScrumOps.ArchitectureTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+abf65996c3fe465f7f43e962753a3dbf9279ec9a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+149497e7e9981ba5a9054ea12e2e3620e0f87550")]
 [assembly: System.Reflection.AssemblyProductAttribute("ScrumOps.ArchitectureTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ScrumOps.ArchitectureTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

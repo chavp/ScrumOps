@@ -8,23 +8,23 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Parinya.c\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\mypar\\.nuget\\packages\\": {},
+    "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\data\\ScrumOps\\src\\ScrumOps.Shared\\ScrumOps.Shared.csproj",
+      "projectUniqueName": "D:\\ScrumOps\\src\\ScrumOps.Shared\\ScrumOps.Shared.csproj",
       "projectName": "ScrumOps.Shared",
-      "projectPath": "C:\\data\\ScrumOps\\src\\ScrumOps.Shared\\ScrumOps.Shared.csproj",
-      "packagesPath": "C:\\Users\\Parinya.c\\.nuget\\packages\\",
-      "outputPath": "C:\\data\\ScrumOps\\src\\ScrumOps.Shared\\obj\\",
+      "projectPath": "D:\\ScrumOps\\src\\ScrumOps.Shared\\ScrumOps.Shared.csproj",
+      "packagesPath": "C:\\Users\\mypar\\.nuget\\packages\\",
+      "outputPath": "D:\\ScrumOps\\src\\ScrumOps.Shared\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Parinya.c\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\mypar\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
