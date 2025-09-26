@@ -377,3 +377,4 @@ D:\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\refint\ScrumOps.Api.dll
 D:\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\ScrumOps.Api.pdb
 D:\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\ScrumOps.Api.genruntimeconfig.cache
 D:\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\ref\ScrumOps.Api.dll
+D:\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\ScrumOps.Api.MvcApplicationPartsAssemblyInfo.cs

@@ -9,10 +9,125 @@
       "ScrumOps.Web.Tests/1.0.0": {
         "dependencies": {
           "Microsoft.NET.Test.Sdk": "17.8.0",
+          "Moq": "4.20.69",
+          "ScrumOps.Shared": "1.0.0",
+          "ScrumOps.Web": "1.0.0",
+          "bunit": "1.24.10",
           "xunit": "2.5.3"
         },
         "runtime": {
           "ScrumOps.Web.Tests.dll": {}
+        }
+      },
+      "AngleSharp/0.17.1": {
+        "runtime": {
+          "lib/netstandard2.0/AngleSharp.dll": {
+            "assemblyVersion": "0.17.1.0",
+            "fileVersion": "0.17.1.0"
+          }
+        }
+      },
+      "AngleSharp.Css/0.17.0": {
+        "dependencies": {
+          "AngleSharp": "0.17.1"
+        },
+        "runtime": {
+          "lib/net7.0/AngleSharp.Css.dll": {
+            "assemblyVersion": "0.17.0.0",
+            "fileVersion": "0.17.0.0"
+          }
+        }
+      },
+      "AngleSharp.Diffing/0.18.2": {
+        "dependencies": {
+          "AngleSharp": "0.17.1",
+          "AngleSharp.Css": "0.17.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/AngleSharp.Diffing.dll": {
+            "assemblyVersion": "0.18.2.0",
+            "fileVersion": "0.18.2.0"
+          }
+        }
+      },
+      "bunit/1.24.10": {
+        "dependencies": {
+          "bunit.core": "1.24.10",
+          "bunit.web": "1.24.10"
+        }
+      },
+      "bunit.core/1.24.10": {
+        "runtime": {
+          "lib/net8.0/Bunit.Core.dll": {
+            "assemblyVersion": "1.24.10.33775",
+            "fileVersion": "1.24.10.33775"
+          }
+        }
+      },
+      "bunit.web/1.24.10": {
+        "dependencies": {
+          "AngleSharp": "0.17.1",
+          "AngleSharp.Diffing": "0.18.2",
+          "Microsoft.AspNetCore.Components.WebAssembly": "8.0.0-rc.2.23480.2",
+          "Microsoft.AspNetCore.Components.WebAssembly.Authentication": "8.0.0-rc.2.23480.2",
+          "bunit.core": "1.24.10"
+        },
+        "runtime": {
+          "lib/net8.0/AngleSharpWrappers.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          },
+          "lib/net8.0/Bunit.Web.dll": {
+            "assemblyVersion": "1.24.10.33775",
+            "fileVersion": "1.24.10.33775"
+          }
+        }
+      },
+      "Castle.Core/5.1.1": {
+        "runtime": {
+          "lib/net6.0/Castle.Core.dll": {
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.1.1.0"
+          }
+        }
+      },
+      "MediatR/13.0.0": {
+        "dependencies": {
+          "MediatR.Contracts": "2.0.1",
+          "Microsoft.IdentityModel.JsonWebTokens": "8.0.1"
+        },
+        "runtime": {
+          "lib/net8.0/MediatR.dll": {
+            "assemblyVersion": "13.0.0.0",
+            "fileVersion": "13.0.0.0"
+          }
+        }
+      },
+      "MediatR.Contracts/2.0.1": {
+        "runtime": {
+          "lib/netstandard2.0/MediatR.Contracts.dll": {
+            "assemblyVersion": "2.0.1.0",
+            "fileVersion": "2.0.1.0"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Components.WebAssembly/8.0.0-rc.2.23480.2": {
+        "dependencies": {
+          "Microsoft.JSInterop.WebAssembly": "8.0.0-rc.2.23480.2"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.AspNetCore.Components.WebAssembly.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.48002"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Components.WebAssembly.Authentication/8.0.0-rc.2.23480.2": {
+        "runtime": {
+          "lib/net8.0/Microsoft.AspNetCore.Components.WebAssembly.Authentication.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.48002"
+          }
         }
       },
       "Microsoft.CodeCoverage/17.8.0": {
@@ -20,6 +135,55 @@
           "lib/netcoreapp3.1/Microsoft.VisualStudio.CodeCoverage.Shim.dll": {
             "assemblyVersion": "15.0.0.0",
             "fileVersion": "17.800.623.45702"
+          }
+        }
+      },
+      "Microsoft.IdentityModel.Abstractions/8.0.1": {
+        "runtime": {
+          "lib/net8.0/Microsoft.IdentityModel.Abstractions.dll": {
+            "assemblyVersion": "8.0.1.0",
+            "fileVersion": "8.0.1.50722"
+          }
+        }
+      },
+      "Microsoft.IdentityModel.JsonWebTokens/8.0.1": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Tokens": "8.0.1"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll": {
+            "assemblyVersion": "8.0.1.0",
+            "fileVersion": "8.0.1.50722"
+          }
+        }
+      },
+      "Microsoft.IdentityModel.Logging/8.0.1": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Abstractions": "8.0.1"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.IdentityModel.Logging.dll": {
+            "assemblyVersion": "8.0.1.0",
+            "fileVersion": "8.0.1.50722"
+          }
+        }
+      },
+      "Microsoft.IdentityModel.Tokens/8.0.1": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Logging": "8.0.1"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.IdentityModel.Tokens.dll": {
+            "assemblyVersion": "8.0.1.0",
+            "fileVersion": "8.0.1.50722"
+          }
+        }
+      },
+      "Microsoft.JSInterop.WebAssembly/8.0.0-rc.2.23480.2": {
+        "runtime": {
+          "lib/net8.0/Microsoft.JSInterop.WebAssembly.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.48002"
           }
         }
       },
@@ -275,6 +439,17 @@
           }
         }
       },
+      "Moq/4.20.69": {
+        "dependencies": {
+          "Castle.Core": "5.1.1"
+        },
+        "runtime": {
+          "lib/net6.0/Moq.dll": {
+            "assemblyVersion": "4.20.69.0",
+            "fileVersion": "4.20.69.0"
+          }
+        }
+      },
       "Newtonsoft.Json/13.0.1": {
         "runtime": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {
@@ -340,6 +515,46 @@
             "fileVersion": "2.5.3.0"
           }
         }
+      },
+      "ScrumOps.Application/1.0.0": {
+        "dependencies": {
+          "MediatR": "13.0.0",
+          "ScrumOps.Domain": "1.0.0"
+        },
+        "runtime": {
+          "ScrumOps.Application.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ScrumOps.Domain/1.0.0": {
+        "runtime": {
+          "ScrumOps.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ScrumOps.Shared/1.0.0": {
+        "runtime": {
+          "ScrumOps.Shared.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ScrumOps.Web/1.0.0": {
+        "dependencies": {
+          "ScrumOps.Application": "1.0.0",
+          "ScrumOps.Shared": "1.0.0"
+        },
+        "runtime": {
+          "ScrumOps.Web.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
       }
     }
   },
@@ -349,12 +564,124 @@
       "serviceable": false,
       "sha512": ""
     },
+    "AngleSharp/0.17.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5MPI4bbixlwxb0W/smOMeIR+QlxMy5/5jD+WnIAw4pBC+7AhLPe5bS3cLgQMJyvd6q0A48sG+uYOt/ep406GLA==",
+      "path": "anglesharp/0.17.1",
+      "hashPath": "anglesharp.0.17.1.nupkg.sha512"
+    },
+    "AngleSharp.Css/0.17.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bg0AcugmX6BFEi/DHG61QrwRU8iuiX4H8LZehdIzYdqOM/dgb3BsCTzNIcc1XADn4+xfQEdVwJYTSwUxroL4vg==",
+      "path": "anglesharp.css/0.17.0",
+      "hashPath": "anglesharp.css.0.17.0.nupkg.sha512"
+    },
+    "AngleSharp.Diffing/0.18.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fmUgbgu8cJIENHhRloD5PP6diPnGZVbIt7oJH1asDd7cRyVZNELsuBTjJlKv/YDEGREbVE18XQ3hh3nSla+L5A==",
+      "path": "anglesharp.diffing/0.18.2",
+      "hashPath": "anglesharp.diffing.0.18.2.nupkg.sha512"
+    },
+    "bunit/1.24.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RVYnbZEovh1+1e3X8u3GvPYWKu7+jkZaAG4jU3QfpKzJuKnR1+MKKqXA9XrnkeYlZWmHEzMaeqjl73vMRZPg2Q==",
+      "path": "bunit/1.24.10",
+      "hashPath": "bunit.1.24.10.nupkg.sha512"
+    },
+    "bunit.core/1.24.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PFX6WrBMTLumrmLJsABsD15UH/hSlXAwCSM4Qf2Fh9wPFfQ5UAVO6j7b+6FwHvtN+Uc/QCLKxsfwd5US4dkyWw==",
+      "path": "bunit.core/1.24.10",
+      "hashPath": "bunit.core.1.24.10.nupkg.sha512"
+    },
+    "bunit.web/1.24.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9UiCFygm3tdBNoNXkK+UBBqZH5VwdN4vXpA2l8K3QRS3+9mzhsvGwcfRtIuxSZfYrij1OYtCnxGF06e36niHlA==",
+      "path": "bunit.web/1.24.10",
+      "hashPath": "bunit.web.1.24.10.nupkg.sha512"
+    },
+    "Castle.Core/5.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rpYtIczkzGpf+EkZgDr9CClTdemhsrwA/W5hMoPjLkRFnXzH44zDLoovXeKtmxb1ykXK9aJVODSpiJml8CTw2g==",
+      "path": "castle.core/5.1.1",
+      "hashPath": "castle.core.5.1.1.nupkg.sha512"
+    },
+    "MediatR/13.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gR5vSoIINsXs86we38qdIfG62f6ngxT2sSaePsakJGHJIgLUDA7b41lujGXGWxX0hWyk8suajr2VKcAYSVMtdw==",
+      "path": "mediatr/13.0.0",
+      "hashPath": "mediatr.13.0.0.nupkg.sha512"
+    },
+    "MediatR.Contracts/2.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-FYv95bNT4UwcNA+G/J1oX5OpRiSUxteXaUt2BJbRSdRNiIUNbggJF69wy6mnk2wYToaanpdXZdCwVylt96MpwQ==",
+      "path": "mediatr.contracts/2.0.1",
+      "hashPath": "mediatr.contracts.2.0.1.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Components.WebAssembly/8.0.0-rc.2.23480.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mb3kMf4SW6k4Jv3S6fJtu94nuHGNETSXUR+LdRFiduzoZI3FLXrPNqEWgECPZJDQbzlvwdHoB7hjgOLxnQQjfw==",
+      "path": "microsoft.aspnetcore.components.webassembly/8.0.0-rc.2.23480.2",
+      "hashPath": "microsoft.aspnetcore.components.webassembly.8.0.0-rc.2.23480.2.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Components.WebAssembly.Authentication/8.0.0-rc.2.23480.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Oy00tKlLcBYdNWYLjPZaTi6dAETRFTxl/GnAGlMGtT6gUszlZvJ5vQoQQmJalwrvHHt/Eb0ThOT8isQq+MNPEA==",
+      "path": "microsoft.aspnetcore.components.webassembly.authentication/8.0.0-rc.2.23480.2",
+      "hashPath": "microsoft.aspnetcore.components.webassembly.authentication.8.0.0-rc.2.23480.2.nupkg.sha512"
+    },
     "Microsoft.CodeCoverage/17.8.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-KC8SXWbGIdoFVdlxKk9WHccm0llm9HypcHMLUUFabRiTS3SO2fQXNZfdiF3qkEdTJhbRrxhdRxjL4jbtwPq4Ew==",
       "path": "microsoft.codecoverage/17.8.0",
       "hashPath": "microsoft.codecoverage.17.8.0.nupkg.sha512"
+    },
+    "Microsoft.IdentityModel.Abstractions/8.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OtlIWcyX01olfdevPKZdIPfBEvbcioDyBiE/Z2lHsopsMD7twcKtlN9kMevHmI5IIPhFpfwCIiR6qHQz1WHUIw==",
+      "path": "microsoft.identitymodel.abstractions/8.0.1",
+      "hashPath": "microsoft.identitymodel.abstractions.8.0.1.nupkg.sha512"
+    },
+    "Microsoft.IdentityModel.JsonWebTokens/8.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-s6++gF9x0rQApQzOBbSyp4jUaAlwm+DroKfL8gdOHxs83k8SJfUXhuc46rDB3rNXBQ1MVRxqKUrqFhO/M0E97g==",
+      "path": "microsoft.identitymodel.jsonwebtokens/8.0.1",
+      "hashPath": "microsoft.identitymodel.jsonwebtokens.8.0.1.nupkg.sha512"
+    },
+    "Microsoft.IdentityModel.Logging/8.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-UCPF2exZqBXe7v/6sGNiM6zCQOUXXQ9+v5VTb9gPB8ZSUPnX53BxlN78v2jsbIvK9Dq4GovQxo23x8JgWvm/Qg==",
+      "path": "microsoft.identitymodel.logging/8.0.1",
+      "hashPath": "microsoft.identitymodel.logging.8.0.1.nupkg.sha512"
+    },
+    "Microsoft.IdentityModel.Tokens/8.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kDimB6Dkd3nkW2oZPDkMkVHfQt3IDqO5gL0oa8WVy3OP4uE8Ij+8TXnqg9TOd9ufjsY3IDiGz7pCUbnfL18tjg==",
+      "path": "microsoft.identitymodel.tokens/8.0.1",
+      "hashPath": "microsoft.identitymodel.tokens.8.0.1.nupkg.sha512"
+    },
+    "Microsoft.JSInterop.WebAssembly/8.0.0-rc.2.23480.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mAJQWdBBD0BGkfNLxw8hJB5NrYRkDAMfAPVzJ49VWnOKV3Xr0JIzkYX3onDqcSzHk5rqBuOWvuZaf9Gr8emwAA==",
+      "path": "microsoft.jsinterop.webassembly/8.0.0-rc.2.23480.2",
+      "hashPath": "microsoft.jsinterop.webassembly.8.0.0-rc.2.23480.2.nupkg.sha512"
     },
     "Microsoft.NET.Test.Sdk/17.8.0": {
       "type": "package",
@@ -376,6 +703,13 @@
       "sha512": "sha512-9ivcl/7SGRmOT0YYrHQGohWiT5YCpkmy/UEzldfVisLm6QxbLaK3FAJqZXI34rnRLmqqDCeMQxKINwmKwAPiDw==",
       "path": "microsoft.testplatform.testhost/17.8.0",
       "hashPath": "microsoft.testplatform.testhost.17.8.0.nupkg.sha512"
+    },
+    "Moq/4.20.69": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8P/oAUOL8ZVyXnzBBcgdhTsOD1kQbAWfOcMI7KDQO3HqQtzB/0WYLdnMa4Jefv8nu/MQYiiG0IuoJdvG0v0Nig==",
+      "path": "moq/4.20.69",
+      "hashPath": "moq.4.20.69.nupkg.sha512"
     },
     "Newtonsoft.Json/13.0.1": {
       "type": "package",
@@ -432,6 +766,26 @@
       "sha512": "sha512-w9eGCHl+gJj1GzZSf0VTzYPp/gv4fiUDkr+yR7/Wv9/ucO2CHltGg2TnyySLFjzekkjuxVJZUE+tZyDNzryJFw==",
       "path": "xunit.extensibility.execution/2.5.3",
       "hashPath": "xunit.extensibility.execution.2.5.3.nupkg.sha512"
+    },
+    "ScrumOps.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ScrumOps.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ScrumOps.Shared/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ScrumOps.Web/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

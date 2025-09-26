@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ScrumOps.Shared")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+149497e7e9981ba5a9054ea12e2e3620e0f87550")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+07ef08cb09f565706bb6c881138ccc1f9e9c4854")]
 [assembly: System.Reflection.AssemblyProductAttribute("ScrumOps.Shared")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ScrumOps.Shared")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

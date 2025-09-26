@@ -115,3 +115,8 @@
 2025-09-26 22:13:38.606 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 67.5073ms
 2025-09-26 22:13:38.609 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
 2025-09-26 22:13:38.611 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5225/api/teams - 200 null application/json; charset=utf-8 122.6919ms
+2025-09-26 22:27:42.502 +07:00 [INF] Starting ScrumOps API
+2025-09-26 22:27:42.716 +07:00 [INF] Now listening on: http://localhost:5225
+2025-09-26 22:27:42.725 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-09-26 22:27:42.727 +07:00 [INF] Hosting environment: Development
+2025-09-26 22:27:42.729 +07:00 [INF] Content root path: D:\ScrumOps\src\ScrumOps.Api
