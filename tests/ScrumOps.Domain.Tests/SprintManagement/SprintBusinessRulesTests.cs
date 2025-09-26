@@ -2,6 +2,8 @@ using ScrumOps.Domain.SharedKernel.Exceptions;
 using ScrumOps.Domain.SharedKernel.ValueObjects;
 using ScrumOps.Domain.SprintManagement.ValueObjects;
 using ScrumOps.Domain.TeamManagement.ValueObjects;
+using SprintTaskStatus = ScrumOps.Domain.SprintManagement.ValueObjects.TaskStatus;
+using SprintVelocity = ScrumOps.Domain.SprintManagement.ValueObjects.Velocity;
 
 namespace ScrumOps.Domain.Tests.SprintManagement;
 
@@ -44,10 +46,13 @@ public class SprintBusinessRulesTests
 
     [Theory]
     [InlineData(1)]
+    [InlineData(2)]
+    [InlineData(3)]
+    [InlineData(5)]
+    [InlineData(8)]
     [InlineData(13)]
     [InlineData(21)]
-    [InlineData(40)]
-    [InlineData(100)]
+    [InlineData(34)]
     public void StoryPoints_Create_WithValidValues_ShouldSucceed(int points)
     {
         // Act
@@ -61,10 +66,13 @@ public class SprintBusinessRulesTests
     [Theory]
     [InlineData(-1)]
     [InlineData(-10)]
-    public void StoryPoints_Create_WithNegativeValues_ShouldThrowException(int negativePoints)
+    [InlineData(0)]  // 0 is not valid for story points
+    [InlineData(4)]  // Not in Fibonacci sequence
+    [InlineData(100)]  // Too large
+    public void StoryPoints_Create_WithInvalidValues_ShouldThrowException(int invalidPoints)
     {
         // Act & Assert
-        Assert.Throws<DomainException>(() => StoryPoints.Create(negativePoints));
+        Assert.Throws<DomainException>(() => StoryPoints.Create(invalidPoints));
     }
 
     [Fact]
@@ -78,12 +86,11 @@ public class SprintBusinessRulesTests
 
         // Assert
         Assert.NotNull(capacity);
-        Assert.Equal(capacityValue, capacity.Value);
+        Assert.Equal(capacityValue, capacity.Hours); // Use Hours property instead of Value
     }
 
     [Theory]
-    [InlineData(0)]
-    [InlineData(-5)]
+    [InlineData(-5)]  // Remove 0 since it's valid for capacity
     public void Capacity_Create_WithInvalidValue_ShouldThrowException(int invalidCapacity)
     {
         // Act & Assert
@@ -134,13 +141,13 @@ public class SprintBusinessRulesTests
     }
 
     [Fact]
-    public void Velocity_Create_WithValidValue_ShouldSucceed()
+    public void SprintVelocity_Create_WithValidValue_ShouldSucceed()
     {
         // Arrange
-        const decimal velocityValue = 25.5m;
+        const int velocityValue = 25; // Use int instead of decimal
 
         // Act
-        var velocity = Velocity.Create(velocityValue);
+        var velocity = SprintVelocity.Create(velocityValue);
 
         // Assert
         Assert.NotNull(velocity);
@@ -148,36 +155,36 @@ public class SprintBusinessRulesTests
     }
 
     [Theory]
-    [InlineData(-1.0)]
-    [InlineData(-25.5)]
-    public void Velocity_Create_WithNegativeValue_ShouldThrowException(decimal negativeVelocity)
+    [InlineData(-1)]
+    [InlineData(-25)]
+    public void SprintVelocity_Create_WithNegativeValue_ShouldThrowException(int negativeVelocity) // Use int instead of decimal
     {
         // Act & Assert
-        Assert.Throws<DomainException>(() => Velocity.Create(negativeVelocity));
+        Assert.Throws<DomainException>(() => SprintVelocity.Create(negativeVelocity));
     }
 
     [Fact]
     public void SprintStatus_ShouldHaveExpectedValues()
     {
         // Assert - Verify that SprintStatus enum has expected values
-        Assert.True(Enum.IsDefined(typeof(SprintStatus), SprintStatus.Planned));
+        Assert.True(Enum.IsDefined(typeof(SprintStatus), SprintStatus.Planning));
         Assert.True(Enum.IsDefined(typeof(SprintStatus), SprintStatus.Active));
         Assert.True(Enum.IsDefined(typeof(SprintStatus), SprintStatus.Completed));
     }
 
     [Fact]
-    public void TaskStatus_ShouldHaveExpectedValues()
+    public void SprintTaskStatus_ShouldHaveExpectedValues()
     {
         // Assert - Verify that TaskStatus enum has expected values  
-        Assert.True(Enum.IsDefined(typeof(TaskStatus), TaskStatus.NotStarted));
-        Assert.True(Enum.IsDefined(typeof(TaskStatus), TaskStatus.InProgress));
-        Assert.True(Enum.IsDefined(typeof(TaskStatus), TaskStatus.Done));
+        Assert.True(Enum.IsDefined(typeof(SprintTaskStatus), SprintTaskStatus.ToDo)); // Use correct enum value
+        Assert.True(Enum.IsDefined(typeof(SprintTaskStatus), SprintTaskStatus.InProgress));
+        Assert.True(Enum.IsDefined(typeof(SprintTaskStatus), SprintTaskStatus.Done));
     }
 
     [Theory]
-    [InlineData(1, 21)]   // 3 weeks
-    [InlineData(2, 14)]   // 2 weeks  
-    [InlineData(3, 28)]   // 4 weeks
+    [InlineData(2, 14)]   // 2 weeks
+    [InlineData(1, 7)]    // 1 week  
+    [InlineData(3, 21)]   // 3 weeks
     public void Sprint_DateCalculations_ShouldBeAccurate(int sprintLengthWeeks, int expectedDays)
     {
         // Arrange
@@ -225,14 +232,14 @@ public class SprintBusinessRulesTests
     {
         // Arrange
         var totalCapacity = Capacity.Create(100);
-        var usedPoints = StoryPoints.Create(75);
+        var usedPoints = StoryPoints.Create(34); // Use valid Fibonacci number
 
         // Act
-        var remainingCapacity = totalCapacity.Value - usedPoints.Value;
+        var remainingCapacity = totalCapacity.Hours - usedPoints.Value; // Use Hours property
 
         // Assert
-        Assert.Equal(25, remainingCapacity);
+        Assert.Equal(66, remainingCapacity); // 100 - 34 = 66
         Assert.True(remainingCapacity > 0);
-        Assert.True(usedPoints.Value < totalCapacity.Value);
+        Assert.True(usedPoints.Value < totalCapacity.Hours); // Use Hours property
     }
 }

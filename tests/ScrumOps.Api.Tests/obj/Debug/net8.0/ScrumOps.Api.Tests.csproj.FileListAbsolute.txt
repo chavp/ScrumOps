@@ -472,7 +472,6 @@ C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Application.
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Domain.pdb
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Infrastructure.pdb
 D:\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\CoverletSourceRootsMapping_ScrumOps.Api.Tests
-D:\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\testhost.dll
 D:\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Api.deps.json
 D:\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Api.runtimeconfig.json
 D:\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\appsettings.Development.json
@@ -480,10 +479,11 @@ D:\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\appsettings.json
 D:\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Api.staticwebassets.endpoints.json
 D:\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Api.exe
 D:\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\testhost.exe
-D:\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\MvcTestingAppManifest.json
+D:\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\testhost.dll
 D:\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll
 D:\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\xunit.runner.reporters.netcoreapp10.dll
 D:\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\xunit.runner.utility.netcoreapp10.dll
+D:\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\MvcTestingAppManifest.json
 D:\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Api.Tests.deps.json
 D:\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Api.Tests.runtimeconfig.json
 D:\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Api.Tests.dll
