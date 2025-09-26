@@ -120,3 +120,93 @@
 2025-09-26 22:27:42.725 +07:00 [INF] Application started. Press Ctrl+C to shut down.
 2025-09-26 22:27:42.727 +07:00 [INF] Hosting environment: Development
 2025-09-26 22:27:42.729 +07:00 [INF] Content root path: D:\ScrumOps\src\ScrumOps.Api
+2025-09-26 23:30:31.372 +07:00 [INF] Starting ScrumOps API
+2025-09-26 23:30:33.691 +07:00 [INF] Now listening on: https://localhost:7204
+2025-09-26 23:30:33.699 +07:00 [INF] Now listening on: http://localhost:5225
+2025-09-26 23:30:34.052 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5225/api/teams - null null
+2025-09-26 23:30:34.420 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-09-26 23:30:34.422 +07:00 [INF] Hosting environment: Development
+2025-09-26 23:30:34.424 +07:00 [INF] Content root path: D:\ScrumOps\src\ScrumOps.Api
+2025-09-26 23:30:34.994 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5225/api/teams - 307 0 null 963.8602ms
+2025-09-26 23:30:35.383 +07:00 [INF] Request starting HTTP/1.1 GET https://localhost:7204/api/teams - null null
+2025-09-26 23:30:35.418 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-26 23:30:35.606 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7204/swagger/index.html - null null
+2025-09-26 23:30:35.826 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-26 23:30:35.839 +07:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-09-26 23:30:35.864 +07:00 [INF] Getting all teams
+2025-09-26 23:30:35.878 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-26 23:30:35.926 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 90.0533ms
+2025-09-26 23:30:35.930 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-26 23:30:35.933 +07:00 [INF] Request finished HTTP/1.1 GET https://localhost:7204/api/teams - 200 null application/json; charset=utf-8 551.2425ms
+2025-09-26 23:30:36.257 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7204/swagger/index.html - 200 null text/html;charset=utf-8 653.245ms
+2025-09-26 23:30:36.453 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7204/_framework/aspnetcore-browser-refresh.js - null null
+2025-09-26 23:30:36.461 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7204/_vs/browserLink - null null
+2025-09-26 23:30:36.467 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7204/_framework/aspnetcore-browser-refresh.js - 200 16509 application/javascript; charset=utf-8 14.6875ms
+2025-09-26 23:30:36.533 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7204/_vs/browserLink - 200 null text/javascript; charset=UTF-8 72.4765ms
+2025-09-26 23:30:38.001 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7204/swagger/v1/swagger.json - null null
+2025-09-26 23:30:38.478 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7204/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 478.1828ms
+2025-09-26 23:31:02.909 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5225/api/backlog - null null
+2025-09-26 23:31:02.918 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5225/api/backlog - 307 0 null 9.5799ms
+2025-09-26 23:31:02.940 +07:00 [INF] Request starting HTTP/1.1 GET https://localhost:7204/api/backlog - null null
+2025-09-26 23:31:02.949 +07:00 [INF] Request finished HTTP/1.1 GET https://localhost:7204/api/backlog - 404 0 null 9.0809ms
+2025-09-26 23:31:02.960 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7204/api/backlog, Response status code: 404
+2025-09-26 23:31:15.566 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5225/api/sprints - null null
+2025-09-26 23:31:15.574 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5225/api/sprints - 307 0 null 8.3955ms
+2025-09-26 23:31:15.590 +07:00 [INF] Request starting HTTP/1.1 GET https://localhost:7204/api/sprints - null null
+2025-09-26 23:31:15.597 +07:00 [INF] Request finished HTTP/1.1 GET https://localhost:7204/api/sprints - 404 0 null 6.6453ms
+2025-09-26 23:31:15.607 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7204/api/sprints, Response status code: 404
+2025-09-26 23:31:20.503 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5225/api/sprints - null null
+2025-09-26 23:31:20.511 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5225/api/sprints - 307 0 null 8.0851ms
+2025-09-26 23:31:20.513 +07:00 [INF] Request starting HTTP/1.1 GET https://localhost:7204/api/sprints - null null
+2025-09-26 23:31:20.527 +07:00 [INF] Request finished HTTP/1.1 GET https://localhost:7204/api/sprints - 404 0 null 13.9495ms
+2025-09-26 23:31:20.537 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7204/api/sprints, Response status code: 404
+2025-09-26 23:31:23.534 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5225/api/sprints - null null
+2025-09-26 23:31:23.541 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5225/api/sprints - 307 0 null 7.2822ms
+2025-09-26 23:31:23.543 +07:00 [INF] Request starting HTTP/1.1 GET https://localhost:7204/api/sprints - null null
+2025-09-26 23:31:23.563 +07:00 [INF] Request finished HTTP/1.1 GET https://localhost:7204/api/sprints - 404 0 null 20.3381ms
+2025-09-26 23:31:23.574 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7204/api/sprints, Response status code: 404
+2025-09-26 23:31:24.781 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5225/api/backlog - null null
+2025-09-26 23:31:24.787 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5225/api/backlog - 307 0 null 5.7679ms
+2025-09-26 23:31:24.788 +07:00 [INF] Request starting HTTP/1.1 GET https://localhost:7204/api/backlog - null null
+2025-09-26 23:31:24.800 +07:00 [INF] Request finished HTTP/1.1 GET https://localhost:7204/api/backlog - 404 0 null 12.2099ms
+2025-09-26 23:31:24.810 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7204/api/backlog, Response status code: 404
+2025-09-26 23:31:39.901 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5225/api/teams - null null
+2025-09-26 23:31:39.908 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5225/api/teams - 307 0 null 6.9787ms
+2025-09-26 23:31:39.911 +07:00 [INF] Request starting HTTP/1.1 GET https://localhost:7204/api/teams - null null
+2025-09-26 23:31:39.933 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-26 23:31:39.937 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-26 23:31:39.943 +07:00 [INF] Getting all teams
+2025-09-26 23:31:39.946 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-26 23:31:39.950 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 8.5378ms
+2025-09-26 23:31:39.953 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-26 23:31:39.957 +07:00 [INF] Request finished HTTP/1.1 GET https://localhost:7204/api/teams - 200 null application/json; charset=utf-8 47.5285ms
+2025-09-26 23:31:51.578 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5225/api/backlog - null null
+2025-09-26 23:31:51.585 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5225/api/backlog - 307 0 null 7.2076ms
+2025-09-26 23:31:51.587 +07:00 [INF] Request starting HTTP/1.1 GET https://localhost:7204/api/backlog - null null
+2025-09-26 23:31:51.599 +07:00 [INF] Request finished HTTP/1.1 GET https://localhost:7204/api/backlog - 404 0 null 12.3775ms
+2025-09-26 23:31:51.610 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7204/api/backlog, Response status code: 404
+2025-09-26 23:31:52.900 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5225/api/sprints - null null
+2025-09-26 23:31:52.908 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5225/api/sprints - 307 0 null 7.9155ms
+2025-09-26 23:31:52.910 +07:00 [INF] Request starting HTTP/1.1 GET https://localhost:7204/api/sprints - null null
+2025-09-26 23:31:52.927 +07:00 [INF] Request finished HTTP/1.1 GET https://localhost:7204/api/sprints - 404 0 null 17.6023ms
+2025-09-26 23:31:52.937 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7204/api/sprints, Response status code: 404
+2025-09-26 23:31:58.121 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5225/api/backlog - null null
+2025-09-26 23:31:58.128 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5225/api/backlog - 307 0 null 6.5005ms
+2025-09-26 23:31:58.129 +07:00 [INF] Request starting HTTP/1.1 GET https://localhost:7204/api/backlog - null null
+2025-09-26 23:31:58.141 +07:00 [INF] Request finished HTTP/1.1 GET https://localhost:7204/api/backlog - 404 0 null 12.3402ms
+2025-09-26 23:31:58.150 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7204/api/backlog, Response status code: 404
+2025-09-26 23:31:59.112 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5225/api/teams - null null
+2025-09-26 23:31:59.119 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5225/api/teams - 307 0 null 6.754ms
+2025-09-26 23:31:59.120 +07:00 [INF] Request starting HTTP/1.1 GET https://localhost:7204/api/teams - null null
+2025-09-26 23:31:59.136 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-26 23:31:59.139 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-26 23:31:59.144 +07:00 [INF] Getting all teams
+2025-09-26 23:31:59.146 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-26 23:31:59.154 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 10.5195ms
+2025-09-26 23:31:59.159 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-26 23:31:59.161 +07:00 [INF] Request finished HTTP/1.1 GET https://localhost:7204/api/teams - 200 null application/json; charset=utf-8 41.3241ms
+2025-09-26 23:32:09.617 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5225/api/backlog - null null
+2025-09-26 23:32:09.625 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5225/api/backlog - 307 0 null 8.3829ms
+2025-09-26 23:32:09.626 +07:00 [INF] Request starting HTTP/1.1 GET https://localhost:7204/api/backlog - null null
+2025-09-26 23:32:09.638 +07:00 [INF] Request finished HTTP/1.1 GET https://localhost:7204/api/backlog - 404 0 null 12.3734ms
+2025-09-26 23:32:09.651 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7204/api/backlog, Response status code: 404

@@ -1,5 +1,171 @@
 [
   {
+    "ContainingType": "ScrumOps.Api.Controllers.ProductBacklogController",
+    "Method": "CreateProductBacklog",
+    "RelativePath": "api/backlogs",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "ScrumOps.Shared.Contracts.ProductBacklog.CreateProductBacklogRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ScrumOps.Shared.Contracts.ProductBacklog.ProductBacklogResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 201
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 400
+      }
+    ],
+    "Tags": [
+      "Product Backlogs"
+    ]
+  },
+  {
+    "ContainingType": "ScrumOps.Api.Controllers.ProductBacklogController",
+    "Method": "GetProductBacklog",
+    "RelativePath": "api/backlogs/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ScrumOps.Shared.Contracts.ProductBacklog.ProductBacklogResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      }
+    ],
+    "Tags": [
+      "Product Backlogs"
+    ]
+  },
+  {
+    "ContainingType": "ScrumOps.Api.Controllers.ProductBacklogController",
+    "Method": "AddBacklogItem",
+    "RelativePath": "api/backlogs/{id}/items",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "ScrumOps.Shared.Contracts.ProductBacklog.AddBacklogItemRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ScrumOps.Shared.Contracts.ProductBacklog.BacklogItemResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 201
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 400
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      }
+    ],
+    "Tags": [
+      "Product Backlogs"
+    ]
+  },
+  {
+    "ContainingType": "ScrumOps.Api.Controllers.ProductBacklogController",
+    "Method": "GetProductBacklogByTeam",
+    "RelativePath": "api/backlogs/team/{teamId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "teamId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ScrumOps.Shared.Contracts.ProductBacklog.ProductBacklogResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      }
+    ],
+    "Tags": [
+      "Product Backlogs"
+    ]
+  },
+  {
     "ContainingType": "ScrumOps.Api.Controllers.TeamsController",
     "Method": "CreateTeam",
     "RelativePath": "api/Teams",
@@ -92,6 +258,58 @@
           "text/json"
         ],
         "StatusCode": 404
+      }
+    ],
+    "Tags": [
+      "Teams"
+    ]
+  },
+  {
+    "ContainingType": "ScrumOps.Api.Controllers.TeamsController",
+    "Method": "UpdateTeam",
+    "RelativePath": "api/Teams/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "ScrumOps.Shared.Contracts.Teams.UpdateTeamRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ScrumOps.Shared.Contracts.Teams.TeamDetailsResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 400
       }
     ],
     "Tags": [

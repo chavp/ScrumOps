@@ -3,16 +3,44 @@
   "WorkspaceRootPath": "D:\\ScrumOps\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{B614FE70-FB84-48C0-8DED-7CB96431E78F}|src\\ScrumOps.Infrastructure\\ScrumOps.Infrastructure.csproj|d:\\scrumops\\src\\scrumops.infrastructure\\persistence\\inmemoryunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B614FE70-FB84-48C0-8DED-7CB96431E78F}|src\\ScrumOps.Infrastructure\\ScrumOps.Infrastructure.csproj|solutionrelative:src\\scrumops.infrastructure\\persistence\\inmemoryunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B614FE70-FB84-48C0-8DED-7CB96431E78F}|src\\ScrumOps.Infrastructure\\ScrumOps.Infrastructure.csproj|d:\\scrumops\\src\\scrumops.infrastructure\\persistence\\inmemoryteamrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B614FE70-FB84-48C0-8DED-7CB96431E78F}|src\\ScrumOps.Infrastructure\\ScrumOps.Infrastructure.csproj|solutionrelative:src\\scrumops.infrastructure\\persistence\\inmemoryteamrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B614FE70-FB84-48C0-8DED-7CB96431E78F}|src\\ScrumOps.Infrastructure\\ScrumOps.Infrastructure.csproj|d:\\scrumops\\src\\scrumops.infrastructure\\persistence\\inmemoryproductbacklogrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B614FE70-FB84-48C0-8DED-7CB96431E78F}|src\\ScrumOps.Infrastructure\\ScrumOps.Infrastructure.csproj|solutionrelative:src\\scrumops.infrastructure\\persistence\\inmemoryproductbacklogrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E39344A1-E192-45DB-88E8-83685BF1F5DB}|src\\ScrumOps.Application\\ScrumOps.Application.csproj|d:\\scrumops\\src\\scrumops.application\\productbacklog\\handlers\\queryhandlers\\getproductbacklogqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E39344A1-E192-45DB-88E8-83685BF1F5DB}|src\\ScrumOps.Application\\ScrumOps.Application.csproj|solutionrelative:src\\scrumops.application\\productbacklog\\handlers\\queryhandlers\\getproductbacklogqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E39344A1-E192-45DB-88E8-83685BF1F5DB}|src\\ScrumOps.Application\\ScrumOps.Application.csproj|d:\\scrumops\\src\\scrumops.application\\productbacklog\\queries\\getproductbacklogquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E39344A1-E192-45DB-88E8-83685BF1F5DB}|src\\ScrumOps.Application\\ScrumOps.Application.csproj|solutionrelative:src\\scrumops.application\\productbacklog\\queries\\getproductbacklogquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8C01E888-30D0-4948-B0AD-26B8EA498CCB}|src\\ScrumOps.Api\\ScrumOps.Api.csproj|d:\\scrumops\\src\\scrumops.api\\controllers\\productbacklogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8C01E888-30D0-4948-B0AD-26B8EA498CCB}|src\\ScrumOps.Api\\ScrumOps.Api.csproj|solutionrelative:src\\scrumops.api\\controllers\\productbacklogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|d:\\scrumops\\src\\scrumops.web\\components\\productbacklog\\productbackloglistcomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|solutionrelative:src\\scrumops.web\\components\\productbacklog\\productbackloglistcomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|d:\\scrumops\\src\\scrumops.web\\components\\teammanagement\\teamformcomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|solutionrelative:src\\scrumops.web\\components\\teammanagement\\teamformcomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{2E275ADE-64A1-47E2-9C10-525705125D98}|tests\\ScrumOps.Domain.Tests\\ScrumOps.Domain.Tests.csproj|d:\\scrumops\\tests\\scrumops.domain.tests\\sprintmanagement\\sprintbusinessrulestests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2E275ADE-64A1-47E2-9C10-525705125D98}|tests\\ScrumOps.Domain.Tests\\ScrumOps.Domain.Tests.csproj|solutionrelative:tests\\scrumops.domain.tests\\sprintmanagement\\sprintbusinessrulestests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8C01E888-30D0-4948-B0AD-26B8EA498CCB}|src\\ScrumOps.Api\\ScrumOps.Api.csproj|d:\\scrumops\\src\\scrumops.api\\controllers\\teamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8C01E888-30D0-4948-B0AD-26B8EA498CCB}|src\\ScrumOps.Api\\ScrumOps.Api.csproj|solutionrelative:src\\scrumops.api\\controllers\\teamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8C01E888-30D0-4948-B0AD-26B8EA498CCB}|src\\ScrumOps.Api\\ScrumOps.Api.csproj|d:\\scrumops\\src\\scrumops.api\\controllers\\productbacklogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8C01E888-30D0-4948-B0AD-26B8EA498CCB}|src\\ScrumOps.Api\\ScrumOps.Api.csproj|solutionrelative:src\\scrumops.api\\controllers\\productbacklogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E39344A1-E192-45DB-88E8-83685BF1F5DB}|src\\ScrumOps.Application\\ScrumOps.Application.csproj|d:\\scrumops\\src\\scrumops.application\\productbacklog\\handlers\\commandhandlers\\addbacklogitemcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -42,19 +70,97 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "InMemoryUnitOfWork.cs",
+              "DocumentMoniker": "D:\\ScrumOps\\src\\ScrumOps.Infrastructure\\Persistence\\InMemoryUnitOfWork.cs",
+              "RelativeDocumentMoniker": "src\\ScrumOps.Infrastructure\\Persistence\\InMemoryUnitOfWork.cs",
+              "ToolTip": "D:\\ScrumOps\\src\\ScrumOps.Infrastructure\\Persistence\\InMemoryUnitOfWork.cs",
+              "RelativeToolTip": "src\\ScrumOps.Infrastructure\\Persistence\\InMemoryUnitOfWork.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T16:36:19.734Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "InMemoryTeamRepository.cs",
+              "DocumentMoniker": "D:\\ScrumOps\\src\\ScrumOps.Infrastructure\\Persistence\\InMemoryTeamRepository.cs",
+              "RelativeDocumentMoniker": "src\\ScrumOps.Infrastructure\\Persistence\\InMemoryTeamRepository.cs",
+              "ToolTip": "D:\\ScrumOps\\src\\ScrumOps.Infrastructure\\Persistence\\InMemoryTeamRepository.cs",
+              "RelativeToolTip": "src\\ScrumOps.Infrastructure\\Persistence\\InMemoryTeamRepository.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T16:36:12.611Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "InMemoryProductBacklogRepository.cs",
+              "DocumentMoniker": "D:\\ScrumOps\\src\\ScrumOps.Infrastructure\\Persistence\\InMemoryProductBacklogRepository.cs",
+              "RelativeDocumentMoniker": "src\\ScrumOps.Infrastructure\\Persistence\\InMemoryProductBacklogRepository.cs",
+              "ToolTip": "D:\\ScrumOps\\src\\ScrumOps.Infrastructure\\Persistence\\InMemoryProductBacklogRepository.cs",
+              "RelativeToolTip": "src\\ScrumOps.Infrastructure\\Persistence\\InMemoryProductBacklogRepository.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T16:36:02.569Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GetProductBacklogQueryHandler.cs",
+              "DocumentMoniker": "D:\\ScrumOps\\src\\ScrumOps.Application\\ProductBacklog\\Handlers\\QueryHandlers\\GetProductBacklogQueryHandler.cs",
+              "RelativeDocumentMoniker": "src\\ScrumOps.Application\\ProductBacklog\\Handlers\\QueryHandlers\\GetProductBacklogQueryHandler.cs",
+              "ToolTip": "D:\\ScrumOps\\src\\ScrumOps.Application\\ProductBacklog\\Handlers\\QueryHandlers\\GetProductBacklogQueryHandler.cs",
+              "RelativeToolTip": "src\\ScrumOps.Application\\ProductBacklog\\Handlers\\QueryHandlers\\GetProductBacklogQueryHandler.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABgAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T16:35:35.513Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GetProductBacklogQuery.cs",
+              "DocumentMoniker": "D:\\ScrumOps\\src\\ScrumOps.Application\\ProductBacklog\\Queries\\GetProductBacklogQuery.cs",
+              "RelativeDocumentMoniker": "src\\ScrumOps.Application\\ProductBacklog\\Queries\\GetProductBacklogQuery.cs",
+              "ToolTip": "D:\\ScrumOps\\src\\ScrumOps.Application\\ProductBacklog\\Queries\\GetProductBacklogQuery.cs",
+              "RelativeToolTip": "src\\ScrumOps.Application\\ProductBacklog\\Queries\\GetProductBacklogQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T16:35:05.604Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ProductBacklogListComponent.razor",
+              "DocumentMoniker": "D:\\ScrumOps\\src\\ScrumOps.Web\\Components\\ProductBacklog\\ProductBacklogListComponent.razor",
+              "RelativeDocumentMoniker": "src\\ScrumOps.Web\\Components\\ProductBacklog\\ProductBacklogListComponent.razor",
+              "ToolTip": "D:\\ScrumOps\\src\\ScrumOps.Web\\Components\\ProductBacklog\\ProductBacklogListComponent.razor",
+              "RelativeToolTip": "src\\ScrumOps.Web\\Components\\ProductBacklog\\ProductBacklogListComponent.razor",
+              "ViewState": "AgIAAF0AAAAAAAAAAAAAAGkAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-26T16:29:11.831Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "SprintBusinessRulesTests.cs",
               "DocumentMoniker": "D:\\ScrumOps\\tests\\ScrumOps.Domain.Tests\\SprintManagement\\SprintBusinessRulesTests.cs",
               "RelativeDocumentMoniker": "tests\\ScrumOps.Domain.Tests\\SprintManagement\\SprintBusinessRulesTests.cs",
               "ToolTip": "D:\\ScrumOps\\tests\\ScrumOps.Domain.Tests\\SprintManagement\\SprintBusinessRulesTests.cs",
               "RelativeToolTip": "tests\\ScrumOps.Domain.Tests\\SprintManagement\\SprintBusinessRulesTests.cs",
-              "ViewState": "AgIAAEAAAAAAAAAAAAAAAFAAAAAtAAAAAAAAAA==",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAAAEkAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-26T16:14:16.649Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 9,
               "Title": "TeamsController.cs",
               "DocumentMoniker": "D:\\ScrumOps\\src\\ScrumOps.Api\\Controllers\\TeamsController.cs",
               "RelativeDocumentMoniker": "src\\ScrumOps.Api\\Controllers\\TeamsController.cs",
@@ -62,25 +168,37 @@
               "RelativeToolTip": "src\\ScrumOps.Api\\Controllers\\TeamsController.cs",
               "ViewState": "AgIAAKUAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-26T16:13:20.671Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-26T16:13:20.671Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "ProductBacklogController.cs",
               "DocumentMoniker": "D:\\ScrumOps\\src\\ScrumOps.Api\\Controllers\\ProductBacklogController.cs",
               "RelativeDocumentMoniker": "src\\ScrumOps.Api\\Controllers\\ProductBacklogController.cs",
               "ToolTip": "D:\\ScrumOps\\src\\ScrumOps.Api\\Controllers\\ProductBacklogController.cs",
               "RelativeToolTip": "src\\ScrumOps.Api\\Controllers\\ProductBacklogController.cs",
-              "ViewState": "AgIAAF8AAAAAAAAAAAAAAGQAAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAACAAAAAAAAAAAAAuwDQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-26T16:12:55.597Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
+              "Title": "TeamFormComponent.razor",
+              "DocumentMoniker": "D:\\ScrumOps\\src\\ScrumOps.Web\\Components\\TeamManagement\\TeamFormComponent.razor",
+              "RelativeDocumentMoniker": "src\\ScrumOps.Web\\Components\\TeamManagement\\TeamFormComponent.razor",
+              "ToolTip": "D:\\ScrumOps\\src\\ScrumOps.Web\\Components\\TeamManagement\\TeamFormComponent.razor",
+              "RelativeToolTip": "src\\ScrumOps.Web\\Components\\TeamManagement\\TeamFormComponent.razor",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-26T16:28:23.539Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "AddBacklogItemCommandHandler.cs",
               "DocumentMoniker": "D:\\ScrumOps\\src\\ScrumOps.Application\\ProductBacklog\\Handlers\\CommandHandlers\\AddBacklogItemCommandHandler.cs",
               "RelativeDocumentMoniker": "src\\ScrumOps.Application\\ProductBacklog\\Handlers\\CommandHandlers\\AddBacklogItemCommandHandler.cs",
@@ -88,12 +206,11 @@
               "RelativeToolTip": "src\\ScrumOps.Application\\ProductBacklog\\Handlers\\CommandHandlers\\AddBacklogItemCommandHandler.cs",
               "ViewState": "AgIAAB0AAAAAAAAAAAAAABsAAABUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-26T13:14:35.938Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-26T13:14:35.938Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 11,
               "Title": "TeamManagementOnlyTests.cs",
               "DocumentMoniker": "D:\\ScrumOps\\tests\\ScrumOps.Domain.Tests\\TeamManagement\\TeamManagementOnlyTests.cs",
               "RelativeDocumentMoniker": "tests\\ScrumOps.Domain.Tests\\TeamManagement\\TeamManagementOnlyTests.cs",
@@ -105,7 +222,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 12,
               "Title": "UnitTest1.cs",
               "DocumentMoniker": "D:\\ScrumOps\\tests\\ScrumOps.Domain.Tests\\UnitTest1.cs",
               "RelativeDocumentMoniker": "tests\\ScrumOps.Domain.Tests\\UnitTest1.cs",
@@ -117,7 +234,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 13,
               "Title": "Microsoft.NET.Sdk.StaticWebAssets.targets",
               "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\9.0.301\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.targets",
               "ToolTip": "C:\\Program Files\\dotnet\\sdk\\9.0.301\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.targets",
