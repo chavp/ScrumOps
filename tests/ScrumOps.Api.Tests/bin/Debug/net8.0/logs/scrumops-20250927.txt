@@ -1,0 +1,357 @@
+2025-09-27 13:28:40.166 +07:00 [INF] Starting ScrumOps API
+2025-09-27 13:28:40.167 +07:00 [INF] Starting ScrumOps API
+2025-09-27 13:28:40.167 +07:00 [INF] Starting ScrumOps API
+2025-09-27 13:28:40.316 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.332 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams/1/members - application/json; charset=utf-8 69
+2025-09-27 13:28:40.332 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 59
+2025-09-27 13:28:40.369 +07:00 [WRN] Failed to determine the https port for redirect.
+2025-09-27 13:28:40.369 +07:00 [WRN] Failed to determine the https port for redirect.
+2025-09-27 13:28:40.369 +07:00 [WRN] Failed to determine the https port for redirect.
+2025-09-27 13:28:40.376 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-09-27 13:28:40.376 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.378 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams/1/members - 404 null null 46.768ms
+2025-09-27 13:28:40.384 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST http://localhost/api/teams/1/members, Response status code: 404
+2025-09-27 13:28:40.391 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 94
+2025-09-27 13:28:40.393 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-09-27 13:28:40.411 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.411 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTeam(ScrumOps.Shared.Contracts.Teams.CreateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.411 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTeam(ScrumOps.Shared.Contracts.Teams.CreateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.419 +07:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-09-27 13:28:40.419 +07:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-09-27 13:28:40.419 +07:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-09-27 13:28:40.434 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.442 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.465 +07:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2025-09-27 13:28:40.465 +07:00 [INF] Creating team with name: Test Team
+2025-09-27 13:28:40.480 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 64.4208ms
+2025-09-27 13:28:40.480 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.481 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 172.369ms
+2025-09-27 13:28:40.484 +07:00 [INF] Executing CreatedAtActionResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.TeamDetailsResponse'.
+2025-09-27 13:28:40.486 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.488 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.488 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.489 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.489 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.490 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 1.3931ms
+2025-09-27 13:28:40.490 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.490 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 4.3911ms
+2025-09-27 13:28:40.490 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.492 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api) in 80.5289ms
+2025-09-27 13:28:40.492 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-09-27 13:28:40.492 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams - 400 null application/problem+json; charset=utf-8 160.9737ms
+2025-09-27 13:28:40.493 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.493 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.494 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.494 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.495 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 1.0978ms
+2025-09-27 13:28:40.495 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.495 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 4.3481ms
+2025-09-27 13:28:40.495 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.495 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.496 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.496 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.496 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.496 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.496ms
+2025-09-27 13:28:40.496 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.496 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.3539ms
+2025-09-27 13:28:40.497 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.497 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.497 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.498 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.498 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.498 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 74
+2025-09-27 13:28:40.498 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.9046ms
+2025-09-27 13:28:40.499 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.499 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 2.0031ms
+2025-09-27 13:28:40.499 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.499 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.500 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.500 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.500 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.500 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-09-27 13:28:40.501 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTeam(ScrumOps.Shared.Contracts.Teams.CreateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.501 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.9206ms
+2025-09-27 13:28:40.501 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.501 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.9394ms
+2025-09-27 13:28:40.523 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.524 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.524 +07:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2025-09-27 13:28:40.524 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api) in 23.5651ms
+2025-09-27 13:28:40.524 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-09-27 13:28:40.524 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.525 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams - 400 null application/problem+json; charset=utf-8 26.2594ms
+2025-09-27 13:28:40.525 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.525 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.525 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 61
+2025-09-27 13:28:40.526 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.7369ms
+2025-09-27 13:28:40.526 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.526 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 2.9864ms
+2025-09-27 13:28:40.527 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.527 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.527 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.527 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.527 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-09-27 13:28:40.527 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.528 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTeam(ScrumOps.Shared.Contracts.Teams.CreateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.528 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.7452ms
+2025-09-27 13:28:40.528 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.528 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.5984ms
+2025-09-27 13:28:40.529 +07:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2025-09-27 13:28:40.529 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.529 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.529 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api) in 1.1982ms
+2025-09-27 13:28:40.529 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-09-27 13:28:40.529 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.529 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams - 400 null application/problem+json; charset=utf-8 3.8617ms
+2025-09-27 13:28:40.529 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.530 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.530 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.5977ms
+2025-09-27 13:28:40.530 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.530 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.6136ms
+2025-09-27 13:28:40.531 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.531 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.531 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.531 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/health - null null
+2025-09-27 13:28:40.531 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.532 +07:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-09-27 13:28:40.532 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.532 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 1.0178ms
+2025-09-27 13:28:40.532 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.533 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 2.053ms
+2025-09-27 13:28:40.538 +07:00 [INF] Setting HTTP status code 200.
+2025-09-27 13:28:40.546 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.546 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api) in 134.7397ms
+2025-09-27 13:28:40.546 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-09-27 13:28:40.546 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams - 201 null application/json; charset=utf-8 155.9751ms
+2025-09-27 13:28:40.546 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.547 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.547 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.547 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.547 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.5957ms
+2025-09-27 13:28:40.547 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.548 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.6609ms
+2025-09-27 13:28:40.548 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.549 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.549 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.549 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.549 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.550 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.5816ms
+2025-09-27 13:28:40.550 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.550 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.8054ms
+2025-09-27 13:28:40.551 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.551 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.551 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.551 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.552 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.552 +07:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-09-27 13:28:40.552 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.8832ms
+2025-09-27 13:28:40.552 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.552 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.7633ms
+2025-09-27 13:28:40.553 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.553 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.553 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.553 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.554 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.554 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.5438ms
+2025-09-27 13:28:40.554 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.554 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.3954ms
+2025-09-27 13:28:40.555 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.555 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.555 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.556 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.556 +07:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-09-27 13:28:40.556 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.556 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/health - 200 null application/json; charset=utf-8 24.6385ms
+2025-09-27 13:28:40.556 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.8344ms
+2025-09-27 13:28:40.557 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.557 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 2.0262ms
+2025-09-27 13:28:40.557 +07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost/api/teams - null null
+2025-09-27 13:28:40.557 +07:00 [INF] Executing endpoint '405 HTTP Method Not Supported'
+2025-09-27 13:28:40.557 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.558 +07:00 [INF] Executed endpoint '405 HTTP Method Not Supported'
+2025-09-27 13:28:40.558 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.558 +07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost/api/teams - 405 null null 0.9232ms
+2025-09-27 13:28:40.558 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.559 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.559 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.559 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.7453ms
+2025-09-27 13:28:40.559 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.559 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.9786ms
+2025-09-27 13:28:40.561 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/health - null null
+2025-09-27 13:28:40.561 +07:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-09-27 13:28:40.561 +07:00 [INF] Setting HTTP status code 200.
+2025-09-27 13:28:40.562 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.562 +07:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-09-27 13:28:40.562 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.562 +07:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-09-27 13:28:40.563 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/health - 200 null application/json; charset=utf-8 1.9658ms
+2025-09-27 13:28:40.565 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.565 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.566 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.567 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.567 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.567 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.8871ms
+2025-09-27 13:28:40.568 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.568 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 3.0143ms
+2025-09-27 13:28:40.569 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.569 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.569 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.570 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.570 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.571 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.571 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.571 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 1.7847ms
+2025-09-27 13:28:40.571 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.571 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.571 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.571 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.571 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.571 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.571 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.572 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.571 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 9.4768ms
+2025-09-27 13:28:40.572 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.572 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.572 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.6061ms
+2025-09-27 13:28:40.572 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.572 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.7546ms
+2025-09-27 13:28:40.572 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.572 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.572 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.572 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.8845ms
+2025-09-27 13:28:40.572 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.572 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.9551ms
+2025-09-27 13:28:40.573 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.573 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.573 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.6988ms
+2025-09-27 13:28:40.573 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.573 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.573 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.573 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.573 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.573 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 2.4569ms
+2025-09-27 13:28:40.573 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.573 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.573 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.573 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.574 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.574 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.574 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.574 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.574 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.574 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.5097ms
+2025-09-27 13:28:40.574 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.574 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.5955ms
+2025-09-27 13:28:40.574 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.574 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.574 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.574 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.574 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.3852ms
+2025-09-27 13:28:40.574 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.6264ms
+2025-09-27 13:28:40.574 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.574 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.574 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.575 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.575 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.575 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.575 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.575 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.575 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.6106ms
+2025-09-27 13:28:40.575 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.575 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.575 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 3.3642ms
+2025-09-27 13:28:40.575 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.4728ms
+2025-09-27 13:28:40.575 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.575 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.575 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.2238ms
+2025-09-27 13:28:40.575 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 1.684ms
+2025-09-27 13:28:40.576 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.576 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.576 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 2.3333ms
+2025-09-27 13:28:40.576 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.8088ms
+2025-09-27 13:28:40.576 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.576 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.5604ms
+2025-09-27 13:28:40.576 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 110
+2025-09-27 13:28:40.576 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.577 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.577 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-09-27 13:28:40.577 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.577 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.577 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTeam(ScrumOps.Shared.Contracts.Teams.CreateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.577 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.578 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.5876ms
+2025-09-27 13:28:40.578 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.578 +07:00 [INF] Creating team with name: Integration Test Team
+2025-09-27 13:28:40.578 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.5543ms
+2025-09-27 13:28:40.579 +07:00 [INF] Executing CreatedAtActionResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.TeamDetailsResponse'.
+2025-09-27 13:28:40.580 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams/1/velocity - null null
+2025-09-27 13:28:40.582 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams/1/velocity - 404 null null 2.504ms
+2025-09-27 13:28:40.582 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost/api/teams/1/velocity, Response status code: 404
+2025-09-27 13:28:40.584 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api) in 7.07ms
+2025-09-27 13:28:40.585 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-09-27 13:28:40.585 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.585 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams - 201 null application/json; charset=utf-8 8.4993ms
+2025-09-27 13:28:40.585 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 107
+2025-09-27 13:28:40.585 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.585 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-09-27 13:28:40.585 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.586 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.586 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.586 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.586 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.587 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.6309ms
+2025-09-27 13:28:40.587 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.587 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.4876ms
+2025-09-27 13:28:40.589 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.590 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.590 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTeam(ScrumOps.Shared.Contracts.Teams.CreateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.590 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.591 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 1.2271ms
+2025-09-27 13:28:40.591 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.591 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 6.3343ms
+2025-09-27 13:28:40.591 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams/1 - null null
+2025-09-27 13:28:40.591 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeam (ScrumOps.Api)'
+2025-09-27 13:28:40.592 +07:00 [INF] Creating team with name: Performance Test Team
+2025-09-27 13:28:40.593 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-09-27 13:28:40.593 +07:00 [INF] Executing CreatedAtActionResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.TeamDetailsResponse'.
+2025-09-27 13:28:40.593 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.593 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.594 +07:00 [INF] Getting all teams
+2025-09-27 13:28:40.594 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-09-27 13:28:40.594 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.9068ms
+2025-09-27 13:28:40.595 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-09-27 13:28:40.595 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.9081ms
+2025-09-27 13:28:40.595 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api) in 5.0959ms
+2025-09-27 13:28:40.595 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-09-27 13:28:40.595 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams - 201 null application/json; charset=utf-8 10.3394ms
+2025-09-27 13:28:40.596 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams/1 - null null
+2025-09-27 13:28:40.597 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeam (ScrumOps.Api)'
+2025-09-27 13:28:40.597 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams/1 - null null
+2025-09-27 13:28:40.597 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeam (ScrumOps.Api)'
+2025-09-27 13:28:40.597 +07:00 [INF] Route matched with {action = "GetTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeam(Int32, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.600 +07:00 [INF] Getting team with ID: 1
+2025-09-27 13:28:40.600 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.TeamDetailsResponse'.
+2025-09-27 13:28:40.600 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeam (ScrumOps.Api) in 3.0327ms
+2025-09-27 13:28:40.600 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeam (ScrumOps.Api)'
+2025-09-27 13:28:40.601 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams/1 - 200 null application/json; charset=utf-8 9.404ms
+2025-09-27 13:28:40.602 +07:00 [INF] Route matched with {action = "GetTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeam(Int32, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.602 +07:00 [INF] Route matched with {action = "GetTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeam(Int32, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.602 +07:00 [INF] Getting team with ID: 1
+2025-09-27 13:28:40.602 +07:00 [INF] Getting team with ID: 1
+2025-09-27 13:28:40.603 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.TeamDetailsResponse'.
+2025-09-27 13:28:40.603 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.TeamDetailsResponse'.
+2025-09-27 13:28:40.603 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeam (ScrumOps.Api) in 0.8876ms
+2025-09-27 13:28:40.603 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeam (ScrumOps.Api) in 0.9639ms
+2025-09-27 13:28:40.603 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeam (ScrumOps.Api)'
+2025-09-27 13:28:40.603 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeam (ScrumOps.Api)'
+2025-09-27 13:28:40.603 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams/1 - 200 null application/json; charset=utf-8 6.8186ms
+2025-09-27 13:28:40.603 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams/1 - 200 null application/json; charset=utf-8 6.489ms
+2025-09-27 13:28:40.603 +07:00 [INF] Request starting HTTP/1.1 PUT http://localhost/api/teams/1 - application/json; charset=utf-8 98
+2025-09-27 13:28:40.604 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.UpdateTeam (ScrumOps.Api)'
+2025-09-27 13:28:40.605 +07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost/api/teams - null null
+2025-09-27 13:28:40.606 +07:00 [INF] CORS policy execution successful.
+2025-09-27 13:28:40.607 +07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost/api/teams - 204 null null 2.1001ms
+2025-09-27 13:28:40.609 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 59
+2025-09-27 13:28:40.609 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-09-27 13:28:40.609 +07:00 [INF] Route matched with {action = "UpdateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UpdateTeam(Int32, ScrumOps.Shared.Contracts.Teams.UpdateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-09-27 13:28:40.610 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTeam(ScrumOps.Shared.Contracts.Teams.CreateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
