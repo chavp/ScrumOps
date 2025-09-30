@@ -604,23 +604,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mypar\\.nuget\\packages\\": {},
-    "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Parinya.c\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\ScrumOps\\src\\ScrumOps.Application\\ScrumOps.Application.csproj",
+      "projectUniqueName": "C:\\data\\ScrumOps\\src\\ScrumOps.Application\\ScrumOps.Application.csproj",
       "projectName": "ScrumOps.Application",
-      "projectPath": "D:\\ScrumOps\\src\\ScrumOps.Application\\ScrumOps.Application.csproj",
-      "packagesPath": "C:\\Users\\mypar\\.nuget\\packages\\",
-      "outputPath": "D:\\ScrumOps\\src\\ScrumOps.Application\\obj\\",
+      "projectPath": "C:\\data\\ScrumOps\\src\\ScrumOps.Application\\ScrumOps.Application.csproj",
+      "packagesPath": "C:\\Users\\Parinya.c\\.nuget\\packages\\",
+      "outputPath": "C:\\data\\ScrumOps\\src\\ScrumOps.Application\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\mypar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Parinya.c\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -636,8 +636,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\ScrumOps\\src\\ScrumOps.Domain\\ScrumOps.Domain.csproj": {
-              "projectPath": "D:\\ScrumOps\\src\\ScrumOps.Domain\\ScrumOps.Domain.csproj"
+            "C:\\data\\ScrumOps\\src\\ScrumOps.Domain\\ScrumOps.Domain.csproj": {
+              "projectPath": "C:\\data\\ScrumOps\\src\\ScrumOps.Domain\\ScrumOps.Domain.csproj"
             }
           }
         }
@@ -652,7 +652,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "10.0.100"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -679,7 +679,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100-rc.1.25451.107/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
