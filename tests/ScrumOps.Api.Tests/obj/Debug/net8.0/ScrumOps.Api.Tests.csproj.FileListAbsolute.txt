@@ -1245,8 +1245,6 @@ C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\refs\System.Xml.XmlSe
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\refs\System.Xml.XPath.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\refs\System.Xml.XPath.XDocument.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\refs\WindowsBase.dll
-C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\MediatR.dll
-C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\MediatR.Contracts.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.Testing.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Microsoft.AspNetCore.TestHost.dll
@@ -1268,10 +1266,6 @@ C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Microsoft.Extensions.
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
-C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
-C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
-C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
-C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Microsoft.OpenApi.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Microsoft.TestPlatform.CoreUtilities.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Microsoft.TestPlatform.PlatformAbstractions.dll
@@ -1281,6 +1275,8 @@ C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Microsoft.TestPlatfor
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Microsoft.TestPlatform.Utilities.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Microsoft.VisualStudio.TestPlatform.Common.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Npgsql.dll
+C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\NuGet.Frameworks.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Serilog.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Serilog.AspNetCore.dll
@@ -1369,11 +1365,13 @@ C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\zh-Hant\Microsoft.Tes
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\zh-Hant\Microsoft.VisualStudio.TestPlatform.Common.resources.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Api.dll
+C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Application.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Domain.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Infrastructure.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Shared.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Api.pdb
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Shared.pdb
+C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Application.pdb
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Domain.pdb
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Infrastructure.pdb
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\obj\Debug\net8.0\ScrumOps.Api.Tests.csproj.AssemblyReference.cache
@@ -1389,7 +1387,3 @@ C:\data\ScrumOps\tests\ScrumOps.Api.Tests\obj\Debug\net8.0\refint\ScrumOps.Api.T
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\obj\Debug\net8.0\ScrumOps.Api.Tests.pdb
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\obj\Debug\net8.0\ScrumOps.Api.Tests.genruntimeconfig.cache
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\obj\Debug\net8.0\ref\ScrumOps.Api.Tests.dll
-C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Npgsql.dll
-C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
-C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Application.dll
-C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\ScrumOps.Application.pdb

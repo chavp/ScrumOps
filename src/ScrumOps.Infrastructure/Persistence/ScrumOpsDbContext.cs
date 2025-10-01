@@ -29,6 +29,9 @@ public class ScrumOpsDbContext : DbContext
     public DbSet<Sprint> Sprints { get; set; } = null!;
     public DbSet<SprintBacklogItem> SprintBacklogItems { get; set; } = null!;
     public DbSet<DomainTask> Tasks { get; set; } = null!;
+    
+    // Event Management Bounded Context - Temporarily disabled
+    // public DbSet<SprintEvent> SprintEvents { get; set; } = null!;;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -49,6 +52,9 @@ public class ScrumOpsDbContext : DbContext
         modelBuilder.ApplyConfiguration(new SprintConfiguration());
         modelBuilder.ApplyConfiguration(new SprintBacklogItemConfiguration());
         modelBuilder.ApplyConfiguration(new TaskConfiguration());
+
+        // Event Management Bounded Context - Temporarily disabled  
+        // modelBuilder.ApplyConfiguration(new SprintEventConfiguration());
 
         // Configure schema separation for bounded contexts
         ConfigureSchemas(modelBuilder);

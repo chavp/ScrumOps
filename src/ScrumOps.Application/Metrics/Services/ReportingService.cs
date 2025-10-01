@@ -2,12 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
 using Microsoft.Extensions.Logging;
-using ScrumOps.Application.Metrics.Commands;
 using ScrumOps.Application.Metrics.DTOs;
 using ScrumOps.Application.Metrics.Interfaces;
-using ScrumOps.Application.Metrics.Queries;
 using ScrumOps.Domain.Metrics.Entities;
 using ScrumOps.Domain.Metrics.ValueObjects;
 using ScrumOps.Domain.SharedKernel.ValueObjects;
@@ -19,12 +16,10 @@ namespace ScrumOps.Application.Metrics.Services;
 /// </summary>
 public class ReportingService : IReportingService
 {
-    private readonly IMediator _mediator;
     private readonly ILogger<ReportingService> _logger;
 
-    public ReportingService(IMediator mediator, ILogger<ReportingService> logger)
+    public ReportingService(ILogger<ReportingService> logger)
     {
-        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 

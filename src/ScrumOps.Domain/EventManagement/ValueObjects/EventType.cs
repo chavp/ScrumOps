@@ -7,7 +7,13 @@ namespace ScrumOps.Domain.EventManagement.ValueObjects;
 /// </summary>
 public class EventType : ValueObject
 {
-    public string Value { get; }
+    public string Value { get; private set; }
+
+    // Parameterless constructor for EF Core
+    private EventType()
+    {
+        Value = string.Empty;
+    }
 
     private EventType(string value)
     {

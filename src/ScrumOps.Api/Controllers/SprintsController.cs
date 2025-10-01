@@ -1,7 +1,5 @@
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using ScrumOps.Application.SprintManagement.Commands;
-using ScrumOps.Application.SprintManagement.Queries;
+using ScrumOps.Application.Services.SprintManagement;
 using ScrumOps.Domain.SharedKernel.ValueObjects;
 using ScrumOps.Domain.SprintManagement.ValueObjects;
 
@@ -15,12 +13,12 @@ namespace ScrumOps.Api.Controllers;
 [Produces("application/json")]
 public class SprintsController : ControllerBase
 {
-    private readonly IMediator _mediator;
+    private readonly ISprintManagementService _sprintManagementService;
     private readonly ILogger<SprintsController> _logger;
 
-    public SprintsController(IMediator mediator, ILogger<SprintsController> logger)
+    public SprintsController(ISprintManagementService sprintManagementService, ILogger<SprintsController> logger)
     {
-        _mediator = mediator;
+        _sprintManagementService = sprintManagementService;
         _logger = logger;
     }
 
@@ -66,8 +64,7 @@ public class SprintsController : ControllerBase
             if (offset < 0) offset = 0;
 
             var teamIdValue = ConvertToTeamId(teamId);
-            var query = new GetSprintsQuery(teamIdValue, status, limit, offset);
-            var result = await _mediator.Send(query);
+            var result = await _sprintManagementService.GetSprintsAsync(teamIdValue, status, limit, offset);
 
             if (result == null)
                 return NotFound(new { detail = $"Team with ID {teamId} not found" });
@@ -96,8 +93,7 @@ public class SprintsController : ControllerBase
         {
             var teamIdValue = ConvertToTeamId(teamId);
             var sprintIdValue = ConvertToSprintId(sprintId);
-            var query = new GetSprintByIdQuery(teamIdValue, sprintIdValue);
-            var result = await _mediator.Send(query);
+            var result = await _sprintManagementService.GetSprintByIdAsync(teamIdValue, sprintIdValue);
 
             if (result == null)
                 return NotFound(new { detail = $"Sprint with ID {sprintId} not found for team {teamId}" });
@@ -125,7 +121,7 @@ public class SprintsController : ControllerBase
         try
         {
             var teamIdValue = ConvertToTeamId(teamId);
-            var command = new CreateSprintCommand(
+            var sprintId = await _sprintManagementService.CreateSprintAsync(
                 teamIdValue,
                 request.Name,
                 request.Goal,
@@ -133,12 +129,9 @@ public class SprintsController : ControllerBase
                 request.EndDate,
                 request.Capacity
             );
-
-            var sprintId = await _mediator.Send(command);
             
             // Get the created sprint to return full details
-            var query = new GetSprintByIdQuery(teamIdValue, sprintId);
-            var createdSprint = await _mediator.Send(query);
+            var createdSprint = await _sprintManagementService.GetSprintByIdAsync(teamIdValue, sprintId);
 
             return CreatedAtAction(
                 nameof(GetSprint), 
@@ -177,19 +170,18 @@ public class SprintsController : ControllerBase
         {
             var teamIdValue = ConvertToTeamId(teamId);
             var sprintIdValue = ConvertToSprintId(sprintId);
-            var command = new UpdateSprintCommand(
+            await _sprintManagementService.UpdateSprintAsync(
                 sprintIdValue,
                 request.Name,
                 request.Goal,
+                DateTime.MinValue, // TODO: Get dates from request
+                DateTime.MinValue, // TODO: Get dates from request
                 request.Capacity,
                 request.Notes
             );
-
-            await _mediator.Send(command);
             
             // Get the updated sprint to return full details
-            var query = new GetSprintByIdQuery(teamIdValue, sprintIdValue);
-            var updatedSprint = await _mediator.Send(query);
+            var updatedSprint = await _sprintManagementService.GetSprintByIdAsync(teamIdValue, sprintIdValue);
 
             if (updatedSprint == null)
                 return NotFound(new { detail = $"Sprint with ID {sprintId} not found for team {teamId}" });
@@ -226,9 +218,7 @@ public class SprintsController : ControllerBase
         try
         {
             var sprintIdValue = ConvertToSprintId(sprintId);
-            var command = new StartSprintCommand(sprintIdValue);
-
-            await _mediator.Send(command);
+            await _sprintManagementService.StartSprintAsync(sprintIdValue);
             
             var result = new ScrumOps.Api.DTOs.SprintStatusDto
             {
@@ -270,13 +260,11 @@ public class SprintsController : ControllerBase
         try
         {
             var sprintIdValue = ConvertToSprintId(sprintId);
-            var command = new CompleteSprintCommand(
+            await _sprintManagementService.CompleteSprintAsync(
                 sprintIdValue,
-                request.ActualVelocity,
+                null, // ActualEndDate not available in DTO
                 request.Notes
             );
-
-            await _mediator.Send(command);
             
             var result = new ScrumOps.Api.DTOs.SprintStatusDto
             {
@@ -317,8 +305,7 @@ public class SprintsController : ControllerBase
         {
             var teamIdValue = ConvertToTeamId(teamId);
             var sprintIdValue = ConvertToSprintId(sprintId);
-            var query = new GetSprintBacklogQuery(teamIdValue, sprintIdValue);
-            var result = await _mediator.Send(query);
+            var result = await _sprintManagementService.GetSprintBacklogAsync(teamIdValue, sprintIdValue);
 
             if (result == null)
                 return NotFound(new { detail = $"Sprint with ID {sprintId} not found for team {teamId}" });
@@ -347,8 +334,7 @@ public class SprintsController : ControllerBase
         {
             var teamIdValue = ConvertToTeamId(teamId);
             var sprintIdValue = ConvertToSprintId(sprintId);
-            var query = new GetSprintBurndownQuery(teamIdValue, sprintIdValue);
-            var result = await _mediator.Send(query);
+            var result = await _sprintManagementService.GetSprintBurndownAsync(teamIdValue, sprintIdValue);
 
             if (result == null)
                 return NotFound(new { detail = $"Sprint with ID {sprintId} not found for team {teamId}" });
@@ -377,8 +363,7 @@ public class SprintsController : ControllerBase
         {
             var teamIdValue = ConvertToTeamId(teamId);
             var sprintIdValue = ConvertToSprintId(sprintId);
-            var query = new GetSprintVelocityQuery(teamIdValue, sprintIdValue);
-            var result = await _mediator.Send(query);
+            var result = await _sprintManagementService.GetSprintVelocityAsync(teamIdValue, sprintIdValue);
 
             if (result == null)
                 return NotFound(new { detail = $"Sprint with ID {sprintId} not found for team {teamId}" });

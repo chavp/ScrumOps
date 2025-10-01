@@ -57,7 +57,7 @@ public record UpdateBacklogItemRequest(
     string BacklogItemType);
 
 public record ReorderBacklogRequest(
-    List<ScrumOps.Application.ProductBacklog.Commands.ItemOrder> ItemOrders);
+    List<ScrumOps.Application.Services.ProductBacklog.ItemOrder> ItemOrders);
 
 public record EstimateItemRequest(
     int StoryPoints,

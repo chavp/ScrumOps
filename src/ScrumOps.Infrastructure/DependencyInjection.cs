@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ScrumOps.Application.Common.Interfaces;
 using ScrumOps.Domain.TeamManagement.Repositories;
 using ScrumOps.Domain.ProductBacklog.Repositories;
+using ScrumOps.Domain.SprintManagement.Repositories;
 using ScrumOps.Infrastructure.Persistence;
 using ScrumOps.Infrastructure.Persistence.Repositories;
 
@@ -30,6 +31,8 @@ public static class DependencyInjection
         // Register Entity Framework repositories
         services.AddScoped<ITeamRepository, TeamRepository>();
         services.AddScoped<IProductBacklogRepository, ProductBacklogRepository>();
+        services.AddScoped<ISprintRepository, SprintRepository>();
+        // TODO: Add ISprintEventRepository when properly implemented
 
         return services;
     }

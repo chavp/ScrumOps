@@ -1,7 +1,5 @@
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using ScrumOps.Application.ProductBacklog.Commands;
-using ScrumOps.Application.ProductBacklog.Queries;
+using ScrumOps.Application.Services.ProductBacklog;
 using ScrumOps.Domain.SharedKernel.ValueObjects;
 using ScrumOps.Domain.ProductBacklog.ValueObjects;
 
@@ -15,12 +13,12 @@ namespace ScrumOps.Api.Controllers;
 [Produces("application/json")]
 public class BacklogController : ControllerBase
 {
-    private readonly IMediator _mediator;
+    private readonly IProductBacklogService _productBacklogService;
     private readonly ILogger<BacklogController> _logger;
 
-    public BacklogController(IMediator mediator, ILogger<BacklogController> logger)
+    public BacklogController(IProductBacklogService productBacklogService, ILogger<BacklogController> logger)
     {
-        _mediator = mediator;
+        _productBacklogService = productBacklogService;
         _logger = logger;
     }
 
@@ -68,8 +66,7 @@ public class BacklogController : ControllerBase
             if (offset < 0) offset = 0;
 
             var teamIdValue = ConvertToTeamId(teamId);
-            var query = new GetProductBacklogQuery(teamIdValue, status, type, limit, offset);
-            var result = await _mediator.Send(query);
+            var result = await _productBacklogService.GetProductBacklogAsync(teamIdValue, status, type, limit, offset);
 
             if (result == null)
                 return NotFound(new { detail = $"Team with ID {teamId} not found" });
@@ -98,8 +95,7 @@ public class BacklogController : ControllerBase
         {
             var teamIdValue = ConvertToTeamId(teamId);
             var itemIdValue = ConvertToProductBacklogItemId(itemId);
-            var query = new GetBacklogItemByIdQuery(teamIdValue, itemIdValue);
-            var result = await _mediator.Send(query);
+            var result = await _productBacklogService.GetBacklogItemByIdAsync(teamIdValue, itemIdValue);
 
             if (result == null)
                 return NotFound(new { detail = $"Backlog item with ID {itemId} not found for team {teamId}" });
@@ -127,20 +123,17 @@ public class BacklogController : ControllerBase
         try
         {
             var teamIdValue = ConvertToTeamId(teamId);
-            var command = new CreateBacklogItemCommand(
+            var itemId = await _productBacklogService.CreateBacklogItemAsync(
                 teamIdValue,
                 request.Title,
                 request.Description,
                 request.AcceptanceCriteria,
                 request.Type,
-                request.Priority
+                request.Priority ?? 0
             );
-
-            var itemId = await _mediator.Send(command);
             
             // Get the created item to return full details
-            var query = new GetBacklogItemByIdQuery(teamIdValue, itemId);
-            var createdItem = await _mediator.Send(query);
+            var createdItem = await _productBacklogService.GetBacklogItemByIdAsync(teamIdValue, itemId);
 
             return CreatedAtAction(
                 nameof(GetBacklogItem), 
@@ -175,7 +168,7 @@ public class BacklogController : ControllerBase
         {
             var teamIdValue = ConvertToTeamId(teamId);
             var itemIdValue = ConvertToProductBacklogItemId(itemId);
-            var command = new UpdateBacklogItemCommand(
+            await _productBacklogService.UpdateBacklogItemAsync(
                 itemIdValue,
                 request.Title,
                 request.Description,
@@ -184,12 +177,9 @@ public class BacklogController : ControllerBase
                 request.StoryPoints,
                 request.BacklogItemType
             );
-
-            await _mediator.Send(command);
             
             // Get the updated item to return full details
-            var query = new GetBacklogItemByIdQuery(teamIdValue, itemIdValue);
-            var updatedItem = await _mediator.Send(query);
+            var updatedItem = await _productBacklogService.GetBacklogItemByIdAsync(teamIdValue, itemIdValue);
 
             if (updatedItem == null)
                 return NotFound(new { detail = $"Backlog item with ID {itemId} not found for team {teamId}" });
@@ -226,9 +216,7 @@ public class BacklogController : ControllerBase
         try
         {
             var itemIdValue = ConvertToProductBacklogItemId(itemId);
-            var command = new DeleteBacklogItemCommand(itemIdValue);
-
-            await _mediator.Send(command);
+            await _productBacklogService.DeleteBacklogItemAsync(itemIdValue);
             return NoContent();
         }
         catch (InvalidOperationException ex) when (ex.Message.Contains("not found"))
@@ -260,9 +248,7 @@ public class BacklogController : ControllerBase
         try
         {
             var teamIdValue = ConvertToTeamId(teamId);
-            var command = new ReorderBacklogCommand(teamIdValue, request.ItemOrders);
-
-            var result = await _mediator.Send(command);
+            var result = await _productBacklogService.ReorderBacklogAsync(teamIdValue, request.ItemOrders);
             return Ok(result);
         }
         catch (ArgumentException ex)
@@ -289,8 +275,7 @@ public class BacklogController : ControllerBase
         try
         {
             var teamIdValue = ConvertToTeamId(teamId);
-            var query = new GetReadyItemsQuery(teamIdValue);
-            var result = await _mediator.Send(query);
+            var result = await _productBacklogService.GetReadyItemsAsync(teamIdValue);
 
             if (result == null)
                 return NotFound(new { detail = $"Team with ID {teamId} not found" });
@@ -317,8 +302,7 @@ public class BacklogController : ControllerBase
         try
         {
             var teamIdValue = ConvertToTeamId(teamId);
-            var query = new GetBacklogMetricsQuery(teamIdValue);
-            var result = await _mediator.Send(query);
+            var result = await _productBacklogService.GetBacklogMetricsAsync(teamIdValue);
 
             if (result == null)
                 return NotFound(new { detail = $"Team with ID {teamId} not found" });
@@ -345,8 +329,7 @@ public class BacklogController : ControllerBase
         try
         {
             var teamIdValue = ConvertToTeamId(teamId);
-            var query = new GetBacklogFlowQuery(teamIdValue);
-            var result = await _mediator.Send(query);
+            var result = await _productBacklogService.GetBacklogFlowAsync(teamIdValue);
 
             if (result == null)
                 return NotFound(new { detail = $"Team with ID {teamId} not found" });
@@ -376,21 +359,18 @@ public class BacklogController : ControllerBase
         try
         {
             var itemIdValue = ConvertToProductBacklogItemId(itemId);
-            var command = new EstimateBacklogItemCommand(
+            await _productBacklogService.EstimateBacklogItemAsync(
                 itemIdValue,
                 request.StoryPoints,
                 request.EstimatedBy,
-                request.EstimationMethod,
-                request.Confidence,
+                request.EstimationMethod ?? "Planning Poker",
+                5, // Default confidence value
                 request.Notes
             );
-
-            await _mediator.Send(command);
             
             // Get the updated item to return full details
             var teamIdValue = ConvertToTeamId(teamId);
-            var query = new GetBacklogItemByIdQuery(teamIdValue, itemIdValue);
-            var updatedItem = await _mediator.Send(query);
+            var updatedItem = await _productBacklogService.GetBacklogItemByIdAsync(teamIdValue, itemIdValue);
 
             if (updatedItem == null)
                 return NotFound(new { detail = $"Backlog item with ID {itemId} not found for team {teamId}" });

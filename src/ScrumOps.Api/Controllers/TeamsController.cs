@@ -1,7 +1,5 @@
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using ScrumOps.Application.TeamManagement.Commands;
-using ScrumOps.Application.TeamManagement.Queries;
+using ScrumOps.Application.Services.TeamManagement;
 using ScrumOps.Domain.SharedKernel.ValueObjects;
 
 namespace ScrumOps.Api.Controllers;
@@ -14,12 +12,12 @@ namespace ScrumOps.Api.Controllers;
 [Produces("application/json")]
 public class TeamsController : ControllerBase
 {
-    private readonly IMediator _mediator;
+    private readonly ITeamManagementService _teamManagementService;
     private readonly ILogger<TeamsController> _logger;
 
-    public TeamsController(IMediator mediator, ILogger<TeamsController> logger)
+    public TeamsController(ITeamManagementService teamManagementService, ILogger<TeamsController> logger)
     {
-        _mediator = mediator;
+        _teamManagementService = teamManagementService;
         _logger = logger;
     }
 
@@ -42,8 +40,7 @@ public class TeamsController : ControllerBase
     {
         try
         {
-            var query = new GetTeamsQuery();
-            var result = await _mediator.Send(query);
+            var result = await _teamManagementService.GetTeamsAsync();
             
             return Ok(result);
         }
@@ -67,8 +64,7 @@ public class TeamsController : ControllerBase
         try
         {
             var teamId = ConvertToTeamId(id);
-            var query = new GetTeamByIdQuery(teamId);
-            var result = await _mediator.Send(query);
+            var result = await _teamManagementService.GetTeamByIdAsync(teamId);
 
             if (result == null)
                 return NotFound(new { detail = $"Team with ID {id} not found" });
@@ -95,19 +91,16 @@ public class TeamsController : ControllerBase
     {
         try
         {
-            var command = new CreateTeamCommand(
+            var teamId = await _teamManagementService.CreateTeamAsync(
                 request.Name,
                 request.Description,
                 request.SprintLengthWeeks,
                 request.ProductOwnerEmail ?? string.Empty,
                 request.ScrumMasterEmail ?? string.Empty
             );
-
-            var teamId = await _mediator.Send(command);
             
             // Get the created team to return full details
-            var query = new GetTeamByIdQuery(teamId);
-            var createdTeam = await _mediator.Send(query);
+            var createdTeam = await _teamManagementService.GetTeamByIdAsync(teamId);
 
             return CreatedAtAction(
                 nameof(GetTeam), 
@@ -145,18 +138,17 @@ public class TeamsController : ControllerBase
         try
         {
             var teamId = ConvertToTeamId(id);
-            var command = new UpdateTeamCommand(
+            await _teamManagementService.UpdateTeamAsync(
                 teamId,
                 request.Name,
                 request.Description,
-                request.SprintLengthWeeks
+                request.SprintLengthWeeks,
+                string.Empty, // TODO: Add these fields to request DTO
+                string.Empty  // TODO: Add these fields to request DTO
             );
-
-            await _mediator.Send(command);
             
             // Get the updated team to return full details
-            var query = new GetTeamByIdQuery(teamId);
-            var updatedTeam = await _mediator.Send(query);
+            var updatedTeam = await _teamManagementService.GetTeamByIdAsync(teamId);
 
             if (updatedTeam == null)
                 return NotFound(new { detail = $"Team with ID {id} not found" });
@@ -196,9 +188,7 @@ public class TeamsController : ControllerBase
         try
         {
             var teamId = ConvertToTeamId(id);
-            var command = new DeactivateTeamCommand(teamId);
-
-            await _mediator.Send(command);
+            await _teamManagementService.DeactivateTeamAsync(teamId);
             return NoContent();
         }
         catch (InvalidOperationException ex) when (ex.Message.Contains("not found"))
@@ -229,8 +219,7 @@ public class TeamsController : ControllerBase
         try
         {
             var teamId = ConvertToTeamId(id);
-            var query = new GetTeamMembersQuery(teamId);
-            var result = await _mediator.Send(query);
+            var result = await _teamManagementService.GetTeamMembersAsync(teamId);
 
             if (result == null)
                 return NotFound(new { detail = $"Team with ID {id} not found" });
@@ -257,8 +246,7 @@ public class TeamsController : ControllerBase
         try
         {
             var teamId = ConvertToTeamId(id);
-            var query = new GetTeamVelocityQuery(teamId);
-            var result = await _mediator.Send(query);
+            var result = await _teamManagementService.GetTeamVelocityAsync(teamId);
 
             if (result == null)
                 return NotFound(new { detail = $"Team with ID {id} not found" });
@@ -285,8 +273,7 @@ public class TeamsController : ControllerBase
         try
         {
             var teamId = ConvertToTeamId(id);
-            var query = new GetTeamMetricsQuery(teamId);
-            var result = await _mediator.Send(query);
+            var result = await _teamManagementService.GetTeamMetricsAsync(teamId);
 
             if (result == null)
                 return NotFound(new { detail = $"Team with ID {id} not found" });
