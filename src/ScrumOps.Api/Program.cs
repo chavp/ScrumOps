@@ -4,6 +4,7 @@ using Serilog;
 using ScrumOps.Application;
 using ScrumOps.Infrastructure;
 using ScrumOps.Infrastructure.Persistence;
+using ScrumOps.Api.Middleware;
 
 // Configure Serilog
 Log.Logger = new LoggerConfiguration()
@@ -18,6 +19,23 @@ builder.Host.UseSerilog();
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+// Configure Problem Details
+builder.Services.AddProblemDetails(options =>
+{
+    // Customize the problem details response
+    options.CustomizeProblemDetails = (context) =>
+    {
+        var problemDetails = context.ProblemDetails;
+        
+        // Add additional information
+        problemDetails.Extensions["machine"] = Environment.MachineName;
+        problemDetails.Extensions["requestId"] = context.HttpContext.TraceIdentifier;
+        
+        // Add timestamp
+        problemDetails.Extensions["timestamp"] = DateTimeOffset.UtcNow;
+    };
+});
 
 // Add Application layer services
 builder.Services.AddApplication();
@@ -37,6 +55,22 @@ builder.Services.AddSwaggerGen(c =>
         Contact = new OpenApiContact
         {
             Name = "ScrumOps Team"
+        }
+    });
+
+    // Add Problem Details schema to Swagger
+    c.MapType<Microsoft.AspNetCore.Mvc.ProblemDetails>(() => new Microsoft.OpenApi.Models.OpenApiSchema
+    {
+        Type = "object",
+        Properties = new Dictionary<string, OpenApiSchema>
+        {
+            ["type"] = new() { Type = "string", Format = "uri" },
+            ["title"] = new() { Type = "string" },
+            ["status"] = new() { Type = "integer", Format = "int32" },
+            ["detail"] = new() { Type = "string" },
+            ["instance"] = new() { Type = "string", Format = "uri" },
+            ["traceId"] = new() { Type = "string" },
+            ["timestamp"] = new() { Type = "string", Format = "date-time" }
         }
     });
 });
@@ -83,10 +117,21 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = "swagger";
     });
 }
+else
+{
+    // Use built-in problem details handler in production
+    app.UseExceptionHandler();
+}
+
+// Add global exception handling middleware
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 
 app.UseCors("AllowBlazorOrigin");
+
+// Enable status code pages with Problem Details
+app.UseStatusCodePages();
 
 app.UseAuthorization();
 

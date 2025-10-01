@@ -17,13 +17,13 @@ public class GetTeamsResponse
 /// </summary>
 public class TeamDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public int SprintLengthWeeks { get; set; }
     public decimal Velocity { get; set; }
     public int MemberCount { get; set; }
-    public int? CurrentSprintId { get; set; }
+    public Guid? CurrentSprintId { get; set; }
     public bool IsActive { get; set; }
     public DateTime CreatedDate { get; set; }
 }
@@ -33,7 +33,7 @@ public class TeamDto
 /// </summary>
 public class TeamDetailDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public int SprintLengthWeeks { get; set; }
@@ -49,7 +49,7 @@ public class TeamDetailDto
 /// </summary>
 public class TeamMemberDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string Role { get; set; } = string.Empty;
@@ -61,7 +61,7 @@ public class TeamMemberDto
 /// </summary>
 public class CurrentSprintDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
@@ -73,7 +73,7 @@ public class CurrentSprintDto
 /// </summary>
 public class TeamVelocityDto
 {
-    public int TeamId { get; set; }
+    public Guid TeamId { get; set; }
     public decimal CurrentVelocity { get; set; }
     public decimal AverageVelocity { get; set; }
     public List<VelocityDataPoint> VelocityTrend { get; set; } = new();
@@ -98,7 +98,7 @@ public class VelocityDataPoint
 /// </summary>
 public class TeamMetricsDto
 {
-    public int TeamId { get; set; }
+    public Guid TeamId { get; set; }
     public string TeamName { get; set; } = string.Empty;
     public VelocityMetrics Velocity { get; set; } = new();
     public QualityMetrics Quality { get; set; } = new();

@@ -9,11 +9,18 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.TeamManagement.Queries.GetTeamsResponse",
+        "Type": "ScrumOps.Application.Services.TeamManagement.GetTeamsResponse",
         "MediaTypes": [
           "application/json"
         ],
         "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 500
       }
     ]
   },
@@ -33,7 +40,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.TeamManagement.Queries.TeamDto",
+        "Type": "ScrumOps.Application.Services.TeamManagement.TeamDto",
         "MediaTypes": [
           "application/json"
         ],
@@ -52,6 +59,13 @@
           "application/json"
         ],
         "StatusCode": 409
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 500
       }
     ]
   },
@@ -65,13 +79,13 @@
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.TeamManagement.Queries.TeamDetailDto",
+        "Type": "ScrumOps.Application.Services.TeamManagement.TeamDetailDto",
         "MediaTypes": [
           "application/json"
         ],
@@ -83,6 +97,13 @@
           "application/json"
         ],
         "StatusCode": 404
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 500
       }
     ]
   },
@@ -96,7 +117,7 @@
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
@@ -107,7 +128,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.TeamManagement.Queries.TeamDto",
+        "Type": "ScrumOps.Application.Services.TeamManagement.TeamDto",
         "MediaTypes": [
           "application/json"
         ],
@@ -133,6 +154,13 @@
           "application/json"
         ],
         "StatusCode": 409
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 500
       }
     ]
   },
@@ -146,7 +174,7 @@
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],
@@ -169,6 +197,13 @@
           "application/json"
         ],
         "StatusCode": 409
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 500
       }
     ]
   },
@@ -182,13 +217,13 @@
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[ScrumOps.Application.TeamManagement.Queries.TeamMemberDto, ScrumOps.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[ScrumOps.Application.Services.TeamManagement.TeamMemberDto, ScrumOps.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "application/json"
         ],
@@ -200,6 +235,13 @@
           "application/json"
         ],
         "StatusCode": 404
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 500
       }
     ]
   },
@@ -213,13 +255,13 @@
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.TeamManagement.Queries.TeamMetricsDto",
+        "Type": "ScrumOps.Application.Services.TeamManagement.TeamMetricsDto",
         "MediaTypes": [
           "application/json"
         ],
@@ -231,6 +273,13 @@
           "application/json"
         ],
         "StatusCode": 404
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 500
       }
     ]
   },
@@ -244,13 +293,13 @@
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.TeamManagement.Queries.TeamVelocityDto",
+        "Type": "ScrumOps.Application.Services.TeamManagement.TeamVelocityDto",
         "MediaTypes": [
           "application/json"
         ],
@@ -262,6 +311,13 @@
           "application/json"
         ],
         "StatusCode": 404
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 500
       }
     ]
   },
@@ -275,7 +331,7 @@
     "Parameters": [
       {
         "Name": "teamId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
@@ -301,7 +357,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.ProductBacklog.Queries.GetBacklogResponse",
+        "Type": "ScrumOps.Application.Services.ProductBacklog.GetBacklogResponse",
         "MediaTypes": [
           "application/json"
         ],
@@ -326,13 +382,13 @@
     "Parameters": [
       {
         "Name": "teamId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.ProductBacklog.Queries.BacklogFlowDto",
+        "Type": "ScrumOps.Application.Services.ProductBacklog.BacklogFlowDto",
         "MediaTypes": [
           "application/json"
         ],
@@ -357,7 +413,7 @@
     "Parameters": [
       {
         "Name": "teamId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
@@ -368,7 +424,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.ProductBacklog.Queries.BacklogItemDto",
+        "Type": "ScrumOps.Application.Services.ProductBacklog.BacklogItemDto",
         "MediaTypes": [
           "application/json"
         ],
@@ -393,18 +449,18 @@
     "Parameters": [
       {
         "Name": "teamId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
         "Name": "itemId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.ProductBacklog.Queries.BacklogItemDetailDto",
+        "Type": "ScrumOps.Application.Services.ProductBacklog.BacklogItemDetailDto",
         "MediaTypes": [
           "application/json"
         ],
@@ -429,12 +485,12 @@
     "Parameters": [
       {
         "Name": "teamId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
         "Name": "itemId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
@@ -445,7 +501,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.ProductBacklog.Queries.BacklogItemDto",
+        "Type": "ScrumOps.Application.Services.ProductBacklog.BacklogItemDto",
         "MediaTypes": [
           "application/json"
         ],
@@ -477,12 +533,12 @@
     "Parameters": [
       {
         "Name": "teamId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
         "Name": "itemId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],
@@ -518,12 +574,12 @@
     "Parameters": [
       {
         "Name": "teamId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
         "Name": "itemId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
@@ -534,7 +590,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.ProductBacklog.Queries.BacklogItemDto",
+        "Type": "ScrumOps.Application.Services.ProductBacklog.BacklogItemDto",
         "MediaTypes": [
           "application/json"
         ],
@@ -566,13 +622,13 @@
     "Parameters": [
       {
         "Name": "teamId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.ProductBacklog.Queries.BacklogMetricsDto",
+        "Type": "ScrumOps.Application.Services.ProductBacklog.BacklogMetricsDto",
         "MediaTypes": [
           "application/json"
         ],
@@ -597,13 +653,13 @@
     "Parameters": [
       {
         "Name": "teamId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.ProductBacklog.Queries.ReadyItemsResponse",
+        "Type": "ScrumOps.Application.Services.ProductBacklog.ReadyItemsResponse",
         "MediaTypes": [
           "application/json"
         ],
@@ -628,7 +684,7 @@
     "Parameters": [
       {
         "Name": "teamId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
@@ -639,7 +695,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.ProductBacklog.Commands.ReorderBacklogResponse",
+        "Type": "ScrumOps.Application.Services.ProductBacklog.ReorderBacklogResponse",
         "MediaTypes": [
           "application/json"
         ],
@@ -664,7 +720,7 @@
     "Parameters": [
       {
         "Name": "teamId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
@@ -685,7 +741,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.SprintManagement.Queries.GetSprintsResponse",
+        "Type": "ScrumOps.Application.Services.SprintManagement.GetSprintsResponse",
         "MediaTypes": [
           "application/json"
         ],
@@ -697,6 +753,13 @@
           "application/json"
         ],
         "StatusCode": 404
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 500
       }
     ]
   },
@@ -710,7 +773,7 @@
     "Parameters": [
       {
         "Name": "teamId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
@@ -721,7 +784,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.SprintManagement.Queries.SprintDto",
+        "Type": "ScrumOps.Application.Services.SprintManagement.SprintDto",
         "MediaTypes": [
           "application/json"
         ],
@@ -746,18 +809,18 @@
     "Parameters": [
       {
         "Name": "teamId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
         "Name": "sprintId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.SprintManagement.Queries.SprintDetailDto",
+        "Type": "ScrumOps.Application.Services.SprintManagement.SprintDetailDto",
         "MediaTypes": [
           "application/json"
         ],
@@ -782,12 +845,12 @@
     "Parameters": [
       {
         "Name": "teamId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
         "Name": "sprintId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
@@ -798,7 +861,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.SprintManagement.Queries.SprintDto",
+        "Type": "ScrumOps.Application.Services.SprintManagement.SprintDto",
         "MediaTypes": [
           "application/json"
         ],
@@ -830,18 +893,18 @@
     "Parameters": [
       {
         "Name": "teamId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
         "Name": "sprintId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.SprintManagement.Queries.GetSprintBacklogResponse",
+        "Type": "ScrumOps.Application.Services.SprintManagement.GetSprintBacklogResponse",
         "MediaTypes": [
           "application/json"
         ],
@@ -866,18 +929,18 @@
     "Parameters": [
       {
         "Name": "teamId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
         "Name": "sprintId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.SprintManagement.Queries.SprintBurndownDto",
+        "Type": "ScrumOps.Application.Services.SprintManagement.SprintBurndownDto",
         "MediaTypes": [
           "application/json"
         ],
@@ -902,12 +965,12 @@
     "Parameters": [
       {
         "Name": "teamId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
         "Name": "sprintId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
@@ -950,12 +1013,12 @@
     "Parameters": [
       {
         "Name": "teamId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
         "Name": "sprintId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],
@@ -993,18 +1056,18 @@
     "Parameters": [
       {
         "Name": "teamId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
         "Name": "sprintId",
-        "Type": "System.Int32",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "ScrumOps.Application.SprintManagement.Queries.SprintVelocityDto",
+        "Type": "ScrumOps.Application.Services.SprintManagement.SprintVelocityDto",
         "MediaTypes": [
           "application/json"
         ],

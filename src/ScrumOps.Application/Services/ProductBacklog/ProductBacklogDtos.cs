@@ -10,7 +10,7 @@ public class ReadyItemsResponse
 {
     public List<ReadyItemDto> ReadyItems { get; set; } = new();
     public int TotalReadyPoints { get; set; }
-    public List<int> RecommendedForNextSprint { get; set; } = new();
+    public List<Guid> RecommendedForNextSprint { get; set; } = new();
 }
 
 /// <summary>
@@ -18,7 +18,7 @@ public class ReadyItemsResponse
 /// </summary>
 public class ReadyItemDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Title { get; set; } = string.Empty;
     public int StoryPoints { get; set; }
     public int Priority { get; set; }
@@ -106,7 +106,7 @@ public class ThroughputDto
 /// Item order specification.
 /// </summary>
 public record ItemOrder(
-    int ItemId,
+    Guid ItemId,
     int Priority);
 
 /// <summary>
@@ -118,9 +118,57 @@ public class ReorderBacklogResponse
 }
 
 // Basic DTOs from removed queries
-public class GetBacklogResponse { public ProductBacklogDto Backlog { get; set; } = new(); public List<BacklogItemDto> Items { get; set; } = new(); public int TotalCount { get; set; } public bool HasNext { get; set; } }
-public class ProductBacklogDto { public int Id { get; set; } public int TeamId { get; set; } public DateTime? LastRefinedDate { get; set; } }
-public class BacklogItemDto { public int Id { get; set; } public string Title { get; set; } = string.Empty; public string Description { get; set; } = string.Empty; public string AcceptanceCriteria { get; set; } = string.Empty; public int Priority { get; set; } public int? StoryPoints { get; set; } public string Status { get; set; } = string.Empty; public string Type { get; set; } = string.Empty; public string CreatedBy { get; set; } = string.Empty; public DateTime CreatedDate { get; set; } public bool IsInCurrentSprint { get; set; } public int? SprintId { get; set; } }
-public class BacklogItemDetailDto : BacklogItemDto { public DateTime? LastModifiedDate { get; set; } public SprintDetailsDto? SprintDetails { get; set; } public List<BacklogItemHistoryDto> History { get; set; } = new(); }
-public class SprintDetailsDto { public int SprintId { get; set; } public string SprintName { get; set; } = string.Empty; public DateTime AddedToSprintDate { get; set; } }
-public class BacklogItemHistoryDto { public DateTime Date { get; set; } public string Action { get; set; } = string.Empty; public string Field { get; set; } = string.Empty; public string OldValue { get; set; } = string.Empty; public string NewValue { get; set; } = string.Empty; public string ModifiedBy { get; set; } = string.Empty; }
+public class GetBacklogResponse 
+{ 
+    public ProductBacklogDto Backlog { get; set; } = new(); 
+    public List<BacklogItemDto> Items { get; set; } = new(); 
+    public int TotalCount { get; set; } 
+    public bool HasNext { get; set; } 
+}
+
+public class ProductBacklogDto 
+{ 
+    public Guid Id { get; set; } 
+    public Guid TeamId { get; set; } 
+    public DateTime? LastRefinedDate { get; set; } 
+}
+
+public class BacklogItemDto 
+{ 
+    public Guid Id { get; set; } 
+    public string Title { get; set; } = string.Empty; 
+    public string Description { get; set; } = string.Empty; 
+    public string AcceptanceCriteria { get; set; } = string.Empty; 
+    public int Priority { get; set; } 
+    public int? StoryPoints { get; set; } 
+    public string Status { get; set; } = string.Empty; 
+    public string Type { get; set; } = string.Empty; 
+    public string CreatedBy { get; set; } = string.Empty; 
+    public DateTime CreatedDate { get; set; } 
+    public bool IsInCurrentSprint { get; set; } 
+    public Guid? SprintId { get; set; } 
+}
+
+public class BacklogItemDetailDto : BacklogItemDto 
+{ 
+    public DateTime? LastModifiedDate { get; set; } 
+    public SprintDetailsDto? SprintDetails { get; set; } 
+    public List<BacklogItemHistoryDto> History { get; set; } = new(); 
+}
+
+public class SprintDetailsDto 
+{ 
+    public Guid SprintId { get; set; } 
+    public string SprintName { get; set; } = string.Empty; 
+    public DateTime AddedToSprintDate { get; set; } 
+}
+
+public class BacklogItemHistoryDto 
+{ 
+    public DateTime Date { get; set; } 
+    public string Action { get; set; } = string.Empty; 
+    public string Field { get; set; } = string.Empty; 
+    public string OldValue { get; set; } = string.Empty; 
+    public string NewValue { get; set; } = string.Empty; 
+    public string ModifiedBy { get; set; } = string.Empty; 
+}

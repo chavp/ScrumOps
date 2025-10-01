@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "M8WOia840EE=",
+  "dgSpecHash": "FbnfJ7TjQ6U=",
   "success": true,
-  "projectFilePath": "C:\\data\\ScrumOps\\src\\ScrumOps.Application\\ScrumOps.Application.csproj",
+  "projectFilePath": "D:\\github\\ScrumOps\\src\\ScrumOps.Application\\ScrumOps.Application.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Parinya.c\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
-    "C:\\Users\\Parinya.c\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512"
+    "C:\\Users\\mypar\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\mypar\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512"
   ],
   "logs": []
 }

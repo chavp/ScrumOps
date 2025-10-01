@@ -155,15 +155,9 @@ D:\github\ScrumOps\tests\ScrumOps.Web.Tests\bin\Debug\net8.0\Bunit.Core.dll
 D:\github\ScrumOps\tests\ScrumOps.Web.Tests\bin\Debug\net8.0\AngleSharpWrappers.dll
 D:\github\ScrumOps\tests\ScrumOps.Web.Tests\bin\Debug\net8.0\Bunit.Web.dll
 D:\github\ScrumOps\tests\ScrumOps.Web.Tests\bin\Debug\net8.0\Castle.Core.dll
-D:\github\ScrumOps\tests\ScrumOps.Web.Tests\bin\Debug\net8.0\MediatR.dll
-D:\github\ScrumOps\tests\ScrumOps.Web.Tests\bin\Debug\net8.0\MediatR.Contracts.dll
 D:\github\ScrumOps\tests\ScrumOps.Web.Tests\bin\Debug\net8.0\Microsoft.AspNetCore.Components.WebAssembly.dll
 D:\github\ScrumOps\tests\ScrumOps.Web.Tests\bin\Debug\net8.0\Microsoft.AspNetCore.Components.WebAssembly.Authentication.dll
 D:\github\ScrumOps\tests\ScrumOps.Web.Tests\bin\Debug\net8.0\Microsoft.VisualStudio.CodeCoverage.Shim.dll
-D:\github\ScrumOps\tests\ScrumOps.Web.Tests\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
-D:\github\ScrumOps\tests\ScrumOps.Web.Tests\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
-D:\github\ScrumOps\tests\ScrumOps.Web.Tests\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
-D:\github\ScrumOps\tests\ScrumOps.Web.Tests\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 D:\github\ScrumOps\tests\ScrumOps.Web.Tests\bin\Debug\net8.0\Microsoft.JSInterop.WebAssembly.dll
 D:\github\ScrumOps\tests\ScrumOps.Web.Tests\bin\Debug\net8.0\Microsoft.TestPlatform.CoreUtilities.dll
 D:\github\ScrumOps\tests\ScrumOps.Web.Tests\bin\Debug\net8.0\Microsoft.TestPlatform.PlatformAbstractions.dll

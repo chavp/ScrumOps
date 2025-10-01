@@ -18,7 +18,7 @@ public class GetSprintsResponse
 /// </summary>
 public class SprintDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Goal { get; set; } = string.Empty;
     public DateTime StartDate { get; set; }
@@ -37,7 +37,7 @@ public class SprintDto
 /// </summary>
 public class SprintDetailDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Goal { get; set; } = string.Empty;
     public DateTime StartDate { get; set; }
@@ -55,8 +55,8 @@ public class SprintDetailDto
 /// </summary>
 public class SprintBacklogItemDto
 {
-    public int Id { get; set; }
-    public int ProductBacklogItemId { get; set; }
+    public Guid Id { get; set; }
+    public Guid ProductBacklogItemId { get; set; }
     public string Title { get; set; } = string.Empty;
     public string Status { get; set; } = string.Empty;
     public int OriginalEstimate { get; set; }
@@ -70,7 +70,7 @@ public class SprintBacklogItemDto
 /// </summary>
 public class ImpedimentDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Title { get; set; } = string.Empty;
     public string Severity { get; set; } = string.Empty;
     public string Status { get; set; } = string.Empty;
@@ -92,8 +92,8 @@ public class GetSprintBacklogResponse
 /// </summary>
 public class SprintBacklogDetailDto
 {
-    public int Id { get; set; }
-    public int ProductBacklogItemId { get; set; }
+    public Guid Id { get; set; }
+    public Guid ProductBacklogItemId { get; set; }
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public string Status { get; set; } = string.Empty;
@@ -107,7 +107,7 @@ public class SprintBacklogDetailDto
 /// </summary>
 public class TaskDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Title { get; set; } = string.Empty;
     public string Status { get; set; } = string.Empty;
     public string AssignedTo { get; set; } = string.Empty;
@@ -120,7 +120,7 @@ public class TaskDto
 /// </summary>
 public class SprintBurndownDto
 {
-    public int SprintId { get; set; }
+    public Guid SprintId { get; set; }
     public int SprintDays { get; set; }
     public int TotalCapacity { get; set; }
     public List<BurndownDataPoint> BurndownData { get; set; } = new();
@@ -141,7 +141,7 @@ public class BurndownDataPoint
 /// </summary>
 public class SprintVelocityDto
 {
-    public int SprintId { get; set; }
+    public Guid SprintId { get; set; }
     public decimal PlannedVelocity { get; set; }
     public decimal ActualVelocity { get; set; }
     public int CompletedStoryPoints { get; set; }

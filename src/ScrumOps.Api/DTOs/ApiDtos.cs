@@ -35,7 +35,7 @@ public record CompleteSprintRequest(
 
 public class SprintStatusDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Status { get; set; } = string.Empty;
     public DateTime? StartedAt { get; set; }
     public DateTime? CompletedAt { get; set; }

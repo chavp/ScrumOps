@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ScrumOps.Application.Common.Interfaces;
@@ -8,6 +9,7 @@ using ScrumOps.Domain.SprintManagement.Entities;
 using ScrumOps.Domain.SprintManagement.Repositories;
 using ScrumOps.Domain.SprintManagement.ValueObjects;
 using TaskEntity = ScrumOps.Domain.SprintManagement.Entities.Task;
+using SprintVelocity = ScrumOps.Domain.SprintManagement.ValueObjects.Velocity;
 
 namespace ScrumOps.Application.Services.SprintManagement;
 
@@ -32,12 +34,37 @@ public class SprintManagementService : ISprintManagementService
         int offset = 0,
         CancellationToken cancellationToken = default)
     {
-        // TODO: Implement actual logic
+        IEnumerable<Sprint> sprints;
+
+        if (!string.IsNullOrEmpty(status) && Enum.TryParse<SprintStatus>(status, true, out var statusEnum))
+        {
+            sprints = await _sprintRepository.GetByStatusAsync(statusEnum, cancellationToken);
+            sprints = sprints.Where(s => s.TeamId == teamId);
+        }
+        else
+        {
+            sprints = await _sprintRepository.GetByTeamIdAsync(teamId, cancellationToken);
+        }
+
+        var totalCount = sprints.Count();
+        var paginatedSprints = sprints.Skip(offset).Take(limit);
+
+        var sprintDtos = paginatedSprints.Select(sprint => new SprintDto
+        {
+            Id = sprint.Id.Value,
+            Name = sprint.Goal?.Value ?? $"Sprint {sprint.Id.Value}",
+            Goal = sprint.Goal?.Value,
+            StartDate = sprint.StartDate,
+            EndDate = sprint.EndDate,
+            Status = sprint.Status.ToString(),
+            Capacity = sprint.Capacity.Hours
+        }).ToList();
+
         return new GetSprintsResponse
         {
-            Sprints = new List<SprintDto>(),
-            TotalCount = 0,
-            HasNext = false
+            Sprints = sprintDtos,
+            TotalCount = totalCount,
+            HasNext = offset + limit < totalCount
         };
     }
 
@@ -46,18 +73,32 @@ public class SprintManagementService : ISprintManagementService
         SprintId sprintId,
         CancellationToken cancellationToken = default)
     {
-        // TODO: Implement actual logic
+        var sprint = await _sprintRepository.GetByIdAsync(sprintId, cancellationToken);
+        if (sprint == null || sprint.TeamId != teamId) return null;
+
+        var backlogItems = sprint.BacklogItems.Select(item => new SprintBacklogItemDto
+        {
+            Id = item.Id.Value,
+            ProductBacklogItemId = item.ProductBacklogItemId.Value,
+            Title = "TODO: Load from ProductBacklogItem", // TODO: Load title from ProductBacklogItem
+            Status = item.IsCompleted ? "Completed" : "In Progress",
+            OriginalEstimate = item.OriginalEstimate,
+            RemainingWork = item.RemainingWork,
+            TaskCount = item.Tasks.Count,
+            CompletedTaskCount = item.Tasks.Count(t => t.CompletedDate.HasValue)
+        }).ToList();
+
         return new SprintDetailDto
         {
-            Id = 1,
-            Name = "Sample Sprint",
-            Goal = "Sample Goal",
-            StartDate = DateTime.UtcNow.AddDays(-7),
-            EndDate = DateTime.UtcNow.AddDays(7),
-            Status = "Active",
-            Capacity = 40,
-            BacklogItems = new List<SprintBacklogItemDto>(),
-            Impediments = new List<ImpedimentDto>()
+            Id = sprint.Id.Value,
+            Name = sprint.Goal?.Value ?? $"Sprint {sprint.Id.Value}",
+            Goal = sprint.Goal?.Value,
+            StartDate = sprint.StartDate,
+            EndDate = sprint.EndDate,
+            Status = sprint.Status.ToString(),
+            Capacity = sprint.Capacity.Hours,
+            BacklogItems = backlogItems,
+            Impediments = new List<ImpedimentDto>() // TODO: Implement impediment tracking
         };
     }
 
@@ -81,7 +122,7 @@ public class SprintManagementService : ISprintManagementService
         // TODO: Implement actual logic
         return new SprintBurndownDto
         {
-            SprintId = 1,
+            SprintId = sprintId.Value,
             SprintDays = 10,
             TotalCapacity = 40,
             BurndownData = new List<BurndownDataPoint>()
@@ -96,7 +137,7 @@ public class SprintManagementService : ISprintManagementService
         // TODO: Implement actual logic
         return new SprintVelocityDto
         {
-            SprintId = 1,
+            SprintId = sprintId.Value,
             PlannedVelocity = 20,
             ActualVelocity = 18,
             CompletedStoryPoints = 18,
@@ -114,8 +155,23 @@ public class SprintManagementService : ISprintManagementService
         int capacity,
         CancellationToken cancellationToken = default)
     {
-        // TODO: Implement actual logic
-        return SprintId.New();
+        // Check if team already has an active sprint
+        var hasActiveSprint = await _sprintRepository.HasActiveSprintAsync(teamId, cancellationToken);
+        if (hasActiveSprint)
+        {
+            throw new InvalidOperationException($"Team {teamId.Value} already has an active sprint.");
+        }
+
+        var sprintId = SprintId.New();
+        var sprintGoal = SprintGoal.Create(goal);
+        var sprintCapacity = Capacity.Create(capacity);
+
+        var sprint = new Sprint(sprintId, teamId, sprintGoal, startDate, endDate, sprintCapacity);
+
+        await _sprintRepository.AddAsync(sprint, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return sprint.Id;
     }
 
     public async System.Threading.Tasks.Task StartSprintAsync(
@@ -123,8 +179,16 @@ public class SprintManagementService : ISprintManagementService
         DateTime? actualStartDate = null,
         CancellationToken cancellationToken = default)
     {
-        // TODO: Implement actual logic
-        await System.Threading.Tasks.Task.CompletedTask;
+        var sprint = await _sprintRepository.GetByIdAsync(sprintId, cancellationToken);
+        if (sprint == null)
+        {
+            throw new InvalidOperationException($"Sprint with ID {sprintId.Value} not found.");
+        }
+
+        sprint.Start();
+
+        await _sprintRepository.UpdateAsync(sprint, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 
     public async System.Threading.Tasks.Task UpdateSprintAsync(
@@ -137,8 +201,19 @@ public class SprintManagementService : ISprintManagementService
         string? notes = null,
         CancellationToken cancellationToken = default)
     {
-        // TODO: Implement actual logic
-        await System.Threading.Tasks.Task.CompletedTask;
+        var sprint = await _sprintRepository.GetByIdAsync(sprintId, cancellationToken);
+        if (sprint == null)
+        {
+            throw new InvalidOperationException($"Sprint with ID {sprintId.Value} not found.");
+        }
+
+        // Note: Sprint entity currently only supports updating the goal
+        // For start/end dates and capacity, the sprint would need to be recreated
+        var newGoal = SprintGoal.Create(goal);
+        sprint.UpdateGoal(newGoal);
+
+        await _sprintRepository.UpdateAsync(sprint, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 
     public async System.Threading.Tasks.Task CompleteSprintAsync(
@@ -147,7 +222,21 @@ public class SprintManagementService : ISprintManagementService
         string? notes = null,
         CancellationToken cancellationToken = default)
     {
-        // TODO: Implement actual logic
-        await System.Threading.Tasks.Task.CompletedTask;
+        var sprint = await _sprintRepository.GetByIdAsync(sprintId, cancellationToken);
+        if (sprint == null)
+        {
+            throw new InvalidOperationException($"Sprint with ID {sprintId.Value} not found.");
+        }
+
+        // Calculate actual velocity based on completed items
+        var completedStoryPoints = sprint.BacklogItems
+            .Where(item => item.IsCompleted)
+            .Sum(item => item.StoryPoints?.Value ?? 0);
+        
+        var actualVelocity = SprintVelocity.Create(completedStoryPoints);
+        sprint.Complete(actualVelocity);
+
+        await _sprintRepository.UpdateAsync(sprint, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

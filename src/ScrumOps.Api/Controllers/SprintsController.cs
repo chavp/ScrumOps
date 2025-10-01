@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using ScrumOps.Application.Services.SprintManagement;
 using ScrumOps.Domain.SharedKernel.ValueObjects;
 using ScrumOps.Domain.SprintManagement.ValueObjects;
+using ScrumOps.Api.Extensions;
 
 namespace ScrumOps.Api.Controllers;
 
@@ -9,7 +10,7 @@ namespace ScrumOps.Api.Controllers;
 /// Sprints API controller for managing team sprints.
 /// </summary>
 [ApiController]
-[Route("api/teams/{teamId:int}/sprints")]
+[Route("api/teams/{teamId:guid}/sprints")]
 [Produces("application/json")]
 public class SprintsController : ControllerBase
 {
@@ -23,24 +24,6 @@ public class SprintsController : ControllerBase
     }
 
     /// <summary>
-    /// Helper method to convert int ID to TeamId (temporary solution).
-    /// </summary>
-    private static TeamId ConvertToTeamId(int id)
-    {
-        var guidFromInt = new Guid($"00000000-0000-0000-0000-{id:000000000000}");
-        return TeamId.From(guidFromInt);
-    }
-
-    /// <summary>
-    /// Helper method to convert int ID to SprintId (temporary solution).
-    /// </summary>
-    private static SprintId ConvertToSprintId(int id)
-    {
-        var guidFromInt = new Guid($"11111111-1111-1111-1111-{id:000000000000}");
-        return SprintId.From(guidFromInt);
-    }
-
-    /// <summary>
     /// Get team's sprints with optional filtering.
     /// </summary>
     /// <param name="teamId">Team ID</param>
@@ -50,32 +33,25 @@ public class SprintsController : ControllerBase
     /// <returns>List of sprints</returns>
     [HttpGet]
     [ProducesResponseType(typeof(GetSprintsResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<GetSprintsResponse>> GetSprints(
-        int teamId,
+        Guid teamId,
         [FromQuery] string? status = null,
         [FromQuery] int limit = 10,
         [FromQuery] int offset = 0)
     {
-        try
-        {
-            if (limit > 50) limit = 50;
-            if (limit < 1) limit = 10;
-            if (offset < 0) offset = 0;
+        if (limit > 50) limit = 50;
+        if (limit < 1) limit = 10;
+        if (offset < 0) offset = 0;
 
-            var teamIdValue = ConvertToTeamId(teamId);
-            var result = await _sprintManagementService.GetSprintsAsync(teamIdValue, status, limit, offset);
+        var teamIdValue = TeamId.From(teamId);
+        var result = await _sprintManagementService.GetSprintsAsync(teamIdValue, status, limit, offset);
 
-            if (result == null)
-                return NotFound(new { detail = $"Team with ID {teamId} not found" });
+        if (result == null)
+            return NotFound(this.NotFoundProblem("team", teamId));
 
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error occurred while getting sprints for team {TeamId}", teamId);
-            return StatusCode(500, new { error = "An error occurred while processing your request" });
-        }
+        return Ok(result);
     }
 
     /// <summary>
@@ -84,15 +60,15 @@ public class SprintsController : ControllerBase
     /// <param name="teamId">Team ID</param>
     /// <param name="sprintId">Sprint ID</param>
     /// <returns>Sprint details with backlog items and impediments</returns>
-    [HttpGet("{sprintId:int}")]
+    [HttpGet("{sprintId:guid}")]
     [ProducesResponseType(typeof(SprintDetailDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<SprintDetailDto>> GetSprint(int teamId, int sprintId)
+    public async Task<ActionResult<SprintDetailDto>> GetSprint(Guid teamId, Guid sprintId)
     {
         try
         {
-            var teamIdValue = ConvertToTeamId(teamId);
-            var sprintIdValue = ConvertToSprintId(sprintId);
+            var teamIdValue = TeamId.From(teamId);
+            var sprintIdValue = SprintId.From(sprintId);
             var result = await _sprintManagementService.GetSprintByIdAsync(teamIdValue, sprintIdValue);
 
             if (result == null)
@@ -116,11 +92,11 @@ public class SprintsController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(SprintDto), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<SprintDto>> CreateSprint(int teamId, [FromBody] ScrumOps.Api.DTOs.CreateSprintRequest request)
+    public async Task<ActionResult<SprintDto>> CreateSprint(Guid teamId, [FromBody] ScrumOps.Api.DTOs.CreateSprintRequest request)
     {
         try
         {
-            var teamIdValue = ConvertToTeamId(teamId);
+            var teamIdValue = TeamId.From(teamId);
             var sprintId = await _sprintManagementService.CreateSprintAsync(
                 teamIdValue,
                 request.Name,
@@ -133,10 +109,9 @@ public class SprintsController : ControllerBase
             // Get the created sprint to return full details
             var createdSprint = await _sprintManagementService.GetSprintByIdAsync(teamIdValue, sprintId);
 
-            return CreatedAtAction(
-                nameof(GetSprint), 
-                new { teamId, sprintId = sprintId.Value }, 
-                createdSprint);
+            // Return created sprint directly with proper Location header
+            Response.Headers.Location = $"/api/teams/{teamId}/sprints/{sprintId.Value}";
+            return StatusCode(201, createdSprint);
         }
         catch (ArgumentException ex)
         {
@@ -160,16 +135,16 @@ public class SprintsController : ControllerBase
     /// <param name="sprintId">Sprint ID</param>
     /// <param name="request">Sprint update request</param>
     /// <returns>Updated sprint information</returns>
-    [HttpPut("{sprintId:int}")]
+    [HttpPut("{sprintId:guid}")]
     [ProducesResponseType(typeof(SprintDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<SprintDto>> UpdateSprint(int teamId, int sprintId, [FromBody] ScrumOps.Api.DTOs.UpdateSprintRequest request)
+    public async Task<ActionResult<SprintDto>> UpdateSprint(Guid teamId, Guid sprintId, [FromBody] ScrumOps.Api.DTOs.UpdateSprintRequest request)
     {
         try
         {
-            var teamIdValue = ConvertToTeamId(teamId);
-            var sprintIdValue = ConvertToSprintId(sprintId);
+            var teamIdValue = TeamId.From(teamId);
+            var sprintIdValue = SprintId.From(sprintId);
             await _sprintManagementService.UpdateSprintAsync(
                 sprintIdValue,
                 request.Name,
@@ -209,15 +184,15 @@ public class SprintsController : ControllerBase
     /// <param name="teamId">Team ID</param>
     /// <param name="sprintId">Sprint ID</param>
     /// <returns>Sprint with updated status</returns>
-    [HttpPost("{sprintId:int}/start")]
+    [HttpPost("{sprintId:guid}/start")]
     [ProducesResponseType(typeof(ScrumOps.Api.DTOs.SprintStatusDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<ScrumOps.Api.DTOs.SprintStatusDto>> StartSprint(int teamId, int sprintId)
+    public async Task<ActionResult<ScrumOps.Api.DTOs.SprintStatusDto>> StartSprint(Guid teamId, Guid sprintId)
     {
         try
         {
-            var sprintIdValue = ConvertToSprintId(sprintId);
+            var sprintIdValue = SprintId.From(sprintId);
             await _sprintManagementService.StartSprintAsync(sprintIdValue);
             
             var result = new ScrumOps.Api.DTOs.SprintStatusDto
@@ -251,15 +226,15 @@ public class SprintsController : ControllerBase
     /// <param name="sprintId">Sprint ID</param>
     /// <param name="request">Sprint completion request</param>
     /// <returns>Sprint with updated status</returns>
-    [HttpPost("{sprintId:int}/complete")]
+    [HttpPost("{sprintId:guid}/complete")]
     [ProducesResponseType(typeof(ScrumOps.Api.DTOs.SprintStatusDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<ScrumOps.Api.DTOs.SprintStatusDto>> CompleteSprint(int teamId, int sprintId, [FromBody] ScrumOps.Api.DTOs.CompleteSprintRequest request)
+    public async Task<ActionResult<ScrumOps.Api.DTOs.SprintStatusDto>> CompleteSprint(Guid teamId, Guid sprintId, [FromBody] ScrumOps.Api.DTOs.CompleteSprintRequest request)
     {
         try
         {
-            var sprintIdValue = ConvertToSprintId(sprintId);
+            var sprintIdValue = SprintId.From(sprintId);
             await _sprintManagementService.CompleteSprintAsync(
                 sprintIdValue,
                 null, // ActualEndDate not available in DTO
@@ -296,15 +271,15 @@ public class SprintsController : ControllerBase
     /// <param name="teamId">Team ID</param>
     /// <param name="sprintId">Sprint ID</param>
     /// <returns>Sprint backlog items with tasks</returns>
-    [HttpGet("{sprintId:int}/backlog")]
+    [HttpGet("{sprintId:guid}/backlog")]
     [ProducesResponseType(typeof(GetSprintBacklogResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<GetSprintBacklogResponse>> GetSprintBacklog(int teamId, int sprintId)
+    public async Task<ActionResult<GetSprintBacklogResponse>> GetSprintBacklog(Guid teamId, Guid sprintId)
     {
         try
         {
-            var teamIdValue = ConvertToTeamId(teamId);
-            var sprintIdValue = ConvertToSprintId(sprintId);
+            var teamIdValue = TeamId.From(teamId);
+            var sprintIdValue = SprintId.From(sprintId);
             var result = await _sprintManagementService.GetSprintBacklogAsync(teamIdValue, sprintIdValue);
 
             if (result == null)
@@ -325,15 +300,15 @@ public class SprintsController : ControllerBase
     /// <param name="teamId">Team ID</param>
     /// <param name="sprintId">Sprint ID</param>
     /// <returns>Burndown chart data</returns>
-    [HttpGet("{sprintId:int}/burndown")]
+    [HttpGet("{sprintId:guid}/burndown")]
     [ProducesResponseType(typeof(SprintBurndownDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<SprintBurndownDto>> GetSprintBurndown(int teamId, int sprintId)
+    public async Task<ActionResult<SprintBurndownDto>> GetSprintBurndown(Guid teamId, Guid sprintId)
     {
         try
         {
-            var teamIdValue = ConvertToTeamId(teamId);
-            var sprintIdValue = ConvertToSprintId(sprintId);
+            var teamIdValue = TeamId.From(teamId);
+            var sprintIdValue = SprintId.From(sprintId);
             var result = await _sprintManagementService.GetSprintBurndownAsync(teamIdValue, sprintIdValue);
 
             if (result == null)
@@ -354,15 +329,15 @@ public class SprintsController : ControllerBase
     /// <param name="teamId">Team ID</param>
     /// <param name="sprintId">Sprint ID</param>
     /// <returns>Sprint velocity metrics</returns>
-    [HttpGet("{sprintId:int}/velocity")]
+    [HttpGet("{sprintId:guid}/velocity")]
     [ProducesResponseType(typeof(SprintVelocityDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<SprintVelocityDto>> GetSprintVelocity(int teamId, int sprintId)
+    public async Task<ActionResult<SprintVelocityDto>> GetSprintVelocity(Guid teamId, Guid sprintId)
     {
         try
         {
-            var teamIdValue = ConvertToTeamId(teamId);
-            var sprintIdValue = ConvertToSprintId(sprintId);
+            var teamIdValue = TeamId.From(teamId);
+            var sprintIdValue = SprintId.From(sprintId);
             var result = await _sprintManagementService.GetSprintVelocityAsync(teamIdValue, sprintIdValue);
 
             if (result == null)

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using ScrumOps.Application.Services.ProductBacklog;
 using ScrumOps.Domain.SharedKernel.ValueObjects;
 using ScrumOps.Domain.ProductBacklog.ValueObjects;
+using ScrumOps.Api.Extensions;
 
 namespace ScrumOps.Api.Controllers;
 
@@ -9,7 +10,7 @@ namespace ScrumOps.Api.Controllers;
 /// Product Backlog API controller for managing team backlogs and items.
 /// </summary>
 [ApiController]
-[Route("api/teams/{teamId:int}/backlog")]
+[Route("api/teams/{teamId:guid}/backlog")]
 [Produces("application/json")]
 public class BacklogController : ControllerBase
 {
@@ -20,24 +21,6 @@ public class BacklogController : ControllerBase
     {
         _productBacklogService = productBacklogService;
         _logger = logger;
-    }
-
-    /// <summary>
-    /// Helper method to convert int ID to TeamId (temporary solution).
-    /// </summary>
-    private static TeamId ConvertToTeamId(int id)
-    {
-        var guidFromInt = new Guid($"00000000-0000-0000-0000-{id:000000000000}");
-        return TeamId.From(guidFromInt);
-    }
-
-    /// <summary>
-    /// Helper method to convert int ID to ProductBacklogItemId (temporary solution).
-    /// </summary>
-    private static ProductBacklogItemId ConvertToProductBacklogItemId(int id)
-    {
-        var guidFromInt = new Guid($"22222222-2222-2222-2222-{id:000000000000}");
-        return ProductBacklogItemId.From(guidFromInt);
     }
 
     /// <summary>
@@ -53,7 +36,7 @@ public class BacklogController : ControllerBase
     [ProducesResponseType(typeof(GetBacklogResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<GetBacklogResponse>> GetBacklog(
-        int teamId,
+        Guid teamId,
         [FromQuery] string? status = null,
         [FromQuery] string? type = null,
         [FromQuery] int limit = 20,
@@ -65,7 +48,7 @@ public class BacklogController : ControllerBase
             if (limit < 1) limit = 20;
             if (offset < 0) offset = 0;
 
-            var teamIdValue = ConvertToTeamId(teamId);
+            var teamIdValue = TeamId.From(teamId);
             var result = await _productBacklogService.GetProductBacklogAsync(teamIdValue, status, type, limit, offset);
 
             if (result == null)
@@ -86,15 +69,15 @@ public class BacklogController : ControllerBase
     /// <param name="teamId">Team ID</param>
     /// <param name="itemId">Backlog item ID</param>
     /// <returns>Backlog item details with history</returns>
-    [HttpGet("items/{itemId:int}")]
+    [HttpGet("items/{itemId:guid}")]
     [ProducesResponseType(typeof(BacklogItemDetailDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<BacklogItemDetailDto>> GetBacklogItem(int teamId, int itemId)
+    public async Task<ActionResult<BacklogItemDetailDto>> GetBacklogItem(Guid teamId, Guid itemId)
     {
         try
         {
-            var teamIdValue = ConvertToTeamId(teamId);
-            var itemIdValue = ConvertToProductBacklogItemId(itemId);
+            var teamIdValue = TeamId.From(teamId);
+            var itemIdValue = ProductBacklogItemId.From(itemId);
             var result = await _productBacklogService.GetBacklogItemByIdAsync(teamIdValue, itemIdValue);
 
             if (result == null)
@@ -118,11 +101,11 @@ public class BacklogController : ControllerBase
     [HttpPost("items")]
     [ProducesResponseType(typeof(BacklogItemDto), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<BacklogItemDto>> CreateBacklogItem(int teamId, [FromBody] ScrumOps.Api.DTOs.CreateBacklogItemRequest request)
+    public async Task<ActionResult<BacklogItemDto>> CreateBacklogItem(Guid teamId, [FromBody] ScrumOps.Api.DTOs.CreateBacklogItemRequest request)
     {
         try
         {
-            var teamIdValue = ConvertToTeamId(teamId);
+            var teamIdValue = TeamId.From(teamId);
             var itemId = await _productBacklogService.CreateBacklogItemAsync(
                 teamIdValue,
                 request.Title,
@@ -135,10 +118,9 @@ public class BacklogController : ControllerBase
             // Get the created item to return full details
             var createdItem = await _productBacklogService.GetBacklogItemByIdAsync(teamIdValue, itemId);
 
-            return CreatedAtAction(
-                nameof(GetBacklogItem), 
-                new { teamId, itemId = itemId.Value }, 
-                createdItem);
+            // Return created item directly with proper Location header
+            Response.Headers.Location = $"/api/teams/{teamId}/backlog/items/{itemId.Value}";
+            return StatusCode(201, createdItem);
         }
         catch (ArgumentException ex)
         {
@@ -158,16 +140,16 @@ public class BacklogController : ControllerBase
     /// <param name="itemId">Backlog item ID</param>
     /// <param name="request">Backlog item update request</param>
     /// <returns>Updated backlog item</returns>
-    [HttpPut("items/{itemId:int}")]
+    [HttpPut("items/{itemId:guid}")]
     [ProducesResponseType(typeof(BacklogItemDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<BacklogItemDto>> UpdateBacklogItem(int teamId, int itemId, [FromBody] ScrumOps.Api.DTOs.UpdateBacklogItemRequest request)
+    public async Task<ActionResult<BacklogItemDto>> UpdateBacklogItem(Guid teamId, Guid itemId, [FromBody] ScrumOps.Api.DTOs.UpdateBacklogItemRequest request)
     {
         try
         {
-            var teamIdValue = ConvertToTeamId(teamId);
-            var itemIdValue = ConvertToProductBacklogItemId(itemId);
+            var teamIdValue = TeamId.From(teamId);
+            var itemIdValue = ProductBacklogItemId.From(itemId);
             await _productBacklogService.UpdateBacklogItemAsync(
                 itemIdValue,
                 request.Title,
@@ -207,15 +189,15 @@ public class BacklogController : ControllerBase
     /// <param name="teamId">Team ID</param>
     /// <param name="itemId">Backlog item ID</param>
     /// <returns>No content on success</returns>
-    [HttpDelete("items/{itemId:int}")]
+    [HttpDelete("items/{itemId:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<ActionResult> DeleteBacklogItem(int teamId, int itemId)
+    public async Task<ActionResult> DeleteBacklogItem(Guid teamId, Guid itemId)
     {
         try
         {
-            var itemIdValue = ConvertToProductBacklogItemId(itemId);
+            var itemIdValue = ProductBacklogItemId.From(itemId);
             await _productBacklogService.DeleteBacklogItemAsync(itemIdValue);
             return NoContent();
         }
@@ -243,11 +225,11 @@ public class BacklogController : ControllerBase
     [HttpPut("reorder")]
     [ProducesResponseType(typeof(ReorderBacklogResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<ReorderBacklogResponse>> ReorderBacklog(int teamId, [FromBody] ScrumOps.Api.DTOs.ReorderBacklogRequest request)
+    public async Task<ActionResult<ReorderBacklogResponse>> ReorderBacklog(Guid teamId, [FromBody] ScrumOps.Api.DTOs.ReorderBacklogRequest request)
     {
         try
         {
-            var teamIdValue = ConvertToTeamId(teamId);
+            var teamIdValue = TeamId.From(teamId);
             var result = await _productBacklogService.ReorderBacklogAsync(teamIdValue, request.ItemOrders);
             return Ok(result);
         }
@@ -270,11 +252,11 @@ public class BacklogController : ControllerBase
     [HttpGet("ready")]
     [ProducesResponseType(typeof(ReadyItemsResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ReadyItemsResponse>> GetReadyItems(int teamId)
+    public async Task<ActionResult<ReadyItemsResponse>> GetReadyItems(Guid teamId)
     {
         try
         {
-            var teamIdValue = ConvertToTeamId(teamId);
+            var teamIdValue = TeamId.From(teamId);
             var result = await _productBacklogService.GetReadyItemsAsync(teamIdValue);
 
             if (result == null)
@@ -297,11 +279,11 @@ public class BacklogController : ControllerBase
     [HttpGet("metrics")]
     [ProducesResponseType(typeof(BacklogMetricsDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<BacklogMetricsDto>> GetBacklogMetrics(int teamId)
+    public async Task<ActionResult<BacklogMetricsDto>> GetBacklogMetrics(Guid teamId)
     {
         try
         {
-            var teamIdValue = ConvertToTeamId(teamId);
+            var teamIdValue = TeamId.From(teamId);
             var result = await _productBacklogService.GetBacklogMetricsAsync(teamIdValue);
 
             if (result == null)
@@ -324,11 +306,11 @@ public class BacklogController : ControllerBase
     [HttpGet("flow")]
     [ProducesResponseType(typeof(BacklogFlowDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<BacklogFlowDto>> GetBacklogFlow(int teamId)
+    public async Task<ActionResult<BacklogFlowDto>> GetBacklogFlow(Guid teamId)
     {
         try
         {
-            var teamIdValue = ConvertToTeamId(teamId);
+            var teamIdValue = TeamId.From(teamId);
             var result = await _productBacklogService.GetBacklogFlowAsync(teamIdValue);
 
             if (result == null)
@@ -350,15 +332,15 @@ public class BacklogController : ControllerBase
     /// <param name="itemId">Backlog item ID</param>
     /// <param name="request">Estimation request</param>
     /// <returns>Updated backlog item</returns>
-    [HttpPut("items/{itemId:int}/estimate")]
+    [HttpPut("items/{itemId:guid}/estimate")]
     [ProducesResponseType(typeof(BacklogItemDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<BacklogItemDto>> EstimateBacklogItem(int teamId, int itemId, [FromBody] ScrumOps.Api.DTOs.EstimateItemRequest request)
+    public async Task<ActionResult<BacklogItemDto>> EstimateBacklogItem(Guid teamId, Guid itemId, [FromBody] ScrumOps.Api.DTOs.EstimateItemRequest request)
     {
         try
         {
-            var itemIdValue = ConvertToProductBacklogItemId(itemId);
+            var itemIdValue = ProductBacklogItemId.From(itemId);
             await _productBacklogService.EstimateBacklogItemAsync(
                 itemIdValue,
                 request.StoryPoints,
@@ -369,7 +351,7 @@ public class BacklogController : ControllerBase
             );
             
             // Get the updated item to return full details
-            var teamIdValue = ConvertToTeamId(teamId);
+            var teamIdValue = TeamId.From(teamId);
             var updatedItem = await _productBacklogService.GetBacklogItemByIdAsync(teamIdValue, itemIdValue);
 
             if (updatedItem == null)
