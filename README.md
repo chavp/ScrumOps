@@ -56,21 +56,53 @@ ScrumOps is a comprehensive Scrum framework management system designed to help t
 
 ### Prerequisites
 - .NET 8.0 SDK
-- SQLite (included)
+- Docker Desktop
+- PostgreSQL (or use Docker)
 - Modern web browser
 - Git
 
 ### Quick Setup
+
+#### Option 1: Docker (Recommended)
 ```bash
 # Clone the repository
 git clone https://github.com/your-org/ScrumOps.git
 cd ScrumOps
 
+# Test the setup (optional)
+.\test-docker.ps1
+
+# Run with Docker Compose (includes PostgreSQL database)
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# The API will be available at http://localhost:8080
+# pgAdmin will be available at http://localhost:8081 (admin@scrumops.com / admin123)
+```
+
+#### Option 2: Local Development
+```bash
+# Clone the repository
+git clone https://github.com/your-org/ScrumOps.git
+cd ScrumOps
+
+# Start PostgreSQL (if not using Docker)
+# Update connection string in appsettings.Development.json
+
 # Run the application
-dotnet run --project src/ScrumOps.Web
+dotnet run --project src/ScrumOps.Api
 
 # Navigate to https://localhost:5001
 ```
+
+### Service URLs
+- **API**: http://localhost:8080
+- **Health Check**: http://localhost:8080/health  
+- **Swagger Documentation**: http://localhost:8080/swagger
+- **pgAdmin**: http://localhost:8081 (admin@scrumops.com / admin123)
+- **PostgreSQL**: localhost:5432 (scrumops / scrumops123)
 
 ## 📚 Documentation Index
 
@@ -123,7 +155,8 @@ dotnet run --project src/ScrumOps.Web
 **Technology Stack**: 
 - Frontend: Blazor Server/WebAssembly
 - Backend: ASP.NET Core Web API
-- Database: SQLite with Entity Framework Core
+- Database: PostgreSQL with Entity Framework Core
+- Deployment: Docker & Docker Compose
 - Architecture: Domain Driven Design with Clean Architecture
 
 **Key Principles**:

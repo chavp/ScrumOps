@@ -62,7 +62,7 @@ public class ScrumOpsDbContext : DbContext
         if (!optionsBuilder.IsConfigured)
         {
             // Default configuration for development
-            optionsBuilder.UseSqlite("Data Source=scrumops.db");
+            optionsBuilder.UseNpgsql("Host=localhost;Database=scrumops;Username=scrumops;Password=scrumops123");
         }
 
         // Enable sensitive data logging in development

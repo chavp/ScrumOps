@@ -1,0 +1,24 @@
+services:
+  # Development-specific overrides
+  api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Host=postgres;Database=scrumops_dev;Username=scrumops;Password=scrumops123
+    volumes:
+      # Mount source code for development (optional - for hot reload if needed)
+      - ./src:/app/src:ro
+      # Mount logs directory
+      - ./logs:/app/logs
+    
+  postgres:
+    environment:
+      POSTGRES_DB: scrumops_dev
+    # Mount local data directory for development
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data/pgdata
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+
+volumes:
+  postgres_dev_data:
+    driver: local

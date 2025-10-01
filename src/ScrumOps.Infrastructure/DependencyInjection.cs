@@ -15,9 +15,17 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        // For demo purposes, use in-memory implementations
-        // TODO: Replace with EF Core implementations when EF mappings are fixed
-        
+        // TODO: Add PostgreSQL Database Context when EF configurations are fixed
+        /*
+        services.AddDbContext<ScrumOpsDbContext>(options =>
+        {
+            var connectionString = configuration.GetConnectionString("DefaultConnection") 
+                ?? "Host=localhost;Database=scrumops;Username=scrumops;Password=scrumops123";
+            options.UseNpgsql(connectionString);
+        });
+        */
+
+        // Temporarily use in-memory implementations until EF mappings are fixed
         // Register Unit of Work
         services.AddScoped<IUnitOfWork, InMemoryUnitOfWork>();
 

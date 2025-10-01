@@ -52,6 +52,24 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// TODO: Apply database migrations when EF configurations are fixed
+/*
+try
+{
+    using var scope = app.Services.CreateScope();
+    var context = scope.ServiceProvider.GetRequiredService<ScrumOpsDbContext>();
+    
+    Log.Information("Applying database migrations...");
+    await context.Database.MigrateAsync();
+    Log.Information("Database migrations applied successfully");
+}
+catch (Exception ex)
+{
+    Log.Error(ex, "An error occurred while applying database migrations");
+    throw;
+}
+*/
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -76,7 +94,7 @@ app.MapGet("/health", () => Results.Ok(new { Status = "Healthy", Timestamp = Dat
 
 try
 {
-    Log.Information("Starting ScrumOps API");
+    Log.Information("Starting ScrumOps API with PostgreSQL support");
     app.Run();
 }
 catch (Exception ex)

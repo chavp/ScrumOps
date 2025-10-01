@@ -54,28 +54,37 @@
 
 **Validation**: ✅ APPROVED
 
-### Data Layer: Entity Framework Core with SQLite
-**Decision**: EF Core 8.0 with SQLite provider, Code First approach
+### Data Layer: Entity Framework Core with PostgreSQL
+**Decision**: EF Core 8.0 with PostgreSQL provider, Code First approach with Docker deployment
 **Rationale**:
-- Specified requirement: local SQLite database
-- Code First aligns with version control and deployment
-- Excellent LINQ query capabilities
-- Built-in migration system
-- Strong typing and compile-time validation
+- Enterprise-grade database suitable for production deployments
+- Excellent performance and scalability characteristics
+- Strong ACID compliance and transaction support
+- Advanced features: JSON support, full-text search, window functions
+- Docker containerization for consistent development and deployment environments
 
 **Database Design Considerations**:
-- SQLite limitations: No foreign key enforcement by default (enable pragmas)
-- Concurrent access: Use connection pooling and proper transactions
-- Backup strategy: File-based backups sufficient for local deployment
-- Migration strategy: Automated migrations in development, controlled in production
+- PostgreSQL schema separation for bounded contexts (TeamManagement, ProductBacklog, SprintManagement, EventManagement)
+- Advanced constraint support and referential integrity
+- Connection pooling with Npgsql for optimal performance
+- Comprehensive backup and recovery options
+- Migration strategy: Automated migrations in development, controlled deployments in production
 
 **Performance Considerations**:
-- SQLite performance adequate for specified scale (100+ users)
-- Proper indexing on frequently queried columns
-- Connection pooling to handle concurrent requests
-- Consider WAL mode for better concurrent read performance
+- PostgreSQL excellent performance for 100+ concurrent users
+- Advanced indexing capabilities (B-tree, GIN, GiST)
+- Query optimization with EXPLAIN ANALYZE
+- Connection pooling and prepared statements
+- Horizontal scaling options available if needed
 
-**Validation**: ✅ APPROVED with considerations noted
+**Docker Integration**:
+- PostgreSQL 16 Alpine container for lightweight deployment
+- Volume persistence for data durability
+- Health checks and automatic restart policies
+- pgAdmin container for database administration
+- Environment-specific configuration (dev/staging/prod)
+
+**Validation**: ✅ APPROVED - Enterprise-ready database solution
 
 ### Testing Strategy
 **Unit Testing**: xUnit with FluentAssertions
@@ -85,8 +94,9 @@
 
 **Integration Testing**: ASP.NET Core TestHost with WebApplicationFactory
 - Full API endpoint testing
-- In-memory database for isolated tests
-- TestContainers for database integration tests if needed
+- PostgreSQL TestContainers for isolated database tests
+- Docker Compose test environment for integration scenarios
+- Testcontainers for consistent database state across test runs
 
 **End-to-End Testing**: Playwright for .NET
 - Browser automation for complete user workflows
@@ -275,27 +285,34 @@ public class Sprint : IAggregateRoot
 
 ### Prerequisites
 - .NET 8.0 SDK
+- Docker Desktop for containerized development
 - Visual Studio 2022 17.8+ or VS Code with C# Dev Kit
 - Git for version control
-- SQLite command-line tools (optional, for database inspection)
+- PostgreSQL client tools (psql, pgAdmin) - optional, included in Docker setup
 
 ### Local Development Configuration
 - HTTPS development certificates
-- Local SQLite database in `App_Data` folder
+- Docker Compose environment with PostgreSQL
 - Environment-specific configuration (appsettings.Development.json)
 - Hot reload enabled for rapid development
+- Container orchestration for consistent environments
 
 ### Database Management
-- Automatic database creation on first run
+- Docker-based PostgreSQL development environment
+- Automatic database creation via init scripts
 - Migration commands for schema updates
 - Seed data for development and testing
-- Backup/restore procedures for data safety
+- Backup/restore procedures using PostgreSQL tools
+- pgAdmin web interface for database administration
 
 ## Risk Assessment and Mitigation
 
 ### Technical Risks
-**Risk**: SQLite concurrent access limitations
-**Mitigation**: Connection pooling, proper transaction management, WAL mode
+**Risk**: PostgreSQL container startup dependencies
+**Mitigation**: Docker health checks, proper service dependencies, graceful connection retry logic
+
+**Risk**: Docker environment complexity for new developers
+**Mitigation**: Comprehensive setup documentation, test scripts, automated environment validation
 
 **Risk**: Blazor Server scalability with many users
 **Mitigation**: SignalR backplane configuration, monitoring connection counts

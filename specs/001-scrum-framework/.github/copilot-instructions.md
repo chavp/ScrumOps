@@ -1,9 +1,9 @@
 # GitHub Copilot Development Instructions: ScrumOps
 
 **Project**: Scrum Framework Management System  
-**Technology Stack**: C# .NET 8, ASP.NET Core, Blazor, Entity Framework Core, SQLite  
+**Technology Stack**: C# .NET 8, ASP.NET Core, Blazor, Entity Framework Core, PostgreSQL, Docker  
 **Architecture**: Domain Driven Design (DDD) with Clean Architecture  
-**Last Updated**: 2025-01-27 (DDD Implementation)
+**Last Updated**: 2025-01-01 (PostgreSQL Migration)
 
 ## Project Context
 

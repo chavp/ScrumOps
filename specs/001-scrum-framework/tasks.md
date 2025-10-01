@@ -6,7 +6,7 @@
 ## Execution Flow (main)
 ```
 1. Load plan.md from feature directory ✅
-   → Tech stack: C# .NET 8.0, ASP.NET Core, Blazor, EF Core, SQLite
+   → Tech stack: C# .NET 8.0, ASP.NET Core, Blazor, EF Core, PostgreSQL, Docker
    → Architecture: Domain Driven Design with Clean Architecture
 2. Load design documents ✅
    → data-model.md: 4 bounded contexts, domain entities and value objects

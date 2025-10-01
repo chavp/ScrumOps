@@ -34,7 +34,7 @@
 
 **Project Type**: Web application with Domain Driven Design architecture
 **Performance Goals**: API responses <200ms p95, page loads <2s, support 100+ concurrent users
-**Constraints**: Local SQLite database, Entity Framework Code First, responsive design
+**Constraints**: PostgreSQL database with Docker deployment, Entity Framework Code First, responsive design
 **Scale/Scope**: Multi-team Scrum management, 26 functional requirements, DDD bounded contexts
 **Architecture Approach**: Domain Driven Design with Clean Architecture principles
 
@@ -62,7 +62,7 @@
 **Performance Requirements**:
 - [x] Performance benchmarks defined (API <200ms p95, pages <2s)
 - [x] Scalability requirements identified (100+ concurrent users)
-- [x] Resource usage constraints planned (SQLite limitations considered)
+- [x] Resource usage constraints planned (PostgreSQL performance characteristics considered)
 - [x] Performance testing approach defined (NBomber, Browser testing)
 
 **Observability**:

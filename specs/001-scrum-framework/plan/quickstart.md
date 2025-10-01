@@ -1,7 +1,7 @@
 # ScrumOps Development Quickstart Guide
 
 **Target Audience**: Developers setting up local development environment  
-**Prerequisites**: .NET 8.0 SDK, Visual Studio 2022 or VS Code  
+**Prerequisites**: .NET 8.0 SDK, Docker Desktop, Visual Studio 2022 or VS Code  
 **Estimated Setup Time**: 15-20 minutes
 
 ## Quick Setup (TL;DR)
@@ -12,18 +12,23 @@ git clone <repository-url>
 cd ScrumOps
 dotnet restore
 
-# Database setup
-dotnet ef database update --project src/ScrumOps.Api
+# Start services with Docker
+docker-compose up -d
 
-# Run applications
-dotnet run --project src/ScrumOps.Api  # API (port 5000/5001)
-dotnet run --project src/ScrumOps.Web  # Blazor UI (port 5002/5003)
+# Wait for services to be healthy (check with)
+docker-compose logs -f
 
-# Run tests
+# Run API tests (optional)
 dotnet test
+
+# Access applications
+# API: http://localhost:8080
+# API Health: http://localhost:8080/health
+# Swagger: http://localhost:8080/swagger
+# pgAdmin: http://localhost:8081 (admin@scrumops.com / admin123)
 ```
 
-**Verify Setup**: Navigate to https://localhost:5003 to see Blazor UI, https://localhost:5001/swagger for API docs
+**Verify Setup**: Navigate to http://localhost:8080/health for API status, http://localhost:8080/swagger for API docs
 
 ## Detailed Setup Instructions
 
@@ -37,15 +42,26 @@ dotnet --version  # Should show 8.0.x
 # If not installed, download from: https://dotnet.microsoft.com/download/dotnet/8.0
 ```
 
+#### Docker Desktop
+```bash
+# Verify installation
+docker --version  # Should show version 20.0+
+docker-compose --version  # Should show version 2.0+
+
+# If not installed, download from: https://www.docker.com/products/docker-desktop
+```
+
 #### IDE Setup
 **Visual Studio 2022 (Recommended)**:
 - Version 17.8 or later
 - ASP.NET and web development workload
 - .NET desktop development workload
+- Docker development tools
 
 **VS Code Alternative**:
 - C# Dev Kit extension
 - C# extension
+- Docker extension
 - REST Client extension (for API testing)
 
 #### Database Tools (Optional)
@@ -53,10 +69,13 @@ dotnet --version  # Should show 8.0.x
 # Install EF Core tools globally
 dotnet tool install --global dotnet-ef
 
-# Install SQLite command-line tools (optional)
-# Windows: Download from https://sqlite.org/download.html
-# macOS: brew install sqlite
-# Linux: apt-get install sqlite3
+# Install PostgreSQL client tools (optional - included in Docker setup)
+# Windows: Download from https://www.postgresql.org/download/windows/
+# macOS: brew install postgresql
+# Linux: apt-get install postgresql-client
+
+# Docker setup includes pgAdmin web interface
+# Access at http://localhost:8081
 ```
 
 ### 2. Project Setup
@@ -80,54 +99,62 @@ dotnet restore
 dotnet build
 ```
 
-### 3. Database Configuration
+### 3. Docker Environment Setup
 
-#### Connection String Setup
-**Development**: Uses SQLite database in `App_Data/scrumops.db`
+#### Start Development Environment
+```bash
+# Start all services (PostgreSQL + API + pgAdmin)
+docker-compose up -d
 
-**appsettings.Development.json**:
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Data Source=App_Data/scrumops.db;Cache=Shared"
-  },
-  "Logging": {
-    "LogLevel": {
-      "Default": "Debug",
-      "Microsoft.EntityFrameworkCore": "Information"
-    }
-  }
-}
+# Monitor service startup
+docker-compose logs -f
+
+# Verify all services are healthy
+docker-compose ps
 ```
 
-#### Database Creation and Migration
-```bash
-# Create database and apply migrations
-cd src/ScrumOps.Api
-dotnet ef database update
+#### Service Access Points
+- **API**: http://localhost:8080
+- **Health Check**: http://localhost:8080/health  
+- **Swagger UI**: http://localhost:8080/swagger
+- **pgAdmin**: http://localhost:8081 (admin@scrumops.com / admin123)
+- **PostgreSQL**: localhost:5432 (scrumops / scrumops123)
 
-# Verify database created
-ls -la App_Data/
-# Should see: scrumops.db
+#### Database Access
+```bash
+# Connect to PostgreSQL via psql (if installed locally)
+psql -h localhost -p 5432 -U scrumops -d scrumops_dev
+
+# Or use pgAdmin web interface at http://localhost:8081
+# Server details:
+# - Host: postgres (container name)
+# - Port: 5432
+# - Username: scrumops
+# - Password: scrumops123
+# - Database: scrumops_dev
 ```
 
-#### Seed Development Data (Optional)
+#### Development Data Setup (Optional)
 ```bash
-# Run with seed data flag
-dotnet run --project src/ScrumOps.Api --seed-data
-
-# This creates:
-# - Sample team "Demo Team"
-# - Users with all three Scrum roles
-# - Sample product backlog items
-# - Active sprint with tasks
+# Database is automatically initialized with schemas
+# For seed data, access pgAdmin or run SQL scripts manually
 ```
 
 ### 4. Running the Application
 
-#### Start API Server
+#### Docker-based Development (Recommended)
+All services are started with docker-compose, so no additional steps needed.
+- **API** is automatically running at http://localhost:8080
+- **Database** is automatically running with schema initialization
+- **pgAdmin** is available for database management
+
+#### Alternative: Local Development
 ```bash
-# Terminal 1: Start API
+# If you want to run API locally (PostgreSQL still in Docker)
+# Make sure PostgreSQL container is running
+docker-compose up -d postgres
+
+# Run API locally
 cd src/ScrumOps.Api
 dotnet run
 
@@ -137,23 +164,10 @@ dotnet run
 # - Swagger UI: https://localhost:5001/swagger
 ```
 
-#### Start Blazor Web Application
-```bash
-# Terminal 2: Start Blazor UI
-cd src/ScrumOps.Web
-dotnet run
-
-# Web app will be available at:
-# - HTTP: http://localhost:5002
-# - HTTPS: https://localhost:5003
-```
-
-#### Alternative: Use Visual Studio
-1. Set multiple startup projects:
-   - Right-click solution → Properties
-   - Select "Multiple startup projects"
-   - Set ScrumOps.Api and ScrumOps.Web to "Start"
-2. Press F5 to run both projects
+#### Using Visual Studio with Docker
+1. Set ScrumOps.Api as startup project
+2. Select "Docker Compose" as startup option
+3. Press F5 to run with debugging support in containers
 
 ### 5. Development Workflow
 
@@ -164,15 +178,39 @@ Both projects are configured for hot reload:
 
 #### Database Development
 ```bash
-# Add new migration after model changes
+# Add new migration after model changes (when EF is fully configured)
 dotnet ef migrations add MigrationName --project src/ScrumOps.Api
 
 # Apply migrations
 dotnet ef database update --project src/ScrumOps.Api
 
+# View database schema in pgAdmin
+# http://localhost:8081 -> Connect to postgres server
+# Browse schemas: TeamManagement, ProductBacklog, SprintManagement, EventManagement
+
 # Reset database (development only)
-dotnet ef database drop --project src/ScrumOps.Api
-dotnet ef database update --project src/ScrumOps.Api
+docker-compose down -v  # Removes volumes and data
+docker-compose up -d    # Recreates with fresh data
+```
+
+#### Docker Development Commands
+```bash
+# View logs for specific service
+docker-compose logs -f api
+docker-compose logs -f postgres
+
+# Restart specific service
+docker-compose restart api
+
+# Stop all services
+docker-compose down
+
+# Stop and remove all data
+docker-compose down -v
+
+# Build and restart API after code changes
+docker-compose build api
+docker-compose up -d api
 ```
 
 #### Testing Workflow
@@ -193,7 +231,7 @@ dotnet watch test --project tests/ScrumOps.Api.Tests/
 ### 6. API Development and Testing
 
 #### Using Swagger UI
-1. Navigate to https://localhost:5001/swagger
+1. Navigate to http://localhost:8080/swagger (Docker) or https://localhost:5001/swagger (local)
 2. Explore all available endpoints
 3. Test endpoints directly from the UI
 4. View request/response schemas
@@ -340,7 +378,9 @@ After successful setup:
 - Enable SQL query logging to identify N+1 problems
 - Use `Include()` carefully to avoid over-fetching
 - Implement pagination for large result sets
-- Monitor SQLite database size and performance
+- Monitor PostgreSQL database performance via pgAdmin
+- Use Docker container health checks and resource monitoring
+- Track connection pool usage and query performance
 
 ---
 

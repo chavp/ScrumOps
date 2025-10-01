@@ -11,7 +11,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.9" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,7 +20,10 @@
     <Compile Remove="Persistence\ScrumOpsDbContext.cs" />
     <Compile Remove="Persistence\UnitOfWork.cs" />
     <Compile Remove="Persistence\Repositories\TeamRepository.cs" />
+    <Compile Remove="Persistence\Repositories\ProductBacklogRepository.cs" />
   </ItemGroup>
+
+
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>

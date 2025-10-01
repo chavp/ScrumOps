@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ScrumOps.Web.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+335b0b90587904934a5316ca0d9cfaa94e0048bb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+08c7a396529c6ffe2bb193091954363c55f7b96f")]
 [assembly: System.Reflection.AssemblyProductAttribute("ScrumOps.Web.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ScrumOps.Web.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,17 +1,17 @@
 # Domain Model Design: Domain Driven Design with Entity Framework Core
 
 **Created**: 2025-01-27  
-**Updated**: 2025-01-27 (DDD Implementation)  
+**Updated**: 2025-01-01 (PostgreSQL Migration)  
 **Status**: Complete  
 **Architecture**: Domain Driven Design with Clean Architecture
-**Database**: SQLite with Entity Framework Core 8.0
+**Database**: PostgreSQL with Entity Framework Core 8.0 and Docker deployment
 
 ## Bounded Context Overview
 
 The ScrumOps domain is organized into four main bounded contexts, each with clear responsibilities and boundaries:
 
 ```mermaid
-graph TB
+flowchart TB
     subgraph "Team Management Context"
         Team[Team Aggregate]
         User[User Entity]
@@ -39,10 +39,10 @@ graph TB
         TimeBox[Time Box VO]
     end
     
-    Team -.-> ProductBacklog : "owns"
-    Team -.-> Sprint : "executes"
-    ProductBacklog -.-> Sprint : "provides items"
-    Sprint -.-> SprintEvent : "includes"
+    Team -->|owns| ProductBacklog
+    Team -->|executes| Sprint
+    ProductBacklog -->|provides items| Sprint
+    Sprint -->|includes| SprintEvent
 ```
 
 ## Shared Kernel
@@ -767,18 +767,40 @@ public class ScrumOpsDbContext : DbContext
         // Apply configurations
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ScrumOpsDbContext).Assembly);
         
-        // SQLite specific configurations
-        ConfigureSQLiteConstraints(modelBuilder);
+        // PostgreSQL specific configurations
+        ConfigurePostgreSQLConstraints(modelBuilder);
+        ConfigureSchemas(modelBuilder);
     }
 
-    private static void ConfigureSQLiteConstraints(ModelBuilder modelBuilder)
+    private static void ConfigurePostgreSQLConstraints(ModelBuilder modelBuilder)
     {
-        // Configure cascade delete behaviors for SQLite
+        // Configure cascade delete behaviors for PostgreSQL
         foreach (var relationship in modelBuilder.Model.GetEntityTypes()
             .SelectMany(e => e.GetForeignKeys()))
         {
             relationship.DeleteBehavior = DeleteBehavior.Restrict;
         }
+    }
+
+    private static void ConfigureSchemas(ModelBuilder modelBuilder)
+    {
+        // Team Management schema
+        modelBuilder.Entity<Team>().ToTable("Teams", "TeamManagement");
+        modelBuilder.Entity<User>().ToTable("Users", "TeamManagement");
+
+        // Product Backlog schema
+        modelBuilder.Entity<ProductBacklog>().ToTable("ProductBacklogs", "ProductBacklog");
+        modelBuilder.Entity<ProductBacklogItem>().ToTable("ProductBacklogItems", "ProductBacklog");
+
+        // Sprint Management schema
+        modelBuilder.Entity<Sprint>().ToTable("Sprints", "SprintManagement");
+        modelBuilder.Entity<SprintBacklogItem>().ToTable("SprintBacklogItems", "SprintManagement");
+        modelBuilder.Entity<Task>().ToTable("Tasks", "SprintManagement");
+        modelBuilder.Entity<Impediment>().ToTable("Impediments", "SprintManagement");
+
+        // Event Management schema
+        modelBuilder.Entity<SprintEvent>().ToTable("SprintEvents", "EventManagement");
+        modelBuilder.Entity<SprintEventParticipant>().ToTable("SprintEventParticipants", "EventManagement");
     }
 }
 ```
@@ -788,7 +810,8 @@ Each entity will have a corresponding `IEntityTypeConfiguration<T>` implementati
 - Property constraints and validations
 - Index definitions
 - Relationship configurations
-- SQLite-specific settings
+- PostgreSQL-specific settings (schemas, data types, constraints)
+- Schema separation for bounded contexts
 
 ## Database Initialization and Seeding
 
@@ -811,7 +834,7 @@ Development environment will include:
 - Connection pooling configuration
 - Query optimization with Include() statements
 - Pagination for large result sets
-- SQLite WAL mode for better concurrent access
+- PostgreSQL advanced features for better performance and data integrity
 
 ## Validation and Business Rules
 
