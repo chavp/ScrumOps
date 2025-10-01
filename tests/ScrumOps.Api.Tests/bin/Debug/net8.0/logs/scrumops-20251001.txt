@@ -1,0 +1,867 @@
+2025-10-01 11:03:50.625 +07:00 [INF] Applying database migrations...
+2025-10-01 11:03:50.625 +07:00 [INF] Applying database migrations...
+2025-10-01 11:03:50.624 +07:00 [INF] Applying database migrations...
+2025-10-01 11:03:51.001 +07:00 [WRN] The property 'SprintBacklogItem.IsCompleted' was first mapped explicitly and then ignored. Consider not mapping the property in the first place.
+2025-10-01 11:03:51.395 +07:00 [INF] Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-01 11:03:51.395 +07:00 [INF] Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-01 11:03:51.395 +07:00 [INF] Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-01 11:03:51.650 +07:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" character varying(150) NOT NULL,
+    "ProductVersion" character varying(32) NOT NULL,
+    CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
+);
+2025-10-01 11:03:51.650 +07:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" character varying(150) NOT NULL,
+    "ProductVersion" character varying(32) NOT NULL,
+    CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
+);
+2025-10-01 11:03:51.650 +07:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" character varying(150) NOT NULL,
+    "ProductVersion" character varying(32) NOT NULL,
+    CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
+);
+2025-10-01 11:03:51.673 +07:00 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+LOCK TABLE "__EFMigrationsHistory" IN ACCESS EXCLUSIVE MODE
+2025-10-01 11:03:51.675 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-01 11:03:51.682 +07:00 [INF] No migrations were applied. The database is already up to date.
+2025-10-01 11:03:51.687 +07:00 [INF] Executed DbCommand (26ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+LOCK TABLE "__EFMigrationsHistory" IN ACCESS EXCLUSIVE MODE
+2025-10-01 11:03:51.689 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-01 11:03:51.689 +07:00 [INF] No migrations were applied. The database is already up to date.
+2025-10-01 11:03:51.691 +07:00 [INF] Database migrations applied successfully
+2025-10-01 11:03:51.692 +07:00 [INF] Executed DbCommand (31ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+LOCK TABLE "__EFMigrationsHistory" IN ACCESS EXCLUSIVE MODE
+2025-10-01 11:03:51.692 +07:00 [INF] Database migrations applied successfully
+2025-10-01 11:03:51.694 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-01 11:03:51.694 +07:00 [INF] No migrations were applied. The database is already up to date.
+2025-10-01 11:03:51.697 +07:00 [INF] Database migrations applied successfully
+2025-10-01 11:03:51.760 +07:00 [INF] Starting ScrumOps API with PostgreSQL and Entity Framework Core
+2025-10-01 11:03:51.760 +07:00 [INF] Starting ScrumOps API with PostgreSQL and Entity Framework Core
+2025-10-01 11:03:51.760 +07:00 [INF] Starting ScrumOps API with PostgreSQL and Entity Framework Core
+2025-10-01 11:03:51.825 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.829 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams/1/members - application/json; charset=utf-8 69
+2025-10-01 11:03:51.829 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 59
+2025-10-01 11:03:51.844 +07:00 [WRN] Failed to determine the https port for redirect.
+2025-10-01 11:03:51.844 +07:00 [WRN] Failed to determine the https port for redirect.
+2025-10-01 11:03:51.847 +07:00 [WRN] Failed to determine the https port for redirect.
+2025-10-01 11:03:51.848 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:51.848 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.851 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams/1/members - 404 null null 21.6553ms
+2025-10-01 11:03:51.852 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST http://localhost/api/teams/1/members, Response status code: 404
+2025-10-01 11:03:51.858 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 94
+2025-10-01 11:03:51.859 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:51.866 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.866 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTeam(ScrumOps.Shared.Contracts.Teams.CreateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.866 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTeam(ScrumOps.Shared.Contracts.Teams.CreateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.869 +07:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-10-01 11:03:51.869 +07:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-10-01 11:03:51.869 +07:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-10-01 11:03:51.878 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.879 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.892 +07:00 [INF] Creating team with name: Test Team
+2025-10-01 11:03:51.892 +07:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2025-10-01 11:03:51.896 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 28.7616ms
+2025-10-01 11:03:51.897 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.897 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 73.4915ms
+2025-10-01 11:03:51.908 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.910 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.910 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.910 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.911 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.911 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.9602ms
+2025-10-01 11:03:51.911 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.911 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 2.7725ms
+2025-10-01 11:03:51.911 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.912 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.912 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.913 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.913 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.913 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.7651ms
+2025-10-01 11:03:51.913 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.913 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 2.0069ms
+2025-10-01 11:03:51.914 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.914 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.914 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.914 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.914 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.914 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.2966ms
+2025-10-01 11:03:51.914 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.915 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 0.6894ms
+2025-10-01 11:03:51.915 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.915 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.915 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.915 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.915 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.915 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.2547ms
+2025-10-01 11:03:51.915 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.916 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 0.7775ms
+2025-10-01 11:03:51.916 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.916 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.916 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.916 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.916 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.916 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.2995ms
+2025-10-01 11:03:51.917 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.917 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 0.6814ms
+2025-10-01 11:03:51.917 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.917 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.917 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.917 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.918 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.918 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.4954ms
+2025-10-01 11:03:51.918 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.918 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.1807ms
+2025-10-01 11:03:51.918 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.918 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.919 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.919 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.919 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.919 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.4391ms
+2025-10-01 11:03:51.919 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.919 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.1042ms
+2025-10-01 11:03:51.920 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.920 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.920 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.920 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.921 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.921 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.456ms
+2025-10-01 11:03:51.921 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.921 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.3601ms
+2025-10-01 11:03:51.921 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.922 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.922 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.922 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.922 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.922 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.5278ms
+2025-10-01 11:03:51.922 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.923 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.1471ms
+2025-10-01 11:03:51.926 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api) in 60.6357ms
+2025-10-01 11:03:51.927 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:51.927 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams - 400 null application/problem+json; charset=utf-8 97.898ms
+2025-10-01 11:03:51.930 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.930 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.930 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 74
+2025-10-01 11:03:51.930 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.930 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.931 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.931 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.5431ms
+2025-10-01 11:03:51.931 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.931 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.4721ms
+2025-10-01 11:03:51.931 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.931 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:51.932 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.932 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTeam(ScrumOps.Shared.Contracts.Teams.CreateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.932 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.932 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.932 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.932 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.4488ms
+2025-10-01 11:03:51.932 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.932 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.047ms
+2025-10-01 11:03:51.933 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.933 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.933 +07:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2025-10-01 11:03:51.933 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.933 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api) in 1.4909ms
+2025-10-01 11:03:51.933 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.933 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:51.933 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.933 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams - 400 null application/problem+json; charset=utf-8 3.1914ms
+2025-10-01 11:03:51.934 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.4639ms
+2025-10-01 11:03:51.934 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.934 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.0501ms
+2025-10-01 11:03:51.934 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 61
+2025-10-01 11:03:51.934 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.934 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.934 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.934 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.935 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.935 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.4574ms
+2025-10-01 11:03:51.935 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.935 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.0417ms
+2025-10-01 11:03:51.935 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.935 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:51.935 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.935 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTeam(ScrumOps.Shared.Contracts.Teams.CreateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.936 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.936 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.936 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.936 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.2794ms
+2025-10-01 11:03:51.936 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.936 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 0.7304ms
+2025-10-01 11:03:51.936 +07:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2025-10-01 11:03:51.936 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api) in 0.7746ms
+2025-10-01 11:03:51.936 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:51.936 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams - 400 null application/problem+json; charset=utf-8 2.626ms
+2025-10-01 11:03:51.936 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.937 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.937 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.937 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.937 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.937 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.4206ms
+2025-10-01 11:03:51.937 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.937 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.0386ms
+2025-10-01 11:03:51.938 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/health - null null
+2025-10-01 11:03:51.938 +07:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 11:03:51.939 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/health - null null
+2025-10-01 11:03:51.939 +07:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 11:03:51.975 +07:00 [INF] Setting HTTP status code 200.
+2025-10-01 11:03:51.975 +07:00 [INF] Setting HTTP status code 200.
+2025-10-01 11:03:51.981 +07:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 11:03:51.981 +07:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 11:03:51.983 +07:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 11:03:51.983 +07:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 11:03:51.984 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/health - 200 null application/json; charset=utf-8 46.0189ms
+2025-10-01 11:03:51.984 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/health - 200 null application/json; charset=utf-8 44.9795ms
+2025-10-01 11:03:51.984 +07:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost/api/teams - null null
+2025-10-01 11:03:51.984 +07:00 [INF] Executing endpoint '405 HTTP Method Not Supported'
+2025-10-01 11:03:51.984 +07:00 [INF] Executed endpoint '405 HTTP Method Not Supported'
+2025-10-01 11:03:51.984 +07:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost/api/teams - 405 null null 0.4683ms
+2025-10-01 11:03:51.985 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.985 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.986 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.986 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.986 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.986 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.6154ms
+2025-10-01 11:03:51.986 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.986 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.4915ms
+2025-10-01 11:03:51.987 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.988 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.988 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.988 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.988 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.988 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.988 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.988 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.988 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.989 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.988 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.988 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.989 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.989 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.989 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.989 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.989 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.989 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.989 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.989 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.989 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.989 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.989 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.2798ms
+2025-10-01 11:03:51.989 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.989 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.988 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.989 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.989 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.3854ms
+2025-10-01 11:03:51.989 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.989 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.989 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.990 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.5099ms
+2025-10-01 11:03:51.990 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.989 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.990 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.508ms
+2025-10-01 11:03:51.990 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.990 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.990 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.989 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.990 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:51.990 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 1.1054ms
+2025-10-01 11:03:51.990 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.990 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.990 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.990 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.990 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.990 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.990 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.990 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.990 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.990 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 2.1964ms
+2025-10-01 11:03:51.990 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 2.1944ms
+2025-10-01 11:03:51.990 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 2.1276ms
+2025-10-01 11:03:51.990 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.990 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.990 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.990 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.990 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.4088ms
+2025-10-01 11:03:51.990 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.990 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.991 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.991 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.991 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.991 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 1.1426ms
+2025-10-01 11:03:51.991 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.991 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.991 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.8446ms
+2025-10-01 11:03:51.991 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 2.6539ms
+2025-10-01 11:03:51.991 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.991 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.5525ms
+2025-10-01 11:03:51.991 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 2.8673ms
+2025-10-01 11:03:51.991 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.4613ms
+2025-10-01 11:03:51.991 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.991 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.991 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:51.991 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.991 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 2.9622ms
+2025-10-01 11:03:51.991 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.8885ms
+2025-10-01 11:03:51.991 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.9575ms
+2025-10-01 11:03:51.991 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.6784ms
+2025-10-01 11:03:51.992 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:51.992 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 1.8933ms
+2025-10-01 11:03:51.993 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:51.993 +07:00 [INF] Getting all teams
+2025-10-01 11:03:51.993 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:52.013 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 19.9393ms
+2025-10-01 11:03:52.013 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:52.013 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 25.6206ms
+2025-10-01 11:03:52.013 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 107
+2025-10-01 11:03:52.014 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:52.015 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 110
+2025-10-01 11:03:52.015 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:52.016 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTeam(ScrumOps.Shared.Contracts.Teams.CreateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:52.016 +07:00 [INF] Creating team with name: Integration Test Team
+2025-10-01 11:03:52.017 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTeam(ScrumOps.Shared.Contracts.Teams.CreateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:52.019 +07:00 [INF] Creating team with name: Performance Test Team
+2025-10-01 11:03:52.216 +07:00 [INF] Executed DbCommand (34ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?' (DbType = Boolean), @p3='?' (DbType = Int32), @p4='?', @p5='?', @p6='?' (DbType = Guid), @p7='?' (DbType = DateTime), @p8='?' (DbType = Boolean), @p9='?' (DbType = DateTime), @p10='?' (DbType = Guid), @p11='?', @p12='?' (DbType = Boolean), @p13='?', @p14='?', @p15='?' (DbType = Guid), @p16='?' (DbType = DateTime), @p17='?' (DbType = Boolean), @p18='?' (DbType = DateTime), @p19='?' (DbType = Guid), @p20='?', @p21='?' (DbType = Boolean), @p22='?', @p23='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "TeamManagement"."Teams" ("Id", "CreatedDate", "IsActive", "SprintLengthWeeks", "Description", "Name")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING "CurrentVelocityValue";
+INSERT INTO "TeamManagement"."Users" ("Id", "CreatedDate", "IsActive", "LastLoginDate", "TeamId", "Email", "RoleIsSingleton", "Role", "Name")
+VALUES (@p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14);
+INSERT INTO "TeamManagement"."Users" ("Id", "CreatedDate", "IsActive", "LastLoginDate", "TeamId", "Email", "RoleIsSingleton", "Role", "Name")
+VALUES (@p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23);
+2025-10-01 11:03:52.216 +07:00 [INF] Executed DbCommand (33ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?' (DbType = Boolean), @p3='?' (DbType = Int32), @p4='?', @p5='?', @p6='?' (DbType = Guid), @p7='?' (DbType = DateTime), @p8='?' (DbType = Boolean), @p9='?' (DbType = DateTime), @p10='?' (DbType = Guid), @p11='?', @p12='?' (DbType = Boolean), @p13='?', @p14='?', @p15='?' (DbType = Guid), @p16='?' (DbType = DateTime), @p17='?' (DbType = Boolean), @p18='?' (DbType = DateTime), @p19='?' (DbType = Guid), @p20='?', @p21='?' (DbType = Boolean), @p22='?', @p23='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "TeamManagement"."Teams" ("Id", "CreatedDate", "IsActive", "SprintLengthWeeks", "Description", "Name")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING "CurrentVelocityValue";
+INSERT INTO "TeamManagement"."Users" ("Id", "CreatedDate", "IsActive", "LastLoginDate", "TeamId", "Email", "RoleIsSingleton", "Role", "Name")
+VALUES (@p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14);
+INSERT INTO "TeamManagement"."Users" ("Id", "CreatedDate", "IsActive", "LastLoginDate", "TeamId", "Email", "RoleIsSingleton", "Role", "Name")
+VALUES (@p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23);
+2025-10-01 11:03:52.216 +07:00 [INF] Executed DbCommand (34ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?' (DbType = Boolean), @p3='?' (DbType = Int32), @p4='?', @p5='?', @p6='?' (DbType = Guid), @p7='?' (DbType = DateTime), @p8='?' (DbType = Boolean), @p9='?' (DbType = DateTime), @p10='?' (DbType = Guid), @p11='?', @p12='?' (DbType = Boolean), @p13='?', @p14='?', @p15='?' (DbType = Guid), @p16='?' (DbType = DateTime), @p17='?' (DbType = Boolean), @p18='?' (DbType = DateTime), @p19='?' (DbType = Guid), @p20='?', @p21='?' (DbType = Boolean), @p22='?', @p23='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "TeamManagement"."Teams" ("Id", "CreatedDate", "IsActive", "SprintLengthWeeks", "Description", "Name")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING "CurrentVelocityValue";
+INSERT INTO "TeamManagement"."Users" ("Id", "CreatedDate", "IsActive", "LastLoginDate", "TeamId", "Email", "RoleIsSingleton", "Role", "Name")
+VALUES (@p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14);
+INSERT INTO "TeamManagement"."Users" ("Id", "CreatedDate", "IsActive", "LastLoginDate", "TeamId", "Email", "RoleIsSingleton", "Role", "Name")
+VALUES (@p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23);
+2025-10-01 11:03:52.261 +07:00 [ERR] An exception occurred in the database while saving changes for context type 'ScrumOps.Infrastructure.Persistence.ScrumOpsDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "IX_Users_Email"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "IX_Users_Email"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: TeamManagement
+    TableName: Users
+    ConstraintName: IX_Users_Email
+    File: nbtinsert.c
+    Line: 666
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "IX_Users_Email"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "IX_Users_Email"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: TeamManagement
+    TableName: Users
+    ConstraintName: IX_Users_Email
+    File: nbtinsert.c
+    Line: 666
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-10-01 11:03:52.261 +07:00 [ERR] An exception occurred in the database while saving changes for context type 'ScrumOps.Infrastructure.Persistence.ScrumOpsDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "IX_Users_Email"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "IX_Users_Email"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: TeamManagement
+    TableName: Users
+    ConstraintName: IX_Users_Email
+    File: nbtinsert.c
+    Line: 666
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "IX_Users_Email"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "IX_Users_Email"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: TeamManagement
+    TableName: Users
+    ConstraintName: IX_Users_Email
+    File: nbtinsert.c
+    Line: 666
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-10-01 11:03:52.261 +07:00 [ERR] An exception occurred in the database while saving changes for context type 'ScrumOps.Infrastructure.Persistence.ScrumOpsDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "IX_Users_Email"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "IX_Users_Email"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: TeamManagement
+    TableName: Users
+    ConstraintName: IX_Users_Email
+    File: nbtinsert.c
+    Line: 666
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "IX_Users_Email"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "IX_Users_Email"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: TeamManagement
+    TableName: Users
+    ConstraintName: IX_Users_Email
+    File: nbtinsert.c
+    Line: 666
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-10-01 11:03:52.264 +07:00 [ERR] Error creating team with name: Performance Test Team
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "IX_Users_Email"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "IX_Users_Email"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: TeamManagement
+    TableName: Users
+    ConstraintName: IX_Users_Email
+    File: nbtinsert.c
+    Line: 666
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at ScrumOps.Infrastructure.Persistence.ScrumOpsDbContext.SaveChangesAsync(CancellationToken cancellationToken) in C:\data\ScrumOps\src\ScrumOps.Infrastructure\Persistence\ScrumOpsDbContext.cs:line 138
+   at ScrumOps.Infrastructure.Persistence.UnitOfWork.SaveChangesAsync(CancellationToken cancellationToken) in C:\data\ScrumOps\src\ScrumOps.Infrastructure\Persistence\UnitOfWork.cs:line 21
+   at ScrumOps.Application.TeamManagement.Handlers.CommandHandlers.CreateTeamCommandHandler.Handle(CreateTeamCommand request, CancellationToken cancellationToken) in C:\data\ScrumOps\src\ScrumOps.Application\TeamManagement\Handlers\CommandHandlers\CreateTeamCommandHandler.cs:line 72
+   at ScrumOps.Api.Controllers.TeamsController.CreateTeam(CreateTeamRequest request, CancellationToken cancellationToken) in C:\data\ScrumOps\src\ScrumOps.Api\Controllers\TeamsController.cs:line 50
+2025-10-01 11:03:52.265 +07:00 [ERR] Error creating team with name: Test Team
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "IX_Users_Email"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "IX_Users_Email"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: TeamManagement
+    TableName: Users
+    ConstraintName: IX_Users_Email
+    File: nbtinsert.c
+    Line: 666
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at ScrumOps.Infrastructure.Persistence.ScrumOpsDbContext.SaveChangesAsync(CancellationToken cancellationToken) in C:\data\ScrumOps\src\ScrumOps.Infrastructure\Persistence\ScrumOpsDbContext.cs:line 138
+   at ScrumOps.Infrastructure.Persistence.UnitOfWork.SaveChangesAsync(CancellationToken cancellationToken) in C:\data\ScrumOps\src\ScrumOps.Infrastructure\Persistence\UnitOfWork.cs:line 21
+   at ScrumOps.Application.TeamManagement.Handlers.CommandHandlers.CreateTeamCommandHandler.Handle(CreateTeamCommand request, CancellationToken cancellationToken) in C:\data\ScrumOps\src\ScrumOps.Application\TeamManagement\Handlers\CommandHandlers\CreateTeamCommandHandler.cs:line 72
+   at ScrumOps.Api.Controllers.TeamsController.CreateTeam(CreateTeamRequest request, CancellationToken cancellationToken) in C:\data\ScrumOps\src\ScrumOps.Api\Controllers\TeamsController.cs:line 50
+2025-10-01 11:03:52.263 +07:00 [ERR] Error creating team with name: Integration Test Team
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "IX_Users_Email"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "IX_Users_Email"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: TeamManagement
+    TableName: Users
+    ConstraintName: IX_Users_Email
+    File: nbtinsert.c
+    Line: 666
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at ScrumOps.Infrastructure.Persistence.ScrumOpsDbContext.SaveChangesAsync(CancellationToken cancellationToken) in C:\data\ScrumOps\src\ScrumOps.Infrastructure\Persistence\ScrumOpsDbContext.cs:line 138
+   at ScrumOps.Infrastructure.Persistence.UnitOfWork.SaveChangesAsync(CancellationToken cancellationToken) in C:\data\ScrumOps\src\ScrumOps.Infrastructure\Persistence\UnitOfWork.cs:line 21
+   at ScrumOps.Application.TeamManagement.Handlers.CommandHandlers.CreateTeamCommandHandler.Handle(CreateTeamCommand request, CancellationToken cancellationToken) in C:\data\ScrumOps\src\ScrumOps.Application\TeamManagement\Handlers\CommandHandlers\CreateTeamCommandHandler.cs:line 72
+   at ScrumOps.Api.Controllers.TeamsController.CreateTeam(CreateTeamRequest request, CancellationToken cancellationToken) in C:\data\ScrumOps\src\ScrumOps.Api\Controllers\TeamsController.cs:line 50
+2025-10-01 11:03:52.273 +07:00 [INF] Executing BadRequestObjectResult, writing value of type 'System.String'.
+2025-10-01 11:03:52.273 +07:00 [INF] Executing BadRequestObjectResult, writing value of type 'System.String'.
+2025-10-01 11:03:52.274 +07:00 [INF] Executing BadRequestObjectResult, writing value of type 'System.String'.
+2025-10-01 11:03:52.275 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api) in 259.5649ms
+2025-10-01 11:03:52.275 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api) in 409.4482ms
+2025-10-01 11:03:52.275 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api) in 257.7848ms
+2025-10-01 11:03:52.276 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:52.276 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:52.276 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:52.278 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 130
+2025-10-01 11:03:52.279 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:52.279 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTeam(ScrumOps.Shared.Contracts.Teams.CreateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:52.279 +07:00 [INF] Creating team with name: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+2025-10-01 11:03:52.279 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams - 400 null text/plain; charset=utf-8 421.5096ms
+2025-10-01 11:03:52.279 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams - 400 null text/plain; charset=utf-8 264.2984ms
+2025-10-01 11:03:52.279 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams - 400 null text/plain; charset=utf-8 266.2144ms
+2025-10-01 11:03:52.296 +07:00 [INF] Executed DbCommand (11ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?' (DbType = Boolean), @p3='?' (DbType = Int32), @p4='?', @p5='?', @p6='?' (DbType = Guid), @p7='?' (DbType = DateTime), @p8='?' (DbType = Boolean), @p9='?' (DbType = DateTime), @p10='?' (DbType = Guid), @p11='?', @p12='?' (DbType = Boolean), @p13='?', @p14='?', @p15='?' (DbType = Guid), @p16='?' (DbType = DateTime), @p17='?' (DbType = Boolean), @p18='?' (DbType = DateTime), @p19='?' (DbType = Guid), @p20='?', @p21='?' (DbType = Boolean), @p22='?', @p23='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "TeamManagement"."Teams" ("Id", "CreatedDate", "IsActive", "SprintLengthWeeks", "Description", "Name")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING "CurrentVelocityValue";
+INSERT INTO "TeamManagement"."Users" ("Id", "CreatedDate", "IsActive", "LastLoginDate", "TeamId", "Email", "RoleIsSingleton", "Role", "Name")
+VALUES (@p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14);
+INSERT INTO "TeamManagement"."Users" ("Id", "CreatedDate", "IsActive", "LastLoginDate", "TeamId", "Email", "RoleIsSingleton", "Role", "Name")
+VALUES (@p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23);
+2025-10-01 11:03:52.298 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams/1/velocity - null null
+2025-10-01 11:03:52.298 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams/1 - null null
+2025-10-01 11:03:52.299 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeam (ScrumOps.Api)'
+2025-10-01 11:03:52.300 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams/1/velocity - 404 null null 1.6467ms
+2025-10-01 11:03:52.300 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost/api/teams/1/velocity, Response status code: 404
+2025-10-01 11:03:52.300 +07:00 [ERR] An exception occurred in the database while saving changes for context type 'ScrumOps.Infrastructure.Persistence.ScrumOpsDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "IX_Users_Email"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "IX_Users_Email"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: TeamManagement
+    TableName: Users
+    ConstraintName: IX_Users_Email
+    File: nbtinsert.c
+    Line: 666
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "IX_Users_Email"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "IX_Users_Email"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: TeamManagement
+    TableName: Users
+    ConstraintName: IX_Users_Email
+    File: nbtinsert.c
+    Line: 666
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-10-01 11:03:52.302 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:52.303 +07:00 [INF] Route matched with {action = "GetTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeam(Int32, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:52.305 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:52.305 +07:00 [ERR] Error creating team with name: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "IX_Users_Email"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "IX_Users_Email"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: TeamManagement
+    TableName: Users
+    ConstraintName: IX_Users_Email
+    File: nbtinsert.c
+    Line: 666
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal.NpgsqlModificationCommandBatch.Consume(RelationalDataReader reader, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at ScrumOps.Infrastructure.Persistence.ScrumOpsDbContext.SaveChangesAsync(CancellationToken cancellationToken) in C:\data\ScrumOps\src\ScrumOps.Infrastructure\Persistence\ScrumOpsDbContext.cs:line 138
+   at ScrumOps.Infrastructure.Persistence.UnitOfWork.SaveChangesAsync(CancellationToken cancellationToken) in C:\data\ScrumOps\src\ScrumOps.Infrastructure\Persistence\UnitOfWork.cs:line 21
+   at ScrumOps.Application.TeamManagement.Handlers.CommandHandlers.CreateTeamCommandHandler.Handle(CreateTeamCommand request, CancellationToken cancellationToken) in C:\data\ScrumOps\src\ScrumOps.Application\TeamManagement\Handlers\CommandHandlers\CreateTeamCommandHandler.cs:line 72
+   at ScrumOps.Api.Controllers.TeamsController.CreateTeam(CreateTeamRequest request, CancellationToken cancellationToken) in C:\data\ScrumOps\src\ScrumOps.Api\Controllers\TeamsController.cs:line 50
+2025-10-01 11:03:52.306 +07:00 [INF] Getting team with ID: 1
+2025-10-01 11:03:52.308 +07:00 [INF] Executing BadRequestObjectResult, writing value of type 'System.String'.
+2025-10-01 11:03:52.308 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:52.308 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api) in 28.834ms
+2025-10-01 11:03:52.308 +07:00 [INF] Getting all teams
+2025-10-01 11:03:52.308 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:52.308 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:52.308 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.TeamDetailsResponse'.
+2025-10-01 11:03:52.308 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams - 400 null text/plain; charset=utf-8 29.9816ms
+2025-10-01 11:03:52.309 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 136
+2025-10-01 11:03:52.309 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:52.309 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTeam(ScrumOps.Shared.Contracts.Teams.CreateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:52.309 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 1.2162ms
+2025-10-01 11:03:52.309 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:52.309 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 7.5416ms
+2025-10-01 11:03:52.309 +07:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2025-10-01 11:03:52.309 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api) in 0.3672ms
+2025-10-01 11:03:52.309 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:52.309 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost/api/teams - 400 null application/problem+json; charset=utf-8 0.7759ms
+2025-10-01 11:03:52.311 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/api/teams - null null
+2025-10-01 11:03:52.311 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:52.311 +07:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTeams(System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:52.311 +07:00 [INF] Getting all teams
+2025-10-01 11:03:52.311 +07:00 [INF] Executing OkObjectResult, writing value of type 'ScrumOps.Shared.Contracts.Teams.GetTeamsResponse'.
+2025-10-01 11:03:52.311 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 0.3843ms
+2025-10-01 11:03:52.311 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 11:03:52.311 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams - 200 null application/json; charset=utf-8 0.914ms
+2025-10-01 11:03:52.312 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost/health - null null
+2025-10-01 11:03:52.312 +07:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 11:03:52.312 +07:00 [INF] Setting HTTP status code 200.
+2025-10-01 11:03:52.313 +07:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 11:03:52.313 +07:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 11:03:52.313 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/health - 200 null application/json; charset=utf-8 0.8874ms
+2025-10-01 11:03:52.314 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 90
+2025-10-01 11:03:52.315 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 90
+2025-10-01 11:03:52.315 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 90
+2025-10-01 11:03:52.315 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 90
+2025-10-01 11:03:52.315 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:52.315 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost/api/teams - application/json; charset=utf-8 90
+2025-10-01 11:03:52.315 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:52.315 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:52.315 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:52.315 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTeam(ScrumOps.Shared.Contracts.Teams.CreateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:52.315 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTeam(ScrumOps.Shared.Contracts.Teams.CreateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:52.315 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTeam(ScrumOps.Shared.Contracts.Teams.CreateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:52.315 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 11:03:52.315 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTeam(ScrumOps.Shared.Contracts.Teams.CreateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:52.315 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTeam(ScrumOps.Shared.Contracts.Teams.CreateTeamRequest, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 11:03:52.315 +07:00 [INF] Creating team with name: Concurrent Team 1
+2025-10-01 11:03:52.315 +07:00 [INF] Creating team with name: Concurrent Team 0
+2025-10-01 11:03:52.315 +07:00 [INF] Creating team with name: Concurrent Team 2
+2025-10-01 11:03:52.315 +07:00 [INF] Creating team with name: Concurrent Team 4
+2025-10-01 11:03:52.316 +07:00 [INF] Creating team with name: Concurrent Team 3
+2025-10-01 11:03:52.316 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeam (ScrumOps.Api) in 11.543ms
+2025-10-01 11:03:52.316 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeam (ScrumOps.Api)'
+2025-10-01 11:03:52.316 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost/api/teams/1 - 200 null application/json; charset=utf-8 17.6676ms

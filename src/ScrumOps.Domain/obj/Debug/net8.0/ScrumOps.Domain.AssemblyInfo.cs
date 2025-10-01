@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ScrumOps.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a2daa10464d781d391286e07f5398589d22c0c84")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+38ed2e342513dce49bc2b6b66c6c2ae9abdf1cf8")]
 [assembly: System.Reflection.AssemblyProductAttribute("ScrumOps.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ScrumOps.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
