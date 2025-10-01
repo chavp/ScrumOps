@@ -1,16 +1,17 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ScrumOps.Application.TeamManagement.Commands;
-using ScrumOps.Shared.Contracts.Teams;
+using ScrumOps.Application.TeamManagement.Queries;
+using ScrumOps.Domain.SharedKernel.ValueObjects;
 
 namespace ScrumOps.Api.Controllers;
 
 /// <summary>
-/// API controller for team management operations.
+/// Teams API controller for managing scrum teams.
 /// </summary>
 [ApiController]
-[Route("api/[controller]")]
-[Tags("Teams")]
+[Route("api/teams")]
+[Produces("application/json")]
 public class TeamsController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -23,249 +24,279 @@ public class TeamsController : ControllerBase
     }
 
     /// <summary>
-    /// Creates a new team.
+    /// Helper method to convert int ID to TeamId (temporary solution).
     /// </summary>
-    /// <param name="request">The team creation request</param>
-    /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>The created team's ID</returns>
-    [HttpPost]
-    [ProducesResponseType(typeof(TeamDetailsResponse), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateTeam(
-        [FromBody] CreateTeamRequest request,
-        CancellationToken cancellationToken)
+    private static TeamId ConvertToTeamId(int id)
+    {
+        var guidFromInt = new Guid($"00000000-0000-0000-0000-{id:000000000000}");
+        return TeamId.From(guidFromInt);
+    }
+
+    /// <summary>
+    /// Get all teams.
+    /// </summary>
+    /// <returns>List of teams with summary information</returns>
+    [HttpGet]
+    [ProducesResponseType(typeof(GetTeamsResponse), StatusCodes.Status200OK)]
+    public async Task<ActionResult<GetTeamsResponse>> GetTeams()
     {
         try
         {
-            _logger.LogInformation("Creating team with name: {TeamName}", request.Name);
+            var query = new GetTeamsQuery();
+            var result = await _mediator.Send(query);
+            
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while getting teams");
+            return StatusCode(500, new { error = "An error occurred while processing your request" });
+        }
+    }
 
+    /// <summary>
+    /// Get a specific team by ID with detailed information.
+    /// </summary>
+    /// <param name="id">Team ID</param>
+    /// <returns>Team details including members and current sprint</returns>
+    [HttpGet("{id:int}")]
+    [ProducesResponseType(typeof(TeamDetailDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<TeamDetailDto>> GetTeam(int id)
+    {
+        try
+        {
+            var teamId = ConvertToTeamId(id);
+            var query = new GetTeamByIdQuery(teamId);
+            var result = await _mediator.Send(query);
+
+            if (result == null)
+                return NotFound(new { detail = $"Team with ID {id} not found" });
+
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while getting team {TeamId}", id);
+            return StatusCode(500, new { error = "An error occurred while processing your request" });
+        }
+    }
+
+    /// <summary>
+    /// Create a new team.
+    /// </summary>
+    /// <param name="request">Team creation request</param>
+    /// <returns>Created team information</returns>
+    [HttpPost]
+    [ProducesResponseType(typeof(TeamDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<ActionResult<TeamDto>> CreateTeam([FromBody] ScrumOps.Api.DTOs.CreateTeamRequest request)
+    {
+        try
+        {
             var command = new CreateTeamCommand(
                 request.Name,
                 request.Description,
                 request.SprintLengthWeeks,
-                "po@example.com", // Default for demo
-                "sm@example.com"  // Default for demo
+                request.ProductOwnerEmail ?? string.Empty,
+                request.ScrumMasterEmail ?? string.Empty
             );
 
-            var teamId = await _mediator.Send(command, cancellationToken);
-
-            var response = new TeamDetailsResponse
-            {
-                Id = int.Parse(teamId.Value.ToString().Replace("-", "")[..8], System.Globalization.NumberStyles.HexNumber),
-                Name = request.Name,
-                Description = request.Description ?? "",
-                SprintLengthWeeks = request.SprintLengthWeeks,
-                Velocity = 0,
-                IsActive = true,
-                CreatedDate = DateTime.UtcNow,
-                Members = new[]
-                {
-                    new TeamMember 
-                    { 
-                        Id = 1,
-                        Name = "Product Owner", 
-                        Email = "po@example.com", // Default for demo
-                        Role = "ProductOwner",
-                        CreatedDate = DateTime.UtcNow,
-                        IsActive = true
-                    },
-                    new TeamMember 
-                    { 
-                        Id = 2,
-                        Name = "Scrum Master", 
-                        Email = "sm@example.com", // Default for demo
-                        Role = "ScrumMaster",
-                        CreatedDate = DateTime.UtcNow,
-                        IsActive = true
-                    }
-                }
-            };
-
-            return CreatedAtAction(nameof(GetTeam), new { id = response.Id }, response);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error creating team with name: {TeamName}", request.Name);
-            return BadRequest($"Error creating team: {ex.Message}");
-        }
-    }
-
-    /// <summary>
-    /// Gets a team by ID.
-    /// </summary>
-    /// <param name="id">The team ID</param>
-    /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>The team details</returns>
-    [HttpGet("{id}")]
-    [ProducesResponseType(typeof(TeamDetailsResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetTeam(
-        int id,
-        CancellationToken cancellationToken)
-    {
-        try
-        {
-            _logger.LogInformation("Getting team with ID: {TeamId}", id);
+            var teamId = await _mediator.Send(command);
             
-            // TODO: Implement GetTeamQuery and handler
-            // For now, return a placeholder response
-            var response = new TeamDetailsResponse
-            {
-                Id = id,
-                Name = "Sample Team",
-                Description = "Sample team description",
-                SprintLengthWeeks = 2,
-                Velocity = 15.5m,
-                IsActive = true,
-                CreatedDate = DateTime.UtcNow.AddDays(-1),
-                Members = new[]
-                {
-                    new TeamMember 
-                    { 
-                        Id = 1,
-                        Name = "Product Owner", 
-                        Email = "po@example.com", 
-                        Role = "ProductOwner",
-                        CreatedDate = DateTime.UtcNow.AddDays(-1),
-                        IsActive = true
-                    },
-                    new TeamMember 
-                    { 
-                        Id = 2,
-                        Name = "Scrum Master", 
-                        Email = "sm@example.com", 
-                        Role = "ScrumMaster",
-                        CreatedDate = DateTime.UtcNow.AddDays(-1),
-                        IsActive = true
-                    }
-                }
-            };
+            // Get the created team to return full details
+            var query = new GetTeamByIdQuery(teamId);
+            var createdTeam = await _mediator.Send(query);
 
-            return Ok(response);
+            return CreatedAtAction(
+                nameof(GetTeam), 
+                new { id = teamId.Value }, 
+                createdTeam);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new { detail = ex.Message });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict(new { detail = ex.Message });
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error getting team with ID: {TeamId}", id);
-            return NotFound($"Team with ID {id} not found");
+            _logger.LogError(ex, "Error occurred while creating team");
+            return StatusCode(500, new { error = "An error occurred while processing your request" });
         }
     }
 
     /// <summary>
-    /// Updates an existing team.
+    /// Update team details.
     /// </summary>
-    /// <param name="id">The team ID</param>
-    /// <param name="request">The team update request</param>
-    /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>The updated team details</returns>
-    [HttpPut("{id}")]
-    [ProducesResponseType(typeof(TeamDetailsResponse), StatusCodes.Status200OK)]
+    /// <param name="id">Team ID</param>
+    /// <param name="request">Team update request</param>
+    /// <returns>Updated team information</returns>
+    [HttpPut("{id:int}")]
+    [ProducesResponseType(typeof(TeamDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> UpdateTeam(
-        int id,
-        [FromBody] UpdateTeamRequest request,
-        CancellationToken cancellationToken)
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<ActionResult<TeamDto>> UpdateTeam(int id, [FromBody] ScrumOps.Api.DTOs.UpdateTeamRequest request)
     {
         try
         {
-            _logger.LogInformation("Updating team with ID: {TeamId}", id);
+            var teamId = ConvertToTeamId(id);
+            var command = new UpdateTeamCommand(
+                teamId,
+                request.Name,
+                request.Description,
+                request.SprintLengthWeeks
+            );
 
-            // For now, simulate that team with ID 1 exists, others don't
-            if (id != 1)
-            {
-                return NotFound($"Team with ID {id} not found");
-            }
+            await _mediator.Send(command);
+            
+            // Get the updated team to return full details
+            var query = new GetTeamByIdQuery(teamId);
+            var updatedTeam = await _mediator.Send(query);
 
-            // TODO: Implement UpdateTeamCommand and handler
-            // For now, return a placeholder response
-            var response = new TeamDetailsResponse
-            {
-                Id = id,
-                Name = request.Name,
-                Description = request.Description ?? "",
-                SprintLengthWeeks = request.SprintLengthWeeks,
-                Velocity = 20.0m,
-                Members = new List<TeamMember>
-                {
-                    new()
-                    {
-                        Id = 1,
-                        Name = "Product Owner",
-                        Email = "po@example.com",
-                        Role = "ProductOwner"
-                    },
-                    new()
-                    {
-                        Id = 2,
-                        Name = "Scrum Master",
-                        Email = "sm@example.com",
-                        Role = "ScrumMaster"
-                    }
-                },
-                IsActive = true,
-                CreatedDate = DateTime.UtcNow.AddDays(-2)
-            };
+            if (updatedTeam == null)
+                return NotFound(new { detail = $"Team with ID {id} not found" });
 
-            return Ok(response);
+            return Ok(updatedTeam);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new { detail = ex.Message });
+        }
+        catch (InvalidOperationException ex) when (ex.Message.Contains("not found"))
+        {
+            return NotFound(new { detail = ex.Message });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict(new { detail = ex.Message });
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error updating team with ID: {TeamId}", id);
-            return StatusCode(500, "Internal server error");
+            _logger.LogError(ex, "Error occurred while updating team {TeamId}", id);
+            return StatusCode(500, new { error = "An error occurred while processing your request" });
         }
     }
 
     /// <summary>
-    /// Gets all teams.
+    /// Deactivate a team (soft delete).
     /// </summary>
-    /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>List of teams</returns>
-    [HttpGet]
-    [ProducesResponseType(typeof(GetTeamsResponse), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetTeams(CancellationToken cancellationToken)
+    /// <param name="id">Team ID</param>
+    /// <returns>No content on success</returns>
+    [HttpDelete("{id:int}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<ActionResult> DeleteTeam(int id)
     {
         try
         {
-            _logger.LogInformation("Getting all teams");
-            
-            // TODO: Implement GetTeamsQuery and handler
-            // For now, return a placeholder response
-            var response = new GetTeamsResponse
-            {
-                Teams = new List<TeamSummary>
-                {
-                    new()
-                    {
-                        Id = 1,
-                        Name = "Sample Team 1",
-                        Description = "First sample team",
-                        SprintLengthWeeks = 2,
-                        Velocity = 18.0m,
-                        MemberCount = 5,
-                        IsActive = true,
-                        CreatedDate = DateTime.UtcNow.AddDays(-2)
-                    },
-                    new()
-                    {
-                        Id = 2,
-                        Name = "Sample Team 2", 
-                        Description = "Second sample team",
-                        SprintLengthWeeks = 3,
-                        Velocity = 22.5m,
-                        MemberCount = 7,
-                        IsActive = true,
-                        CreatedDate = DateTime.UtcNow.AddDays(-1)
-                    }
-                },
-                TotalCount = 2
-            };
+            var teamId = ConvertToTeamId(id);
+            var command = new DeactivateTeamCommand(teamId);
 
-            return Ok(response);
+            await _mediator.Send(command);
+            return NoContent();
+        }
+        catch (InvalidOperationException ex) when (ex.Message.Contains("not found"))
+        {
+            return NotFound(new { detail = ex.Message });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict(new { detail = ex.Message });
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error getting teams");
-            return StatusCode(500, "Internal server error");
+            _logger.LogError(ex, "Error occurred while deleting team {TeamId}", id);
+            return StatusCode(500, new { error = "An error occurred while processing your request" });
+        }
+    }
+
+    /// <summary>
+    /// Get team members with their roles.
+    /// </summary>
+    /// <param name="id">Team ID</param>
+    /// <returns>List of team members</returns>
+    [HttpGet("{id:int}/members")]
+    [ProducesResponseType(typeof(List<TeamMemberDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<List<TeamMemberDto>>> GetTeamMembers(int id)
+    {
+        try
+        {
+            var teamId = ConvertToTeamId(id);
+            var query = new GetTeamMembersQuery(teamId);
+            var result = await _mediator.Send(query);
+
+            if (result == null)
+                return NotFound(new { detail = $"Team with ID {id} not found" });
+
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while getting team members for team {TeamId}", id);
+            return StatusCode(500, new { error = "An error occurred while processing your request" });
+        }
+    }
+
+    /// <summary>
+    /// Get team velocity metrics.
+    /// </summary>
+    /// <param name="id">Team ID</param>
+    /// <returns>Team velocity data</returns>
+    [HttpGet("{id:int}/velocity")]
+    [ProducesResponseType(typeof(TeamVelocityDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<TeamVelocityDto>> GetTeamVelocity(int id)
+    {
+        try
+        {
+            var teamId = ConvertToTeamId(id);
+            var query = new GetTeamVelocityQuery(teamId);
+            var result = await _mediator.Send(query);
+
+            if (result == null)
+                return NotFound(new { detail = $"Team with ID {id} not found" });
+
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while getting team velocity for team {TeamId}", id);
+            return StatusCode(500, new { error = "An error occurred while processing your request" });
+        }
+    }
+
+    /// <summary>
+    /// Get team performance metrics.
+    /// </summary>
+    /// <param name="id">Team ID</param>
+    /// <returns>Team metrics and KPIs</returns>
+    [HttpGet("{id:int}/metrics")]
+    [ProducesResponseType(typeof(TeamMetricsDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<TeamMetricsDto>> GetTeamMetrics(int id)
+    {
+        try
+        {
+            var teamId = ConvertToTeamId(id);
+            var query = new GetTeamMetricsQuery(teamId);
+            var result = await _mediator.Send(query);
+
+            if (result == null)
+                return NotFound(new { detail = $"Team with ID {id} not found" });
+
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while getting team metrics for team {TeamId}", id);
+            return StatusCode(500, new { error = "An error occurred while processing your request" });
         }
     }
 }

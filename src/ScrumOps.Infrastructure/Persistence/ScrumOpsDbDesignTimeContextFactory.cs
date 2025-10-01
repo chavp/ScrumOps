@@ -2,14 +2,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using ScrumOps.Infrastructure.Persistence;
 
-namespace Mti.ProductManagement.Persistance
+namespace ScrumOps.Infrastructure.Persistence
 {
     public class ScrumOpsDbDesignTimeContextFactory : IDesignTimeDbContextFactory<ScrumOpsDbContext>
     {
         public ScrumOpsDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<ScrumOpsDbContext>();
-            optionsBuilder.UseNpgsql("Server=localhost;TrustServerCertificate=True;User Id=scrumops;Password=scrumops123;Database=scrumopsdb;");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=scrumops;Username=scrumops;Password=scrumops123");
 
             // Enable sensitive data logging in development
             optionsBuilder.EnableSensitiveDataLogging();

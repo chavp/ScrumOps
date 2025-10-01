@@ -42,10 +42,8 @@ C:\data\ScrumOps\src\ScrumOps.Infrastructure\bin\Debug\net8.0\ScrumOps.Infrastru
 C:\data\ScrumOps\src\ScrumOps.Infrastructure\bin\Debug\net8.0\ScrumOps.Infrastructure.runtimeconfig.json
 C:\data\ScrumOps\src\ScrumOps.Infrastructure\bin\Debug\net8.0\ScrumOps.Infrastructure.dll
 C:\data\ScrumOps\src\ScrumOps.Infrastructure\bin\Debug\net8.0\ScrumOps.Infrastructure.pdb
-C:\data\ScrumOps\src\ScrumOps.Infrastructure\bin\Debug\net8.0\ScrumOps.Application.dll
 C:\data\ScrumOps\src\ScrumOps.Infrastructure\bin\Debug\net8.0\ScrumOps.Domain.dll
 C:\data\ScrumOps\src\ScrumOps.Infrastructure\bin\Debug\net8.0\ScrumOps.Domain.pdb
-C:\data\ScrumOps\src\ScrumOps.Infrastructure\bin\Debug\net8.0\ScrumOps.Application.pdb
 C:\data\ScrumOps\src\ScrumOps.Infrastructure\obj\Debug\net8.0\ScrumOps.Infrastructure.csproj.AssemblyReference.cache
 C:\data\ScrumOps\src\ScrumOps.Infrastructure\obj\Debug\net8.0\ScrumOps.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
 C:\data\ScrumOps\src\ScrumOps.Infrastructure\obj\Debug\net8.0\ScrumOps.Infrastructure.AssemblyInfoInputs.cache
@@ -58,3 +56,5 @@ C:\data\ScrumOps\src\ScrumOps.Infrastructure\obj\Debug\net8.0\refint\ScrumOps.In
 C:\data\ScrumOps\src\ScrumOps.Infrastructure\obj\Debug\net8.0\ScrumOps.Infrastructure.pdb
 C:\data\ScrumOps\src\ScrumOps.Infrastructure\obj\Debug\net8.0\ScrumOps.Infrastructure.genruntimeconfig.cache
 C:\data\ScrumOps\src\ScrumOps.Infrastructure\obj\Debug\net8.0\ref\ScrumOps.Infrastructure.dll
+C:\data\ScrumOps\src\ScrumOps.Infrastructure\bin\Debug\net8.0\ScrumOps.Application.dll
+C:\data\ScrumOps\src\ScrumOps.Infrastructure\bin\Debug\net8.0\ScrumOps.Application.pdb

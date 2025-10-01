@@ -349,3 +349,316 @@ ORDER BY "MigrationId";
 2025-10-01 10:37:38.364 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 1870.1757ms
 2025-10-01 10:37:38.367 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
 2025-10-01 10:37:38.368 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7204/api/Teams - 200 null application/json; charset=utf-8 1929.0672ms
+2025-10-01 11:37:59.678 +07:00 [INF] Applying database migrations...
+2025-10-01 11:38:00.032 +07:00 [WRN] The property 'SprintBacklogItem.IsCompleted' was first mapped explicitly and then ignored. Consider not mapping the property in the first place.
+2025-10-01 11:38:00.291 +07:00 [ERR] An error occurred using the connection to database 'scrumops' on server 'tcp://localhost:5433'.
+2025-10-01 11:38:00.619 +07:00 [INF] Executed DbCommand (124ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE DATABASE scrumops;
+2025-10-01 11:38:00.709 +07:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" character varying(150) NOT NULL,
+    "ProductVersion" character varying(32) NOT NULL,
+    CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
+);
+2025-10-01 11:38:00.721 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+LOCK TABLE "__EFMigrationsHistory" IN ACCESS EXCLUSIVE MODE
+2025-10-01 11:38:00.728 +07:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-01 11:38:00.739 +07:00 [INF] Applying migration '20251001032740_initDb'.
+2025-10-01 11:38:00.770 +07:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DO $EF$
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM pg_namespace WHERE nspname = 'ProductBacklog') THEN
+        CREATE SCHEMA "ProductBacklog";
+    END IF;
+END $EF$;
+2025-10-01 11:38:00.774 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DO $EF$
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM pg_namespace WHERE nspname = 'SprintManagement') THEN
+        CREATE SCHEMA "SprintManagement";
+    END IF;
+END $EF$;
+2025-10-01 11:38:00.776 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DO $EF$
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM pg_namespace WHERE nspname = 'TeamManagement') THEN
+        CREATE SCHEMA "TeamManagement";
+    END IF;
+END $EF$;
+2025-10-01 11:38:00.783 +07:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE "ProductBacklog"."ProductBacklogs" (
+    "Id" uuid NOT NULL,
+    "TeamId" uuid NOT NULL,
+    "CreatedDate" timestamp with time zone NOT NULL,
+    "LastRefinedDate" timestamp with time zone,
+    "Notes" character varying(5000) NOT NULL,
+    CONSTRAINT "PK_ProductBacklogs" PRIMARY KEY ("Id")
+);
+2025-10-01 11:38:00.788 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE "SprintManagement"."Sprints" (
+    "Id" uuid NOT NULL,
+    "TeamId" uuid NOT NULL,
+    "Goal" character varying(200) NOT NULL,
+    "StartDate" timestamp with time zone NOT NULL,
+    "EndDate" timestamp with time zone NOT NULL,
+    "Status" character varying(50) NOT NULL,
+    "CapacityHours" integer NOT NULL,
+    "ActualVelocity" integer,
+    "CreatedDate" timestamp with time zone NOT NULL,
+    "ActualStartDate" timestamp with time zone,
+    "ActualEndDate" timestamp with time zone,
+    CONSTRAINT "PK_Sprints" PRIMARY KEY ("Id")
+);
+2025-10-01 11:38:00.795 +07:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE "TeamManagement"."Teams" (
+    "Id" uuid NOT NULL,
+    "Name" character varying(50) NOT NULL,
+    "Description" character varying(500) NOT NULL,
+    "SprintLengthWeeks" integer NOT NULL,
+    "CurrentVelocityValue" numeric NOT NULL DEFAULT 0.0,
+    "CreatedDate" timestamp with time zone NOT NULL,
+    "IsActive" boolean NOT NULL,
+    CONSTRAINT "PK_Teams" PRIMARY KEY ("Id")
+);
+2025-10-01 11:38:00.806 +07:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE "ProductBacklog"."ProductBacklogItems" (
+    "Id" uuid NOT NULL,
+    "ProductBacklogId" uuid NOT NULL,
+    "Title" character varying(200) NOT NULL,
+    "Description" character varying(2000) NOT NULL,
+    "Type" character varying(50) NOT NULL,
+    "Priority" integer NOT NULL,
+    "StoryPoints" integer,
+    "Status" character varying(50) NOT NULL,
+    "AcceptanceCriteria" character varying(5000),
+    "CreatedBy" character varying(100) NOT NULL,
+    "CreatedDate" timestamp with time zone NOT NULL,
+    "LastModifiedDate" timestamp with time zone NOT NULL,
+    CONSTRAINT "PK_ProductBacklogItems" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_ProductBacklogItems_ProductBacklogs_ProductBacklogId" FOREIGN KEY ("ProductBacklogId") REFERENCES "ProductBacklog"."ProductBacklogs" ("Id") ON DELETE CASCADE
+);
+2025-10-01 11:38:00.813 +07:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE "SprintManagement"."SprintBacklogItems" (
+    "Id" uuid NOT NULL,
+    "SprintId" uuid NOT NULL,
+    "ProductBacklogItemId" uuid NOT NULL,
+    "StoryPoints" integer NOT NULL,
+    "OriginalEstimate" integer NOT NULL,
+    "RemainingWork" integer NOT NULL,
+    "AddedToSprintDate" timestamp with time zone NOT NULL,
+    "CompletedDate" timestamp with time zone,
+    CONSTRAINT "PK_SprintBacklogItems" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_SprintBacklogItems_Sprints_SprintId" FOREIGN KEY ("SprintId") REFERENCES "SprintManagement"."Sprints" ("Id") ON DELETE CASCADE
+);
+2025-10-01 11:38:00.820 +07:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE "TeamManagement"."Users" (
+    "Id" uuid NOT NULL,
+    "TeamId" uuid NOT NULL,
+    "Name" character varying(100) NOT NULL,
+    "Email" character varying(320) NOT NULL,
+    "Role" character varying(50) NOT NULL,
+    "RoleIsSingleton" boolean NOT NULL,
+    "CreatedDate" timestamp with time zone NOT NULL,
+    "LastLoginDate" timestamp with time zone,
+    "IsActive" boolean NOT NULL,
+    CONSTRAINT "PK_Users" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_Users_Teams_TeamId" FOREIGN KEY ("TeamId") REFERENCES "TeamManagement"."Teams" ("Id") ON DELETE CASCADE
+);
+2025-10-01 11:38:00.830 +07:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE "SprintManagement"."Tasks" (
+    "Id" uuid NOT NULL,
+    "SprintBacklogItemId" uuid NOT NULL,
+    "Title" character varying(100) NOT NULL,
+    "Description" character varying(1000) NOT NULL,
+    "Status" character varying(50) NOT NULL,
+    "OriginalEstimateHours" integer NOT NULL,
+    "RemainingHours" integer NOT NULL,
+    "CreatedDate" timestamp with time zone NOT NULL,
+    "StartedDate" timestamp with time zone,
+    "CompletedDate" timestamp with time zone,
+    CONSTRAINT "PK_Tasks" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_Tasks_SprintBacklogItems_SprintBacklogItemId" FOREIGN KEY ("SprintBacklogItemId") REFERENCES "SprintManagement"."SprintBacklogItems" ("Id") ON DELETE CASCADE
+);
+2025-10-01 11:38:00.836 +07:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_ProductBacklogItems_CreatedDate" ON "ProductBacklog"."ProductBacklogItems" ("CreatedDate");
+2025-10-01 11:38:00.841 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_ProductBacklogItems_Priority" ON "ProductBacklog"."ProductBacklogItems" ("Priority");
+2025-10-01 11:38:00.845 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_ProductBacklogItems_ProductBacklogId" ON "ProductBacklog"."ProductBacklogItems" ("ProductBacklogId");
+2025-10-01 11:38:00.849 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_ProductBacklogItems_Status" ON "ProductBacklog"."ProductBacklogItems" ("Status");
+2025-10-01 11:38:00.853 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_ProductBacklogItems_Title" ON "ProductBacklog"."ProductBacklogItems" ("Title");
+2025-10-01 11:38:00.858 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_ProductBacklogItems_Type" ON "ProductBacklog"."ProductBacklogItems" ("Type");
+2025-10-01 11:38:00.862 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_ProductBacklogs_CreatedDate" ON "ProductBacklog"."ProductBacklogs" ("CreatedDate");
+2025-10-01 11:38:00.867 +07:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_ProductBacklogs_LastRefinedDate" ON "ProductBacklog"."ProductBacklogs" ("LastRefinedDate");
+2025-10-01 11:38:00.874 +07:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX "IX_ProductBacklogs_TeamId" ON "ProductBacklog"."ProductBacklogs" ("TeamId");
+2025-10-01 11:38:00.878 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_SprintBacklogItems_CompletedDate" ON "SprintManagement"."SprintBacklogItems" ("CompletedDate");
+2025-10-01 11:38:00.883 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX "IX_SprintBacklogItems_ProductBacklogItemId" ON "SprintManagement"."SprintBacklogItems" ("ProductBacklogItemId");
+2025-10-01 11:38:00.888 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_SprintBacklogItems_SprintId" ON "SprintManagement"."SprintBacklogItems" ("SprintId");
+2025-10-01 11:38:00.892 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_SprintBacklogItems_SprintId_CompletedDate" ON "SprintManagement"."SprintBacklogItems" ("SprintId", "CompletedDate");
+2025-10-01 11:38:00.897 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_Sprints_CreatedDate" ON "SprintManagement"."Sprints" ("CreatedDate");
+2025-10-01 11:38:00.901 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_Sprints_EndDate" ON "SprintManagement"."Sprints" ("EndDate");
+2025-10-01 11:38:00.906 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_Sprints_StartDate" ON "SprintManagement"."Sprints" ("StartDate");
+2025-10-01 11:38:00.911 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_Sprints_Status" ON "SprintManagement"."Sprints" ("Status");
+2025-10-01 11:38:00.916 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_Sprints_TeamId" ON "SprintManagement"."Sprints" ("TeamId");
+2025-10-01 11:38:00.920 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_Sprints_TeamId_Status" ON "SprintManagement"."Sprints" ("TeamId", "Status");
+2025-10-01 11:38:00.924 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_Tasks_CreatedDate" ON "SprintManagement"."Tasks" ("CreatedDate");
+2025-10-01 11:38:00.930 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_Tasks_SprintBacklogItemId" ON "SprintManagement"."Tasks" ("SprintBacklogItemId");
+2025-10-01 11:38:00.934 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_Tasks_Status" ON "SprintManagement"."Tasks" ("Status");
+2025-10-01 11:38:00.938 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_Teams_CreatedDate" ON "TeamManagement"."Teams" ("CreatedDate");
+2025-10-01 11:38:00.944 +07:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_Teams_IsActive" ON "TeamManagement"."Teams" ("IsActive");
+2025-10-01 11:38:00.948 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX "IX_Teams_Name" ON "TeamManagement"."Teams" ("Name");
+2025-10-01 11:38:00.952 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX "IX_Users_Email" ON "TeamManagement"."Users" ("Email");
+2025-10-01 11:38:00.957 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_Users_IsActive" ON "TeamManagement"."Users" ("IsActive");
+2025-10-01 11:38:00.963 +07:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX "IX_Users_TeamId" ON "TeamManagement"."Users" ("TeamId");
+2025-10-01 11:38:00.967 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
+VALUES ('20251001032740_initDb', '9.0.9');
+2025-10-01 11:38:00.978 +07:00 [INF] Database migrations applied successfully
+2025-10-01 11:38:01.032 +07:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-10-01 11:38:01.036 +07:00 [INF] Starting ScrumOps API with PostgreSQL and Entity Framework Core
+2025-10-01 11:38:01.090 +07:00 [INF] Now listening on: http://localhost:5225
+2025-10-01 11:38:01.092 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-10-01 11:38:01.092 +07:00 [INF] Hosting environment: Development
+2025-10-01 11:38:01.093 +07:00 [INF] Content root path: C:\data\ScrumOps\src\ScrumOps.Api
+2025-10-01 12:20:46.378 +07:00 [INF] Applying database migrations...
+2025-10-01 12:20:46.696 +07:00 [WRN] The property 'SprintBacklogItem.IsCompleted' was first mapped explicitly and then ignored. Consider not mapping the property in the first place.
+2025-10-01 12:20:46.980 +07:00 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-01 12:20:47.138 +07:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" character varying(150) NOT NULL,
+    "ProductVersion" character varying(32) NOT NULL,
+    CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
+);
+2025-10-01 12:20:47.149 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+LOCK TABLE "__EFMigrationsHistory" IN ACCESS EXCLUSIVE MODE
+2025-10-01 12:20:47.152 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-01 12:20:47.157 +07:00 [INF] No migrations were applied. The database is already up to date.
+2025-10-01 12:20:47.165 +07:00 [INF] Database migrations applied successfully
+2025-10-01 12:20:47.215 +07:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-10-01 12:20:47.218 +07:00 [INF] Starting ScrumOps API with PostgreSQL and Entity Framework Core
+2025-10-01 12:20:47.272 +07:00 [INF] Now listening on: http://localhost:5225
+2025-10-01 12:20:47.274 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-10-01 12:20:47.275 +07:00 [INF] Hosting environment: Development
+2025-10-01 12:20:47.276 +07:00 [INF] Content root path: C:\data\ScrumOps\src\ScrumOps.Api
+2025-10-01 13:49:19.589 +07:00 [INF] Applying database migrations...
+2025-10-01 13:49:19.929 +07:00 [WRN] The property 'SprintBacklogItem.IsCompleted' was first mapped explicitly and then ignored. Consider not mapping the property in the first place.
+2025-10-01 13:49:20.221 +07:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-01 13:49:20.395 +07:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" character varying(150) NOT NULL,
+    "ProductVersion" character varying(32) NOT NULL,
+    CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
+);
+2025-10-01 13:49:20.406 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+LOCK TABLE "__EFMigrationsHistory" IN ACCESS EXCLUSIVE MODE
+2025-10-01 13:49:20.411 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-01 13:49:20.415 +07:00 [INF] No migrations were applied. The database is already up to date.
+2025-10-01 13:49:20.424 +07:00 [INF] Database migrations applied successfully
+2025-10-01 13:49:20.496 +07:00 [INF] Starting ScrumOps API with PostgreSQL and Entity Framework Core
+2025-10-01 13:49:20.565 +07:00 [INF] Now listening on: http://localhost:5225
+2025-10-01 13:49:20.567 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-10-01 13:49:20.568 +07:00 [INF] Hosting environment: Development
+2025-10-01 13:49:20.569 +07:00 [INF] Content root path: C:\data\ScrumOps\src\ScrumOps.Api
+2025-10-01 13:54:06.329 +07:00 [INF] Applying database migrations...
+2025-10-01 13:54:07.042 +07:00 [WRN] The property 'SprintBacklogItem.IsCompleted' was first mapped explicitly and then ignored. Consider not mapping the property in the first place.
+2025-10-01 13:54:07.552 +07:00 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-01 13:54:07.817 +07:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" character varying(150) NOT NULL,
+    "ProductVersion" character varying(32) NOT NULL,
+    CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
+);
+2025-10-01 13:54:07.834 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+LOCK TABLE "__EFMigrationsHistory" IN ACCESS EXCLUSIVE MODE
+2025-10-01 13:54:07.839 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-01 13:54:07.847 +07:00 [INF] No migrations were applied. The database is already up to date.
+2025-10-01 13:54:07.861 +07:00 [INF] Database migrations applied successfully
+2025-10-01 13:54:08.021 +07:00 [INF] Starting ScrumOps API with PostgreSQL and Entity Framework Core
+2025-10-01 13:54:08.288 +07:00 [INF] Now listening on: https://localhost:7204
+2025-10-01 13:54:08.289 +07:00 [INF] Now listening on: http://localhost:5225
+2025-10-01 13:54:08.405 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-10-01 13:54:08.406 +07:00 [INF] Hosting environment: Development
+2025-10-01 13:54:08.406 +07:00 [INF] Content root path: C:\data\ScrumOps\src\ScrumOps.Api
+2025-10-01 13:54:09.336 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7204/swagger/index.html - null null
+2025-10-01 13:54:09.619 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7204/swagger/index.html - 200 null text/html;charset=utf-8 295.9097ms
+2025-10-01 13:54:09.660 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7204/_vs/browserLink - null null
+2025-10-01 13:54:09.660 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7204/_framework/aspnetcore-browser-refresh.js - null null
+2025-10-01 13:54:09.679 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7204/_framework/aspnetcore-browser-refresh.js - 200 16509 application/javascript; charset=utf-8 18.8535ms
+2025-10-01 13:54:09.738 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7204/_vs/browserLink - 200 null text/javascript; charset=UTF-8 77.9267ms
+2025-10-01 13:54:09.772 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7204/swagger/v1/swagger.json - null null
+2025-10-01 13:54:09.836 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7204/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 65.0131ms
+2025-10-01 13:55:01.562 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7204/api/teams - application/json 86
+2025-10-01 13:55:01.569 +07:00 [INF] CORS policy execution failed.
+2025-10-01 13:55:01.571 +07:00 [INF] Request origin https://localhost:7204 does not have permission to access the resource.
+2025-10-01 13:55:01.576 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 13:55:01.601 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[ScrumOps.Application.TeamManagement.Queries.TeamDto]] CreateTeam(ScrumOps.Api.DTOs.CreateTeamRequest) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 13:55:01.607 +07:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-10-01 13:55:01.937 +07:00 [ERR] Error occurred while creating team
+ScrumOps.Domain.SharedKernel.Exceptions.DomainException: Email cannot be empty
+   at ScrumOps.Domain.SharedKernel.ValueObjects.Email.Create(String email) in C:\data\ScrumOps\src\ScrumOps.Domain\SharedKernel\ValueObjects\Email.cs:line 41
+   at ScrumOps.Application.TeamManagement.Handlers.CommandHandlers.CreateTeamCommandHandler.Handle(CreateTeamCommand request, CancellationToken cancellationToken) in C:\data\ScrumOps\src\ScrumOps.Application\TeamManagement\Handlers\CommandHandlers\CreateTeamCommandHandler.cs:line 48
+   at ScrumOps.Api.Controllers.TeamsController.CreateTeam(CreateTeamRequest request) in C:\data\ScrumOps\src\ScrumOps.Api\Controllers\TeamsController.cs:line 106
+2025-10-01 13:55:01.991 +07:00 [INF] Executing ObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-10-01 13:55:01.999 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api) in 393.2025ms
+2025-10-01 13:55:02.001 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 13:55:02.003 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7204/api/teams - 500 null application/json; charset=utf-8 441.4623ms
+2025-10-01 13:55:30.964 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7204/api/teams - application/json 151
+2025-10-01 13:55:30.978 +07:00 [INF] CORS policy execution failed.
+2025-10-01 13:55:30.979 +07:00 [INF] Request origin https://localhost:7204 does not have permission to access the resource.
+2025-10-01 13:55:30.979 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 13:55:30.980 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[ScrumOps.Application.TeamManagement.Queries.TeamDto]] CreateTeam(ScrumOps.Api.DTOs.CreateTeamRequest) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 13:55:31.099 +07:00 [ERR] Error occurred while creating team
+ScrumOps.Domain.SharedKernel.Exceptions.DomainException: User with this email already exists in team
+   at ScrumOps.Domain.TeamManagement.Entities.Team.AddMember(User user) in C:\data\ScrumOps\src\ScrumOps.Domain\TeamManagement\Entities\Team.cs:line 105
+   at ScrumOps.Application.TeamManagement.Handlers.CommandHandlers.CreateTeamCommandHandler.Handle(CreateTeamCommand request, CancellationToken cancellationToken) in C:\data\ScrumOps\src\ScrumOps.Application\TeamManagement\Handlers\CommandHandlers\CreateTeamCommandHandler.cs:line 68
+   at ScrumOps.Api.Controllers.TeamsController.CreateTeam(CreateTeamRequest request) in C:\data\ScrumOps\src\ScrumOps.Api\Controllers\TeamsController.cs:line 106
+2025-10-01 13:55:31.102 +07:00 [INF] Executing ObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-10-01 13:55:31.104 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api) in 122.2488ms
+2025-10-01 13:55:31.105 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 13:55:31.106 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7204/api/teams - 500 null application/json; charset=utf-8 142.0381ms

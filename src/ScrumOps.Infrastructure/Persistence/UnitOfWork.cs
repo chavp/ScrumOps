@@ -6,7 +6,7 @@ namespace ScrumOps.Infrastructure.Persistence;
 /// <summary>
 /// Unit of Work implementation using Entity Framework Core.
 /// </summary>
-public class UnitOfWork : IUnitOfWork
+public class UnitOfWork : IUnitOfWork, IDisposable
 {
     private readonly ScrumOpsDbContext _context;
     private IDbContextTransaction? _transaction;
@@ -44,5 +44,11 @@ public class UnitOfWork : IUnitOfWork
             await _transaction.DisposeAsync();
             _transaction = null;
         }
+    }
+
+    public void Dispose()
+    {
+        _transaction?.Dispose();
+        _transaction = null;
     }
 }

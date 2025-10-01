@@ -1,6 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
-using ScrumOps.Application.Common.Interfaces;
+using ScrumOps.Domain.SharedKernel.Interfaces;
 
 namespace ScrumOps.Infrastructure.Persistence;
 
@@ -31,5 +31,10 @@ public class InMemoryUnitOfWork : IUnitOfWork
     {
         // No-op for in-memory implementation
         await Task.CompletedTask;
+    }
+
+    public void Dispose()
+    {
+        // No-op for in-memory implementation
     }
 }

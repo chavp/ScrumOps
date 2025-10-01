@@ -7,9 +7,9 @@ COPY ScrumOps.sln ./
 
 # Copy project files
 COPY src/ScrumOps.Api/ScrumOps.Api.csproj src/ScrumOps.Api/
-COPY src/ScrumOps.Application/ScrumOps.Application.csproj src/ScrumOps.Application/
 COPY src/ScrumOps.Domain/ScrumOps.Domain.csproj src/ScrumOps.Domain/
 COPY src/ScrumOps.Infrastructure/ScrumOps.Infrastructure.csproj src/ScrumOps.Infrastructure/
+COPY src/ScrumOps.Shared/ScrumOps.Shared.csproj src/ScrumOps.Shared/
 
 # Restore dependencies
 RUN dotnet restore src/ScrumOps.Api/ScrumOps.Api.csproj

@@ -12,8 +12,8 @@ using ScrumOps.Infrastructure.Persistence;
 namespace ScrumOps.Infrastructure.Migrations
 {
     [DbContext(typeof(ScrumOpsDbContext))]
-    [Migration("20251001032740_initDb")]
-    partial class initDb
+    [Migration("20251001063510_iniDb")]
+    partial class iniDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

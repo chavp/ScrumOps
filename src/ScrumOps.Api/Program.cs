@@ -2,7 +2,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using ScrumOps.Application;
 using ScrumOps.Infrastructure;
 using ScrumOps.Infrastructure.Persistence;
 
@@ -20,8 +19,8 @@ builder.Host.UseSerilog();
 // Add services to the container.
 builder.Services.AddControllers();
 
-// Add Application layer services
-builder.Services.AddApplication();
+// Add MediatR
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ScrumOps.Application.TeamManagement.Commands.CreateTeamCommand).Assembly));
 
 // Add Infrastructure layer services
 builder.Services.AddInfrastructure(builder.Configuration);

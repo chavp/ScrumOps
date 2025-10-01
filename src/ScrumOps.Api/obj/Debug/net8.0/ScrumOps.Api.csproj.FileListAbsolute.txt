@@ -511,12 +511,10 @@ C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Wor
 C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
-C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\ScrumOps.Application.dll
 C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\ScrumOps.Domain.dll
 C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\ScrumOps.Infrastructure.dll
 C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\ScrumOps.Shared.dll
 C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\ScrumOps.Domain.pdb
-C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\ScrumOps.Application.pdb
 C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\ScrumOps.Infrastructure.pdb
 C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\ScrumOps.Shared.pdb
 C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\ScrumOps.Api.csproj.AssemblyReference.cache
@@ -545,4 +543,6 @@ C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\ref\ScrumOps.Api.dll
 C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\swae.build.ex.cache
 C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\Npgsql.dll
 C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\ScrumOps.Application.dll
+C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\ScrumOps.Application.pdb
 C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

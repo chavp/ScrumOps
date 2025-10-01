@@ -20,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ScrumOps.Domain\ScrumOps.Domain.csproj" />
     <ProjectReference Include="..\ScrumOps.Application\ScrumOps.Application.csproj" />
+    <ProjectReference Include="..\ScrumOps.Domain\ScrumOps.Domain.csproj" />
     <ProjectReference Include="..\ScrumOps.Infrastructure\ScrumOps.Infrastructure.csproj" />
     <ProjectReference Include="..\ScrumOps.Shared\ScrumOps.Shared.csproj" />
   </ItemGroup>

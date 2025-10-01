@@ -56,9 +56,9 @@ ScrumOps is a comprehensive Scrum framework management system designed to help t
 
 ### Prerequisites
 - .NET 8.0 SDK
-- Docker Desktop
-- PostgreSQL (or use Docker)
-- Modern web browser
+- Docker Desktop (for containerized deployment)
+- PostgreSQL 16+ (automatically managed via Docker)
+- Modern web browser (Chrome, Firefox, Edge)
 - Git
 
 ### Quick Setup
@@ -71,6 +71,9 @@ cd ScrumOps
 
 # Test the setup (optional - includes EF migration check)
 .\test-ef-migration.ps1
+
+# Test Docker setup
+.\test-docker.ps1
 
 # Run with Docker Compose (includes PostgreSQL database)
 docker-compose up -d
@@ -105,7 +108,7 @@ dotnet run --project src/ScrumOps.Api
 - **Health Check**: http://localhost:8080/health  
 - **Swagger Documentation**: http://localhost:8080/swagger
 - **pgAdmin**: http://localhost:8081 (admin@scrumops.com / admin123)
-- **PostgreSQL**: localhost:5432 (scrumops / scrumops123)
+- **PostgreSQL**: localhost:5433 (scrumops / scrumops123)
 
 ## 📚 Documentation Index
 
@@ -156,11 +159,12 @@ dotnet run --project src/ScrumOps.Api
 ## 🏛️ Architecture
 
 **Technology Stack**: 
-- Frontend: Blazor Server/WebAssembly
-- Backend: ASP.NET Core Web API
-- Database: PostgreSQL with Entity Framework Core
-- Deployment: Docker & Docker Compose
-- Architecture: Domain Driven Design with Clean Architecture
+- **Frontend**: Blazor Server/WebAssembly with responsive design
+- **Backend**: ASP.NET Core 8.0 Web API with minimal APIs
+- **Database**: PostgreSQL 16 with Entity Framework Core (Code First approach)
+- **Containerization**: Docker & Docker Compose for all services
+- **Architecture**: Domain Driven Design with Clean Architecture principles
+- **Additional Services**: pgAdmin for database management
 
 **Key Principles**:
 - Domain Driven Design (DDD) with bounded contexts
@@ -168,6 +172,7 @@ dotnet run --project src/ScrumOps.Api
 - SOLID principles and clean code practices
 - Event-driven architecture for cross-context communication
 - Responsive design for mobile and desktop access
+- Code First Entity Framework migrations for database schema management
 
 ## 🤝 Contributing
 

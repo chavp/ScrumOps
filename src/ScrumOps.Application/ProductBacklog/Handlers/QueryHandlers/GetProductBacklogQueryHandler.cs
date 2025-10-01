@@ -9,9 +9,9 @@ using ScrumOps.Domain.ProductBacklog.Repositories;
 namespace ScrumOps.Application.ProductBacklog.Handlers.QueryHandlers;
 
 /// <summary>
-/// Handler for getting a product backlog by team ID.
+/// Handler for getting a product backlog by team ID with filtering.
 /// </summary>
-public class GetProductBacklogQueryHandler : IRequestHandler<GetProductBacklogQuery, ProductBacklogDto?>
+public class GetProductBacklogQueryHandler : IRequestHandler<GetProductBacklogQuery, GetBacklogResponse?>
 {
     private readonly IProductBacklogRepository _backlogRepository;
 
@@ -20,7 +20,7 @@ public class GetProductBacklogQueryHandler : IRequestHandler<GetProductBacklogQu
         _backlogRepository = backlogRepository;
     }
 
-    public async Task<ProductBacklogDto?> Handle(GetProductBacklogQuery request, CancellationToken cancellationToken)
+    public async Task<GetBacklogResponse?> Handle(GetProductBacklogQuery request, CancellationToken cancellationToken)
     {
         var productBacklog = await _backlogRepository.GetByTeamIdAsync(request.TeamId, cancellationToken);
         
@@ -29,16 +29,33 @@ public class GetProductBacklogQueryHandler : IRequestHandler<GetProductBacklogQu
             return null;
         }
 
-        return new ProductBacklogDto
+        // Apply filtering if needed
+        var filteredItems = productBacklog.Items.AsQueryable();
+        
+        if (!string.IsNullOrEmpty(request.Status))
         {
-            Id = productBacklog.Id.Value.ToString(),
-            TeamId = productBacklog.TeamId.Value.ToString(),
-            CreatedDate = productBacklog.CreatedDate,
-            LastRefinedDate = productBacklog.LastRefinedDate,
-            Notes = productBacklog.Notes.Value,
-            Items = productBacklog.Items.Select(item => new ProductBacklogItemDto
+            filteredItems = filteredItems.Where(item => item.Status.ToString().Equals(request.Status, StringComparison.OrdinalIgnoreCase));
+        }
+        
+        if (!string.IsNullOrEmpty(request.Type))
+        {
+            filteredItems = filteredItems.Where(item => item.Type.ToString().Equals(request.Type, StringComparison.OrdinalIgnoreCase));
+        }
+
+        var totalCount = filteredItems.Count();
+        var pagedItems = filteredItems.Skip(request.Offset).Take(request.Limit).ToList();
+
+        return new GetBacklogResponse
+        {
+            Backlog = new ProductBacklogDto
             {
-                Id = item.Id.Value.ToString(),
+                Id = productBacklog.Id.Value.GetHashCode(), // Convert Guid to int for now
+                TeamId = productBacklog.TeamId.Value.GetHashCode(), // Convert Guid to int for now
+                LastRefinedDate = productBacklog.LastRefinedDate
+            },
+            Items = pagedItems.Select(item => new BacklogItemDto
+            {
+                Id = item.Id.Value.GetHashCode(), // Convert Guid to int for now
                 Title = item.Title.Value,
                 Description = item.Description.Value,
                 AcceptanceCriteria = item.AcceptanceCriteria?.Value ?? string.Empty,
@@ -47,8 +64,12 @@ public class GetProductBacklogQueryHandler : IRequestHandler<GetProductBacklogQu
                 Status = item.Status.ToString(),
                 Type = item.Type.ToString(),
                 CreatedBy = item.CreatedBy.Value,
-                CreatedDate = item.CreatedDate
-            }).ToList()
+                CreatedDate = item.CreatedDate,
+                IsInCurrentSprint = false, // TODO: Implement sprint check
+                SprintId = null // TODO: Implement sprint check
+            }).ToList(),
+            TotalCount = totalCount,
+            HasNext = request.Offset + request.Limit < totalCount
         };
     }
 }
@@ -76,24 +97,9 @@ public class GetProductBacklogByIdQueryHandler : IRequestHandler<GetProductBackl
 
         return new ProductBacklogDto
         {
-            Id = productBacklog.Id.Value.ToString(),
-            TeamId = productBacklog.TeamId.Value.ToString(),
-            CreatedDate = productBacklog.CreatedDate,
-            LastRefinedDate = productBacklog.LastRefinedDate,
-            Notes = productBacklog.Notes.Value,
-            Items = productBacklog.Items.Select(item => new ProductBacklogItemDto
-            {
-                Id = item.Id.Value.ToString(),
-                Title = item.Title.Value,
-                Description = item.Description.Value,
-                AcceptanceCriteria = item.AcceptanceCriteria?.Value ?? string.Empty,
-                Priority = item.Priority.Value,
-                StoryPoints = item.StoryPoints?.Value,
-                Status = item.Status.ToString(),
-                Type = item.Type.ToString(),
-                CreatedBy = item.CreatedBy.Value,
-                CreatedDate = item.CreatedDate
-            }).ToList()
+            Id = productBacklog.Id.Value.GetHashCode(), // Convert Guid to int for now
+            TeamId = productBacklog.TeamId.Value.GetHashCode(), // Convert Guid to int for now
+            LastRefinedDate = productBacklog.LastRefinedDate
         };
     }
 }
