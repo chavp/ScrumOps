@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\github\\ScrumOps\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8C01E888-30D0-4948-B0AD-26B8EA498CCB}|src\\ScrumOps.Api\\ScrumOps.Api.csproj|d:\\github\\scrumops\\src\\scrumops.api\\controllers\\backlogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8C01E888-30D0-4948-B0AD-26B8EA498CCB}|src\\ScrumOps.Api\\ScrumOps.Api.csproj|solutionrelative:src\\scrumops.api\\controllers\\backlogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8C01E888-30D0-4948-B0AD-26B8EA498CCB}|src\\ScrumOps.Api\\ScrumOps.Api.csproj|d:\\github\\scrumops\\src\\scrumops.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8C01E888-30D0-4948-B0AD-26B8EA498CCB}|src\\ScrumOps.Api\\ScrumOps.Api.csproj|solutionrelative:src\\scrumops.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -13,10 +17,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{8C01E888-30D0-4948-B0AD-26B8EA498CCB}|src\\ScrumOps.Api\\ScrumOps.Api.csproj|d:\\github\\scrumops\\src\\scrumops.api\\extensions\\problemdetailsextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8C01E888-30D0-4948-B0AD-26B8EA498CCB}|src\\ScrumOps.Api\\ScrumOps.Api.csproj|solutionrelative:src\\scrumops.api\\extensions\\problemdetailsextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8C01E888-30D0-4948-B0AD-26B8EA498CCB}|src\\ScrumOps.Api\\ScrumOps.Api.csproj|d:\\github\\scrumops\\src\\scrumops.api\\controllers\\backlogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8C01E888-30D0-4948-B0AD-26B8EA498CCB}|src\\ScrumOps.Api\\ScrumOps.Api.csproj|solutionrelative:src\\scrumops.api\\controllers\\backlogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8C01E888-30D0-4948-B0AD-26B8EA498CCB}|src\\ScrumOps.Api\\ScrumOps.Api.csproj|d:\\github\\scrumops\\src\\scrumops.api\\controllers\\sprintscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,11 +34,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\github\\ScrumOps\\src\\ScrumOps.Api\\Program.cs",
               "RelativeDocumentMoniker": "src\\ScrumOps.Api\\Program.cs",
@@ -51,7 +51,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "GlobalExceptionMiddleware.cs",
               "DocumentMoniker": "D:\\github\\ScrumOps\\src\\ScrumOps.Api\\Middleware\\GlobalExceptionMiddleware.cs",
               "RelativeDocumentMoniker": "src\\ScrumOps.Api\\Middleware\\GlobalExceptionMiddleware.cs",
@@ -59,12 +59,11 @@
               "RelativeToolTip": "src\\ScrumOps.Api\\Middleware\\GlobalExceptionMiddleware.cs",
               "ViewState": "AgIAAIUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-01T14:05:36.739Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-01T14:05:36.739Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ProblemDetailsExtensions.cs",
               "DocumentMoniker": "D:\\github\\ScrumOps\\src\\ScrumOps.Api\\Extensions\\ProblemDetailsExtensions.cs",
               "RelativeDocumentMoniker": "src\\ScrumOps.Api\\Extensions\\ProblemDetailsExtensions.cs",
@@ -72,18 +71,17 @@
               "RelativeToolTip": "src\\ScrumOps.Api\\Extensions\\ProblemDetailsExtensions.cs",
               "ViewState": "AgIAAEoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-01T14:05:24.402Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-01T14:05:24.402Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "BacklogController.cs",
               "DocumentMoniker": "D:\\github\\ScrumOps\\src\\ScrumOps.Api\\Controllers\\BacklogController.cs",
               "RelativeDocumentMoniker": "src\\ScrumOps.Api\\Controllers\\BacklogController.cs",
               "ToolTip": "D:\\github\\ScrumOps\\src\\ScrumOps.Api\\Controllers\\BacklogController.cs",
               "RelativeToolTip": "src\\ScrumOps.Api\\Controllers\\BacklogController.cs",
-              "ViewState": "AgIAAKIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAuwJ8AAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-01T14:04:50.226Z",
               "EditorCaption": ""
@@ -98,8 +96,7 @@
               "RelativeToolTip": "src\\ScrumOps.Api\\Controllers\\SprintsController.cs",
               "ViewState": "AgIAAEcBAAAAAAAAAAAAAG4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-01T13:50:50.783Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-01T13:50:50.783Z"
             },
             {
               "$type": "Document",
@@ -111,8 +108,7 @@
               "RelativeToolTip": "src\\ScrumOps.Api\\Controllers\\TeamsController.cs",
               "ViewState": "AgIAAJIAAAAAAAAAAAAAAGwAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-01T07:19:19.669Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-01T07:19:19.669Z"
             }
           ]
         }
