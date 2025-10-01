@@ -1,8 +1,10 @@
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using ScrumOps.Application;
 using ScrumOps.Infrastructure;
+using ScrumOps.Infrastructure.Persistence;
 
 // Configure Serilog
 Log.Logger = new LoggerConfiguration()
@@ -52,8 +54,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// TODO: Apply database migrations when EF configurations are fixed
-/*
+// Apply database migrations on startup
 try
 {
     using var scope = app.Services.CreateScope();
@@ -68,7 +69,6 @@ catch (Exception ex)
     Log.Error(ex, "An error occurred while applying database migrations");
     throw;
 }
-*/
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -94,7 +94,7 @@ app.MapGet("/health", () => Results.Ok(new { Status = "Healthy", Timestamp = Dat
 
 try
 {
-    Log.Information("Starting ScrumOps API with PostgreSQL support");
+    Log.Information("Starting ScrumOps API with PostgreSQL and Entity Framework Core");
     app.Run();
 }
 catch (Exception ex)

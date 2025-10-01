@@ -10,6 +10,16 @@ namespace ScrumOps.Domain.TeamManagement.ValueObjects;
 public class UserName : ValueObject
 {
     /// <summary>
+    /// Maximum allowed length for user names.
+    /// </summary>
+    public const int MaxLength = 100;
+
+    /// <summary>
+    /// Minimum allowed length for user names.
+    /// </summary>
+    public const int MinLength = 2;
+
+    /// <summary>
     /// Gets the user name value.
     /// </summary>
     public string Value { get; }
@@ -38,9 +48,9 @@ public class UserName : ValueObject
 
         var trimmedName = name.Trim();
         
-        if (trimmedName.Length < 2 || trimmedName.Length > 100)
+        if (trimmedName.Length < MinLength || trimmedName.Length > MaxLength)
         {
-            throw new DomainException("User name must be between 2 and 100 characters");
+            throw new DomainException($"User name must be between {MinLength} and {MaxLength} characters");
         }
 
         return new UserName(trimmedName);

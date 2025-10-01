@@ -13,6 +13,13 @@ public record TeamId(Guid Value)
     public static TeamId New() => new(Guid.NewGuid());
 
     /// <summary>
+    /// Creates a TeamId from an existing GUID value.
+    /// </summary>
+    /// <param name="value">The GUID value</param>
+    /// <returns>A new TeamId with the specified value</returns>
+    public static TeamId From(Guid value) => new(value);
+
+    /// <summary>
     /// Implicitly converts TeamId to GUID for convenience.
     /// </summary>
     /// <param name="teamId">The TeamId to convert</param>

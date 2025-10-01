@@ -33,7 +33,7 @@ public class SprintBacklogItemConfiguration : IEntityTypeConfiguration<SprintBac
         builder.Property(sbi => sbi.ProductBacklogItemId)
             .HasConversion(
                 id => id.Value,
-                value => ProductBacklogItemId.From(value))
+                value => ScrumOps.Domain.SprintManagement.ValueObjects.ProductBacklogItemId.From(value))
             .IsRequired();
 
         // Configure StoryPoints value object
@@ -60,6 +60,9 @@ public class SprintBacklogItemConfiguration : IEntityTypeConfiguration<SprintBac
             .HasForeignKey("SprintBacklogItemId")
             .OnDelete(DeleteBehavior.Cascade);
 
+        // Ignore computed properties
+        builder.Ignore(sbi => sbi.IsCompleted);
+
         // Configure indexes
         builder.HasIndex(sbi => sbi.SprintId)
             .HasDatabaseName("IX_SprintBacklogItems_SprintId");
@@ -68,11 +71,14 @@ public class SprintBacklogItemConfiguration : IEntityTypeConfiguration<SprintBac
             .IsUnique()
             .HasDatabaseName("IX_SprintBacklogItems_ProductBacklogItemId");
 
-        builder.HasIndex(sbi => sbi.IsCompleted)
-            .HasDatabaseName("IX_SprintBacklogItems_IsCompleted");
+        builder.HasIndex(sbi => sbi.CompletedDate)
+            .HasDatabaseName("IX_SprintBacklogItems_CompletedDate");
 
         // Compound index for sprint + completion status
-        builder.HasIndex(sbi => new { sbi.SprintId, sbi.IsCompleted })
-            .HasDatabaseName("IX_SprintBacklogItems_SprintId_IsCompleted");
+        builder.HasIndex(sbi => new { sbi.SprintId, sbi.CompletedDate })
+            .HasDatabaseName("IX_SprintBacklogItems_SprintId_CompletedDate");
+
+        // Configure table and schema
+        builder.ToTable("SprintBacklogItems", "SprintManagement");
     }
 }

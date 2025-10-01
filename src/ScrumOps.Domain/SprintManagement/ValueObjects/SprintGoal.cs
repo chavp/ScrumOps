@@ -10,6 +10,16 @@ namespace ScrumOps.Domain.SprintManagement.ValueObjects;
 public class SprintGoal : ValueObject
 {
     /// <summary>
+    /// Maximum allowed length for sprint goals.
+    /// </summary>
+    public const int MaxLength = 200;
+
+    /// <summary>
+    /// Minimum allowed length for sprint goals.
+    /// </summary>
+    public const int MinLength = 10;
+
+    /// <summary>
     /// Gets the sprint goal value.
     /// </summary>
     public string Value { get; }
@@ -43,9 +53,9 @@ public class SprintGoal : ValueObject
 
         var trimmedGoal = goal.Trim();
         
-        if (trimmedGoal.Length < 10 || trimmedGoal.Length > 200)
+        if (trimmedGoal.Length < MinLength || trimmedGoal.Length > MaxLength)
         {
-            throw new DomainException("Sprint goal must be between 10 and 200 characters");
+            throw new DomainException($"Sprint goal must be between {MinLength} and {MaxLength} characters");
         }
 
         return new SprintGoal(trimmedGoal);

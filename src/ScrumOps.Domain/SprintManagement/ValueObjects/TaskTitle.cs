@@ -10,6 +10,16 @@ namespace ScrumOps.Domain.SprintManagement.ValueObjects;
 public class TaskTitle : ValueObject
 {
     /// <summary>
+    /// Maximum allowed length for task titles.
+    /// </summary>
+    public const int MaxLength = 100;
+
+    /// <summary>
+    /// Minimum allowed length for task titles.
+    /// </summary>
+    public const int MinLength = 3;
+
+    /// <summary>
     /// Gets the task title value.
     /// </summary>
     public string Value { get; }
@@ -38,9 +48,9 @@ public class TaskTitle : ValueObject
 
         var trimmedTitle = title.Trim();
         
-        if (trimmedTitle.Length < 3 || trimmedTitle.Length > 100)
+        if (trimmedTitle.Length < MinLength || trimmedTitle.Length > MaxLength)
         {
-            throw new DomainException("Task title must be between 3 and 100 characters");
+            throw new DomainException($"Task title must be between {MinLength} and {MaxLength} characters");
         }
 
         return new TaskTitle(trimmedTitle);

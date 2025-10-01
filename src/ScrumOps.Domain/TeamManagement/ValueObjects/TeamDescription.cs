@@ -10,6 +10,11 @@ namespace ScrumOps.Domain.TeamManagement.ValueObjects;
 public class TeamDescription : ValueObject
 {
     /// <summary>
+    /// Maximum allowed length for team descriptions.
+    /// </summary>
+    public const int MaxLength = 500;
+
+    /// <summary>
     /// Gets the team description value.
     /// </summary>
     public string Value { get; }
@@ -38,9 +43,9 @@ public class TeamDescription : ValueObject
     {
         var trimmedDescription = description?.Trim() ?? string.Empty;
         
-        if (trimmedDescription.Length > 500)
+        if (trimmedDescription.Length > MaxLength)
         {
-            throw new DomainException("Team description cannot exceed 500 characters");
+            throw new DomainException($"Team description cannot exceed {MaxLength} characters");
         }
 
         return new TeamDescription(trimmedDescription);

@@ -63,5 +63,8 @@ public class ProductBacklogConfiguration : IEntityTypeConfiguration<ProductBackl
 
         builder.HasIndex(pb => pb.LastRefinedDate)
             .HasDatabaseName("IX_ProductBacklogs_LastRefinedDate");
+
+        // Configure table and schema
+        builder.ToTable("ProductBacklogs", "ProductBacklog");
     }
 }

@@ -13,6 +13,13 @@ public record ProductBacklogItemId(Guid Value)
     public static ProductBacklogItemId New() => new(Guid.NewGuid());
 
     /// <summary>
+    /// Creates a ProductBacklogItemId from an existing GUID value.
+    /// </summary>
+    /// <param name="value">The GUID value</param>
+    /// <returns>A new ProductBacklogItemId with the specified value</returns>
+    public static ProductBacklogItemId From(Guid value) => new(value);
+
+    /// <summary>
     /// Implicitly converts ProductBacklogItemId to GUID for convenience.
     /// </summary>
     /// <param name="itemId">The ProductBacklogItemId to convert</param>

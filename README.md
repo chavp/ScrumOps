@@ -69,8 +69,8 @@ ScrumOps is a comprehensive Scrum framework management system designed to help t
 git clone https://github.com/your-org/ScrumOps.git
 cd ScrumOps
 
-# Test the setup (optional)
-.\test-docker.ps1
+# Test the setup (optional - includes EF migration check)
+.\test-ef-migration.ps1
 
 # Run with Docker Compose (includes PostgreSQL database)
 docker-compose up -d
@@ -82,14 +82,17 @@ docker-compose logs -f
 # pgAdmin will be available at http://localhost:8081 (admin@scrumops.com / admin123)
 ```
 
-#### Option 2: Local Development
+#### Option 2: Local Development with EF Migrations
 ```bash
 # Clone the repository
 git clone https://github.com/your-org/ScrumOps.git
 cd ScrumOps
 
 # Start PostgreSQL (if not using Docker)
-# Update connection string in appsettings.Development.json
+docker-compose up -d postgres
+
+# Apply Entity Framework migrations
+dotnet ef database update --project src/ScrumOps.Infrastructure --startup-project src/ScrumOps.Api
 
 # Run the application
 dotnet run --project src/ScrumOps.Api

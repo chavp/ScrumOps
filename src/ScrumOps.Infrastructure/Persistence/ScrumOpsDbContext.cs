@@ -57,18 +57,19 @@ public class ScrumOpsDbContext : DbContext
         ConfigureConventions(modelBuilder);
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
-        {
-            // Default configuration for development
-            optionsBuilder.UseNpgsql("Host=localhost;Database=scrumops;Username=scrumops;Password=scrumops123");
-        }
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //{
+    //    if (!optionsBuilder.IsConfigured)
+    //    {
+    //        // Default configuration for development
+    //        //optionsBuilder.UseNpgsql("Host=localhost;Database=scrumops;Username=scrumops;Password=scrumops123");
+    //        optionsBuilder.UseNpgsql("Server=localhost;TrustServerCertificate=True;User Id=postgres;Password=animalfarm888");
+    //    }
 
-        // Enable sensitive data logging in development
-        optionsBuilder.EnableSensitiveDataLogging();
-        optionsBuilder.EnableDetailedErrors();
-    }
+    //    // Enable sensitive data logging in development
+    //    optionsBuilder.EnableSensitiveDataLogging();
+    //    optionsBuilder.EnableDetailedErrors();
+    //}
 
     /// <summary>
     /// Configures schema separation for bounded contexts.

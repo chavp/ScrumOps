@@ -5,6 +5,7 @@ using ScrumOps.Application.Common.Interfaces;
 using ScrumOps.Domain.TeamManagement.Repositories;
 using ScrumOps.Domain.ProductBacklog.Repositories;
 using ScrumOps.Infrastructure.Persistence;
+using ScrumOps.Infrastructure.Persistence.Repositories;
 
 namespace ScrumOps.Infrastructure;
 
@@ -15,23 +16,20 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        // TODO: Add PostgreSQL Database Context when EF configurations are fixed
-        /*
+        // Add PostgreSQL Database Context
         services.AddDbContext<ScrumOpsDbContext>(options =>
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection") 
                 ?? "Host=localhost;Database=scrumops;Username=scrumops;Password=scrumops123";
             options.UseNpgsql(connectionString);
         });
-        */
 
-        // Temporarily use in-memory implementations until EF mappings are fixed
         // Register Unit of Work
-        services.AddScoped<IUnitOfWork, InMemoryUnitOfWork>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        // Register repositories
-        services.AddScoped<ITeamRepository, InMemoryTeamRepository>();
-        services.AddScoped<IProductBacklogRepository, InMemoryProductBacklogRepository>();
+        // Register Entity Framework repositories
+        services.AddScoped<ITeamRepository, TeamRepository>();
+        services.AddScoped<IProductBacklogRepository, ProductBacklogRepository>();
 
         return services;
     }

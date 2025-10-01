@@ -446,15 +446,17 @@
           "lib/net8.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {}
         }
       },
-      "Microsoft.EntityFrameworkCore.Relational/8.0.10": {
+      "Microsoft.EntityFrameworkCore.Relational/9.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "9.0.9",
-          "Microsoft.Extensions.Configuration.Abstractions": "9.0.0"
+          "Microsoft.Extensions.Caching.Memory": "9.0.9",
+          "Microsoft.Extensions.Configuration.Abstractions": "9.0.0",
+          "Microsoft.Extensions.Logging": "9.0.9"
         },
         "runtime": {
           "lib/net8.0/Microsoft.EntityFrameworkCore.Relational.dll": {
-            "assemblyVersion": "8.0.10.0",
-            "fileVersion": "8.0.1024.46708"
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.24.52902"
           }
         },
         "compile": {
@@ -1009,31 +1011,30 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
-      "Npgsql/8.0.5": {
+      "Npgsql/9.0.2": {
         "dependencies": {
           "Microsoft.Extensions.Logging.Abstractions": "9.0.9"
         },
         "runtime": {
           "lib/net8.0/Npgsql.dll": {
-            "assemblyVersion": "8.0.5.0",
-            "fileVersion": "8.0.5.0"
+            "assemblyVersion": "9.0.2.0",
+            "fileVersion": "9.0.2.0"
           }
         },
         "compile": {
           "lib/net8.0/Npgsql.dll": {}
         }
       },
-      "Npgsql.EntityFrameworkCore.PostgreSQL/8.0.10": {
+      "Npgsql.EntityFrameworkCore.PostgreSQL/9.0.2": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "9.0.9",
-          "Microsoft.EntityFrameworkCore.Abstractions": "9.0.9",
-          "Microsoft.EntityFrameworkCore.Relational": "8.0.10",
-          "Npgsql": "8.0.5"
+          "Microsoft.EntityFrameworkCore.Relational": "9.0.0",
+          "Npgsql": "9.0.2"
         },
         "runtime": {
           "lib/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
-            "assemblyVersion": "8.0.10.0",
-            "fileVersion": "8.0.10.0"
+            "assemblyVersion": "9.0.2.0",
+            "fileVersion": "9.0.2.0"
           }
         },
         "compile": {
@@ -1410,7 +1411,7 @@
       "ScrumOps.Infrastructure/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "9.0.9",
-          "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.10",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.2",
           "ScrumOps.Application": "1.0.0",
           "ScrumOps.Domain": "1.0.0"
         },
@@ -4125,12 +4126,12 @@
       "path": "microsoft.entityframeworkcore.abstractions/9.0.9",
       "hashPath": "microsoft.entityframeworkcore.abstractions.9.0.9.nupkg.sha512"
     },
-    "Microsoft.EntityFrameworkCore.Relational/8.0.10": {
+    "Microsoft.EntityFrameworkCore.Relational/9.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-OefBEE47kGKPRPV3OT+FAW6o5BFgLk2D9EoeWVy7NbOepzUneayLQxbVE098FfedTyMwxvZQoDD9LrvZc3MadA==",
-      "path": "microsoft.entityframeworkcore.relational/8.0.10",
-      "hashPath": "microsoft.entityframeworkcore.relational.8.0.10.nupkg.sha512"
+      "sha512": "sha512-j+msw6fWgAE9M3Q/5B9Uhv7pdAdAQUvFPJAiBJmoy+OXvehVbfbCE8ftMAa51Uo2ZeiqVnHShhnv4Y4UJJmUzA==",
+      "path": "microsoft.entityframeworkcore.relational/9.0.0",
+      "hashPath": "microsoft.entityframeworkcore.relational.9.0.0.nupkg.sha512"
     },
     "Microsoft.Extensions.Caching.Abstractions/9.0.9": {
       "type": "package",
@@ -4293,19 +4294,19 @@
       "path": "newtonsoft.json/13.0.1",
       "hashPath": "newtonsoft.json.13.0.1.nupkg.sha512"
     },
-    "Npgsql/8.0.5": {
+    "Npgsql/9.0.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-zRG5V8cyeZLpzJlKzFKjEwkRMYIYnHWJvEor2lWXeccS2E1G2nIWYYhnukB51iz5XsWSVEtqg3AxTWM0QJ6vfg==",
-      "path": "npgsql/8.0.5",
-      "hashPath": "npgsql.8.0.5.nupkg.sha512"
+      "sha512": "sha512-hCbO8box7i/XXiTFqCJ3GoowyLqx3JXxyrbOJ6om7dr+eAknvBNhhUHeJVGAQo44sySZTfdVffp4BrtPeLZOAA==",
+      "path": "npgsql/9.0.2",
+      "hashPath": "npgsql.9.0.2.nupkg.sha512"
     },
-    "Npgsql.EntityFrameworkCore.PostgreSQL/8.0.10": {
+    "Npgsql.EntityFrameworkCore.PostgreSQL/9.0.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-gFPl9Dmxih7Yi4tZ3bITzZFzbxFMBx04gqTqcjoL2r5VEW+O2TA5UVw/wm/XW26NAJ7sg59Je0+9QrwiZt6MPQ==",
-      "path": "npgsql.entityframeworkcore.postgresql/8.0.10",
-      "hashPath": "npgsql.entityframeworkcore.postgresql.8.0.10.nupkg.sha512"
+      "sha512": "sha512-cYdOGplIvr9KgsG8nJ8xnzBTImeircbgetlzS1OmepS5dAQW6PuGpVrLOKBNEwEvGYZPsV8037X5vZ/Dmpwz7Q==",
+      "path": "npgsql.entityframeworkcore.postgresql/9.0.2",
+      "hashPath": "npgsql.entityframeworkcore.postgresql.9.0.2.nupkg.sha512"
     },
     "NuGet.Frameworks/6.5.0": {
       "type": "package",

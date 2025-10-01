@@ -11,19 +11,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.2" />
   </ItemGroup>
-
-  <ItemGroup>
-    <!-- Temporarily exclude EF configurations until they're fixed -->
-    <Compile Remove="Persistence\Configurations\*.cs" />
-    <Compile Remove="Persistence\ScrumOpsDbContext.cs" />
-    <Compile Remove="Persistence\UnitOfWork.cs" />
-    <Compile Remove="Persistence\Repositories\TeamRepository.cs" />
-    <Compile Remove="Persistence\Repositories\ProductBacklogRepository.cs" />
-  </ItemGroup>
-
-
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>

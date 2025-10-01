@@ -63,3 +63,177 @@
 2025-10-01 02:15:55.015 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
 2025-10-01 02:15:55.015 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 2.9862ms
 2025-10-01 02:16:16.636 +00:00 [INF] Application is shutting down...
+2025-10-01 02:37:57.600 +00:00 [INF] Starting ScrumOps API with PostgreSQL support
+2025-10-01 02:37:57.654 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:8080'.
+2025-10-01 02:37:57.725 +00:00 [INF] Now listening on: http://[::]:8080
+2025-10-01 02:37:57.726 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-10-01 02:37:57.727 +00:00 [INF] Hosting environment: Development
+2025-10-01 02:37:57.727 +00:00 [INF] Content root path: /app
+2025-10-01 02:38:26.602 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:38:26.626 +00:00 [WRN] Failed to determine the https port for redirect.
+2025-10-01 02:38:26.628 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:38:26.631 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:38:26.652 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:38:26.668 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:38:26.670 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 69.2904ms
+2025-10-01 02:38:56.778 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:38:56.782 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:38:56.783 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:38:56.787 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:38:56.789 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:38:56.791 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 14.031ms
+2025-10-01 02:39:26.940 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:39:26.942 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:39:26.943 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:39:26.944 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:39:26.944 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:39:26.945 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 4.662ms
+2025-10-01 02:39:57.022 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:39:57.023 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:39:57.024 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:39:57.024 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:39:57.024 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:39:57.025 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 2.6659ms
+2025-10-01 02:40:08.727 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/ - null null
+2025-10-01 02:40:08.729 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/ - 404 0 null 1.8305ms
+2025-10-01 02:40:08.731 +00:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:8080/, Response status code: 404
+2025-10-01 02:40:20.698 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:40:20.699 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:40:20.699 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:40:20.700 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:40:20.701 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:40:20.701 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 3.1284ms
+2025-10-01 02:40:27.138 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:40:27.139 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:40:27.139 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:40:27.139 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:40:27.142 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:40:27.144 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 5.9877ms
+2025-10-01 02:40:29.141 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/swagger/index.html - null null
+2025-10-01 02:40:29.175 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/swagger/index.html - 200 null text/html;charset=utf-8 34.0063ms
+2025-10-01 02:40:29.459 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/swagger/v1/swagger.json - null null
+2025-10-01 02:40:29.545 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 85.9798ms
+2025-10-01 02:40:35.910 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/api/backlogs/112 - null null
+2025-10-01 02:40:35.911 +00:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.ProductBacklogController.GetProductBacklog (ScrumOps.Api)'
+2025-10-01 02:40:35.931 +00:00 [INF] Route matched with {action = "GetProductBacklog", controller = "ProductBacklog"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetProductBacklog(System.String, System.Threading.CancellationToken) on controller ScrumOps.Api.Controllers.ProductBacklogController (ScrumOps.Api).
+2025-10-01 02:40:35.934 +00:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-10-01 02:40:35.941 +00:00 [INF] Getting product backlog with ID: 112
+2025-10-01 02:40:35.944 +00:00 [ERR] Error getting product backlog with ID: 112
+System.ArgumentException: Invalid ProductBacklogId format (Parameter 'value')
+   at ScrumOps.Domain.ProductBacklog.ValueObjects.ProductBacklogId.From(String value) in /src/src/ScrumOps.Domain/ProductBacklog/ValueObjects/ProductBacklogId.cs:line 38
+   at ScrumOps.Api.Controllers.ProductBacklogController.GetProductBacklog(String id, CancellationToken cancellationToken) in /src/src/ScrumOps.Api/Controllers/ProductBacklogController.cs:line 107
+2025-10-01 02:40:35.959 +00:00 [INF] Executing NotFoundObjectResult, writing value of type 'System.String'.
+2025-10-01 02:40:35.961 +00:00 [INF] Executed action ScrumOps.Api.Controllers.ProductBacklogController.GetProductBacklog (ScrumOps.Api) in 27.5689ms
+2025-10-01 02:40:35.962 +00:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.ProductBacklogController.GetProductBacklog (ScrumOps.Api)'
+2025-10-01 02:40:35.962 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/api/backlogs/112 - 404 null text/plain; charset=utf-8 52.2365ms
+2025-10-01 02:40:57.233 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:40:57.234 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:40:57.234 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:40:57.235 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:40:57.236 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:40:57.237 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 4.1502ms
+2025-10-01 02:41:27.337 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:41:27.338 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:41:27.338 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:41:27.338 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:41:27.339 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:41:27.339 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 2.2522ms
+2025-10-01 02:41:57.414 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:41:57.415 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:41:57.416 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:41:57.416 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:41:57.417 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:41:57.417 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 2.7119ms
+2025-10-01 02:42:27.539 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:42:27.540 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:42:27.540 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:42:27.541 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:42:27.541 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:42:27.541 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 2.4149ms
+2025-10-01 02:42:57.624 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:42:57.625 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:42:57.626 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:42:57.626 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:42:57.626 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:42:57.627 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 2.4565ms
+2025-10-01 02:43:27.716 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:43:27.717 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:43:27.717 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:43:27.717 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:43:27.718 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:43:27.718 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 2.0229ms
+2025-10-01 02:43:57.799 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:43:57.799 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:43:57.800 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:43:57.800 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:43:57.801 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:43:57.801 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 2.4898ms
+2025-10-01 02:44:27.924 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:44:27.929 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:44:27.930 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:44:27.930 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:44:27.931 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:44:27.932 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 7.633ms
+2025-10-01 02:44:58.016 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:44:58.017 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:44:58.017 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:44:58.017 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:44:58.017 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:44:58.018 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 1.6927ms
+2025-10-01 02:45:28.103 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:45:28.103 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:45:28.104 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:45:28.104 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:45:28.105 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:45:28.105 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 2.4512ms
+2025-10-01 02:45:58.172 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:45:58.174 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:45:58.174 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:45:58.175 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:45:58.175 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:45:58.176 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 3.7123ms
+2025-10-01 02:46:28.252 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:46:28.253 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:46:28.253 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:46:28.254 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:46:28.254 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:46:28.254 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 2.0513ms
+2025-10-01 02:46:58.321 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:46:58.322 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:46:58.322 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:46:58.323 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:46:58.323 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:46:58.323 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 2.1205ms
+2025-10-01 02:47:28.386 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:47:28.386 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:47:28.387 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:47:28.387 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:47:28.388 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:47:28.388 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 2.2956ms
+2025-10-01 02:47:58.460 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:47:58.461 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:47:58.461 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:47:58.461 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:47:58.462 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:47:58.462 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 2.2768ms
+2025-10-01 02:48:28.566 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 02:48:28.566 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 02:48:28.567 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 02:48:28.567 +00:00 [INF] Writing value of type '<>f__AnonymousType1`2' as Json.
+2025-10-01 02:48:28.568 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 02:48:28.568 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 2.1007ms
+2025-10-01 02:48:41.326 +00:00 [INF] Application is shutting down...
+2025-10-01 02:53:15.616 +00:00 [INF] Starting ScrumOps API with PostgreSQL support
+2025-10-01 02:53:15.672 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:8080'.
+2025-10-01 02:53:15.765 +00:00 [INF] Now listening on: http://[::]:8080
+2025-10-01 02:53:15.766 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-10-01 02:53:15.766 +00:00 [INF] Hosting environment: Development
+2025-10-01 02:53:15.767 +00:00 [INF] Content root path: /app
+2025-10-01 02:53:22.261 +00:00 [INF] Application is shutting down...
+2025-10-01 03:14:32.115 +00:00 [INF] Starting ScrumOps API with PostgreSQL support
+2025-10-01 03:14:32.176 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:8080'.
+2025-10-01 03:14:32.249 +00:00 [INF] Now listening on: http://[::]:8080
+2025-10-01 03:14:32.249 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-10-01 03:14:32.251 +00:00 [INF] Hosting environment: Development
+2025-10-01 03:14:32.252 +00:00 [INF] Content root path: /app
+2025-10-01 03:14:57.299 +00:00 [INF] Application is shutting down...

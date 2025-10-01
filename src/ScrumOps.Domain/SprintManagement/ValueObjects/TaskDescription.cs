@@ -10,6 +10,11 @@ namespace ScrumOps.Domain.SprintManagement.ValueObjects;
 public class TaskDescription : ValueObject
 {
     /// <summary>
+    /// Maximum allowed length for task descriptions.
+    /// </summary>
+    public const int MaxLength = 1000;
+
+    /// <summary>
     /// Gets the task description value.
     /// </summary>
     public string Value { get; }
@@ -38,9 +43,9 @@ public class TaskDescription : ValueObject
     {
         var trimmedDescription = description?.Trim() ?? string.Empty;
         
-        if (trimmedDescription.Length > 1000)
+        if (trimmedDescription.Length > MaxLength)
         {
-            throw new DomainException("Task description cannot exceed 1000 characters");
+            throw new DomainException($"Task description cannot exceed {MaxLength} characters");
         }
 
         return new TaskDescription(trimmedDescription);

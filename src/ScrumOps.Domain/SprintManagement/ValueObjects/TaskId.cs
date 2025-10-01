@@ -13,6 +13,13 @@ public record TaskId(Guid Value)
     public static TaskId New() => new(Guid.NewGuid());
 
     /// <summary>
+    /// Creates a TaskId from an existing GUID value.
+    /// </summary>
+    /// <param name="value">The GUID value</param>
+    /// <returns>A new TaskId with the specified value</returns>
+    public static TaskId From(Guid value) => new(value);
+
+    /// <summary>
     /// Implicitly converts TaskId to GUID for convenience.
     /// </summary>
     /// <param name="taskId">The TaskId to convert</param>

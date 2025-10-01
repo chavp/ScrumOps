@@ -36,6 +36,10 @@ public class ProductBacklogItemConfiguration : IEntityTypeConfiguration<ProductB
                 .HasColumnName("Title")
                 .HasMaxLength(ItemTitle.MaxLength)
                 .IsRequired();
+            
+            // Add index for title searches
+            titleBuilder.HasIndex(t => t.Value)
+                .HasDatabaseName("IX_ProductBacklogItems_Title");
         });
 
         // Configure ItemDescription value object
@@ -53,6 +57,10 @@ public class ProductBacklogItemConfiguration : IEntityTypeConfiguration<ProductB
             priorityBuilder.Property(p => p.Value)
                 .HasColumnName("Priority")
                 .IsRequired();
+            
+            // Add index for priority ordering
+            priorityBuilder.HasIndex(p => p.Value)
+                .HasDatabaseName("IX_ProductBacklogItems_Priority");
         });
 
         // Configure StoryPoints value object (nullable)
@@ -75,7 +83,7 @@ public class ProductBacklogItemConfiguration : IEntityTypeConfiguration<ProductB
         {
             createdByBuilder.Property(cb => cb.Value)
                 .HasColumnName("CreatedBy")
-                .HasMaxLength(UserName.MaxLength)
+                .HasMaxLength(ScrumOps.Domain.TeamManagement.ValueObjects.UserName.MaxLength)
                 .IsRequired();
         });
 
@@ -101,9 +109,6 @@ public class ProductBacklogItemConfiguration : IEntityTypeConfiguration<ProductB
         builder.HasIndex(pbi => pbi.ProductBacklogId)
             .HasDatabaseName("IX_ProductBacklogItems_ProductBacklogId");
 
-        builder.HasIndex("Priority")
-            .HasDatabaseName("IX_ProductBacklogItems_Priority");
-
         builder.HasIndex(pbi => pbi.Status)
             .HasDatabaseName("IX_ProductBacklogItems_Status");
 
@@ -113,7 +118,7 @@ public class ProductBacklogItemConfiguration : IEntityTypeConfiguration<ProductB
         builder.HasIndex(pbi => pbi.CreatedDate)
             .HasDatabaseName("IX_ProductBacklogItems_CreatedDate");
 
-        builder.HasIndex("Title")
-            .HasDatabaseName("IX_ProductBacklogItems_Title");
+        // Configure table and schema
+        builder.ToTable("ProductBacklogItems", "ProductBacklog");
     }
 }

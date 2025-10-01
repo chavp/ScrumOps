@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "4iak5GQdXd0=",
+  "dgSpecHash": "CZarPOM7hu8=",
   "success": true,
   "projectFilePath": "C:\\data\\ScrumOps\\src\\ScrumOps.Infrastructure\\ScrumOps.Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -21,6 +21,7 @@
     "C:\\Users\\Parinya.c\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\9.0.9\\microsoft.entityframeworkcore.analyzers.9.0.9.nupkg.sha512",
     "C:\\Users\\Parinya.c\\.nuget\\packages\\microsoft.entityframeworkcore.design\\9.0.9\\microsoft.entityframeworkcore.design.9.0.9.nupkg.sha512",
     "C:\\Users\\Parinya.c\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\9.0.9\\microsoft.entityframeworkcore.relational.9.0.9.nupkg.sha512",
+    "C:\\Users\\Parinya.c\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\9.0.9\\microsoft.entityframeworkcore.tools.9.0.9.nupkg.sha512",
     "C:\\Users\\Parinya.c\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\9.0.9\\microsoft.extensions.caching.abstractions.9.0.9.nupkg.sha512",
     "C:\\Users\\Parinya.c\\.nuget\\packages\\microsoft.extensions.caching.memory\\9.0.9\\microsoft.extensions.caching.memory.9.0.9.nupkg.sha512",
     "C:\\Users\\Parinya.c\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\9.0.9\\microsoft.extensions.configuration.abstractions.9.0.9.nupkg.sha512",
@@ -36,8 +37,8 @@
     "C:\\Users\\Parinya.c\\.nuget\\packages\\microsoft.identitymodel.logging\\8.0.1\\microsoft.identitymodel.logging.8.0.1.nupkg.sha512",
     "C:\\Users\\Parinya.c\\.nuget\\packages\\microsoft.identitymodel.tokens\\8.0.1\\microsoft.identitymodel.tokens.8.0.1.nupkg.sha512",
     "C:\\Users\\Parinya.c\\.nuget\\packages\\mono.texttemplating\\3.0.0\\mono.texttemplating.3.0.0.nupkg.sha512",
-    "C:\\Users\\Parinya.c\\.nuget\\packages\\npgsql\\8.0.5\\npgsql.8.0.5.nupkg.sha512",
-    "C:\\Users\\Parinya.c\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\8.0.10\\npgsql.entityframeworkcore.postgresql.8.0.10.nupkg.sha512",
+    "C:\\Users\\Parinya.c\\.nuget\\packages\\npgsql\\9.0.2\\npgsql.9.0.2.nupkg.sha512",
+    "C:\\Users\\Parinya.c\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\9.0.2\\npgsql.entityframeworkcore.postgresql.9.0.2.nupkg.sha512",
     "C:\\Users\\Parinya.c\\.nuget\\packages\\system.codedom\\6.0.0\\system.codedom.6.0.0.nupkg.sha512",
     "C:\\Users\\Parinya.c\\.nuget\\packages\\system.collections.immutable\\7.0.0\\system.collections.immutable.7.0.0.nupkg.sha512",
     "C:\\Users\\Parinya.c\\.nuget\\packages\\system.composition\\7.0.0\\system.composition.7.0.0.nupkg.sha512",

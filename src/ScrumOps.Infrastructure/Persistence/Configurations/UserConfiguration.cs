@@ -22,6 +22,13 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 value => UserId.From(value))
             .ValueGeneratedNever();
 
+        // Configure TeamId as value object
+        builder.Property(u => u.TeamId)
+            .HasConversion(
+                id => id.Value,
+                value => TeamId.From(value))
+            .IsRequired();
+
         // Configure UserName value object
         builder.OwnsOne(u => u.Name, nameBuilder =>
         {
@@ -38,43 +45,44 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 .HasColumnName("Email")
                 .HasMaxLength(Email.MaxLength)
                 .IsRequired();
+            
+            // Add index on the owned property
+            emailBuilder.HasIndex(e => e.Value)
+                .IsUnique()
+                .HasDatabaseName("IX_Users_Email");
         });
 
-        // Configure ScrumRole value object collection
-        builder.OwnsMany(u => u.Roles, rolesBuilder =>
+        // Configure ScrumRole value object
+        builder.OwnsOne(u => u.Role, roleBuilder =>
         {
-            rolesBuilder.WithOwner().HasForeignKey("UserId");
-            rolesBuilder.Property<int>("Id").ValueGeneratedOnAdd();
-            rolesBuilder.HasKey("Id");
-            
-            rolesBuilder.Property(r => r.Value)
+            roleBuilder.Property(r => r.Name)
                 .HasColumnName("Role")
-                .HasConversion<string>()
+                .HasMaxLength(50)
+                .IsRequired();
+            
+            roleBuilder.Property(r => r.IsSingleton)
+                .HasColumnName("RoleIsSingleton")
                 .IsRequired();
         });
 
         // Configure simple properties
-        builder.Property(u => u.IsActive)
-            .IsRequired();
-
         builder.Property(u => u.CreatedDate)
             .IsRequired();
 
-        builder.Property(u => u.LastModifiedDate)
+        builder.Property(u => u.LastLoginDate)
+            .IsRequired(false);
+
+        builder.Property(u => u.IsActive)
             .IsRequired();
 
         // Configure indexes
-        builder.HasIndex("Email")
-            .IsUnique()
-            .HasDatabaseName("IX_Users_Email");
-
-        builder.HasIndex("Name")
-            .HasDatabaseName("IX_Users_Name");
+        builder.HasIndex(u => u.TeamId)
+            .HasDatabaseName("IX_Users_TeamId");
 
         builder.HasIndex(u => u.IsActive)
             .HasDatabaseName("IX_Users_IsActive");
 
-        builder.HasIndex(u => u.CreatedDate)
-            .HasDatabaseName("IX_Users_CreatedDate");
+        // Configure table and schema
+        builder.ToTable("Users", "TeamManagement");
     }
 }

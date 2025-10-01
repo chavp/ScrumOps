@@ -10,6 +10,16 @@ namespace ScrumOps.Domain.TeamManagement.ValueObjects;
 public class TeamName : ValueObject
 {
     /// <summary>
+    /// Maximum allowed length for team names.
+    /// </summary>
+    public const int MaxLength = 50;
+
+    /// <summary>
+    /// Minimum allowed length for team names.
+    /// </summary>
+    public const int MinLength = 3;
+
+    /// <summary>
     /// Gets the team name value.
     /// </summary>
     public string Value { get; }
@@ -38,9 +48,9 @@ public class TeamName : ValueObject
 
         var trimmedName = name.Trim();
         
-        if (trimmedName.Length < 3 || trimmedName.Length > 50)
+        if (trimmedName.Length < MinLength || trimmedName.Length > MaxLength)
         {
-            throw new DomainException("Team name must be between 3 and 50 characters");
+            throw new DomainException($"Team name must be between {MinLength} and {MaxLength} characters");
         }
 
         return new TeamName(trimmedName);

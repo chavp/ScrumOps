@@ -103,5 +103,8 @@ public class SprintConfiguration : IEntityTypeConfiguration<Sprint>
         // Compound index for team + status queries
         builder.HasIndex(s => new { s.TeamId, s.Status })
             .HasDatabaseName("IX_Sprints_TeamId_Status");
+
+        // Configure table and schema
+        builder.ToTable("Sprints", "SprintManagement");
     }
 }

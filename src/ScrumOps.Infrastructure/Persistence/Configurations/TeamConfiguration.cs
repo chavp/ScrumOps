@@ -29,6 +29,11 @@ public class TeamConfiguration : IEntityTypeConfiguration<Team>
                 .HasColumnName("Name")
                 .HasMaxLength(TeamName.MaxLength)
                 .IsRequired();
+            
+            // Add index on the owned property
+            nameBuilder.HasIndex(n => n.Value)
+                .IsUnique()
+                .HasDatabaseName("IX_Teams_Name");
         });
 
         // Configure TeamDescription value object
@@ -40,10 +45,18 @@ public class TeamConfiguration : IEntityTypeConfiguration<Team>
         });
 
         // Configure SprintLength value object
-        builder.OwnsOne(t => t.DefaultSprintLength, lengthBuilder =>
+        builder.OwnsOne(t => t.SprintLength, lengthBuilder =>
         {
             lengthBuilder.Property(l => l.Weeks)
-                .HasColumnName("DefaultSprintLengthWeeks");
+                .HasColumnName("SprintLengthWeeks");
+        });
+
+        // Configure Velocity value object
+        builder.OwnsOne(t => t.CurrentVelocity, velocityBuilder =>
+        {
+            velocityBuilder.Property(v => v.Value)
+                .HasColumnName("CurrentVelocityValue")
+                .HasDefaultValue(0);
         });
 
         // Configure simple properties
@@ -53,45 +66,23 @@ public class TeamConfiguration : IEntityTypeConfiguration<Team>
         builder.Property(t => t.CreatedDate)
             .IsRequired();
 
-        builder.Property(t => t.LastModifiedDate)
-            .IsRequired();
-
         // Configure relationships
         builder.HasMany(t => t.Members)
             .WithOne()
             .HasForeignKey("TeamId")
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Configure ScrumMasterId as nullable foreign key
-        builder.Property<Guid?>("ScrumMasterId")
-            .IsRequired(false);
-
-        builder.HasOne<User>()
-            .WithMany()
-            .HasForeignKey("ScrumMasterId")
-            .OnDelete(DeleteBehavior.SetNull);
-
-        // Configure ProductOwnerId as nullable foreign key  
-        builder.Property<Guid?>("ProductOwnerId")
-            .IsRequired(false);
-
-        builder.HasOne<User>()
-            .WithMany()
-            .HasForeignKey("ProductOwnerId")
-            .OnDelete(DeleteBehavior.SetNull);
-
         // Ignore domain events (handled separately)
         builder.Ignore(t => t.DomainEvents);
 
-        // Configure indexes
-        builder.HasIndex("Name")
-            .IsUnique()
-            .HasDatabaseName("IX_Teams_Name");
-
+        // Configure indexes  
         builder.HasIndex(t => t.IsActive)
             .HasDatabaseName("IX_Teams_IsActive");
 
         builder.HasIndex(t => t.CreatedDate)
             .HasDatabaseName("IX_Teams_CreatedDate");
+
+        // Configure table and schema
+        builder.ToTable("Teams", "TeamManagement");
     }
 }

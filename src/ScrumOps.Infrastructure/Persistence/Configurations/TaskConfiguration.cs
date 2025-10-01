@@ -47,13 +47,6 @@ public class TaskConfiguration : IEntityTypeConfiguration<Domain.SprintManagemen
                 .IsRequired();
         });
 
-        // Configure AssignedToId as nullable UserId
-        builder.Property(t => t.AssignedToId)
-            .HasConversion(
-                id => id != null ? id.Value : (Guid?)null,
-                value => value != null ? UserId.From(value.Value) : null)
-            .IsRequired(false);
-
         // Configure enum properties
         builder.Property(t => t.Status)
             .HasConversion<string>()
@@ -61,7 +54,7 @@ public class TaskConfiguration : IEntityTypeConfiguration<Domain.SprintManagemen
             .IsRequired();
 
         // Configure simple properties
-        builder.Property(t => t.EstimatedHours)
+        builder.Property(t => t.OriginalEstimateHours)
             .IsRequired();
 
         builder.Property(t => t.RemainingHours)
@@ -80,20 +73,13 @@ public class TaskConfiguration : IEntityTypeConfiguration<Domain.SprintManagemen
         builder.HasIndex(t => t.SprintBacklogItemId)
             .HasDatabaseName("IX_Tasks_SprintBacklogItemId");
 
-        builder.HasIndex(t => t.AssignedToId)
-            .HasDatabaseName("IX_Tasks_AssignedToId");
-
         builder.HasIndex(t => t.Status)
             .HasDatabaseName("IX_Tasks_Status");
 
         builder.HasIndex(t => t.CreatedDate)
             .HasDatabaseName("IX_Tasks_CreatedDate");
 
-        // Compound indexes for common queries
-        builder.HasIndex(t => new { t.AssignedToId, t.Status })
-            .HasDatabaseName("IX_Tasks_AssignedToId_Status");
-
-        builder.HasIndex(t => new { t.SprintBacklogItemId, t.Status })
-            .HasDatabaseName("IX_Tasks_SprintBacklogItemId_Status");
+        // Configure table and schema
+        builder.ToTable("Tasks", "SprintManagement");
     }
 }

@@ -13,6 +13,13 @@ public record SprintBacklogItemId(Guid Value)
     public static SprintBacklogItemId New() => new(Guid.NewGuid());
 
     /// <summary>
+    /// Creates a SprintBacklogItemId from an existing GUID value.
+    /// </summary>
+    /// <param name="value">The GUID value</param>
+    /// <returns>A new SprintBacklogItemId with the specified value</returns>
+    public static SprintBacklogItemId From(Guid value) => new(value);
+
+    /// <summary>
     /// Implicitly converts SprintBacklogItemId to GUID for convenience.
     /// </summary>
     /// <param name="itemId">The SprintBacklogItemId to convert</param>

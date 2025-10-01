@@ -10,6 +10,11 @@ namespace ScrumOps.Domain.SharedKernel.ValueObjects;
 public class Email : ValueObject
 {
     /// <summary>
+    /// Maximum allowed length for email addresses.
+    /// </summary>
+    public const int MaxLength = 320; // RFC 5321 compliant
+
+    /// <summary>
     /// Gets the email address value.
     /// </summary>
     public string Value { get; }

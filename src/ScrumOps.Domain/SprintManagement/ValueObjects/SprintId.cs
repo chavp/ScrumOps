@@ -13,6 +13,13 @@ public record SprintId(Guid Value)
     public static SprintId New() => new(Guid.NewGuid());
 
     /// <summary>
+    /// Creates a SprintId from an existing GUID value.
+    /// </summary>
+    /// <param name="value">The GUID value</param>
+    /// <returns>A new SprintId with the specified value</returns>
+    public static SprintId From(Guid value) => new(value);
+
+    /// <summary>
     /// Implicitly converts SprintId to GUID for convenience.
     /// </summary>
     /// <param name="sprintId">The SprintId to convert</param>

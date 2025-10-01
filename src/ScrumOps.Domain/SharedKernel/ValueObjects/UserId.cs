@@ -13,6 +13,13 @@ public record UserId(Guid Value)
     public static UserId New() => new(Guid.NewGuid());
 
     /// <summary>
+    /// Creates a UserId from an existing GUID value.
+    /// </summary>
+    /// <param name="value">The GUID value</param>
+    /// <returns>A new UserId with the specified value</returns>
+    public static UserId From(Guid value) => new(value);
+
+    /// <summary>
     /// Implicitly converts UserId to GUID for convenience.
     /// </summary>
     /// <param name="userId">The UserId to convert</param>
