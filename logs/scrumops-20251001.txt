@@ -2298,3 +2298,53 @@ Npgsql.PostgresException (0x80004005): 42P07: relation "ProductBacklogs" already
     File: heap.c
     Line: 1150
     Routine: heap_create_with_catalog
+2025-10-01 07:21:25.054 +00:00 [INF] Applying database migrations...
+2025-10-01 07:21:25.534 +00:00 [WRN] The property 'SprintBacklogItem.IsCompleted' was first mapped explicitly and then ignored. Consider not mapping the property in the first place.
+2025-10-01 07:21:25.930 +00:00 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-01 07:21:25.967 +00:00 [INF] Database migrations applied successfully
+2025-10-01 07:21:26.026 +00:00 [INF] Starting ScrumOps API with PostgreSQL and Entity Framework Core
+2025-10-01 07:21:26.036 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:8080'.
+2025-10-01 07:21:26.078 +00:00 [INF] Now listening on: http://[::]:8080
+2025-10-01 07:21:26.080 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-10-01 07:21:26.080 +00:00 [INF] Hosting environment: Development
+2025-10-01 07:21:26.081 +00:00 [INF] Content root path: /app
+2025-10-01 07:21:43.148 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/ - null null
+2025-10-01 07:21:43.173 +00:00 [WRN] Failed to determine the https port for redirect.
+2025-10-01 07:21:43.180 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/ - 404 0 null 33.4121ms
+2025-10-01 07:21:43.186 +00:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:8080/, Response status code: 404
+2025-10-01 07:21:48.347 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/swagger/index.html - null null
+2025-10-01 07:21:48.410 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/swagger/index.html - 200 null text/html;charset=utf-8 62.7677ms
+2025-10-01 07:21:48.557 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/swagger/v1/swagger.json - null null
+2025-10-01 07:21:48.659 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 101.4618ms
+2025-10-01 07:21:53.798 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 07:21:53.800 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 07:21:53.803 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 07:21:53.815 +00:00 [INF] Writing value of type '<>f__AnonymousType5`2' as Json.
+2025-10-01 07:21:53.821 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 07:21:53.822 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 24.2629ms
+2025-10-01 07:22:02.950 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/api/teams - null null
+2025-10-01 07:22:02.952 +00:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 07:22:02.971 +00:00 [INF] Route matched with {action = "GetTeams", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[ScrumOps.Application.TeamManagement.Queries.GetTeamsResponse]] GetTeams() on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 07:22:02.975 +00:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-10-01 07:22:02.981 +00:00 [ERR] Error occurred while getting teams
+System.InvalidOperationException: No service for type 'MediatR.IRequestHandler`2[ScrumOps.Application.TeamManagement.Queries.GetTeamsQuery,ScrumOps.Application.TeamManagement.Queries.GetTeamsResponse]' has been registered.
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService[T](IServiceProvider provider)
+   at MediatR.Wrappers.RequestHandlerWrapperImpl`2.<>c__DisplayClass1_0.<Handle>g__Handler|0(CancellationToken t)
+   at MediatR.Wrappers.RequestHandlerWrapperImpl`2.Handle(IRequest`1 request, IServiceProvider serviceProvider, CancellationToken cancellationToken)
+   at MediatR.Mediator.Send[TResponse](IRequest`1 request, CancellationToken cancellationToken)
+   at ScrumOps.Api.Controllers.TeamsController.GetTeams() in /src/src/ScrumOps.Api/Controllers/TeamsController.cs:line 46
+2025-10-01 07:22:03.001 +00:00 [INF] Executing ObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-10-01 07:22:03.013 +00:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api) in 33.2916ms
+2025-10-01 07:22:03.014 +00:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.GetTeams (ScrumOps.Api)'
+2025-10-01 07:22:03.015 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/api/teams - 500 null application/json; charset=utf-8 64.7885ms
+2025-10-01 07:22:23.906 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:8080/health - null null
+2025-10-01 07:22:23.907 +00:00 [INF] Executing endpoint 'HTTP: GET /health'
+2025-10-01 07:22:23.907 +00:00 [INF] Setting HTTP status code 200.
+2025-10-01 07:22:23.909 +00:00 [INF] Writing value of type '<>f__AnonymousType5`2' as Json.
+2025-10-01 07:22:23.910 +00:00 [INF] Executed endpoint 'HTTP: GET /health'
+2025-10-01 07:22:23.910 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:8080/health - 200 null application/json; charset=utf-8 4.435ms
+2025-10-01 07:22:44.911 +00:00 [INF] Application is shutting down...
