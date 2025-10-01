@@ -60,7 +60,11 @@ try
     var context = scope.ServiceProvider.GetRequiredService<ScrumOpsDbContext>();
     
     Log.Information("Applying database migrations...");
-    await context.Database.MigrateAsync();
+    var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
+    if (pendingMigrations.Any())
+    {
+        await context.Database.MigrateAsync();
+    }
     Log.Information("Database migrations applied successfully");
 }
 catch (Exception ex)

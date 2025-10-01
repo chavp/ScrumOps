@@ -662,3 +662,173 @@ ScrumOps.Domain.SharedKernel.Exceptions.DomainException: User with this email al
 2025-10-01 13:55:31.104 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api) in 122.2488ms
 2025-10-01 13:55:31.105 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
 2025-10-01 13:55:31.106 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7204/api/teams - 500 null application/json; charset=utf-8 142.0381ms
+2025-10-01 14:09:09.248 +07:00 [INF] Applying database migrations...
+2025-10-01 14:09:13.477 +07:00 [WRN] The property 'SprintBacklogItem.IsCompleted' was first mapped explicitly and then ignored. Consider not mapping the property in the first place.
+2025-10-01 14:09:17.989 +07:00 [ERR] An error occurred using the connection to database 'scrumops_dev' on server 'tcp://localhost:5432'.
+2025-10-01 14:09:36.345 +07:00 [INF] Applying database migrations...
+2025-10-01 14:09:39.391 +07:00 [WRN] The property 'SprintBacklogItem.IsCompleted' was first mapped explicitly and then ignored. Consider not mapping the property in the first place.
+2025-10-01 14:10:56.315 +07:00 [INF] Applying database migrations...
+2025-10-01 14:10:59.560 +07:00 [WRN] The property 'SprintBacklogItem.IsCompleted' was first mapped explicitly and then ignored. Consider not mapping the property in the first place.
+2025-10-01 14:11:00.095 +07:00 [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-01 14:11:13.829 +07:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-01 14:11:14.201 +07:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" character varying(150) NOT NULL,
+    "ProductVersion" character varying(32) NOT NULL,
+    CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
+);
+2025-10-01 14:11:14.230 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+LOCK TABLE "__EFMigrationsHistory" IN ACCESS EXCLUSIVE MODE
+2025-10-01 14:11:14.236 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-01 14:11:14.252 +07:00 [INF] Applying migration '20251001063510_iniDb'.
+2025-10-01 14:11:14.321 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DO $EF$
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM pg_namespace WHERE nspname = 'ProductBacklog') THEN
+        CREATE SCHEMA "ProductBacklog";
+    END IF;
+END $EF$;
+2025-10-01 14:11:14.326 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DO $EF$
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM pg_namespace WHERE nspname = 'SprintManagement') THEN
+        CREATE SCHEMA "SprintManagement";
+    END IF;
+END $EF$;
+2025-10-01 14:11:14.331 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DO $EF$
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM pg_namespace WHERE nspname = 'TeamManagement') THEN
+        CREATE SCHEMA "TeamManagement";
+    END IF;
+END $EF$;
+2025-10-01 14:11:14.344 +07:00 [ERR] Failed executing DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE "ProductBacklog"."ProductBacklogs" (
+    "Id" uuid NOT NULL,
+    "TeamId" uuid NOT NULL,
+    "CreatedDate" timestamp with time zone NOT NULL,
+    "LastRefinedDate" timestamp with time zone,
+    "Notes" character varying(5000) NOT NULL,
+    CONSTRAINT "PK_ProductBacklogs" PRIMARY KEY ("Id")
+);
+2025-10-01 14:11:25.046 +07:00 [ERR] An error occurred while applying database migrations
+Npgsql.PostgresException (0x80004005): 42P07: relation "ProductBacklogs" already exists
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteNonQuery(Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteAsync(IReadOnlyList`1 migrationCommands, IRelationalConnection connection, MigrationExecutionState executionState, Boolean beginTransaction, Boolean commitTransaction, Nullable`1 isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteAsync(IReadOnlyList`1 migrationCommands, IRelationalConnection connection, MigrationExecutionState executionState, Boolean beginTransaction, Boolean commitTransaction, Nullable`1 isolationLevel, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteNonQueryAsync(IReadOnlyList`1 migrationCommands, IRelationalConnection connection, MigrationExecutionState executionState, Boolean commitTransaction, Nullable`1 isolationLevel, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateImplementationAsync(DbContext context, String targetMigration, MigrationExecutionState state, Boolean useTransaction, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateImplementationAsync(DbContext context, String targetMigration, MigrationExecutionState state, Boolean useTransaction, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.<>c.<<MigrateAsync>b__22_1>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal.NpgsqlMigrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Program.<Main>$(String[] args) in C:\data\ScrumOps\src\ScrumOps.Api\Program.cs:line 66
+  Exception data:
+    Severity: ERROR
+    SqlState: 42P07
+    MessageText: relation "ProductBacklogs" already exists
+    File: heap.c
+    Line: 1150
+    Routine: heap_create_with_catalog
+2025-10-01 14:13:27.319 +07:00 [INF] Applying database migrations...
+2025-10-01 14:13:30.694 +07:00 [WRN] The property 'SprintBacklogItem.IsCompleted' was first mapped explicitly and then ignored. Consider not mapping the property in the first place.
+2025-10-01 14:13:31.087 +07:00 [ERR] Failed executing DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-01 14:13:33.013 +07:00 [ERR] Failed executing DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-01 14:13:33.390 +07:00 [INF] Applying migration '20251001063510_iniDb'.
+2025-10-01 14:13:34.614 +07:00 [INF] Database migrations applied successfully
+2025-10-01 14:13:35.826 +07:00 [INF] Starting ScrumOps API with PostgreSQL and Entity Framework Core
+2025-10-01 14:13:36.182 +07:00 [INF] Now listening on: https://localhost:7204
+2025-10-01 14:13:36.183 +07:00 [INF] Now listening on: http://localhost:5225
+2025-10-01 14:13:36.389 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-10-01 14:13:36.391 +07:00 [INF] Hosting environment: Development
+2025-10-01 14:13:36.392 +07:00 [INF] Content root path: C:\data\ScrumOps\src\ScrumOps.Api
+2025-10-01 14:13:37.071 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7204/swagger/index.html - null null
+2025-10-01 14:13:37.363 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7204/_framework/aspnetcore-browser-refresh.js - null null
+2025-10-01 14:13:37.368 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7204/swagger/index.html - 200 null text/html;charset=utf-8 316.1459ms
+2025-10-01 14:13:37.376 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7204/_framework/aspnetcore-browser-refresh.js - 200 16509 application/javascript; charset=utf-8 12.7942ms
+2025-10-01 14:13:37.406 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7204/_vs/browserLink - null null
+2025-10-01 14:13:37.486 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7204/_vs/browserLink - 200 null text/javascript; charset=UTF-8 81.0357ms
+2025-10-01 14:13:37.540 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7204/swagger/v1/swagger.json - null null
+2025-10-01 14:13:37.608 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7204/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 68.516ms
+2025-10-01 14:14:23.671 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7204/api/teams - application/json 159
+2025-10-01 14:14:23.691 +07:00 [INF] CORS policy execution failed.
+2025-10-01 14:14:23.693 +07:00 [INF] Request origin https://localhost:7204 does not have permission to access the resource.
+2025-10-01 14:14:23.702 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 14:14:23.740 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[ScrumOps.Application.TeamManagement.Queries.TeamDto]] CreateTeam(ScrumOps.Api.DTOs.CreateTeamRequest) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 14:14:23.751 +07:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-10-01 14:14:23.969 +07:00 [ERR] Error occurred while creating team
+ScrumOps.Domain.SharedKernel.Exceptions.DomainException: User with this email already exists in team
+   at ScrumOps.Domain.TeamManagement.Entities.Team.AddMember(User user) in C:\data\ScrumOps\src\ScrumOps.Domain\TeamManagement\Entities\Team.cs:line 105
+   at ScrumOps.Application.TeamManagement.Handlers.CommandHandlers.CreateTeamCommandHandler.Handle(CreateTeamCommand request, CancellationToken cancellationToken) in C:\data\ScrumOps\src\ScrumOps.Application\TeamManagement\Handlers\CommandHandlers\CreateTeamCommandHandler.cs:line 68
+   at ScrumOps.Api.Controllers.TeamsController.CreateTeam(CreateTeamRequest request) in C:\data\ScrumOps\src\ScrumOps.Api\Controllers\TeamsController.cs:line 106
+2025-10-01 14:14:24.016 +07:00 [INF] Executing ObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-10-01 14:14:24.029 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api) in 281.7742ms
+2025-10-01 14:14:24.031 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 14:14:24.034 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7204/api/teams - 500 null application/json; charset=utf-8 365.1742ms
+2025-10-01 14:17:56.398 +07:00 [INF] Applying database migrations...
+2025-10-01 14:17:59.805 +07:00 [WRN] The property 'SprintBacklogItem.IsCompleted' was first mapped explicitly and then ignored. Consider not mapping the property in the first place.
+2025-10-01 14:18:00.193 +07:00 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-01 14:18:00.239 +07:00 [INF] Database migrations applied successfully
+2025-10-01 14:18:00.332 +07:00 [INF] Starting ScrumOps API with PostgreSQL and Entity Framework Core
+2025-10-01 14:18:00.552 +07:00 [INF] Now listening on: https://localhost:7204
+2025-10-01 14:18:00.553 +07:00 [INF] Now listening on: http://localhost:5225
+2025-10-01 14:18:00.623 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-10-01 14:18:00.624 +07:00 [INF] Hosting environment: Development
+2025-10-01 14:18:00.625 +07:00 [INF] Content root path: C:\data\ScrumOps\src\ScrumOps.Api
+2025-10-01 14:18:01.008 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7204/swagger/index.html - null null
+2025-10-01 14:18:01.235 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7204/swagger/index.html - 200 null text/html;charset=utf-8 237.1598ms
+2025-10-01 14:18:01.240 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7204/_framework/aspnetcore-browser-refresh.js - null null
+2025-10-01 14:18:01.251 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7204/_framework/aspnetcore-browser-refresh.js - 200 16509 application/javascript; charset=utf-8 11.746ms
+2025-10-01 14:18:01.285 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7204/_vs/browserLink - null null
+2025-10-01 14:18:01.325 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7204/_vs/browserLink - 200 null text/javascript; charset=UTF-8 40.3599ms
+2025-10-01 14:18:01.353 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7204/swagger/v1/swagger.json - null null
+2025-10-01 14:18:01.399 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7204/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 45.8714ms
+2025-10-01 14:18:34.020 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7204/api/teams - application/json 158
+2025-10-01 14:18:34.033 +07:00 [INF] CORS policy execution failed.
+2025-10-01 14:18:34.034 +07:00 [INF] Request origin https://localhost:7204 does not have permission to access the resource.
+2025-10-01 14:18:34.038 +07:00 [INF] Executing endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 14:18:34.059 +07:00 [INF] Route matched with {action = "CreateTeam", controller = "Teams"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[ScrumOps.Application.TeamManagement.Queries.TeamDto]] CreateTeam(ScrumOps.Api.DTOs.CreateTeamRequest) on controller ScrumOps.Api.Controllers.TeamsController (ScrumOps.Api).
+2025-10-01 14:18:34.064 +07:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-10-01 14:18:34.361 +07:00 [INF] Executed DbCommand (18ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?' (DbType = Boolean), @p3='?' (DbType = Int32), @p4='?', @p5='?', @p6='?' (DbType = Guid), @p7='?' (DbType = DateTime), @p8='?' (DbType = Boolean), @p9='?' (DbType = DateTime), @p10='?' (DbType = Guid), @p11='?', @p12='?' (DbType = Boolean), @p13='?', @p14='?', @p15='?' (DbType = Guid), @p16='?' (DbType = DateTime), @p17='?' (DbType = Boolean), @p18='?' (DbType = DateTime), @p19='?' (DbType = Guid), @p20='?', @p21='?' (DbType = Boolean), @p22='?', @p23='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "TeamManagement"."Teams" ("Id", "CreatedDate", "IsActive", "SprintLengthWeeks", "Description", "Name")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING "CurrentVelocityValue";
+INSERT INTO "TeamManagement"."Users" ("Id", "CreatedDate", "IsActive", "LastLoginDate", "TeamId", "Email", "RoleIsSingleton", "Role", "Name")
+VALUES (@p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14);
+INSERT INTO "TeamManagement"."Users" ("Id", "CreatedDate", "IsActive", "LastLoginDate", "TeamId", "Email", "RoleIsSingleton", "Role", "Name")
+VALUES (@p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23);
+2025-10-01 14:18:34.510 +07:00 [INF] Executing ConflictObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-10-01 14:18:34.519 +07:00 [INF] Executed action ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api) in 455.3686ms
+2025-10-01 14:18:34.521 +07:00 [INF] Executed endpoint 'ScrumOps.Api.Controllers.TeamsController.CreateTeam (ScrumOps.Api)'
+2025-10-01 14:18:34.525 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7204/api/teams - 409 null application/json; charset=utf-8 508.4931ms

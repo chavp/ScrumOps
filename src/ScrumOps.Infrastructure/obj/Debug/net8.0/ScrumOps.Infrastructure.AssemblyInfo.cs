@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ScrumOps.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+323e6fd026f7be68a0590127277d7b4cee9ae137")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c8e6c5e0097bf9f2e8284c875940c4551cc51e68")]
 [assembly: System.Reflection.AssemblyProductAttribute("ScrumOps.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ScrumOps.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

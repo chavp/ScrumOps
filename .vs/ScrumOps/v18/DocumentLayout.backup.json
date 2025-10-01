@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\data\\ScrumOps\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8C01E888-30D0-4948-B0AD-26B8EA498CCB}|src\\ScrumOps.Api\\ScrumOps.Api.csproj|c:\\data\\scrumops\\src\\scrumops.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8C01E888-30D0-4948-B0AD-26B8EA498CCB}|src\\ScrumOps.Api\\ScrumOps.Api.csproj|solutionrelative:src\\scrumops.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B614FE70-FB84-48C0-8DED-7CB96431E78F}|src\\ScrumOps.Infrastructure\\ScrumOps.Infrastructure.csproj|c:\\data\\scrumops\\src\\scrumops.infrastructure\\persistence\\scrumopsdbdesigntimecontextfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B614FE70-FB84-48C0-8DED-7CB96431E78F}|src\\ScrumOps.Infrastructure\\ScrumOps.Infrastructure.csproj|solutionrelative:src\\scrumops.infrastructure\\persistence\\scrumopsdbdesigntimecontextfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -27,19 +31,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Api\\Program.cs",
+              "RelativeDocumentMoniker": "src\\ScrumOps.Api\\Program.cs",
+              "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Api\\Program.cs",
+              "RelativeToolTip": "src\\ScrumOps.Api\\Program.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAADIAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-01T07:02:42.988Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "ScrumOpsDbDesignTimeContextFactory.cs",
               "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Infrastructure\\Persistence\\ScrumOpsDbDesignTimeContextFactory.cs",
               "RelativeDocumentMoniker": "src\\ScrumOps.Infrastructure\\Persistence\\ScrumOpsDbDesignTimeContextFactory.cs",
               "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Infrastructure\\Persistence\\ScrumOpsDbDesignTimeContextFactory.cs",
               "RelativeToolTip": "src\\ScrumOps.Infrastructure\\Persistence\\ScrumOpsDbDesignTimeContextFactory.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA6AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-01T06:40:29.583Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "BacklogController.cs",
               "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Api\\Controllers\\BacklogController.cs",
               "RelativeDocumentMoniker": "src\\ScrumOps.Api\\Controllers\\BacklogController.cs",
@@ -51,7 +68,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "MetricsService.cs",
               "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Application\\Metrics\\Services\\MetricsService.cs",
               "RelativeDocumentMoniker": "src\\ScrumOps.Application\\Metrics\\Services\\MetricsService.cs",
