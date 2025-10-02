@@ -3,12 +3,14 @@
     "Name": "New Profile",
     "Projects": [
       {
-        "Path": "src\\ScrumOps.Api\\ScrumOps.Api.csproj",
-        "Action": "Start"
+        "Path": "src\\ScrumOps.Web\\ScrumOps.Web.csproj",
+        "Action": "Start",
+        "DebugTarget": "http"
       },
       {
-        "Path": "src\\ScrumOps.Web\\ScrumOps.Web.csproj",
-        "Action": "Start"
+        "Path": "src\\ScrumOps.Api\\ScrumOps.Api.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
       }
     ]
   }

@@ -1,11 +1,14 @@
-@page "/backlog/{BacklogId}/add-item"
-@page "/backlog/{BacklogId}/items/{ItemId}/edit"
+@page "/backlog/{TeamId:guid}/add-item"
+@page "/backlog/{TeamId:guid}/items/{ItemId:guid}/edit"
+
 @using System.ComponentModel.DataAnnotations
 @using ScrumOps.Shared.Contracts.ProductBacklog
 @using ScrumOps.Web.Services
 @inject IProductBacklogService ProductBacklogService
+@inject INotificationService NotificationService
 @inject NavigationManager Navigation
 @inject ILogger<BacklogItemFormComponent> Logger
+@rendermode InteractiveServer
 
 <div class="container">
     <div class="row justify-content-center">
@@ -86,7 +89,7 @@
                         </div>
 
                         <div class="d-flex justify-content-between">
-                            <button type="button" class="btn btn-secondary" @onclick="Cancel">
+                            <button type="button" class="btn btn-secondary" @onclick="Cancel" @onclick:preventDefault="true">
                                 <i class="bi bi-x-circle"></i> Cancel
                             </button>
                             <button type="submit" class="btn btn-primary" disabled="@isSubmitting">
@@ -106,28 +109,35 @@
 </div>
 
 @code {
-    [Parameter] public string BacklogId { get; set; } = string.Empty;
-    [Parameter] public string? ItemId { get; set; }
+    [Parameter] public Guid? TeamId { get; set; }
+	[Parameter] public Guid? ItemId { get; set; }
 
     private BacklogItemFormModel formModel = new();
     private bool isSubmitting = false;
-    private bool IsEditMode => !string.IsNullOrEmpty(ItemId);
+    private bool IsEditMode => ItemId.HasValue;
 
     protected override async Task OnInitializedAsync()
     {
-        if (IsEditMode && !string.IsNullOrEmpty(ItemId))
+        if (IsEditMode && ItemId.HasValue)
         {
-            // In a real implementation, you would load the existing item
-            // For now, we'll just set default values
-            formModel = new BacklogItemFormModel
+            try
             {
-                Title = "Sample Item Title",
-                Description = "Sample description for editing",
-                AcceptanceCriteria = "Sample acceptance criteria",
-                Priority = 10,
-                StoryPoints = 5,
-                Type = "UserStory"
-            };
+				var item = await ProductBacklogService.GetBacklogItemAsync(TeamId.Value, ItemId.Value);
+                formModel = new BacklogItemFormModel
+                {
+                    Title = item.Title,
+                    Description = item.Description,
+                    AcceptanceCriteria = item.AcceptanceCriteria,
+                    Priority = item.Priority,
+                    StoryPoints = item.StoryPoints,
+                    Type = item.Type
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Failed to load backlog item {ItemId}", ItemId);
+                NotificationService.ShowError("Failed to load item for editing", "Error");
+            }
         }
     }
 
@@ -136,8 +146,7 @@
         try
         {
             isSubmitting = true;
-
-            if (IsEditMode && !string.IsNullOrEmpty(ItemId))
+            if (IsEditMode && TeamId.HasValue)
             {
                 var updateRequest = new UpdateBacklogItemRequest
                 {
@@ -149,7 +158,8 @@
                     Type = formModel.Type
                 };
 
-                await ProductBacklogService.UpdateBacklogItemAsync(BacklogId, ItemId, updateRequest);
+                await ProductBacklogService.UpdateBacklogItemAsync(TeamId.Value, ItemId.Value, updateRequest);
+                NotificationService.ShowSuccess($"Successfully updated '{formModel.Title}'", "Item Updated");
             }
             else
             {
@@ -163,14 +173,16 @@
                     Type = formModel.Type
                 };
 
-                await ProductBacklogService.AddBacklogItemAsync(BacklogId, addRequest);
+				await ProductBacklogService.AddBacklogItemAsync(TeamId.Value, addRequest);
+                NotificationService.ShowSuccess($"Successfully added '{formModel.Title}'", "Item Added");
             }
 
-            Navigation.NavigateTo($"/backlog/{BacklogId}");
+			Navigation.NavigateTo($"/backlog/{TeamId}");
         }
         catch (Exception ex)
         {
             Logger.LogError(ex, "Failed to {Action} backlog item", IsEditMode ? "update" : "add");
+            NotificationService.ShowError($"Failed to {(IsEditMode ? "update" : "add")} item. Please try again.", "Error");
         }
         finally
         {
@@ -180,7 +192,7 @@
 
     private void Cancel()
     {
-        Navigation.NavigateTo($"/backlog/{BacklogId}");
+		Navigation.NavigateTo($"/backlog/{TeamId}");
     }
 
     public class BacklogItemFormModel

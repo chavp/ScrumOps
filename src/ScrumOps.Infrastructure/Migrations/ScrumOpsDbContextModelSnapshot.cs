@@ -44,9 +44,9 @@ namespace ScrumOps.Infrastructure.Migrations
                     b.HasIndex("LastRefinedDate")
                         .HasDatabaseName("IX_ProductBacklogs_LastRefinedDate");
 
-                    b.HasIndex("TeamId")
+                    b.HasIndex("Id", "TeamId")
                         .IsUnique()
-                        .HasDatabaseName("IX_ProductBacklogs_TeamId");
+                        .HasDatabaseName("IX_ProductBacklogs_Id_TeamId");
 
                     b.ToTable("ProductBacklogs", "ProductBacklog");
                 });

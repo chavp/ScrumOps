@@ -74,8 +74,6 @@ public class TeamService : ITeamService
                 Name = request.Name,
                 Description = request.Description,
                 SprintLengthWeeks = request.SprintLengthWeeks,
-                ProductOwnerEmail = (string?)null,
-                ScrumMasterEmail = (string?)null,
             };
 
             var response = await _httpClient.PostAsJsonAsync("/api/teams", apiRequest);

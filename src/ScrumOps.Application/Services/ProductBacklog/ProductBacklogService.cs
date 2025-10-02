@@ -167,18 +167,21 @@ public class ProductBacklogService : IProductBacklogService
     }
 
     public async Task<ProductBacklogId> CreateProductBacklogAsync(
-        TeamId teamId, 
+        TeamId teamId,
+        string? notes,
         CancellationToken cancellationToken = default)
     {
         // Check if team already has a backlog
-        var existsForTeam = await _backlogRepository.ExistsForTeamAsync(teamId, cancellationToken);
-        if (existsForTeam)
-        {
-            throw new InvalidOperationException($"Team {teamId.Value} already has a product backlog.");
-        }
+        //var existsForTeam = await _backlogRepository.ExistsForTeamAsync(teamId, cancellationToken);
+        //if (existsForTeam)
+        //{
+        //    throw new InvalidOperationException($"Team {teamId.Value} already has a product backlog.");
+        //}
 
-        var backlog = new Domain.ProductBacklog.Entities.ProductBacklog(ProductBacklogId.New(), teamId);
-        
+        var backlog = new Domain.ProductBacklog.Entities
+            .ProductBacklog(ProductBacklogId.New(), teamId, BacklogNotes.Create(notes));
+
+
         await _backlogRepository.AddAsync(backlog, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
@@ -253,7 +256,40 @@ public class ProductBacklogService : IProductBacklogService
         string backlogItemType, 
         CancellationToken cancellationToken = default)
     {
-        // TODO: Implement actual logic
+        var productBacklogItem = await _backlogRepository.GetItemByIdAsync(itemId, cancellationToken);
+        if (productBacklogItem == null)
+        {
+            throw new InvalidOperationException($"Backlog item {itemId.Value} not found.");
+        }
+
+        var productBacklog = await _backlogRepository.GetByIdAsync(productBacklogItem.ProductBacklogId, cancellationToken);
+        if (productBacklog == null)
+        {
+            throw new InvalidOperationException($"Product backlog {productBacklogItem.ProductBacklogId.Value} not found.");
+        }
+
+        // Update fields
+        productBacklogItem.UpdateTitle(ItemTitle.Create(title));
+        productBacklogItem.UpdateDescription(ItemDescription.Create(description));
+        productBacklogItem.SetAcceptanceCriteria(AcceptanceCriteria.Create(acceptanceCriteria));
+
+        productBacklog.SetPriority(productBacklogItem, priority);
+
+        
+        if (storyPoints.HasValue)
+        {
+            productBacklogItem.EstimateStoryPoints(StoryPoints.Create(storyPoints.Value));
+        }
+        if (Enum.TryParse<BacklogItemType>(backlogItemType, true, out var itemType))
+        {
+            productBacklog.SetType(productBacklogItem, itemType);
+        }
+        else
+        {
+            throw new ArgumentException($"Invalid backlog item type: {backlogItemType}");
+        }
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
         await Task.CompletedTask;
     }
 

@@ -8,7 +8,7 @@ namespace ScrumOps.Shared.Contracts.ProductBacklog;
 public class CreateProductBacklogRequest
 {
     [Required]
-    public int TeamId { get; set; }
+    public Guid? TeamId { get; set; }
 
     [StringLength(1000)]
     public string? Notes { get; set; }

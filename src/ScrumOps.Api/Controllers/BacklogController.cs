@@ -64,6 +64,52 @@ public class BacklogController : ControllerBase
     }
 
     /// <summary>
+    /// Create a product backlog for a team.
+    /// </summary>
+    /// <param name="teamId">Team ID</param>
+    /// <returns>Created product backlog information</returns>
+    [HttpPost]
+    [ProducesResponseType(typeof(GetBacklogResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<ActionResult<GetBacklogResponse>> CreateProductBacklog(Guid teamId, string? notes)
+    {
+        try
+        {
+            var teamIdValue = TeamId.From(teamId);
+            
+            // Check if backlog already exists
+            var existingBacklog = await _productBacklogService.GetProductBacklogAsync(teamIdValue);
+            if (existingBacklog != null)
+            {
+                return Conflict(new { detail = $"Team {teamId} already has a product backlog" });
+            }
+
+            // Create new backlog
+            var backlogId = await _productBacklogService.CreateProductBacklogAsync(teamIdValue, notes);
+            
+            // Return the created backlog
+            var createdBacklog = await _productBacklogService.GetProductBacklogAsync(teamIdValue);
+            if (createdBacklog == null)
+            {
+                return StatusCode(500, new { error = "Failed to retrieve created backlog" });
+            }
+
+            Response.Headers.Location = $"/api/teams/{teamId}/backlog";
+            return StatusCode(201, createdBacklog);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict(new { detail = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while creating backlog for team {TeamId}", teamId);
+            return StatusCode(500, new { error = "An error occurred while processing your request" });
+        }
+    }
+
+    /// <summary>
     /// Get specific backlog item with detailed information.
     /// </summary>
     /// <param name="teamId">Team ID</param>

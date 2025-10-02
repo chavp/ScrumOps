@@ -45,6 +45,7 @@ public interface IProductBacklogService
     // Command operations
     Task<ProductBacklogId> CreateProductBacklogAsync(
         TeamId teamId,
+        string? notes,
         CancellationToken cancellationToken = default);
 
     Task<ProductBacklogItemId> AddBacklogItemAsync(

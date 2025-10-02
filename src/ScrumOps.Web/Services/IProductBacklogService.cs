@@ -8,9 +8,10 @@ namespace ScrumOps.Web.Services;
 public interface IProductBacklogService
 {
     Task<GetProductBacklogsResponse> GetProductBacklogsAsync();
-    Task<ProductBacklogResponse> GetProductBacklogAsync(string id);
+    Task<ProductBacklogResponse?> GetProductBacklogAsync(Guid id);
     Task<ProductBacklogResponse> CreateProductBacklogAsync(CreateProductBacklogRequest request);
-    Task<BacklogItemResponse> AddBacklogItemAsync(string backlogId, AddBacklogItemRequest request);
-    Task<BacklogItemResponse> UpdateBacklogItemAsync(string backlogId, string itemId, UpdateBacklogItemRequest request);
-    Task<bool> DeleteBacklogItemAsync(string backlogId, string itemId);
+    Task<BacklogItemResponse> AddBacklogItemAsync(Guid teamId, AddBacklogItemRequest request);
+    Task<BacklogItemResponse> UpdateBacklogItemAsync(Guid teamId, Guid itemId, UpdateBacklogItemRequest request);
+    Task<bool> DeleteBacklogItemAsync(Guid teamId, Guid itemId);
+    Task<BacklogItemResponse> GetBacklogItemAsync(Guid teamId, Guid itemId);
 }

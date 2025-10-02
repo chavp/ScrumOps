@@ -3,6 +3,7 @@
 @inject IProductBacklogService ProductBacklogService
 @inject NavigationManager Navigation
 @inject ILogger<ProductBacklogListComponent> Logger
+@rendermode InteractiveServer
 
 <div class="container-fluid">
     <div class="row mb-3">
@@ -10,7 +11,7 @@
             <h2>Product Backlogs</h2>
         </div>
         <div class="col-auto">
-            <button class="btn btn-primary" @onclick="NavigateToCreate">
+            <button type="button" class="btn btn-primary" @onclick="NavigateToCreate" @onclick:preventDefault="true">
                 <i class="bi bi-plus-circle"></i> Create Backlog
             </button>
         </div>
@@ -65,10 +66,10 @@
                         </div>
                         <div class="card-footer">
                             <div class="btn-group w-100" role="group">
-                                <button class="btn btn-outline-primary btn-sm" @onclick="() => NavigateToDetails(backlog.Id)">
+                                <button type="button" class="btn btn-outline-primary btn-sm" @onclick="@(() => NavigateToDetails(backlog.TeamId.Value))" @onclick:preventDefault="true">
                                     <i class="bi bi-eye"></i> View
                                 </button>
-                                <button class="btn btn-outline-success btn-sm" @onclick="() => NavigateToAddItem(backlog.Id)">
+								<button type="button" class="btn btn-outline-success btn-sm" @onclick="@(() => NavigateToAddItem(backlog.TeamId.Value))" @onclick:preventDefault="true">
                                     <i class="bi bi-plus"></i> Add Item
                                 </button>
                             </div>
@@ -83,7 +84,7 @@
         <div class="text-center py-5">
             <h4>No product backlogs found</h4>
             <p class="text-muted">Create a product backlog to start managing your user stories and requirements.</p>
-            <button class="btn btn-primary" @onclick="NavigateToCreate">
+            <button type="button" class="btn btn-primary" @onclick="NavigateToCreate" @onclick:preventDefault="true">
                 <i class="bi bi-plus-circle"></i> Create First Backlog
             </button>
         </div>
@@ -96,10 +97,24 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadBacklogs();
+        try
+        {
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            await LoadBacklogs(cts.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            Logger.LogWarning("LoadBacklogs operation timed out");
+            isLoading = false;
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to initialize ProductBacklogListComponent");
+            isLoading = false;
+        }
     }
 
-    private async Task LoadBacklogs()
+    private async Task LoadBacklogs(CancellationToken cancellationToken = default)
     {
         try
         {
@@ -110,6 +125,7 @@
         catch (Exception ex)
         {
             Logger.LogError(ex, "Failed to load product backlogs");
+            backlogs = new List<ProductBacklogSummary>(); // Set empty list instead of null
         }
         finally
         {
@@ -122,13 +138,13 @@
         Navigation.NavigateTo("/backlog/create");
     }
 
-    private void NavigateToDetails(string backlogId)
+    private void NavigateToDetails(Guid teamId)
     {
-        Navigation.NavigateTo($"/backlog/{backlogId}");
+		Navigation.NavigateTo($"/backlog/{teamId}");
     }
 
-    private void NavigateToAddItem(string backlogId)
+	private void NavigateToAddItem(Guid teamId)
     {
-        Navigation.NavigateTo($"/backlog/{backlogId}/add-item");
+		Navigation.NavigateTo($"/backlog/{teamId}/add-item");
     }
 }

@@ -116,6 +116,12 @@ public class ProductBacklogItem : Entity<ProductBacklogItemId>
         LastModifiedDate = DateTime.UtcNow;
     }
 
+    internal void SetType(BacklogItemType backlogItemType)
+    {
+        Type = backlogItemType;
+        LastModifiedDate = DateTime.UtcNow;
+    }
+
     /// <summary>
     /// Estimates the story points for this backlog item.
     /// </summary>

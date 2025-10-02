@@ -1,0 +1,172 @@
+@page "/backlog/create"
+@using System.ComponentModel.DataAnnotations
+@using ScrumOps.Shared.Contracts.ProductBacklog
+@using ScrumOps.Shared.Contracts.Teams
+@using ScrumOps.Web.Services
+@inject IProductBacklogService ProductBacklogService
+@inject ITeamService TeamService
+@inject INotificationService NotificationService
+@inject NavigationManager Navigation
+@inject ILogger<CreateBacklogComponent> Logger
+@rendermode InteractiveServer
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">Create Product Backlog</h4>
+                </div>
+                <div class="card-body">
+                    @if (isLoadingTeams)
+                    {
+                        <div class="text-center">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading teams...</span>
+                            </div>
+                        </div>
+                    }
+                    else if (!teams.Any())
+                    {
+                        <div class="alert alert-warning">
+                            <h5>No Teams Available</h5>
+                            <p>You need to create a team first before you can create a product backlog.</p>
+                            <button type="button" class="btn btn-primary" @onclick="NavigateToCreateTeam" @onclick:preventDefault="true">
+                                <i class="bi bi-plus-circle"></i> Create Team
+                            </button>
+                        </div>
+                    }
+                    else
+                    {
+                        <EditForm Model="formModel" OnValidSubmit="HandleSubmit">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary class="alert alert-danger" />
+
+                            <div class="mb-3">
+                                <label for="teamSelect" class="form-label">Select Team *</label>
+                                <InputSelect id="teamSelect" class="form-select" @bind-Value="formModel.TeamId">
+                                    <option value="">Choose a team...</option>
+                                    @foreach (var team in teams)
+                                    {
+                                        <option value="@team.Id">@team.Name</option>
+                                    }
+                                </InputSelect>
+                                <ValidationMessage For="@(() => formModel.TeamId)" class="text-danger" />
+                                <div class="form-text">Select the team this product backlog will belong to</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="notes" class="form-label">Notes</label>
+                                <InputTextArea id="notes" class="form-control" rows="4" @bind-Value="formModel.Notes" 
+                                               placeholder="Add any notes or guidelines for this product backlog..." />
+                                <ValidationMessage For="@(() => formModel.Notes)" class="text-danger" />
+                                <div class="form-text">Optional notes about the product backlog scope, objectives, or guidelines</div>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <button type="button" class="btn btn-secondary" @onclick="Cancel" @onclick:preventDefault="true">
+                                    <i class="bi bi-x-circle"></i> Cancel
+                                </button>
+                                <button type="submit" class="btn btn-primary" disabled="@isSubmitting">
+                                    @if (isSubmitting)
+                                    {
+                                        <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                                    }
+                                    <i class="bi bi-plus-circle"></i> Create Backlog
+                                </button>
+                            </div>
+                        </EditForm>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private CreateBacklogFormModel formModel = new();
+    private List<TeamSummary> teams = new();
+    private bool isSubmitting = false;
+    private bool isLoadingTeams = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadTeams();
+    }
+
+    private async Task LoadTeams()
+    {
+        try
+        {
+            isLoadingTeams = true;
+            var response = await TeamService.GetTeamsAsync();
+            teams = response.Teams.ToList();
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to load teams");
+            NotificationService.ShowError("Failed to load teams. Please try again.", "Error");
+        }
+        finally
+        {
+            isLoadingTeams = false;
+        }
+    }
+
+    private async Task HandleSubmit()
+    {
+        try
+        {
+            isSubmitting = true;
+
+            var request = new CreateProductBacklogRequest
+            {
+                TeamId = formModel.TeamId,
+                Notes = formModel.Notes
+            };
+
+            var result = await ProductBacklogService.CreateProductBacklogAsync(request);
+            
+            NotificationService.ShowSuccess("Product backlog created successfully", "Success");
+            
+            // Navigate to the created backlog - we need to find the team GUID
+            var selectedTeam = teams.FirstOrDefault(t => t.Id == formModel.TeamId);
+            if (selectedTeam != null)
+            {
+                Navigation.NavigateTo($"/backlog/{selectedTeam.Id}");
+            }
+            else
+            {
+                Navigation.NavigateTo("/backlog");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to create product backlog");
+            NotificationService.ShowError("Failed to create product backlog. Please try again.", "Error");
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+
+    private void Cancel()
+    {
+        Navigation.NavigateTo("/backlog");
+    }
+
+    private void NavigateToCreateTeam()
+    {
+        Navigation.NavigateTo("/teams/create");
+    }
+
+    public class CreateBacklogFormModel
+    {
+        [Required(ErrorMessage = "Please select a team")]
+        public Guid TeamId { get; set; }
+
+        [StringLength(1000, ErrorMessage = "Notes cannot exceed 1000 characters")]
+        public string? Notes { get; set; }
+    }
+}

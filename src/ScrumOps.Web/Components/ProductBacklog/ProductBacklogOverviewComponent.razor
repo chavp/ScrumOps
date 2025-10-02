@@ -1,0 +1,314 @@
+@using ScrumOps.Shared.Contracts.ProductBacklog
+@using ScrumOps.Web.Services
+@inject IProductBacklogService ProductBacklogService
+@inject NavigationManager Navigation
+@inject ILogger<ProductBacklogOverviewComponent> Logger
+@rendermode InteractiveServer
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h2>Product Backlog Management</h2>
+            <p class="text-muted">Manage your product requirements, user stories, and development priorities</p>
+        </div>
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary" @onclick="NavigateToCreateBacklog" @onclick:preventDefault="true">
+                <i class="bi bi-plus-circle"></i> Create New Backlog
+            </button>
+        </div>
+    </div>
+
+    @if (isLoading)
+    {
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+    else if (backlogs?.Any() == true)
+    {
+        <!-- Summary Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title mb-0">Total Backlogs</h6>
+                                <h2 class="mb-0">@backlogs.Count()</h2>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="bi bi-list-check fs-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title mb-0">Total Items</h6>
+                                <h2 class="mb-0">@backlogs.Sum(b => b.TotalItems)</h2>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="bi bi-card-list fs-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title mb-0">Completed Items</h6>
+                                <h2 class="mb-0">@backlogs.Sum(b => b.CompletedItems)</h2>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="bi bi-check-circle fs-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title mb-0">Active Backlogs</h6>
+                                <h2 class="mb-0">@backlogs.Count(b => b.IsActive)</h2>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="bi bi-play-circle fs-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity and Quick Actions -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Backlog Health Overview</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Team</th>
+                                        <th>Total Items</th>
+                                        <th>Completed</th>
+                                        <th>Progress</th>
+                                        <th>Last Updated</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var backlog in backlogs.OrderByDescending(b => b.LastRefinedDate ?? b.CreatedDate))
+                                    {
+                                        <tr class="@(backlog.IsActive ? "" : "table-secondary")">
+                                            <td>
+                                                <div>
+                                                    <strong>@backlog.TeamName</strong>
+                                                    <br />
+                                                    <small class="text-muted">Product Backlog</small>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-light text-dark">
+                                                    @backlog.TotalItems items
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-success">
+                                                    @backlog.CompletedItems done
+                                                </span>
+                                            </td>
+                                            <td>
+                                                @{
+                                                    var progressPercentage = backlog.TotalItems > 0 ? (backlog.CompletedItems * 100 / backlog.TotalItems) : 0;
+                                                }
+                                                <div class="d-flex align-items-center">
+                                                    <div class="progress me-2" style="width: 100px; height: 8px;">
+                                                        <div class="progress-bar bg-@GetProgressColor(progressPercentage)" 
+                                                             style="width: @progressPercentage%"></div>
+                                                    </div>
+                                                    <small>@progressPercentage%</small>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <small class="text-muted">
+                                                    @((backlog.LastRefinedDate ?? backlog.CreatedDate).ToString("MMM dd, yyyy"))
+                                                </small>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group btn-group-sm">
+                                                    <button type="button" class="btn btn-outline-primary" @onclick="@(() => NavigateToBacklogDetails(backlog))" @onclick:preventDefault="true" title="View Details">
+                                                        <i class="bi bi-eye"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-success" @onclick="@(() => NavigateToAddItem(backlog))" @onclick:preventDefault="true" title="Add Item">
+                                                        <i class="bi bi-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Quick Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <button type="button" class="btn btn-primary" @onclick="NavigateToCreateBacklog" @onclick:preventDefault="true">
+                                <i class="bi bi-plus-circle"></i> Create New Backlog
+                            </button>
+                            <button type="button" class="btn btn-success" @onclick="NavigateToAllBacklogs" @onclick:preventDefault="true">
+                                <i class="bi bi-list-ul"></i> View All Backlogs
+                            </button>
+                            <button type="button" class="btn btn-info" @onclick="NavigateToCreateTeam" @onclick:preventDefault="true">
+                                <i class="bi bi-people"></i> Create Team
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5 class="mb-0">Tips & Best Practices</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="small">
+                            <div class="mb-2">
+                                <i class="bi bi-lightbulb text-warning"></i>
+                                <strong>Prioritize ruthlessly:</strong> Keep your highest value items at the top
+                            </div>
+                            <div class="mb-2">
+                                <i class="bi bi-target text-primary"></i>
+                                <strong>Write clear acceptance criteria:</strong> Define "done" for each item
+                            </div>
+                            <div class="mb-2">
+                                <i class="bi bi-people text-success"></i>
+                                <strong>Involve stakeholders:</strong> Regular refinement sessions are key
+                            </div>
+                            <div>
+                                <i class="bi bi-arrow-clockwise text-info"></i>
+                                <strong>Keep it updated:</strong> Review and refine regularly
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <div class="mb-3">
+                <i class="bi bi-list-check display-1 text-muted"></i>
+            </div>
+            <h4>No product backlogs found</h4>
+            <p class="text-muted mb-4">Get started by creating your first product backlog to manage requirements and user stories.</p>
+            <button type="button" class="btn btn-primary btn-lg" @onclick="NavigateToCreateBacklog" @onclick:preventDefault="true">
+                <i class="bi bi-plus-circle"></i> Create Your First Backlog
+            </button>
+        </div>
+    }
+</div>
+
+@code {
+    private IEnumerable<ProductBacklogSummary>? backlogs;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Add a delay and timeout to prevent hanging
+        try
+        {
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            await LoadBacklogs(cts.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            Logger.LogWarning("LoadBacklogs operation timed out");
+            isLoading = false;
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to initialize ProductBacklogOverviewComponent");
+            isLoading = false;
+        }
+    }
+
+    private async Task LoadBacklogs(CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            isLoading = true;
+            var response = await ProductBacklogService.GetProductBacklogsAsync();
+            backlogs = response.Backlogs;
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to load product backlogs");
+            backlogs = new List<ProductBacklogSummary>(); // Set empty list instead of null
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void NavigateToCreateBacklog()
+    {
+        Navigation.NavigateTo("/backlog/create");
+    }
+
+    private void NavigateToAllBacklogs()
+    {
+        Navigation.NavigateTo("/backlog");
+    }
+
+    private void NavigateToCreateTeam()
+    {
+        Navigation.NavigateTo("/teams/create");
+    }
+
+    private void NavigateToBacklogDetails(ProductBacklogSummary backlog)
+    {
+        // We need to convert the int TeamId back to a Guid for navigation
+        // This is a workaround for the ID conversion issue
+        Navigation.NavigateTo($"/backlog/{backlog.TeamId}");
+    }
+
+    private void NavigateToAddItem(ProductBacklogSummary backlog)
+    {
+        Navigation.NavigateTo($"/backlog/{backlog.Id}/add-item");
+    }
+
+    private string GetProgressColor(int percentage)
+    {
+        return percentage switch
+        {
+            >= 80 => "success",
+            >= 50 => "info", 
+            >= 25 => "warning",
+            _ => "danger"
+        };
+    }
+}

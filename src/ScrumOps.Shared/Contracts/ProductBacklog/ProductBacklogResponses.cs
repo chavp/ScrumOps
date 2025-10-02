@@ -5,8 +5,8 @@ namespace ScrumOps.Shared.Contracts.ProductBacklog;
 /// </summary>
 public class ProductBacklogResponse
 {
-    public string Id { get; set; } = string.Empty;
-    public int TeamId { get; set; }
+    public Guid? Id { get; set; }
+    public Guid? TeamId { get; set; }
     public string TeamName { get; set; } = string.Empty;
     public DateTime CreatedDate { get; set; }
     public DateTime? LastRefinedDate { get; set; }
@@ -29,8 +29,8 @@ public class GetProductBacklogsResponse
 /// </summary>
 public class ProductBacklogSummary
 {
-    public string Id { get; set; } = string.Empty;
-    public int TeamId { get; set; }
+    public Guid? Id { get; set; }
+    public Guid? TeamId { get; set; }
     public string TeamName { get; set; } = string.Empty;
     public DateTime CreatedDate { get; set; }
     public DateTime? LastRefinedDate { get; set; }
@@ -61,7 +61,7 @@ public class BacklogItemResponse
 /// </summary>
 public class BacklogItemSummary
 {
-    public string Id { get; set; } = string.Empty;
+    public Guid? Id { get; set; }
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public int Priority { get; set; }

@@ -1,6 +1,130 @@
 @page "/backlog"
 @using ScrumOps.Web.Components.ProductBacklog
+@rendermode InteractiveServer
 
 <PageTitle>Product Backlog - ScrumOps</PageTitle>
 
-<ProductBacklogListComponent />
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h2>Product Backlog Management</h2>
+            <p class="text-muted">Manage your product requirements, user stories, and development priorities</p>
+        </div>
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary" @onclick="NavigateToCreate" @onclick:preventDefault="true">
+                <i class="bi bi-plus-circle"></i> Create New Backlog
+            </button>
+        </div>
+    </div>
+
+    @if (showError)
+    {
+        <div class="alert alert-warning">
+            <h5>⚠️ API Connection Issue</h5>
+            <p>Unable to connect to the ScrumOps API server (http://localhost:8080). Please ensure the API server is running.</p>
+            <button type="button" class="btn btn-outline-primary btn-sm" @onclick="RetryConnection" @onclick:preventDefault="true">
+                <i class="bi bi-arrow-clockwise"></i> Retry Connection
+            </button>
+        </div>
+    }
+
+    <ul class="nav nav-tabs mb-3" id="backlogTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button type="button" class="nav-link @(activeTab == "overview" ? "active" : "")" 
+                    @onclick='@(() => SetActiveTab("overview"))' 
+                    @onclick:preventDefault="true">
+                <i class="bi bi-speedometer2"></i> Overview
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button type="button" class="nav-link @(activeTab == "backlogs" ? "active" : "")" 
+                    @onclick='@(() => SetActiveTab("backlogs"))' 
+                    @onclick:preventDefault="true">
+                <i class="bi bi-list-ul"></i> All Backlogs
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        @if (activeTab == "overview")
+        {
+            <div class="tab-pane fade show active">
+                @if (!showError)
+                {
+                    <ProductBacklogOverviewComponent />
+                }
+                else
+                {
+                    <div class="text-center py-5">
+                        <i class="bi bi-exclamation-triangle display-4 text-warning"></i>
+                        <h4 class="mt-3">API Server Required</h4>
+                        <p class="text-muted">Please start the ScrumOps API server to load backlog data.</p>
+                    </div>
+                }
+            </div>
+        }
+        else if (activeTab == "backlogs")
+        {
+            <div class="tab-pane fade show active">
+                @if (!showError)
+                {
+                    <ProductBacklogListComponent /> 
+                }
+                else
+                {
+                    <div class="text-center py-5">
+                        <i class="bi bi-exclamation-triangle display-4 text-warning"></i>
+                        <h4 class="mt-3">API Server Required</h4>
+                        <p class="text-muted">Please start the ScrumOps API server to load backlog data.</p>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private string activeTab = "overview";
+    private bool showError = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Test API connectivity without hanging
+        try
+        {
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+            using var httpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(2) };
+			await httpClient.GetAsync("https://localhost:7204/health", cts.Token);
+        }
+        catch
+        {
+            showError = true;
+            StateHasChanged();
+        }
+    }
+
+    private void SetActiveTab(string tab)
+    {
+        activeTab = tab;
+    }
+
+    private void NavigateToCreate()
+    {
+        // For now, just show a message since API might not be available
+        if (showError)
+        {
+            // Show inline message instead of navigating
+        }
+        else
+        {
+            // Navigate to create page when API is available
+        }
+    }
+
+    private async Task RetryConnection()
+    {
+        showError = false;
+        StateHasChanged();
+        await OnInitializedAsync();
+    }
+}

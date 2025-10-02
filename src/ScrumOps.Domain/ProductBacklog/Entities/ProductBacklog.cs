@@ -52,12 +52,13 @@ public class ProductBacklog : Entity<ProductBacklogId>, IAggregateRoot
     /// </summary>
     /// <param name="id">The unique identifier for the product backlog</param>
     /// <param name="teamId">The team identifier that owns this backlog</param>
-    public ProductBacklog(ProductBacklogId id, TeamId teamId) : base(id)
+    public ProductBacklog(ProductBacklogId id, TeamId teamId, BacklogNotes? notes = null) : base(id)
     {
         TeamId = teamId ?? throw new ArgumentNullException(nameof(teamId));
         CreatedDate = DateTime.UtcNow;
         Notes = BacklogNotes.Empty;
-        
+        if(notes != null)
+            Notes = notes;
         RaiseDomainEvent(new ProductBacklogCreatedEvent(Id, TeamId, CreatedDate));
     }
 
@@ -88,6 +89,16 @@ public class ProductBacklog : Entity<ProductBacklogId>, IAggregateRoot
         _items.Add(item);
         
         RaiseDomainEvent(new BacklogItemAddedEvent(Id, item.Id, item.Title.Value, nextPriority));
+    }
+
+    public void SetPriority(ProductBacklogItem item, int priority)
+    {
+        item.SetPriority(Priority.Create(priority));
+    }
+
+    public void SetType(ProductBacklogItem item, BacklogItemType type)
+    {
+        item.SetType(type);
     }
 
     /// <summary>
