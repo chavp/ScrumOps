@@ -1,0 +1,7 @@
+.vs/ScrumOps/v18/.suo
+src/ScrumOps.Domain/obj/Debug/net8.0/ScrumOps.Domain.assets.cache
+src/ScrumOps.Shared/obj/Debug/net8.0/ScrumOps.Shared.assets.cache
+src/ScrumOps.Shared/obj/Debug/net8.0/ScrumOps.Shared.csproj.FileListAbsolute.txt
+tests/ScrumOps.Application.Tests/obj/Debug/net8.0/ScrumOps.Application.Tests.assets.cache
+tests/ScrumOps.ArchitectureTests/obj/Debug/net8.0/ScrumOps.ArchitectureTests.assets.cache
+tests/ScrumOps.ArchitectureTests/obj/Debug/net8.0/ScrumOps.ArchitectureTests.csproj.FileListAbsolute.txt
