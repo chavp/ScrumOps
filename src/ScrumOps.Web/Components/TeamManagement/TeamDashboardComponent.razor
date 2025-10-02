@@ -1,6 +1,9 @@
 @using ScrumOps.Shared.Contracts.Teams
+@using ScrumOps.Shared.Contracts.Sprints
 @using ScrumOps.Web.Services
 @inject ITeamService TeamService
+@inject ISprintService SprintService
+@inject INotificationService NotificationService
 @inject NavigationManager Navigation
 @inject ILogger<TeamDashboardComponent> Logger
 @rendermode InteractiveServer
@@ -149,9 +152,39 @@
                                         </span>
                                     </td>
                                     <td>
-                                        @if (team.CurrentSprintId.HasValue)
+                                        @{
+                                            var teamSprintInfo = GetTeamSprintInfo(team.Id);
+                                        }
+                                        @if (teamSprintInfo != null)
                                         {
-                                            <span class="badge bg-primary">In Progress</span>
+                                            @if (teamSprintInfo.Status == "Active")
+                                            {
+                                                <div>
+                                                    <span class="badge bg-success mb-1">Active Sprint</span>
+                                                    <br />
+                                                    <small class="text-muted">@teamSprintInfo.Goal</small>
+                                                    <br />
+                                                    <div class="progress mt-1" style="height: 4px;">
+                                                        <div class="progress-bar bg-success" 
+                                                             style="width: @teamSprintInfo.ProgressPercentage.ToString("F0")%"></div>
+                                                    </div>
+                                                    <small class="text-muted">@teamSprintInfo.ProgressPercentage.ToString("F0")% complete</small>
+                                                </div>
+                                            }
+                                            else if (teamSprintInfo.Status == "Planned")
+                                            {
+                                                <div>
+                                                    <span class="badge bg-warning text-dark mb-1">Planned Sprint</span>
+                                                    <br />
+                                                    <small class="text-muted">@teamSprintInfo.Goal</small>
+                                                    <br />
+                                                    <small class="text-muted">Starts: @teamSprintInfo.StartDate.ToString("MMM dd")</small>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-info">@teamSprintInfo.Status</span>
+                                            }
                                         }
                                         else
                                         {
@@ -159,10 +192,40 @@
                                         }
                                     </td>
                                     <td>
+                                        @{
+                                            var currentSprintInfo = GetTeamSprintInfo(team.Id);
+                                        }
                                         <div class="btn-group btn-group-sm" role="group">
                                             <button type="button" class="btn btn-outline-primary" @onclick="@(() => NavigateToDetails(team.Id))" @onclick:preventDefault="true" title="View Details">
                                                 <i class="bi bi-eye"></i>
                                             </button>
+                                            
+                                            @if (currentSprintInfo?.Status == "Planned")
+                                            {
+                                                <button type="button" class="btn btn-outline-success" @onclick="@(() => StartSprint(team.Id, currentSprintInfo.Id))" @onclick:preventDefault="true" title="Start Sprint" disabled="@isStartingSprint">
+                                                    @if (isStartingSprint)
+                                                    {
+                                                        <span class="spinner-border spinner-border-sm" role="status"></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="bi bi-play"></i>
+                                                    }
+                                                </button>
+                                            }
+                                            else if (currentSprintInfo?.Status == "Active")
+                                            {
+                                                <button type="button" class="btn btn-outline-info" @onclick="@(() => NavigateToSprintBoard(team.Id, currentSprintInfo.Id))" @onclick:preventDefault="true" title="Sprint Board">
+                                                    <i class="bi bi-kanban"></i>
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-outline-success" @onclick="@(() => NavigateToCreateSprint(team.Id))" @onclick:preventDefault="true" title="Create Sprint">
+                                                    <i class="bi bi-plus-circle"></i>
+                                                </button>
+                                            }
+                                            
                                             <button type="button" class="btn btn-outline-secondary" @onclick="@(() => NavigateToEdit(team.Id))" @onclick:preventDefault="true" title="Edit Team">
                                                 <i class="bi bi-pencil"></i>
                                             </button>
@@ -201,11 +264,14 @@
     [Parameter] public EventCallback<Guid> OnTeamSelected { get; set; }
 
     private IEnumerable<TeamSummary>? teams;
+    private Dictionary<Guid, SprintSummary?> teamSprints = new();
     private bool isLoading = true;
+    private bool isStartingSprint = false;
 
     protected override async Task OnInitializedAsync()
     {
         await LoadTeams();
+        await LoadTeamSprints();
     }
 
     private async Task LoadTeams()
@@ -226,6 +292,64 @@
         }
     }
 
+    private async Task LoadTeamSprints()
+    {
+        if (teams == null) return;
+
+        foreach (var team in teams)
+        {
+            try
+            {
+                var sprintsResponse = await SprintService.GetSprintsAsync(team.Id);
+                var currentSprint = sprintsResponse?.Sprints?
+                    .Where(s => s.Status == "Active" || s.Status == "Planned")
+                    .OrderBy(s => s.Status == "Active" ? 0 : 1) // Active first, then Planned
+                    .ThenByDescending(s => s.StartDate)
+                    .FirstOrDefault();
+                
+                teamSprints[team.Id] = currentSprint;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogWarning(ex, "Failed to load sprints for team {TeamId}", team.Id);
+                teamSprints[team.Id] = null;
+            }
+        }
+        StateHasChanged();
+    }
+
+    private SprintSummary? GetTeamSprintInfo(Guid teamId)
+    {
+        return teamSprints.TryGetValue(teamId, out var sprint) ? sprint : null;
+    }
+
+    private async Task StartSprint(Guid teamId, Guid sprintId)
+    {
+        try
+        {
+            isStartingSprint = true;
+            var success = await SprintService.StartSprintAsync(teamId, sprintId);
+            if (success)
+            {
+                NotificationService.ShowSuccess("Sprint started successfully!", "Success");
+                await LoadTeamSprints(); // Refresh sprint data
+            }
+            else
+            {
+                NotificationService.ShowError("Failed to start sprint", "Error");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to start sprint {SprintId} for team {TeamId}", sprintId, teamId);
+            NotificationService.ShowError("Failed to start sprint", "Error");
+        }
+        finally
+        {
+            isStartingSprint = false;
+        }
+    }
+
     private void NavigateToCreateTeam()
     {
         Navigation.NavigateTo("/teams/create");
@@ -239,6 +363,16 @@
     private void NavigateToEdit(Guid teamId)
     {
         Navigation.NavigateTo($"/teams/{teamId}/edit");
+    }
+
+    private void NavigateToCreateSprint(Guid teamId)
+    {
+        Navigation.NavigateTo($"/teams/{teamId}/sprints/create");
+    }
+
+    private void NavigateToSprintBoard(Guid teamId, Guid sprintId)
+    {
+        Navigation.NavigateTo($"/teams/{teamId}/sprints/{sprintId}/board");
     }
 
     private string GetVelocityColor(decimal velocity)

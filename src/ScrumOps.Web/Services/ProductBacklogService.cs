@@ -273,6 +273,21 @@ public class ProductBacklogService : IProductBacklogService
         }
     }
 
+    public async Task<GetBacklogItemsResponse> GetBacklogItemsAsync()
+    {
+        try
+        {
+            _logger.LogInformation("Fetching all backlog items from API");
+            var response = await _httpClient.GetFromJsonAsync<GetBacklogItemsResponse>("/api/backlog/items");
+            return response ?? new GetBacklogItemsResponse { Items = [] };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching all backlog items");
+            return new GetBacklogItemsResponse { Items = [] };
+        }
+    }
+
     private static BacklogItemSummary MapToBacklogItemSummary(BacklogItemDto dto)
     {
         return new BacklogItemSummary

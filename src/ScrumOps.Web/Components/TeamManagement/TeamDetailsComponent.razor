@@ -1,8 +1,11 @@
 @page "/teams/{TeamId:guid}"
 @using ScrumOps.Shared.Contracts.Teams
+@using ScrumOps.Shared.Contracts.Sprints
 @using ScrumOps.Web.Services
 @using ScrumOps.Web.Components.TeamManagement
 @inject ITeamService TeamService
+@inject ISprintService SprintService
+@inject INotificationService NotificationService
 @inject NavigationManager Navigation
 @inject ILogger<TeamDetailsComponent> Logger
 @rendermode InteractiveServer
@@ -160,6 +163,130 @@
                 </div>
             </div>
             <div class="col-md-4">
+                <!-- Current Sprint Status -->
+                @if (teamSprints?.Any() == true)
+                {
+                    var activeSprint = teamSprints.FirstOrDefault(s => s.Status == "Active");
+                    var plannedSprint = teamSprints.FirstOrDefault(s => s.Status == "Planned");
+                    
+                    @if (activeSprint != null)
+                    {
+                        <div class="card border-success mb-3">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-play-circle"></i> Active Sprint
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-title">@activeSprint.Goal</h6>
+                                <div class="row text-sm mb-2">
+                                    <div class="col-6">
+                                        <small class="text-muted">Progress:</small>
+                                        <br />
+                                        <strong>@activeSprint.CompletedStoryPoints/@activeSprint.CommittedStoryPoints pts</strong>
+                                    </div>
+                                    <div class="col-6">
+                                        <small class="text-muted">Days Left:</small>
+                                        <br />
+                                        <strong>@CalculateDaysRemaining(activeSprint)</strong>
+                                    </div>
+                                </div>
+                                <div class="progress mb-2" style="height: 8px;">
+                                    <div class="progress-bar bg-success" 
+                                         role="progressbar" 
+                                         style="width: @activeSprint.ProgressPercentage.ToString("F0")%">
+                                    </div>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-outline-primary btn-sm" @onclick="@(() => NavigateToSprintBoard(activeSprint.Id))">
+                                        <i class="bi bi-kanban"></i> Sprint Board
+                                    </button>
+                                    <button class="btn btn-outline-warning btn-sm" @onclick="@(() => CompleteSprint(activeSprint.Id))">
+                                        <i class="bi bi-check2-square"></i> Complete Sprint
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else if (plannedSprint != null)
+                    {
+                        <div class="card border-warning mb-3">
+                            <div class="card-header bg-warning text-dark">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-calendar-check"></i> Planned Sprint
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-title">@plannedSprint.Goal</h6>
+                                <div class="row text-sm mb-2">
+                                    <div class="col-6">
+                                        <small class="text-muted">Start Date:</small>
+                                        <br />
+                                        <strong>@plannedSprint.StartDate.ToString("MMM dd")</strong>
+                                    </div>
+                                    <div class="col-6">
+                                        <small class="text-muted">Capacity:</small>
+                                        <br />
+                                        <strong>@plannedSprint.CommittedStoryPoints pts</strong>
+                                    </div>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-success" @onclick="@(() => StartSprint(plannedSprint.Id))" disabled="@isStartingSprint">
+                                        @if (isStartingSprint)
+                                        {
+                                            <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                                        }
+                                        <i class="bi bi-play"></i> Start Sprint
+                                    </button>
+                                    <button class="btn btn-outline-info btn-sm" @onclick="@(() => NavigateToSprintPlanning(plannedSprint.Id))">
+                                        <i class="bi bi-list-task"></i> Sprint Planning
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card border-info mb-3">
+                            <div class="card-header bg-info text-white">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-calendar-plus"></i> No Active Sprint
+                                </h5>
+                            </div>
+                            <div class="card-body text-center">
+                                <p class="text-muted">No active or planned sprints</p>
+                                <button class="btn btn-primary" @onclick="NavigateToCreateSprint">
+                                    <i class="bi bi-plus-circle"></i> Create Sprint
+                                </button>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="card border-info mb-3">
+                        <div class="card-header bg-info text-white">
+                            <h5 class="mb-0">
+                                <i class="bi bi-calendar-plus"></i> Sprint Management
+                            </h5>
+                        </div>
+                        <div class="card-body text-center">
+                            @if (isLoadingSprints)
+                            {
+                                <div class="spinner-border spinner-border-sm" role="status"></div>
+                                <p class="text-muted mt-2">Loading sprints...</p>
+                            }
+                            else
+                            {
+                                <p class="text-muted">Start managing sprints for this team</p>
+                                <button class="btn btn-primary" @onclick="NavigateToCreateSprint">
+                                    <i class="bi bi-plus-circle"></i> Create First Sprint
+                                </button>
+                            }
+                        </div>
+                    </div>
+                }
+
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0">Quick Actions</h5>
@@ -172,10 +299,10 @@
                             <button type="button" class="btn btn-success" @onclick="ShowAddMemberModal" @onclick:preventDefault="true">
                                 <i class="bi bi-person-plus"></i> Add Member
                             </button>
-                            <button type="button" class="btn btn-info" @onclick:preventDefault="true">
-                                <i class="bi bi-calendar-plus"></i> Start Sprint
+                            <button type="button" class="btn btn-info" @onclick="NavigateToSprints" @onclick:preventDefault="true">
+                                <i class="bi bi-calendar-check"></i> View All Sprints
                             </button>
-                            <button type="button" class="btn btn-secondary" @onclick:preventDefault="true">
+                            <button type="button" class="btn btn-secondary" @onclick="NavigateToBacklog" @onclick:preventDefault="true">
                                 <i class="bi bi-list-check"></i> View Backlog
                             </button>
                             <button type="button" class="btn btn-outline-danger" @onclick="@(() => ConfirmDeleteTeam())" @onclick:preventDefault="true">
@@ -258,18 +385,23 @@
     [Parameter] public Guid TeamId { get; set; }
 
     private TeamDetailsResponse? team;
+    private IEnumerable<SprintSummary>? teamSprints;
     private bool isLoading = true;
+    private bool isLoadingSprints = false;
+    private bool isStartingSprint = false;
     private bool showAddMemberModal = false;
     private string activeMetricsTab = "velocity";
 
     protected override async Task OnInitializedAsync()
     {
         await LoadTeam();
+        await LoadTeamSprints();
     }
 
     protected override async Task OnParametersSetAsync()
     {
         await LoadTeam();
+        await LoadTeamSprints();
     }
 
     private async Task LoadTeam()
@@ -290,6 +422,80 @@
         }
     }
 
+    private async Task LoadTeamSprints()
+    {
+        try
+        {
+            isLoadingSprints = true;
+            var sprintsResponse = await SprintService.GetSprintsAsync(TeamId);
+            teamSprints = sprintsResponse?.Sprints?.OrderByDescending(s => s.StartDate);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to load sprints for team {TeamId}", TeamId);
+            teamSprints = null;
+        }
+        finally
+        {
+            isLoadingSprints = false;
+        }
+    }
+
+    private async Task StartSprint(Guid sprintId)
+    {
+        try
+        {
+            isStartingSprint = true;
+            var success = await SprintService.StartSprintAsync(TeamId, sprintId);
+            if (success)
+            {
+                NotificationService.ShowSuccess("Sprint started successfully!", "Success");
+                await LoadTeamSprints(); // Refresh sprint data
+            }
+            else
+            {
+                NotificationService.ShowError("Failed to start sprint", "Error");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to start sprint {SprintId} for team {TeamId}", sprintId, TeamId);
+            NotificationService.ShowError("Failed to start sprint", "Error");
+        }
+        finally
+        {
+            isStartingSprint = false;
+        }
+    }
+
+    private async Task CompleteSprint(Guid sprintId)
+    {
+        try
+        {
+            var success = await SprintService.CompleteSprintAsync(TeamId, sprintId);
+            if (success)
+            {
+                NotificationService.ShowSuccess("Sprint completed successfully!", "Success");
+                await LoadTeamSprints(); // Refresh sprint data
+            }
+            else
+            {
+                NotificationService.ShowError("Failed to complete sprint", "Error");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to complete sprint {SprintId} for team {TeamId}", sprintId, TeamId);
+            NotificationService.ShowError("Failed to complete sprint", "Error");
+        }
+    }
+
+    private int CalculateDaysRemaining(SprintSummary sprint)
+    {
+        var remaining = (sprint.EndDate - DateTime.Today).Days;
+        return Math.Max(0, remaining);
+    }
+
     private void NavigateToEdit()
     {
         Navigation.NavigateTo($"/teams/{TeamId}/edit");
@@ -298,6 +504,31 @@
     private void NavigateToTeams()
     {
         Navigation.NavigateTo("/teams");
+    }
+
+    private void NavigateToCreateSprint()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints/create");
+    }
+
+    private void NavigateToSprints()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints");
+    }
+
+    private void NavigateToBacklog()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/backlog");
+    }
+
+    private void NavigateToSprintBoard(Guid sprintId)
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints/{sprintId}/board");
+    }
+
+    private void NavigateToSprintPlanning(Guid sprintId)
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints/{sprintId}/planning");
     }
 
     private string GetRoleBadgeColor(string role)

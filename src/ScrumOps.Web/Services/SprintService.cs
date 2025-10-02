@@ -213,6 +213,66 @@ public class SprintService : ISprintService
         }
     }
 
+    public async Task<bool> AddBacklogItemToSprintAsync(Guid teamId, Guid sprintId, Guid backlogItemId)
+    {
+        try
+        {
+            _logger.LogInformation("Adding backlog item {BacklogItemId} to sprint {SprintId} for team {TeamId}", backlogItemId, sprintId, teamId);
+            var response = await _httpClient.PostAsJsonAsync($"/api/teams/{teamId}/sprints/{sprintId}/items", new { BacklogItemId = backlogItemId });
+            return response.IsSuccessStatusCode;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error adding backlog item {BacklogItemId} to sprint {SprintId} for team {TeamId}", backlogItemId, sprintId, teamId);
+            return false;
+        }
+    }
+
+    public async Task<bool> RemoveBacklogItemFromSprintAsync(Guid teamId, Guid sprintId, Guid backlogItemId)
+    {
+        try
+        {
+            _logger.LogInformation("Removing backlog item {BacklogItemId} from sprint {SprintId} for team {TeamId}", backlogItemId, sprintId, teamId);
+            var response = await _httpClient.DeleteAsync($"/api/teams/{teamId}/sprints/{sprintId}/items/{backlogItemId}");
+            return response.IsSuccessStatusCode;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error removing backlog item {BacklogItemId} from sprint {SprintId} for team {TeamId}", backlogItemId, sprintId, teamId);
+            return false;
+        }
+    }
+
+    public async Task<bool> UpdateBacklogItemStatusAsync(Guid teamId, Guid sprintId, Guid itemId, string status)
+    {
+        try
+        {
+            _logger.LogInformation("Updating backlog item {ItemId} status to {Status} in sprint {SprintId} for team {TeamId}", itemId, status, sprintId, teamId);
+            var response = await _httpClient.PutAsJsonAsync($"/api/teams/{teamId}/sprints/{sprintId}/items/{itemId}/status", new { Status = status });
+            return response.IsSuccessStatusCode;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating backlog item {ItemId} status in sprint {SprintId} for team {TeamId}", itemId, sprintId, teamId);
+            return false;
+        }
+    }
+
+    public async Task<bool> SaveSprintRetrospectiveAsync(Guid teamId, Guid sprintId, object retrospectiveData)
+    {
+        try
+        {
+            _logger.LogInformation("Saving retrospective for sprint {SprintId} for team {TeamId}", sprintId, teamId);
+            var response = await _httpClient.PostAsJsonAsync($"/api/teams/{teamId}/sprints/{sprintId}/retrospective", retrospectiveData);
+            return response.IsSuccessStatusCode;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error saving retrospective for sprint {SprintId} for team {TeamId}", sprintId, teamId);
+            return false;
+        }
+    }
+
     private static SprintSummary MapToSprintSummary(ScrumOps.Application.Services.SprintManagement.SprintDto dto)
     {
         return new SprintSummary

@@ -17,4 +17,10 @@ public interface ISprintService
     Task<SprintBurndownResponse> GetSprintBurndownAsync(Guid teamId, Guid sprintId);
     Task<bool> AddSprintTaskAsync(Guid teamId, Guid sprintId, Guid itemId, AddSprintTaskRequest request);
     Task<bool> UpdateSprintTaskAsync(Guid teamId, Guid sprintId, Guid taskId, UpdateSprintTaskRequest request);
+    
+    // Additional methods for comprehensive sprint management
+    Task<bool> AddBacklogItemToSprintAsync(Guid teamId, Guid sprintId, Guid backlogItemId);
+    Task<bool> RemoveBacklogItemFromSprintAsync(Guid teamId, Guid sprintId, Guid backlogItemId);
+    Task<bool> UpdateBacklogItemStatusAsync(Guid teamId, Guid sprintId, Guid itemId, string status);
+    Task<bool> SaveSprintRetrospectiveAsync(Guid teamId, Guid sprintId, object retrospectiveData);
 }

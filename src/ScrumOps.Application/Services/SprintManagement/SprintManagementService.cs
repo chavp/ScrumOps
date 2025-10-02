@@ -52,6 +52,7 @@ public class SprintManagementService : ISprintManagementService
         var sprintDtos = paginatedSprints.Select(sprint => new SprintDto
         {
             Id = sprint.Id.Value,
+            TeamId = sprint.TeamId.Value,
             Name = sprint.Goal?.Value ?? $"Sprint {sprint.Id.Value}",
             Goal = sprint.Goal?.Value,
             StartDate = sprint.StartDate,

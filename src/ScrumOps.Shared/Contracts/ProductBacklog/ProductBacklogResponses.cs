@@ -70,3 +70,12 @@ public class BacklogItemSummary
     public string Type { get; set; } = string.Empty;
     public DateTime CreatedDate { get; set; }
 }
+
+/// <summary>
+/// Response model for GET /api/backlog/items endpoint
+/// </summary>
+public class GetBacklogItemsResponse
+{
+    public List<BacklogItemSummary> Items { get; set; } = new();
+    public int TotalCount { get; set; }
+}

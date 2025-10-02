@@ -1,0 +1,605 @@
+@page "/teams/{TeamId:guid}/sprints/{SprintId:guid}/reports"
+@using ScrumOps.Shared.Contracts.Sprints
+@using ScrumOps.Web.Services
+@inject ISprintService SprintService
+@inject NavigationManager Navigation
+@inject ILogger<SprintReportsComponent> Logger
+
+<div class="container-fluid">
+    @if (isLoading)
+    {
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+    else if (sprint != null)
+    {
+        <!-- Header -->
+        <div class="row mb-3">
+            <div class="col">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/sprints">Sprints</a></li>
+                        <li class="breadcrumb-item"><a href="/teams/@TeamId/sprints/@SprintId">Sprint Details</a></li>
+                        <li class="breadcrumb-item active">Reports</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2>Sprint Reports</h2>
+                        <p class="text-muted mb-0">Comprehensive sprint analytics and insights</p>
+                        @if (sprint.Status == "Completed")
+                        {
+                            <div class="mt-2">
+                                <span class="badge bg-success me-2">
+                                    <i class="bi bi-check-circle"></i> Sprint Completed
+                                </span>
+                                <span class="badge bg-info">
+                                    Final Velocity: @sprint.ActualVelocity.ToString("F1")
+                                </span>
+                            </div>
+                        }
+                    </div>
+                    <div>
+                        <button class="btn btn-outline-primary btn-sm me-2" @onclick="NavigateToDetails">
+                            <i class="bi bi-arrow-left"></i> Back to Sprint
+                        </button>
+                        @if (sprint.Status == "Completed")
+                        {
+                            <button class="btn btn-outline-success btn-sm me-2" @onclick="NavigateToRetrospective">
+                                <i class="bi bi-chat-quote"></i> Retrospective
+                            </button>
+                        }
+                        <button class="btn btn-outline-secondary btn-sm" @onclick="ExportReport">
+                            <i class="bi bi-download"></i> Export Report
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sprint Overview -->
+        <div class="row mb-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Sprint Overview</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td><strong>Sprint Goal:</strong></td>
+                                        <td>@sprint.Goal</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Duration:</strong></td>
+                                        <td>@sprint.StartDate.ToString("MMM dd") - @sprint.EndDate.ToString("MMM dd, yyyy") (@CalculateSprintDuration() days)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Status:</strong></td>
+                                        <td><span class="badge @GetStatusBadgeClass(sprint.Status)">@sprint.Status</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Team:</strong></td>
+                                        <td>@sprint.TeamName</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td><strong>Capacity:</strong></td>
+                                        <td>@sprint.Capacity story points</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Committed:</strong></td>
+                                        <td>@sprint.CommittedStoryPoints story points</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Completed:</strong></td>
+                                        <td>@sprint.CompletedStoryPoints story points</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Velocity:</strong></td>
+                                        <td>@sprint.ActualVelocity.ToString("F1")</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="row mb-4">
+            @if (sprint.Status == "Completed")
+            {
+                <!-- Completion Success Banner -->
+                <div class="col-12 mb-4">
+                    <div class="card border-success">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0">
+                                <i class="bi bi-trophy"></i> Sprint Completion Summary
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3 text-center">
+                                    <h3 class="text-success">@CalculateCompletionPercentage()%</h3>
+                                    <small class="text-muted">Goal Achievement</small>
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <h3 class="text-info">@sprint.ActualVelocity.ToString("F1")</h3>
+                                    <small class="text-muted">Final Velocity</small>
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <h3 class="text-primary">@CalculateSprintDuration()</h3>
+                                    <small class="text-muted">Days Duration</small>
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <h3 class="text-warning">@CalculateTaskCompletionRate()%</h3>
+                                    <small class="text-muted">Tasks Completed</small>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col text-center">
+                                    @{
+                                        var completionRate = CalculateCompletionPercentage();
+                                        var message = completionRate >= 100 ? "🎉 Excellent! All sprint goals achieved!" :
+                                                     completionRate >= 80 ? "✅ Great job! Most goals completed successfully!" :
+                                                     completionRate >= 60 ? "👍 Good progress made this sprint!" :
+                                                     "📈 Learning opportunity for future sprints!";
+                                    }
+                                    <p class="mb-0 fw-bold">@message</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            
+            <div class="col-md-3">
+                <div class="card text-center border-primary">
+                    <div class="card-body">
+                        <h3 class="text-primary">@CalculateCommitmentPercentage()%</h3>
+                        <h6 class="card-title text-muted">Commitment Rate</h6>
+                        <small class="text-muted">@sprint.CommittedStoryPoints / @sprint.Capacity</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center border-success">
+                    <div class="card-body">
+                        <h3 class="text-success">@CalculateCompletionPercentage()%</h3>
+                        <h6 class="card-title text-muted">Completion Rate</h6>
+                        <small class="text-muted">@sprint.CompletedStoryPoints / @sprint.CommittedStoryPoints</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center border-info">
+                    <div class="card-body">
+                        <h3 class="text-info">@CalculateVelocityTrend()%</h3>
+                        <h6 class="card-title text-muted">Velocity vs Target</h6>
+                        <small class="text-muted">@sprint.ActualVelocity.ToString("F1") / @sprint.Capacity</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center border-warning">
+                    <div class="card-body">
+                        <h3 class="text-warning">@CalculateTaskCompletionRate()%</h3>
+                        <h6 class="card-title text-muted">Task Completion</h6>
+                        <small class="text-muted">@sprint.Tasks.Count(t => t.Status == "Done") / @sprint.Tasks.Count()</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Work Breakdown -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Work Breakdown by Type</h5>
+                    </div>
+                    <div class="card-body">
+                        @{
+                            var itemsByType = sprint.BacklogItems.GroupBy(i => i.Type);
+                        }
+                        @if (itemsByType.Any())
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Count</th>
+                                            <th>Story Points</th>
+                                            <th>Completed</th>
+                                            <th>%</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var group in itemsByType)
+                                        {
+                                            var total = group.Count();
+                                            var completed = group.Count(i => i.Status == "Done");
+                                            var points = group.Sum(i => i.StoryPoints ?? 0);
+                                            var completedPoints = group.Where(i => i.Status == "Done").Sum(i => i.StoryPoints ?? 0);
+                                            
+                                            <tr>
+                                                <td><span class="badge @GetTypeBadgeClass(group.Key)">@group.Key</span></td>
+                                                <td>@total</td>
+                                                <td>@points</td>
+                                                <td>@completed (@completedPoints pts)</td>
+                                                <td>@(total > 0 ? (completed * 100 / total) : 0)%</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-muted text-center py-3">No backlog items to analyze</p>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Work Breakdown by Status</h5>
+                    </div>
+                    <div class="card-body">
+                        @{
+                            var itemsByStatus = sprint.BacklogItems.GroupBy(i => i.Status);
+                        }
+                        @if (itemsByStatus.Any())
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Status</th>
+                                            <th>Count</th>
+                                            <th>Story Points</th>
+                                            <th>Percentage</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var group in itemsByStatus)
+                                        {
+                                            var count = group.Count();
+                                            var points = group.Sum(i => i.StoryPoints ?? 0);
+                                            var percentage = sprint.BacklogItems.Count > 0 ? (count * 100 / sprint.BacklogItems.Count) : 0;
+                                            
+                                            <tr>
+                                                <td><span class="badge @GetStatusBadgeClass(group.Key)">@group.Key</span></td>
+                                                <td>@count</td>
+                                                <td>@points</td>
+                                                <td>@percentage%</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-muted text-center py-3">No backlog items to analyze</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task Analysis -->
+        <div class="row mb-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Task Analysis</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (sprint.Tasks.Any())
+                        {
+                            <div class="row mb-3">
+                                <div class="col-md-3">
+                                    <div class="text-center">
+                                        <h4 class="text-primary">@sprint.Tasks.Count()</h4>
+                                        <small class="text-muted">Total Tasks</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="text-center">
+                                        <h4 class="text-success">@sprint.Tasks.Count(t => t.Status == "Done")</h4>
+                                        <small class="text-muted">Completed</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="text-center">
+                                        <h4 class="text-warning">@sprint.Tasks.Count(t => t.Status == "InProgress")</h4>
+                                        <small class="text-muted">In Progress</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="text-center">
+                                        <h4 class="text-info">@sprint.Tasks.Count(t => t.Status == "Todo")</h4>
+                                        <small class="text-muted">To Do</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Task Hours Analysis -->
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Metric</th>
+                                            <th>Estimated Hours</th>
+                                            <th>Actual Hours</th>
+                                            <th>Variance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Total</strong></td>
+                                            <td>@sprint.Tasks.Sum(t => t.EstimatedHours).ToString("F1")</td>
+                                            <td>@sprint.Tasks.Sum(t => t.ActualHours).ToString("F1")</td>
+                                            <td class="@GetVarianceClass(sprint.Tasks.Sum(t => t.ActualHours) - sprint.Tasks.Sum(t => t.EstimatedHours))">
+                                                @(sprint.Tasks.Sum(t => t.ActualHours) - sprint.Tasks.Sum(t => t.EstimatedHours)).ToString("F1")h
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Completed Tasks</strong></td>
+                                            <td>@sprint.Tasks.Where(t => t.Status == "Done").Sum(t => t.EstimatedHours).ToString("F1")</td>
+                                            <td>@sprint.Tasks.Where(t => t.Status == "Done").Sum(t => t.ActualHours).ToString("F1")</td>
+                                            <td class="@GetVarianceClass(sprint.Tasks.Where(t => t.Status == "Done").Sum(t => t.ActualHours) - sprint.Tasks.Where(t => t.Status == "Done").Sum(t => t.EstimatedHours))">
+                                                @(sprint.Tasks.Where(t => t.Status == "Done").Sum(t => t.ActualHours) - sprint.Tasks.Where(t => t.Status == "Done").Sum(t => t.EstimatedHours)).ToString("F1")h
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-muted text-center py-3">No tasks to analyze</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Performance -->
+        <div class="row mb-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Team Performance Insights</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Sprint Health Indicators</h6>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <i class="bi bi-circle-fill @GetHealthIndicatorClass(CalculateCommitmentPercentage(), 80, 120)"></i>
+                                        <strong>Commitment:</strong> @GetHealthStatus(CalculateCommitmentPercentage(), 80, 120)
+                                        <small class="text-muted">(@CalculateCommitmentPercentage()%)</small>
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="bi bi-circle-fill @GetHealthIndicatorClass(CalculateCompletionPercentage(), 85, 100)"></i>
+                                        <strong>Completion:</strong> @GetHealthStatus(CalculateCompletionPercentage(), 85, 100)
+                                        <small class="text-muted">(@CalculateCompletionPercentage()%)</small>
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="bi bi-circle-fill @GetHealthIndicatorClass(CalculateTaskCompletionRate(), 90, 100)"></i>
+                                        <strong>Task Execution:</strong> @GetHealthStatus(CalculateTaskCompletionRate(), 90, 100)
+                                        <small class="text-muted">(@CalculateTaskCompletionRate()%)</small>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Recommendations</h6>
+                                <div class="list-group list-group-flush">
+                                    @foreach (var recommendation in GetRecommendations())
+                                    {
+                                        <div class="list-group-item border-0 ps-0">
+                                            <i class="bi bi-lightbulb text-warning"></i> @recommendation
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <h4>Sprint not found</h4>
+            <p class="text-muted">The requested sprint could not be found.</p>
+            <button class="btn btn-primary" @onclick="NavigateToSprints">
+                <i class="bi bi-arrow-left"></i> Back to Sprints
+            </button>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public Guid TeamId { get; set; }
+    [Parameter] public Guid SprintId { get; set; }
+
+    private SprintDetailsResponse? sprint;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadSprint();
+    }
+
+    private async Task LoadSprint()
+    {
+        try
+        {
+            isLoading = true;
+            sprint = await SprintService.GetSprintAsync(TeamId, SprintId);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to load sprint {SprintId} for team {TeamId}", SprintId, TeamId);
+            sprint = null;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void NavigateToDetails()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints/{SprintId}");
+    }
+
+    private void NavigateToRetrospective()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints/{SprintId}/retrospective");
+    }
+
+    private void NavigateToSprints()
+    {
+        Navigation.NavigateTo("/sprints");
+    }
+
+    private void ExportReport()
+    {
+        // TODO: Implement report export functionality
+        Logger.LogInformation("Export report requested for sprint {SprintId}", SprintId);
+    }
+
+    private int CalculateSprintDuration()
+    {
+        if (sprint == null) return 0;
+        return (sprint.EndDate - sprint.StartDate).Days;
+    }
+
+    private int CalculateCommitmentPercentage()
+    {
+        if (sprint == null || sprint.Capacity == 0) return 0;
+        return (int)((double)sprint.CommittedStoryPoints / sprint.Capacity * 100);
+    }
+
+    private int CalculateCompletionPercentage()
+    {
+        if (sprint == null || sprint.CommittedStoryPoints == 0) return 0;
+        return (int)((double)sprint.CompletedStoryPoints / sprint.CommittedStoryPoints * 100);
+    }
+
+    private int CalculateVelocityTrend()
+    {
+        if (sprint == null || sprint.Capacity == 0) return 0;
+        return (int)((double)sprint.ActualVelocity / sprint.Capacity * 100);
+    }
+
+    private int CalculateTaskCompletionRate()
+    {
+        if (sprint == null || !sprint.Tasks.Any()) return 0;
+        return (int)((double)sprint.Tasks.Count(t => t.Status == "Done") / sprint.Tasks.Count * 100);
+    }
+
+    private List<string> GetRecommendations()
+    {
+        var recommendations = new List<string>();
+        
+        if (sprint == null) return recommendations;
+
+        var commitmentRate = CalculateCommitmentPercentage();
+        var completionRate = CalculateCompletionPercentage();
+        var taskCompletionRate = CalculateTaskCompletionRate();
+
+        if (commitmentRate > 120)
+            recommendations.Add("Consider reducing sprint commitment to avoid overcommitment");
+        else if (commitmentRate < 70)
+            recommendations.Add("Team capacity might be underutilized, consider taking on more work");
+
+        if (completionRate < 80)
+            recommendations.Add("Focus on completing committed items before taking on new work");
+
+        if (taskCompletionRate < 90 && completionRate > 90)
+            recommendations.Add("Some items are marked done but tasks aren't completed - review definition of done");
+
+        if (!recommendations.Any())
+            recommendations.Add("Great job! Sprint metrics look healthy");
+
+        return recommendations;
+    }
+
+    private static string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Active" => "bg-success",
+            "Completed" => "bg-info",
+            "Planned" => "bg-warning",
+            "Done" => "bg-success",
+            "InProgress" => "bg-warning",
+            "Todo" => "bg-primary",
+            _ => "bg-secondary"
+        };
+    }
+
+    private static string GetTypeBadgeClass(string type)
+    {
+        return type switch
+        {
+            "Epic" => "bg-purple",
+            "UserStory" => "bg-primary",
+            "Bug" => "bg-danger",
+            "Task" => "bg-info",
+            _ => "bg-secondary"
+        };
+    }
+
+    private static string GetVarianceClass(decimal variance)
+    {
+        if (variance > 0) return "text-warning";
+        if (variance < 0) return "text-success";
+        return "text-muted";
+    }
+
+    private static string GetHealthIndicatorClass(int value, int goodThreshold, int excellentThreshold)
+    {
+        return value switch
+        {
+            var v when v >= excellentThreshold => "text-success",
+            var v when v >= goodThreshold => "text-warning",
+            _ => "text-danger"
+        };
+    }
+
+    private static string GetHealthStatus(int value, int goodThreshold, int excellentThreshold)
+    {
+        return value switch
+        {
+            var v when v >= excellentThreshold => "Excellent",
+            var v when v >= goodThreshold => "Good",
+            _ => "Needs Attention"
+        };
+    }
+}

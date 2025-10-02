@@ -1,0 +1,764 @@
+@page "/teams/{TeamId:guid}/sprints/{SprintId:guid}/tasks"
+@using ScrumOps.Shared.Contracts.Sprints
+@using ScrumOps.Web.Services
+@inject ISprintService SprintService
+@inject INotificationService NotificationService
+@inject NavigationManager Navigation
+@inject ILogger<SprintTaskManagementComponent> Logger
+@rendermode InteractiveServer
+
+<PageTitle>Sprint Task Management - ScrumOps</PageTitle>
+
+<div class="container-fluid">
+    @if (isLoading)
+    {
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- Header -->
+        <div class="row mb-3">
+            <div class="col">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/sprints">Sprints</a></li>
+                        <li class="breadcrumb-item"><a href="/teams/@TeamId/sprints/@SprintId">Sprint Details</a></li>
+                        <li class="breadcrumb-item active">Task Management</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2>Sprint Task Management</h2>
+                        <p class="text-muted mb-0">
+                            Manage all tasks in the sprint
+                            @if (sprint != null)
+                            {
+                                <span class="badge @GetStatusBadgeClass(sprint.Status) ms-2">@sprint.Status</span>
+                            }
+                        </p>
+                    </div>
+                    <div>
+                        <div class="btn-group me-2">
+                            <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-funnel"></i> Filter: @selectedFilter
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><button class="dropdown-item @(selectedFilter == "All" ? "active" : "")" @onclick='() => ApplyFilter("All")'>All Tasks</button></li>
+                                <li><button class="dropdown-item @(selectedFilter == "Todo" ? "active" : "")" @onclick='() => ApplyFilter("Todo")'>To Do</button></li>
+                                <li><button class="dropdown-item @(selectedFilter == "InProgress" ? "active" : "")" @onclick='() => ApplyFilter("InProgress")'>In Progress</button></li>
+                                <li><button class="dropdown-item @(selectedFilter == "Review" ? "active" : "")" @onclick='() => ApplyFilter("Review")'>Review</button></li>
+                                <li><button class="dropdown-item @(selectedFilter == "Done" ? "active" : "")" @onclick='() => ApplyFilter("Done")'>Done</button></li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-outline-secondary btn-sm" @onclick="NavigateToDetails">
+                            <i class="bi bi-arrow-left"></i> Back to Sprint
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (sprint != null)
+        {
+            <!-- Sprint Summary -->
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <h5 class="card-title mb-1">@sprint.Goal</h5>
+                                    <p class="text-muted mb-0">
+                                        <i class="bi bi-calendar3"></i> 
+                                        @sprint.StartDate.ToString("MMM dd") - @sprint.EndDate.ToString("MMM dd, yyyy")
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row text-center">
+                                        <div class="col-3">
+                                            <div class="h5 text-primary mb-0">@GetTotalTasks()</div>
+                                            <small class="text-muted">Total Tasks</small>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="h5 text-success mb-0">@GetCompletedTasks()</div>
+                                            <small class="text-muted">Completed</small>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="h5 text-info mb-0">@GetTotalEstimatedHours()</div>
+                                            <small class="text-muted">Est. Hours</small>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="h5 text-warning mb-0">@GetTotalActualHours()</div>
+                                            <small class="text-muted">Actual Hours</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Overall Progress -->
+                            <div class="mt-3">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <small class="text-muted">Overall Task Progress</small>
+                                    <small class="text-muted">@CalculateOverallProgress().ToString("F0")%</small>
+                                </div>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-gradient @GetProgressBarClass()" 
+                                         role="progressbar" 
+                                         style="width: @CalculateOverallProgress()%">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tasks by Backlog Item -->
+            <div class="row">
+                <div class="col">
+                    @if (sprint.BacklogItems.Any())
+                    {
+                        @foreach (var item in sprint.BacklogItems.Where(i => i.Tasks.Any() && (selectedFilter == "All" || i.Tasks.Any(t => t.Status == selectedFilter))))
+                        {
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-0">
+                                                <i class="bi bi-bookmark"></i> @item.Title
+                                                <span class="badge @GetItemStatusBadgeClass(item.Status) ms-2">@item.Status</span>
+                                                @if (item.StoryPoints.HasValue)
+                                                {
+                                                    <span class="badge bg-info ms-1">@item.StoryPoints pts</span>
+                                                }
+                                            </h6>
+                                            <small class="text-muted">@TruncateText(item.Description, 100)</small>
+                                        </div>
+                                        <div class="text-end">
+                                            <small class="text-muted">
+                                                @item.Tasks.Count(t => t.Status == "Done")/@item.Tasks.Count tasks completed
+                                            </small>
+                                            <div class="progress mt-1" style="width: 120px; height: 4px;">
+                                                <div class="progress-bar bg-success" 
+                                                     role="progressbar" 
+                                                     style="width: @CalculateItemTaskProgress(item)%">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover mb-0">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Task</th>
+                                                    <th>Status</th>
+                                                    <th>Assignee</th>
+                                                    <th>Hours</th>
+                                                    <th>Progress</th>
+                                                    <th width="120">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var task in GetFilteredAndSortedTasks(item.Tasks))
+                                                {
+                                                    <tr class="@(task.Status == "Done" ? "table-success" : "")">
+                                                        <td>
+                                                            <div>
+                                                                <h6 class="mb-1">@task.Title</h6>
+                                                                @if (!string.IsNullOrEmpty(task.Description))
+                                                                {
+                                                                    <small class="text-muted">@TruncateText(task.Description, 60)</small>
+                                                                }
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge @GetTaskStatusBadgeClass(task.Status)">
+                                                                @GetTaskStatusDisplayName(task.Status)
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            @if (!string.IsNullOrEmpty(task.AssigneeName))
+                                                            {
+                                                                <div class="d-flex align-items-center">
+                                                                    <i class="bi bi-person-circle me-1"></i>
+                                                                    <span>@task.AssigneeName</span>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="text-muted">Unassigned</span>
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            <div class="small">
+                                                                <div><strong>@task.ActualHours</strong> / @task.EstimatedHours h</div>
+                                                                @if (task.ActualHours > task.EstimatedHours)
+                                                                {
+                                                                    <span class="text-warning">
+                                                                        <i class="bi bi-exclamation-triangle"></i> Over estimate
+                                                                    </span>
+                                                                }
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="progress" style="height: 6px; width: 80px;">
+                                                                <div class="progress-bar @GetTaskProgressBarClass(task)" 
+                                                                     role="progressbar" 
+                                                                     style="width: @CalculateTaskProgress(task)%">
+                                                                </div>
+                                                            </div>
+                                                            <small class="text-muted">@CalculateTaskProgress(task).ToString("F0")%</small>
+                                                        </td>
+                                                        <td>
+                                                            <div class="btn-group btn-group-sm">
+                                                                <button class="btn btn-outline-primary" @onclick="() => EditTask(task)" 
+                                                                        title="Edit Task" disabled="@(sprint.Status == "Completed")">
+                                                                    <i class="bi bi-pencil"></i>
+                                                                </button>
+                                                                <button class="btn btn-outline-success" @onclick="() => QuickUpdateStatus(task)" 
+                                                                        title="Update Status" disabled="@(sprint.Status == "Completed" || task.Status == "Done")">
+                                                                    <i class="bi bi-check2"></i>
+                                                                </button>
+                                                                <button class="btn btn-outline-info" @onclick="() => LogTime(task)" 
+                                                                        title="Log Time" disabled="@(sprint.Status == "Completed")">
+                                                                    <i class="bi bi-clock"></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="card">
+                            <div class="card-body text-center py-5">
+                                <i class="bi bi-list-task display-4 text-muted"></i>
+                                <h5 class="text-muted mt-3">No tasks found</h5>
+                                <p class="text-muted">Add backlog items to the sprint and create tasks to get started</p>
+                                <button class="btn btn-primary" @onclick="NavigateToBacklogManagement">
+                                    <i class="bi bi-plus"></i> Manage Sprint Backlog
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    }
+
+    <!-- Edit Task Modal -->
+    <div class="modal fade @(showEditTaskModal ? "show d-block" : "")" tabindex="-1" style="@(showEditTaskModal ? "background-color: rgba(0,0,0,0.5);" : "")">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Task</h5>
+                    <button type="button" class="btn-close" @onclick="CloseModals"></button>
+                </div>
+                <div class="modal-body">
+                    @if (editingTask != null)
+                    {
+                        <EditForm Model="editingTask" OnValidSubmit="SaveEditedTask">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary class="text-danger" />
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="mb-3">
+                                        <label class="form-label">Title</label>
+                                        <InputText class="form-control" @bind-Value="editingTask.Title" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Description</label>
+                                        <InputTextArea class="form-control" rows="3" @bind-Value="editingTask.Description" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Assignee</label>
+                                        <InputText class="form-control" @bind-Value="editingTask.AssigneeId" placeholder="User ID or email" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Status</label>
+                                        <InputSelect class="form-select" @bind-Value="editingTask.Status">
+                                            <option value="Todo">To Do</option>
+                                            <option value="InProgress">In Progress</option>
+                                            <option value="Review">Review</option>
+                                            <option value="Done">Done</option>
+                                        </InputSelect>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Estimated Hours</label>
+                                        <InputNumber class="form-control" @bind-Value="editingTask.EstimatedHours" step="0.5" />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Actual Hours</label>
+                                        <InputNumber class="form-control" @bind-Value="editingTask.ActualHours" step="0.5" />
+                                    </div>
+
+                                    <!-- Quick Time Logging -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Quick Add Hours</label>
+                                        <div class="btn-group d-grid gap-1">
+                                            <button type="button" class="btn btn-outline-primary btn-sm" @onclick="() => AddQuickTime(0.5)">+0.5h</button>
+                                            <button type="button" class="btn btn-outline-primary btn-sm" @onclick="() => AddQuickTime(1)">+1h</button>
+                                            <button type="button" class="btn btn-outline-primary btn-sm" @onclick="() => AddQuickTime(2)">+2h</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end gap-2">
+                                <button type="button" class="btn btn-secondary" @onclick="CloseModals">Cancel</button>
+                                <button type="submit" class="btn btn-primary" disabled="@isSaving">
+                                    @if (isSaving)
+                                    {
+                                        <span class="spinner-border spinner-border-sm me-2"></span>
+                                    }
+                                    Save Changes
+                                </button>
+                            </div>
+                        </EditForm>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Time Log Modal -->
+    <div class="modal fade @(showTimeLogModal ? "show d-block" : "")" tabindex="-1" style="@(showTimeLogModal ? "background-color: rgba(0,0,0,0.5);" : "")">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Log Time</h5>
+                    <button type="button" class="btn-close" @onclick="CloseModals"></button>
+                </div>
+                <div class="modal-body">
+                    @if (selectedTask != null)
+                    {
+                        <div class="mb-3">
+                            <h6>@selectedTask.Title</h6>
+                            <small class="text-muted">Current: @selectedTask.ActualHours / @selectedTask.EstimatedHours hours</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Hours to Add</label>
+                            <input type="number" class="form-control" @bind="hoursToAdd" step="0.5" min="0.5" max="8" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Quick Add</label>
+                            <div class="btn-group d-grid gap-1">
+                                <button type="button" class="btn btn-outline-primary btn-sm" @onclick="() => SetHoursToAdd(0.5)">0.5h</button>
+                                <button type="button" class="btn btn-outline-primary btn-sm" @onclick="() => SetHoursToAdd(1)">1h</button>
+                                <button type="button" class="btn btn-outline-primary btn-sm" @onclick="() => SetHoursToAdd(2)">2h</button>
+                                <button type="button" class="btn btn-outline-primary btn-sm" @onclick="() => SetHoursToAdd(4)">4h</button>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="button" class="btn btn-secondary" @onclick="CloseModals">Cancel</button>
+                            <button type="button" class="btn btn-primary" @onclick="SaveTimeLog" disabled="@isSaving">
+                                @if (isSaving)
+                                {
+                                    <span class="spinner-border spinner-border-sm me-2"></span>
+                                }
+                                Log Time
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Guid TeamId { get; set; }
+    [Parameter] public Guid SprintId { get; set; }
+
+    private SprintDetailsResponse? sprint;
+    private bool isLoading = true;
+    private bool isSaving = false;
+    private bool showEditTaskModal = false;
+    private bool showTimeLogModal = false;
+
+    private string selectedFilter = "All";
+    private string selectedSort = "Status";
+    private UpdateSprintTaskRequest? editingTask;
+    private string editingTaskId = string.Empty;
+    private SprintTask? selectedTask;
+    private decimal hoursToAdd = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadSprint();
+    }
+
+    private async Task LoadSprint()
+    {
+        try
+        {
+            isLoading = true;
+            sprint = await SprintService.GetSprintAsync(TeamId, SprintId);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to load sprint data");
+            NotificationService.ShowError("Failed to load sprint data", "Error");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void ApplyFilter(string filter)
+    {
+        selectedFilter = filter;
+        StateHasChanged();
+    }
+
+    private void ApplySort(string sort)
+    {
+        selectedSort = sort;
+        StateHasChanged();
+    }
+
+    private IEnumerable<SprintTask> GetFilteredAndSortedTasks(List<SprintTask> tasks)
+    {
+        var filtered = selectedFilter == "All" ? tasks : tasks.Where(t => t.Status == selectedFilter);
+        
+        return selectedSort switch
+        {
+            "Status" => filtered.OrderBy(t => GetStatusOrder(t.Status)).ThenBy(t => t.Title),
+            "Priority" => filtered.OrderBy(t => t.Title), // Could add priority field
+            "Hours" => filtered.OrderByDescending(t => t.EstimatedHours).ThenBy(t => t.Title),
+            "Assignee" => filtered.OrderBy(t => t.AssigneeName ?? "~Unassigned").ThenBy(t => t.Title),
+            _ => filtered.OrderBy(t => t.Title)
+        };
+    }
+
+    private static int GetStatusOrder(string status)
+    {
+        return status switch
+        {
+            "Todo" => 1,
+            "InProgress" => 2,
+            "Review" => 3,
+            "Done" => 4,
+            _ => 5
+        };
+    }
+
+    private void EditTask(SprintTask task)
+    {
+        editingTaskId = task.Id;
+        editingTask = new UpdateSprintTaskRequest
+        {
+            Title = task.Title,
+            Description = task.Description,
+            EstimatedHours = task.EstimatedHours,
+            ActualHours = task.ActualHours,
+            Status = task.Status,
+            AssigneeId = task.AssigneeId
+        };
+        showEditTaskModal = true;
+    }
+
+    private async Task QuickUpdateStatus(SprintTask task)
+    {
+        try
+        {
+            var newStatus = task.Status switch
+            {
+                "Todo" => "InProgress",
+                "InProgress" => "Review",
+                "Review" => "Done",
+                _ => task.Status
+            };
+
+            if (newStatus == task.Status) return;
+
+            var updateRequest = new UpdateSprintTaskRequest
+            {
+                Title = task.Title,
+                Description = task.Description,
+                EstimatedHours = task.EstimatedHours,
+                ActualHours = task.ActualHours,
+                Status = newStatus,
+                AssigneeId = task.AssigneeId
+            };
+
+            var success = await SprintService.UpdateSprintTaskAsync(TeamId, SprintId, Guid.Parse(task.Id), updateRequest);
+            
+            if (success)
+            {
+                NotificationService.ShowSuccess($"Task moved to {GetTaskStatusDisplayName(newStatus)}", "Success");
+                await LoadSprint();
+            }
+            else
+            {
+                NotificationService.ShowError("Failed to update task status", "Error");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to update task status");
+            NotificationService.ShowError("Failed to update task status", "Error");
+        }
+    }
+
+    private void LogTime(SprintTask task)
+    {
+        selectedTask = task;
+        hoursToAdd = 1;
+        showTimeLogModal = true;
+    }
+
+    private async Task SaveEditedTask()
+    {
+        if (editingTask == null || string.IsNullOrEmpty(editingTaskId)) return;
+        
+        try
+        {
+            isSaving = true;
+            var success = await SprintService.UpdateSprintTaskAsync(TeamId, SprintId, Guid.Parse(editingTaskId), editingTask);
+            
+            if (success)
+            {
+                NotificationService.ShowSuccess("Task updated successfully!", "Success");
+                CloseModals();
+                await LoadSprint();
+            }
+            else
+            {
+                NotificationService.ShowError("Failed to update task", "Error");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to update task");
+            NotificationService.ShowError("Failed to update task", "Error");
+        }
+        finally
+        {
+            isSaving = false;
+        }
+    }
+
+    private async Task SaveTimeLog()
+    {
+        if (selectedTask == null || hoursToAdd <= 0) return;
+        
+        try
+        {
+            isSaving = true;
+            var updateRequest = new UpdateSprintTaskRequest
+            {
+                Title = selectedTask.Title,
+                Description = selectedTask.Description,
+                EstimatedHours = selectedTask.EstimatedHours,
+                ActualHours = selectedTask.ActualHours + hoursToAdd,
+                Status = selectedTask.Status,
+                AssigneeId = selectedTask.AssigneeId
+            };
+
+            var success = await SprintService.UpdateSprintTaskAsync(TeamId, SprintId, Guid.Parse(selectedTask.Id), updateRequest);
+            
+            if (success)
+            {
+                NotificationService.ShowSuccess($"Logged {hoursToAdd} hours successfully!", "Success");
+                CloseModals();
+                await LoadSprint();
+            }
+            else
+            {
+                NotificationService.ShowError("Failed to log time", "Error");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to log time");
+            NotificationService.ShowError("Failed to log time", "Error");
+        }
+        finally
+        {
+            isSaving = false;
+        }
+    }
+
+    private void CloseModals()
+    {
+        showEditTaskModal = false;
+        showTimeLogModal = false;
+        editingTask = null;
+        editingTaskId = string.Empty;
+        selectedTask = null;
+        hoursToAdd = 1;
+    }
+
+    private void AddQuickTime(double hours)
+    {
+        if (editingTask != null)
+        {
+            editingTask.ActualHours += (decimal)hours;
+            StateHasChanged();
+        }
+    }
+
+    private void SetHoursToAdd(double hours)
+    {
+        hoursToAdd = (decimal)hours;
+        StateHasChanged();
+    }
+
+    private void NavigateToDetails()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints/{SprintId}");
+    }
+
+    private void NavigateToBacklogManagement()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints/{SprintId}/backlog");
+    }
+
+    // Calculation methods
+    private int GetTotalTasks()
+    {
+        return sprint?.BacklogItems.SelectMany(i => i.Tasks).Count() ?? 0;
+    }
+
+    private int GetCompletedTasks()
+    {
+        return sprint?.BacklogItems.SelectMany(i => i.Tasks).Count(t => t.Status == "Done") ?? 0;
+    }
+
+    private decimal GetTotalEstimatedHours()
+    {
+        return sprint?.BacklogItems.SelectMany(i => i.Tasks).Sum(t => t.EstimatedHours) ?? 0;
+    }
+
+    private decimal GetTotalActualHours()
+    {
+        return sprint?.BacklogItems.SelectMany(i => i.Tasks).Sum(t => t.ActualHours) ?? 0;
+    }
+
+    private double CalculateOverallProgress()
+    {
+        var totalTasks = GetTotalTasks();
+        return totalTasks > 0 ? (double)GetCompletedTasks() / totalTasks * 100 : 0;
+    }
+
+    private double CalculateItemTaskProgress(SprintBacklogItem item)
+    {
+        if (!item.Tasks.Any()) return 0;
+        return (double)item.Tasks.Count(t => t.Status == "Done") / item.Tasks.Count * 100;
+    }
+
+    private double CalculateTaskProgress(SprintTask task)
+    {
+        if (task.Status == "Done") return 100;
+        if (task.Status == "Review") return 90;
+        if (task.Status == "InProgress") return 50;
+        return 10;
+    }
+
+    // Style methods
+    private static string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Active" => "bg-success",
+            "Planned" => "bg-warning",
+            "Completed" => "bg-primary",
+            _ => "bg-secondary"
+        };
+    }
+
+    private static string GetItemStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Done" => "bg-success",
+            "InProgress" => "bg-warning",
+            "Review" => "bg-info",
+            "Todo" => "bg-primary",
+            _ => "bg-secondary"
+        };
+    }
+
+    private static string GetTaskStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Done" => "bg-success text-white",
+            "InProgress" => "bg-warning text-dark",
+            "Review" => "bg-info text-white",
+            "Todo" => "bg-primary text-white",
+            _ => "bg-secondary text-white"
+        };
+    }
+
+    private static string GetTaskProgressBarClass(SprintTask task)
+    {
+        return task.Status switch
+        {
+            "Done" => "bg-success",
+            "Review" => "bg-info",
+            "InProgress" => "bg-warning",
+            _ => "bg-primary"
+        };
+    }
+
+    private string GetProgressBarClass()
+    {
+        var progress = CalculateOverallProgress();
+        return progress switch
+        {
+            >= 90 => "bg-success",
+            >= 70 => "bg-info",
+            >= 40 => "bg-warning",
+            _ => "bg-danger"
+        };
+    }
+
+    private static string GetTaskStatusDisplayName(string status)
+    {
+        return status switch
+        {
+            "Todo" => "To Do",
+            "InProgress" => "In Progress",
+            "Review" => "Review",
+            "Done" => "Done",
+            _ => status
+        };
+    }
+
+    private static string TruncateText(string text, int maxLength)
+    {
+        if (string.IsNullOrEmpty(text) || text.Length <= maxLength)
+            return text;
+        return text[..maxLength] + "...";
+    }
+}

@@ -1,0 +1,601 @@
+@page "/sprint-management"
+@using ScrumOps.Shared.Contracts.Sprints
+@using ScrumOps.Shared.Contracts.Teams
+@using ScrumOps.Web.Services
+@inject ISprintService SprintService
+@inject ITeamService TeamService
+@inject INotificationService NotificationService
+@inject NavigationManager Navigation
+@inject ILogger<SprintManagement> Logger
+@rendermode InteractiveServer
+
+<PageTitle>Sprint Management - ScrumOps</PageTitle>
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h1>Sprint Management Dashboard</h1>
+            <p class="text-muted">Comprehensive overview of all sprints across teams</p>
+        </div>
+        <div class="col-auto">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <i class="bi bi-plus-circle"></i> New Sprint
+                </button>
+                <ul class="dropdown-menu">
+                    @if (teams?.Any() == true)
+                    {
+                        @foreach (var team in teams)
+                        {
+                            <li>
+                                <a class="dropdown-item" href="/teams/@team.Id/sprints/create">
+                                    <i class="bi bi-people"></i> @team.Name
+                                </a>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li><span class="dropdown-item-text">No teams available</span></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    @if (isLoading)
+    {
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- Sprint Overview Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card text-center border-warning">
+                    <div class="card-body">
+                        <h3 class="text-warning">@allSprints.Count(s => s.Status == "Planned")</h3>
+                        <h6 class="card-title">Planned Sprints</h6>
+                        <small class="text-muted">Ready to start</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center border-success">
+                    <div class="card-body">
+                        <h3 class="text-success">@allSprints.Count(s => s.Status == "Active")</h3>
+                        <h6 class="card-title">Active Sprints</h6>
+                        <small class="text-muted">Currently running</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center border-info">
+                    <div class="card-body">
+                        <h3 class="text-info">@allSprints.Count(s => s.Status == "Completed")</h3>
+                        <h6 class="card-title">Completed Sprints</h6>
+                        <small class="text-muted">Last 30 days</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center border-primary">
+                    <div class="card-body">
+                        <h3 class="text-primary">@CalculateAverageVelocity().ToString("F1")</h3>
+                        <h6 class="card-title">Avg Velocity</h6>
+                        <small class="text-muted">story points</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <select class="form-select" @onchange="OnTeamFilterChanged">
+                    <option value="">All Teams</option>
+                    @if (teams != null)
+                    {
+                        @foreach (var team in teams)
+                        {
+                            <option value="@team.Id" selected="@(selectedTeamId == team.Id)">
+                                @team.Name
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-select" @onchange="OnStatusFilterChanged">
+                    <option value="">All Statuses</option>
+                    <option value="Planned" selected="@(selectedStatus == "Planned")">Planned</option>
+                    <option value="Active" selected="@(selectedStatus == "Active")">Active</option>
+                    <option value="Completed" selected="@(selectedStatus == "Completed")">Completed</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" @bind="searchTerm" @oninput="OnSearch" placeholder="Search sprints by goal..." />
+                    <button class="btn btn-outline-secondary" type="button" @onclick="ClearSearch">
+                        <i class="bi bi-x"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Sprints - Priority Section -->
+        @if (activeSprints.Any())
+        {
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="card border-success">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0">
+                                <i class="bi bi-play-circle"></i> Active Sprints Requiring Attention
+                            </h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Team</th>
+                                            <th>Sprint Goal</th>
+                                            <th>Progress</th>
+                                            <th>Days Remaining</th>
+                                            <th>Velocity</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var sprint in activeSprints)
+                                        {
+                                            <tr class="@GetRowClass(sprint)">
+                                                <td><strong>@sprint.TeamName</strong></td>
+                                                <td>@sprint.Goal</td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="progress me-2" style="width: 100px; height: 8px;">
+                                                            <div class="progress-bar @GetProgressBarClass(sprint.ProgressPercentage)" 
+                                                                 role="progressbar" 
+                                                                 style="width: @sprint.ProgressPercentage.ToString("F0")%">
+                                                            </div>
+                                                        </div>
+                                                        <small>@sprint.ProgressPercentage.ToString("F0")%</small>
+                                                    </div>
+                                                </td>
+                                                <td>@CalculateDaysRemaining(sprint) days</td>
+                                                <td>
+                                                    <span class="@GetVelocityClass(sprint)">
+                                                        @sprint.CompletedStoryPoints/@sprint.CommittedStoryPoints
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group btn-group-sm">
+                                                        <button class="btn btn-outline-primary" @onclick="@(() => NavigateToSprintBoard(sprint.TeamId, sprint.Id))">
+                                                            <i class="bi bi-kanban"></i>
+                                                        </button>
+                                                        <button class="btn btn-outline-info" @onclick="@(() => NavigateToSprintDetails(sprint.TeamId, sprint.Id))">
+                                                            <i class="bi bi-eye"></i>
+                                                        </button>
+                                                        <button class="btn btn-outline-success" @onclick="@(() => CompleteSprint(sprint.TeamId, sprint.Id))">
+                                                            <i class="bi bi-check2-square"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- All Sprints -->
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">All Sprints</h5>
+                            <small class="text-muted">@filteredSprints.Count() sprints</small>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        @if (filteredSprints.Any())
+                        {
+                            <div class="row g-0">
+                                @foreach (var sprint in filteredSprints.Take(displayCount))
+                                {
+                                    <div class="col-md-6 col-lg-4 col-xl-3">
+                                        <div class="card m-2 h-100 @GetSprintCardClass(sprint.Status)" style="cursor: pointer;" @onclick="@(() => NavigateToSprintDetails(sprint.TeamId, sprint.Id))">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                                    <h6 class="card-title mb-0">@sprint.TeamName</h6>
+                                                    <span class="badge @GetStatusBadgeClass(sprint.Status)">
+                                                        @GetStatusDisplayText(sprint.Status)
+                                                    </span>
+                                                </div>
+                                                <p class="card-text small text-muted mb-2">@TruncateText(sprint.Goal, 60)</p>
+                                                
+                                                <div class="row text-xs mb-2">
+                                                    <div class="col-6">
+                                                        <small class="text-muted">
+                                                            <i class="bi bi-calendar3"></i> 
+                                                            @sprint.StartDate.ToString("MMM dd")
+                                                        </small>
+                                                    </div>
+                                                    <div class="col-6 text-end">
+                                                        <small class="text-muted">
+                                                            @sprint.EndDate.ToString("MMM dd")
+                                                        </small>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Progress Bar -->
+                                                <div class="mb-2">
+                                                    <div class="progress" style="height: 4px;">
+                                                        <div class="progress-bar @GetProgressBarClass(sprint.ProgressPercentage)" 
+                                                             role="progressbar" 
+                                                             style="width: @sprint.ProgressPercentage.ToString("F0")%">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Stats -->
+                                                <div class="row text-xs">
+                                                    <div class="col-6">
+                                                        <small class="text-muted">
+                                                            <i class="bi bi-star"></i> @sprint.CompletedStoryPoints/@sprint.CommittedStoryPoints
+                                                        </small>
+                                                    </div>
+                                                    <div class="col-6 text-end">
+                                                        <small class="text-muted">
+                                                            <i class="bi bi-list-check"></i> @sprint.CompletedTaskCount/@sprint.TaskCount
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer bg-transparent">
+                                                <div class="btn-group w-100" role="group">
+                                                    <button class="btn btn-outline-primary btn-sm" @onclick:stopPropagation="true" @onclick="@(() => NavigateToSprintBoard(sprint.TeamId, sprint.Id))">
+                                                        <i class="bi bi-kanban"></i>
+                                                    </button>
+                                                    <button class="btn btn-outline-info btn-sm" @onclick:stopPropagation="true" @onclick="@(() => NavigateToSprintBurndown(sprint.TeamId, sprint.Id))">
+                                                        <i class="bi bi-graph-down"></i>
+                                                    </button>
+                                                    @if (sprint.Status == "Planned")
+                                                    {
+                                                        <button class="btn btn-outline-success btn-sm" @onclick:stopPropagation="true" @onclick="@(() => StartSprint(sprint.TeamId, sprint.Id))">
+                                                            <i class="bi bi-play"></i>
+                                                        </button>
+                                                    }
+                                                    else if (sprint.Status == "Active")
+                                                    {
+                                                        <button class="btn btn-outline-warning btn-sm" @onclick:stopPropagation="true" @onclick="@(() => CompleteSprint(sprint.TeamId, sprint.Id))">
+                                                            <i class="bi bi-check2-square"></i>
+                                                        </button>
+                                                    }
+                                                    else if (sprint.Status == "Completed")
+                                                    {
+                                                        <button class="btn btn-outline-success btn-sm" @onclick:stopPropagation="true" @onclick="@(() => NavigateToSprintReports(sprint.TeamId, sprint.Id))">
+                                                            <i class="bi bi-graph-up"></i>
+                                                        </button>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+                            @if (filteredSprints.Count() > displayCount)
+                            {
+                                <div class="text-center p-3">
+                                    <button class="btn btn-outline-primary" @onclick="LoadMore">
+                                        <i class="bi bi-arrow-down"></i> Load More (@(filteredSprints.Count() - displayCount) remaining)
+                                    </button>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="text-center py-5">
+                                <i class="bi bi-calendar-x display-4 text-muted"></i>
+                                <h4 class="mt-3">No sprints found</h4>
+                                <p class="text-muted">@GetEmptyStateMessage()</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private IEnumerable<TeamSummary>? teams;
+    private List<SprintSummary> allSprints = new();
+    private IEnumerable<SprintSummary> filteredSprints = new List<SprintSummary>();
+    private bool isLoading = true;
+    private Guid? selectedTeamId;
+    private string selectedStatus = string.Empty;
+    private string searchTerm = string.Empty;
+    private int displayCount = 12;
+
+    private IEnumerable<SprintSummary> activeSprints => allSprints.Where(s => s.Status == "Active");
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        try
+        {
+            isLoading = true;
+            
+            // Load teams first
+            var teamsResponse = await TeamService.GetTeamsAsync();
+            teams = teamsResponse.Teams;
+
+            // Load sprints for all teams
+            allSprints.Clear();
+            if (teams != null)
+            {
+                foreach (var team in teams)
+                {
+                    try
+                    {
+                        var sprintsResponse = await SprintService.GetSprintsAsync(team.Id);
+                        if (sprintsResponse?.Sprints != null)
+                        {
+                            allSprints.AddRange(sprintsResponse.Sprints);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogWarning(ex, "Failed to load sprints for team {TeamId}", team.Id);
+                    }
+                }
+            }
+
+            ApplyFilters();
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to load sprint management data");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void ApplyFilters()
+    {
+        var filtered = allSprints.AsEnumerable();
+
+        if (selectedTeamId.HasValue)
+        {
+            filtered = filtered.Where(s => s.TeamId == selectedTeamId.Value);
+        }
+
+        if (!string.IsNullOrEmpty(selectedStatus))
+        {
+            filtered = filtered.Where(s => s.Status == selectedStatus);
+        }
+
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            filtered = filtered.Where(s => s.Goal.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                         s.TeamName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+
+        filteredSprints = filtered.OrderByDescending(s => s.StartDate);
+        displayCount = 12; // Reset display count when filters change
+        StateHasChanged();
+    }
+
+    private async Task OnTeamFilterChanged(ChangeEventArgs e)
+    {
+        if (Guid.TryParse(e.Value?.ToString(), out var teamId))
+        {
+            selectedTeamId = teamId;
+        }
+        else
+        {
+            selectedTeamId = null;
+        }
+        
+        ApplyFilters();
+    }
+
+    private void OnStatusFilterChanged(ChangeEventArgs e)
+    {
+        selectedStatus = e.Value?.ToString() ?? string.Empty;
+        ApplyFilters();
+    }
+
+    private void OnSearch(ChangeEventArgs e)
+    {
+        searchTerm = e.Value?.ToString() ?? string.Empty;
+        ApplyFilters();
+    }
+
+    private void ClearSearch()
+    {
+        searchTerm = string.Empty;
+        ApplyFilters();
+    }
+
+    private void LoadMore()
+    {
+        displayCount += 12;
+        StateHasChanged();
+    }
+
+    private async Task StartSprint(Guid teamId, Guid sprintId)
+    {
+        try
+        {
+            var success = await SprintService.StartSprintAsync(teamId, sprintId);
+            if (success)
+            {
+                NotificationService.ShowSuccess("Sprint started successfully!", "Success");
+                await LoadData(); // Refresh data
+            }
+            else
+            {
+                NotificationService.ShowError("Failed to start sprint", "Error");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to start sprint {SprintId}", sprintId);
+            NotificationService.ShowError("Failed to start sprint", "Error");
+        }
+    }
+
+    private async Task CompleteSprint(Guid teamId, Guid sprintId)
+    {
+        try
+        {
+            var success = await SprintService.CompleteSprintAsync(teamId, sprintId);
+            if (success)
+            {
+                NotificationService.ShowSuccess("Sprint completed successfully!", "Success");
+                await LoadData(); // Refresh data
+            }
+            else
+            {
+                NotificationService.ShowError("Failed to complete sprint", "Error");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to complete sprint {SprintId}", sprintId);
+            NotificationService.ShowError("Failed to complete sprint", "Error");
+        }
+    }
+
+    private void NavigateToSprintDetails(Guid teamId, Guid sprintId)
+    {
+        Navigation.NavigateTo($"/teams/{teamId}/sprints/{sprintId}");
+    }
+
+    private void NavigateToSprintBoard(Guid teamId, Guid sprintId)
+    {
+        Navigation.NavigateTo($"/teams/{teamId}/sprints/{sprintId}/board");
+    }
+
+    private void NavigateToSprintBurndown(Guid teamId, Guid sprintId)
+    {
+        Navigation.NavigateTo($"/teams/{teamId}/sprints/{sprintId}/burndown");
+    }
+
+    private void NavigateToSprintReports(Guid teamId, Guid sprintId)
+    {
+        Navigation.NavigateTo($"/teams/{teamId}/sprints/{sprintId}/reports");
+    }
+
+    private decimal CalculateAverageVelocity()
+    {
+        var completedSprints = allSprints.Where(s => s.Status == "Completed").ToList();
+        return completedSprints.Any() ? (decimal)completedSprints.Average(s => s.CompletedStoryPoints) : 0;
+    }
+
+    private int CalculateDaysRemaining(SprintSummary sprint)
+    {
+        var remaining = (sprint.EndDate - DateTime.Today).Days;
+        return Math.Max(0, remaining);
+    }
+
+    private string GetEmptyStateMessage()
+    {
+        if (!string.IsNullOrEmpty(searchTerm))
+            return $"No sprints match your search for \"{searchTerm}\"";
+        if (selectedTeamId.HasValue)
+            return "No sprints found for the selected team";
+        if (!string.IsNullOrEmpty(selectedStatus))
+            return $"No {selectedStatus.ToLower()} sprints found";
+        return "Create your first sprint to start organizing work into time-boxed iterations";
+    }
+
+    private static string TruncateText(string text, int maxLength)
+    {
+        return text.Length <= maxLength ? text : text[..maxLength] + "...";
+    }
+
+    private static string GetSprintCardClass(string status)
+    {
+        return status switch
+        {
+            "Active" => "border-success",
+            "Completed" => "border-info",
+            "Planned" => "border-warning",
+            _ => ""
+        };
+    }
+
+    private static string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Active" => "bg-success",
+            "Completed" => "bg-info",
+            "Planned" => "bg-warning",
+            _ => "bg-secondary"
+        };
+    }
+
+    private static string GetStatusDisplayText(string status)
+    {
+        return status switch
+        {
+            "Active" => "Active",
+            "Completed" => "Done",
+            "Planned" => "Planned",
+            _ => status
+        };
+    }
+
+    private static string GetProgressBarClass(decimal percentage)
+    {
+        return percentage switch
+        {
+            >= 90 => "bg-success",
+            >= 70 => "bg-info",
+            >= 30 => "bg-warning",
+            _ => "bg-danger"
+        };
+    }
+
+    private static string GetVelocityClass(SprintSummary sprint)
+    {
+        if (sprint.CommittedStoryPoints == 0) return "text-muted";
+        var ratio = (double)sprint.CompletedStoryPoints / sprint.CommittedStoryPoints;
+        return ratio switch
+        {
+            >= 0.9 => "text-success",
+            >= 0.7 => "text-warning",
+            _ => "text-danger"
+        };
+    }
+
+    private static string GetRowClass(SprintSummary sprint)
+    {
+        var daysRemaining = (sprint.EndDate - DateTime.Today).Days;
+        if (daysRemaining <= 1) return "table-danger";
+        if (daysRemaining <= 3) return "table-warning";
+        return "";
+    }
+}

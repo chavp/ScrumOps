@@ -1,0 +1,446 @@
+@page "/teams/{TeamId:guid}/sprints/{SprintId:guid}/board"
+@using ScrumOps.Shared.Contracts.Sprints
+@using ScrumOps.Web.Services
+@inject ISprintService SprintService
+@inject NavigationManager Navigation
+@inject ILogger<SprintBoardComponent> Logger
+@inject INotificationService NotificationService
+
+<div class="container-fluid">
+    @if (isLoading)
+    {
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+    else if (sprint != null)
+    {
+        <!-- Header -->
+        <div class="row mb-3">
+            <div class="col">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/sprints">Sprints</a></li>
+                        <li class="breadcrumb-item"><a href="/teams/@TeamId/sprints/@SprintId">@sprint.TeamName</a></li>
+                        <li class="breadcrumb-item active">Sprint Board</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2>Sprint Board</h2>
+                        <p class="text-muted mb-0">@sprint.Goal</p>
+                    </div>
+                    <div>
+                        <span class="badge @GetStatusBadgeClass(sprint.Status) fs-6 me-2">
+                            @GetStatusDisplayText(sprint.Status)
+                        </span>
+                        <button class="btn btn-outline-primary btn-sm" @onclick="NavigateToDetails">
+                            <i class="bi bi-arrow-left"></i> Back to Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sprint Progress Summary -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card text-center border-primary">
+                    <div class="card-body">
+                        <h6 class="card-title text-muted">To Do</h6>
+                        <h3 class="text-primary">@todoItems.Count()</h3>
+                        <small class="text-muted">@todoItems.Sum(i => i.StoryPoints ?? 0) pts</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center border-warning">
+                    <div class="card-body">
+                        <h6 class="card-title text-muted">In Progress</h6>
+                        <h3 class="text-warning">@inProgressItems.Count()</h3>
+                        <small class="text-muted">@inProgressItems.Sum(i => i.StoryPoints ?? 0) pts</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center border-info">
+                    <div class="card-body">
+                        <h6 class="card-title text-muted">Review</h6>
+                        <h3 class="text-info">@reviewItems.Count()</h3>
+                        <small class="text-muted">@reviewItems.Sum(i => i.StoryPoints ?? 0) pts</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center border-success">
+                    <div class="card-body">
+                        <h6 class="card-title text-muted">Done</h6>
+                        <h3 class="text-success">@doneItems.Count()</h3>
+                        <small class="text-muted">@doneItems.Sum(i => i.StoryPoints ?? 0) pts</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kanban Board -->
+        <div class="row">
+            <!-- To Do Column -->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-list-ul"></i> To Do
+                            <span class="badge bg-light text-primary ms-2">@todoItems.Count()</span>
+                        </h5>
+                    </div>
+                    <div class="card-body p-2" style="min-height: 500px; max-height: 70vh; overflow-y: auto;">
+                        @foreach (var item in todoItems)
+                        {
+                            <div class="card mb-2 border-start border-primary border-3" draggable="true" @ondragstart="@(() => OnDragStart(item))" @ondrop="@(() => OnDrop(item, "Todo"))" @ondragover="@OnDragOver">
+                                <div class="card-body p-2">
+                                    <h6 class="card-title mb-1">@item.Title</h6>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">
+                                            <i class="bi bi-star"></i> @(item.StoryPoints?.ToString() ?? "?") pts
+                                        </small>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-outline-warning btn-sm" @onclick="@(() => MoveItem(item, "InProgress"))" title="Move to In Progress">
+                                                <i class="bi bi-arrow-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    @if (item.Tasks.Any())
+                                    {
+                                        <div class="mt-1">
+                                            <small class="text-muted">
+                                                <i class="bi bi-list-check"></i> @item.Tasks.Count(t => t.Status == "Done")/@item.Tasks.Count() tasks
+                                            </small>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        @if (!todoItems.Any())
+                        {
+                            <div class="text-center text-muted py-4">
+                                <i class="bi bi-inbox display-4"></i>
+                                <p class="mt-2">No items to do</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- In Progress Column -->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0">
+                            <i class="bi bi-arrow-repeat"></i> In Progress
+                            <span class="badge bg-light text-warning ms-2">@inProgressItems.Count()</span>
+                        </h5>
+                    </div>
+                    <div class="card-body p-2" style="min-height: 500px; max-height: 70vh; overflow-y: auto;">
+                        @foreach (var item in inProgressItems)
+                        {
+                            <div class="card mb-2 border-start border-warning border-3" draggable="true" @ondragstart="@(() => OnDragStart(item))" @ondrop="@(() => OnDrop(item, "InProgress"))" @ondragover="@OnDragOver">
+                                <div class="card-body p-2">
+                                    <h6 class="card-title mb-1">@item.Title</h6>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">
+                                            <i class="bi bi-star"></i> @(item.StoryPoints?.ToString() ?? "?") pts
+                                        </small>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-outline-primary btn-sm" @onclick="@(() => MoveItem(item, "Todo"))" title="Move to To Do">
+                                                <i class="bi bi-arrow-left"></i>
+                                            </button>
+                                            <button class="btn btn-outline-info btn-sm" @onclick="@(() => MoveItem(item, "Review"))" title="Move to Review">
+                                                <i class="bi bi-arrow-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    @if (item.Tasks.Any())
+                                    {
+                                        <div class="mt-1">
+                                            <small class="text-muted">
+                                                <i class="bi bi-list-check"></i> @item.Tasks.Count(t => t.Status == "Done")/@item.Tasks.Count() tasks
+                                            </small>
+                                            <div class="progress mt-1" style="height: 4px;">
+                                                <div class="progress-bar bg-warning" 
+                                                     role="progressbar" 
+                                                     style="width: @CalculateTaskProgress(item)%">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        @if (!inProgressItems.Any())
+                        {
+                            <div class="text-center text-muted py-4">
+                                <i class="bi bi-hourglass-split display-4"></i>
+                                <p class="mt-2">No items in progress</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Column -->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-eye"></i> Review
+                            <span class="badge bg-light text-info ms-2">@reviewItems.Count()</span>
+                        </h5>
+                    </div>
+                    <div class="card-body p-2" style="min-height: 500px; max-height: 70vh; overflow-y: auto;">
+                        @foreach (var item in reviewItems)
+                        {
+                            <div class="card mb-2 border-start border-info border-3" draggable="true" @ondragstart="@(() => OnDragStart(item))" @ondrop="@(() => OnDrop(item, "Review"))" @ondragover="@OnDragOver">
+                                <div class="card-body p-2">
+                                    <h6 class="card-title mb-1">@item.Title</h6>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">
+                                            <i class="bi bi-star"></i> @(item.StoryPoints?.ToString() ?? "?") pts
+                                        </small>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-outline-warning btn-sm" @onclick="@(() => MoveItem(item, "InProgress"))" title="Move to In Progress">
+                                                <i class="bi bi-arrow-left"></i>
+                                            </button>
+                                            <button class="btn btn-outline-success btn-sm" @onclick="@(() => MoveItem(item, "Done"))" title="Move to Done">
+                                                <i class="bi bi-arrow-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    @if (item.Tasks.Any())
+                                    {
+                                        <div class="mt-1">
+                                            <small class="text-muted">
+                                                <i class="bi bi-list-check"></i> @item.Tasks.Count(t => t.Status == "Done")/@item.Tasks.Count() tasks
+                                            </small>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        @if (!reviewItems.Any())
+                        {
+                            <div class="text-center text-muted py-4">
+                                <i class="bi bi-search display-4"></i>
+                                <p class="mt-2">No items in review</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Done Column -->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-check-circle"></i> Done
+                            <span class="badge bg-light text-success ms-2">@doneItems.Count()</span>
+                        </h5>
+                    </div>
+                    <div class="card-body p-2" style="min-height: 500px; max-height: 70vh; overflow-y: auto;">
+                        @foreach (var item in doneItems)
+                        {
+                            <div class="card mb-2 border-start border-success border-3">
+                                <div class="card-body p-2">
+                                    <h6 class="card-title mb-1">@item.Title</h6>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">
+                                            <i class="bi bi-star"></i> @(item.StoryPoints?.ToString() ?? "?") pts
+                                        </small>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-outline-info btn-sm" @onclick="@(() => MoveItem(item, "Review"))" title="Move to Review">
+                                                <i class="bi bi-arrow-left"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    @if (item.Tasks.Any())
+                                    {
+                                        <div class="mt-1">
+                                            <small class="text-success">
+                                                <i class="bi bi-check-circle"></i> All tasks completed
+                                            </small>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        @if (!doneItems.Any())
+                        {
+                            <div class="text-center text-muted py-4">
+                                <i class="bi bi-trophy display-4"></i>
+                                <p class="mt-2">No completed items</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <h4>Sprint not found</h4>
+            <p class="text-muted">The requested sprint could not be found.</p>
+            <button class="btn btn-primary" @onclick="NavigateToSprints">
+                <i class="bi bi-arrow-left"></i> Back to Sprints
+            </button>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public Guid TeamId { get; set; }
+    [Parameter] public Guid SprintId { get; set; }
+
+    private SprintDetailsResponse? sprint;
+    private bool isLoading = true;
+    private SprintBacklogItem? draggedItem;
+
+    private IEnumerable<SprintBacklogItem> todoItems => sprint?.BacklogItems.Where(i => i.Status == "Todo") ?? [];
+    private IEnumerable<SprintBacklogItem> inProgressItems => sprint?.BacklogItems.Where(i => i.Status == "InProgress") ?? [];
+    private IEnumerable<SprintBacklogItem> reviewItems => sprint?.BacklogItems.Where(i => i.Status == "Review") ?? [];
+    private IEnumerable<SprintBacklogItem> doneItems => sprint?.BacklogItems.Where(i => i.Status == "Done") ?? [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadSprint();
+    }
+
+    private async Task LoadSprint()
+    {
+        try
+        {
+            isLoading = true;
+            sprint = await SprintService.GetSprintAsync(TeamId, SprintId);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to load sprint {SprintId} for team {TeamId}", SprintId, TeamId);
+            sprint = null;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task MoveItem(SprintBacklogItem item, string newStatus)
+    {
+        try
+        {
+            // Store original status for rollback if needed
+            var originalStatus = item.Status;
+            
+            // Update the item status locally for immediate UI feedback
+            item.Status = newStatus;
+            StateHasChanged();
+
+            // Call API to update item status
+            var success = await SprintService.UpdateBacklogItemStatusAsync(TeamId, SprintId, Guid.Parse(item.Id), newStatus);
+            
+            if (success)
+            {
+                NotificationService.ShowSuccess($"Item moved to {GetStatusDisplayName(newStatus)}", "Success");
+            }
+            else
+            {
+                // Rollback the change if API call failed
+                item.Status = originalStatus;
+                NotificationService.ShowError("Failed to move item", "Error");
+                StateHasChanged();
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to move item {ItemId} to {Status}", item.Id, newStatus);
+            NotificationService.ShowError("Failed to move item", "Error");
+            // Reload sprint to revert changes
+            await LoadSprint();
+        }
+    }
+
+    private void OnDragStart(SprintBacklogItem item)
+    {
+        draggedItem = item;
+    }
+
+    private void OnDragOver(DragEventArgs e)
+    {
+        // Prevent default behavior to allow drop
+    }
+
+    private async Task OnDrop(SprintBacklogItem targetItem, string status)
+    {
+        if (draggedItem != null && draggedItem != targetItem)
+        {
+            await MoveItem(draggedItem, status);
+            draggedItem = null;
+        }
+    }
+
+    private void NavigateToDetails()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints/{SprintId}");
+    }
+
+    private void NavigateToSprints()
+    {
+        Navigation.NavigateTo("/sprints");
+    }
+
+    private static double CalculateTaskProgress(SprintBacklogItem item)
+    {
+        if (!item.Tasks.Any()) return 0;
+        return (double)item.Tasks.Count(t => t.Status == "Done") / item.Tasks.Count() * 100;
+    }
+
+    private static string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Active" => "bg-success",
+            "Completed" => "bg-info",
+            "Planned" => "bg-warning",
+            _ => "bg-secondary"
+        };
+    }
+
+    private static string GetStatusDisplayText(string status)
+    {
+        return status switch
+        {
+            "Active" => "In Progress",
+            "Completed" => "Completed",
+            "Planned" => "Planned",
+            _ => status
+        };
+    }
+
+    private static string GetStatusDisplayName(string status)
+    {
+        return status switch
+        {
+            "Todo" => "To Do",
+            "InProgress" => "In Progress",
+            "Review" => "Review",
+            "Done" => "Done",
+            _ => status
+        };
+    }
+}

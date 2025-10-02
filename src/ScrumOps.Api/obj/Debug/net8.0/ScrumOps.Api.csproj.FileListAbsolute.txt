@@ -343,7 +343,6 @@ D:\github\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\staticwebassets.build.json.
 D:\github\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\staticwebassets.development.json
 D:\github\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\staticwebassets.build.endpoints.json
 D:\github\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\swae.build.ex.cache
-D:\github\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 D:\github\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\ScrumOps.0BDC8BE4.Up2Date
 D:\github\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\ScrumOps.Api.dll
 D:\github\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\refint\ScrumOps.Api.dll
@@ -511,3 +510,4 @@ C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\ScrumOps.Api.pdb
 C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\ScrumOps.Api.genruntimeconfig.cache
 C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\ref\ScrumOps.Api.dll
 C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+D:\github\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

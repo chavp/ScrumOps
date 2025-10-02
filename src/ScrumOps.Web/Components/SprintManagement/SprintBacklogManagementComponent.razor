@@ -1,0 +1,856 @@
+@page "/teams/{TeamId:guid}/sprints/{SprintId:guid}/backlog"
+@using ScrumOps.Shared.Contracts.Sprints
+@using ScrumOps.Shared.Contracts.ProductBacklog
+@using ScrumOps.Web.Services
+@using Microsoft.JSInterop
+@inject ISprintService SprintService
+@inject IProductBacklogService BacklogService
+@inject INotificationService NotificationService
+@inject IJSRuntime JSRuntime
+@inject NavigationManager Navigation
+@inject ILogger<SprintBacklogManagementComponent> Logger
+@rendermode InteractiveServer
+
+<PageTitle>Sprint Backlog Management - ScrumOps</PageTitle>
+
+<div class="container-fluid">
+    @if (isLoading)
+    {
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- Header -->
+        <div class="row mb-3">
+            <div class="col">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/sprints">Sprints</a></li>
+                        <li class="breadcrumb-item"><a href="/teams/@TeamId/sprints/@SprintId">Sprint Details</a></li>
+                        <li class="breadcrumb-item active">Backlog Management</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2>Sprint Backlog Management</h2>
+                        <p class="text-muted mb-0">
+                            Manage backlog items and tasks for your sprint
+                            @if (sprint != null)
+                            {
+                                <span class="badge @GetStatusBadgeClass(sprint.Status) ms-2">@sprint.Status</span>
+                            }
+                        </p>
+                    </div>
+                    <div>
+                        <button class="btn btn-outline-primary btn-sm me-2" @onclick="NavigateToBoard">
+                            <i class="bi bi-kanban"></i> Sprint Board
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm" @onclick="NavigateToDetails">
+                            <i class="bi bi-arrow-left"></i> Back to Sprint
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (sprint != null)
+        {
+            <!-- Sprint Summary Card -->
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="card-title">@sprint.Goal</h5>
+                                    <p class="text-muted mb-2">
+                                        <i class="bi bi-calendar3"></i> 
+                                        @sprint.StartDate.ToString("MMM dd, yyyy") - @sprint.EndDate.ToString("MMM dd, yyyy")
+                                    </p>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row text-center">
+                                        <div class="col-4">
+                                            <div class="h4 text-primary mb-0">@sprint.BacklogItems.Count</div>
+                                            <small class="text-muted">Items</small>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="h4 text-success mb-0">@sprint.CommittedStoryPoints</div>
+                                            <small class="text-muted">Points</small>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="h4 text-info mb-0">@sprint.Tasks.Count</div>
+                                            <small class="text-muted">Tasks</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="row">
+                <!-- Sprint Backlog Items -->
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-list-ul"></i> Sprint Backlog Items
+                                    <span class="badge bg-primary ms-2">@sprint.BacklogItems.Count</span>
+                                </h5>
+                                <button class="btn btn-outline-primary btn-sm" @onclick="ShowAddItemModal" disabled="@(sprint.Status == "Completed")">
+                                    <i class="bi bi-plus"></i> Add Item
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            @if (sprint.BacklogItems.Any())
+                            {
+                                <div class="list-group list-group-flush">
+                                    @foreach (var item in sprint.BacklogItems.OrderBy(i => i.Priority))
+                                    {
+                                        <div class="list-group-item">
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <div class="flex-grow-1">
+                                                    <div class="d-flex align-items-center mb-2">
+                                                        <h6 class="mb-0 me-2">@item.Title</h6>
+                                                        <span class="badge @GetItemStatusBadgeClass(item.Status) me-2">@item.Status</span>
+                                                        <span class="badge bg-light text-dark me-2">@item.Type</span>
+                                                        @if (item.StoryPoints.HasValue)
+                                                        {
+                                                            <span class="badge bg-info">@item.StoryPoints pts</span>
+                                                        }
+                                                    </div>
+                                                    <p class="text-muted mb-2 small">@item.Description</p>
+                                                    
+                                                    @if (item.Tasks.Any())
+                                                    {
+                                                        <div class="mb-2">
+                                                            <small class="text-muted">
+                                                                <i class="bi bi-list-check"></i> 
+                                                                @item.Tasks.Count(t => t.Status == "Done")/@item.Tasks.Count tasks completed
+                                                                | @item.Tasks.Sum(t => t.ActualHours)/@item.Tasks.Sum(t => t.EstimatedHours) hours
+                                                            </small>
+                                                        </div>
+                                                        
+                                                        <!-- Task Progress Bar -->
+                                                        <div class="progress mb-2" style="height: 6px;">
+                                                            <div class="progress-bar bg-success" 
+                                                                 role="progressbar" 
+                                                                 style="width: @CalculateTaskProgress(item)%">
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <div class="btn-group btn-group-sm">
+                                                    <button class="btn btn-outline-primary" @onclick="() => ShowItemTasks(item)" title="Manage Tasks">
+                                                        <i class="bi bi-list-task"></i>
+                                                    </button>
+                                                    <button class="btn btn-outline-info" @onclick="() => EditItem(item)" title="Edit Item" disabled="@(sprint.Status == "Completed")">
+                                                        <i class="bi bi-pencil"></i>
+                                                    </button>
+                                                    <button class="btn btn-outline-danger" @onclick="() => RemoveItem(item)" title="Remove from Sprint" disabled="@(sprint.Status == "Completed")">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="text-center py-5">
+                                    <i class="bi bi-inbox display-4 text-muted"></i>
+                                    <h5 class="text-muted mt-3">No items in sprint backlog</h5>
+                                    <p class="text-muted">Add product backlog items to get started</p>
+                                    <button class="btn btn-primary" @onclick="ShowAddItemModal">
+                                        <i class="bi bi-plus"></i> Add First Item
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Side Panel -->
+                <div class="col-lg-4">
+                    @if (selectedItem != null)
+                    {
+                        <!-- Task Management Panel -->
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">
+                                        <i class="bi bi-list-task"></i> Tasks for "@selectedItem.Title"
+                                    </h6>
+                                    <button type="button" class="btn-close btn-sm" @onclick="ClearSelectedItem"></button>
+                                </div>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="p-3 border-bottom">
+                                    <button class="btn btn-outline-primary btn-sm w-100" @onclick="ShowAddTaskModal" disabled="@(sprint.Status == "Completed")">
+                                        <i class="bi bi-plus"></i> Add Task
+                                    </button>
+                                </div>
+                                
+                                @if (selectedItem.Tasks.Any())
+                                {
+                                    <div class="list-group list-group-flush" style="max-height: 400px; overflow-y: auto;">
+                                        @foreach (var task in selectedItem.Tasks.OrderBy(t => t.Status == "Done").ThenBy(t => t.Title))
+                                        {
+                                            <div class="list-group-item p-2">
+                                                <div class="d-flex justify-content-between align-items-start">
+                                                    <div class="flex-grow-1">
+                                                        <h6 class="mb-1 small">@task.Title</h6>
+                                                        <div class="d-flex align-items-center mb-1">
+                                                            <span class="badge @GetTaskStatusBadgeClass(task.Status) me-1" style="font-size: 0.7em;">@task.Status</span>
+                                                            <small class="text-muted">@task.EstimatedHours h est.</small>
+                                                            @if (task.ActualHours > 0)
+                                                            {
+                                                                <small class="text-muted ms-2">@task.ActualHours h actual</small>
+                                                            }
+                                                        </div>
+                                                        @if (!string.IsNullOrEmpty(task.AssigneeName))
+                                                        {
+                                                            <small class="text-muted">
+                                                                <i class="bi bi-person"></i> @task.AssigneeName
+                                                            </small>
+                                                        }
+                                                    </div>
+                                                    <div class="btn-group btn-group-sm">
+                                                        <button class="btn btn-outline-primary btn-sm" @onclick="() => EditTask(task)" title="Edit Task" disabled="@(sprint.Status == "Completed")">
+                                                            <i class="bi bi-pencil" style="font-size: 0.7em;"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="text-center py-4">
+                                        <i class="bi bi-list-task display-6 text-muted"></i>
+                                        <p class="text-muted mt-2 mb-0">No tasks yet</p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <!-- Sprint Statistics -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0"><i class="bi bi-graph-up"></i> Sprint Statistics</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col-6">
+                                        <div class="text-center">
+                                            <div class="h5 text-primary mb-0">@sprint.BacklogItems.Count</div>
+                                            <small class="text-muted">Total Items</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="text-center">
+                                            <div class="h5 text-success mb-0">@sprint.BacklogItems.Count(i => i.Status == "Done")</div>
+                                            <small class="text-muted">Completed</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-6">
+                                        <div class="text-center">
+                                            <div class="h5 text-info mb-0">@sprint.CommittedStoryPoints</div>
+                                            <small class="text-muted">Story Points</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="text-center">
+                                            <div class="h5 text-warning mb-0">@sprint.Tasks.Count</div>
+                                            <small class="text-muted">Total Tasks</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Progress Chart -->
+                                <div class="mb-3">
+                                    <small class="text-muted">Overall Progress</small>
+                                    <div class="progress mb-1" style="height: 20px;">
+                                        <div class="progress-bar bg-success" 
+                                             role="progressbar" 
+                                             style="width: @CalculateOverallProgress()%">
+                                            @CalculateOverallProgress().ToString("F0")%
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Burndown Hours -->
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="text-center">
+                                            <div class="h5 text-primary mb-0">@sprint.Tasks.Sum(t => t.EstimatedHours)</div>
+                                            <small class="text-muted">Est. Hours</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="text-center">
+                                            <div class="h5 text-success mb-0">@sprint.Tasks.Sum(t => t.ActualHours)</div>
+                                            <small class="text-muted">Actual Hours</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h6 class="mb-0"><i class="bi bi-lightning"></i> Quick Actions</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-outline-primary btn-sm" @onclick="ShowAddItemModal" disabled="@(sprint.Status == "Completed")">
+                                        <i class="bi bi-plus"></i> Add Backlog Item
+                                    </button>
+                                    <button class="btn btn-outline-info btn-sm" @onclick="NavigateToBoard">
+                                        <i class="bi bi-kanban"></i> Open Sprint Board
+                                    </button>
+                                    <button class="btn btn-outline-success btn-sm" @onclick="NavigateToBurndown">
+                                        <i class="bi bi-graph-down"></i> View Burndown
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    }
+    
+    <!-- Add Item Modal -->
+    <div class="modal fade @(showAddItemModal ? "show d-block" : "")" tabindex="-1" style="@(showAddItemModal ? "background-color: rgba(0,0,0,0.5);" : "")">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Backlog Item to Sprint</h5>
+                    <button type="button" class="btn-close" @onclick="CloseModals"></button>
+                </div>
+                <div class="modal-body">
+                    @if (availableBacklogItems?.Any() == true)
+                    {
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Search backlog items..." @bind="searchTerm" @oninput="FilterBacklogItems" />
+                        </div>
+                        
+                        <div style="max-height: 400px; overflow-y: auto;">
+                            @foreach (var item in filteredBacklogItems)
+                            {
+                                <div class="card mb-2 border-start border-3 border-primary">
+                                    <div class="card-body p-3">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div class="flex-grow-1">
+                                                <h6 class="mb-1">@item.Title</h6>
+                                                <p class="text-muted mb-2 small">@TruncateText(item.Description, 100)</p>
+                                                <div class="d-flex align-items-center">
+                                                    <span class="badge bg-light text-dark me-2">@item.Type</span>
+                                                    <span class="badge bg-info me-2">Priority: @item.Priority</span>
+                                                    @if (item.StoryPoints.HasValue)
+                                                    {
+                                                        <span class="badge bg-success">@item.StoryPoints pts</span>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-outline-primary btn-sm" @onclick="() => AddItemToSprint(item.Id.Value)" disabled="@(!item.Id.HasValue)">
+                                                <i class="bi bi-plus"></i> Add
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-4">
+                            <i class="bi bi-inbox display-4 text-muted"></i>
+                            <h5 class="text-muted mt-3">No available backlog items</h5>
+                            <p class="text-muted">All items are already in sprints or no items exist</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Task Modal -->
+    <div class="modal fade @(showAddTaskModal ? "show d-block" : "")" tabindex="-1" style="@(showAddTaskModal ? "background-color: rgba(0,0,0,0.5);" : "")">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Task</h5>
+                    <button type="button" class="btn-close" @onclick="CloseModals"></button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="newTask" OnValidSubmit="SaveNewTask">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary class="text-danger" />
+
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <InputText class="form-control" @bind-Value="newTask.Title" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <InputTextArea class="form-control" rows="3" @bind-Value="newTask.Description" />
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Estimated Hours</label>
+                                    <InputNumber class="form-control" @bind-Value="newTask.EstimatedHours" step="0.5" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Assignee</label>
+                                    <InputText class="form-control" @bind-Value="newTask.AssigneeId" placeholder="User ID or email" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="button" class="btn btn-secondary" @onclick="CloseModals">Cancel</button>
+                            <button type="submit" class="btn btn-primary" disabled="@isSaving">
+                                @if (isSaving)
+                                {
+                                    <span class="spinner-border spinner-border-sm me-2"></span>
+                                }
+                                Add Task
+                            </button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Task Modal -->
+    <div class="modal fade @(showEditTaskModal ? "show d-block" : "")" tabindex="-1" style="@(showEditTaskModal ? "background-color: rgba(0,0,0,0.5);" : "")">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Task</h5>
+                    <button type="button" class="btn-close" @onclick="CloseModals"></button>
+                </div>
+                <div class="modal-body">
+                    @if (editingTask != null)
+                    {
+                        <EditForm Model="editingTask" OnValidSubmit="SaveEditedTask">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary class="text-danger" />
+
+                            <div class="mb-3">
+                                <label class="form-label">Title</label>
+                                <InputText class="form-control" @bind-Value="editingTask.Title" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
+                                <InputTextArea class="form-control" rows="3" @bind-Value="editingTask.Description" />
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Estimated Hours</label>
+                                        <InputNumber class="form-control" @bind-Value="editingTask.EstimatedHours" step="0.5" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Actual Hours</label>
+                                        <InputNumber class="form-control" @bind-Value="editingTask.ActualHours" step="0.5" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Status</label>
+                                        <InputSelect class="form-select" @bind-Value="editingTask.Status">
+                                            <option value="Todo">To Do</option>
+                                            <option value="InProgress">In Progress</option>
+                                            <option value="Review">Review</option>
+                                            <option value="Done">Done</option>
+                                        </InputSelect>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Assignee</label>
+                                <InputText class="form-control" @bind-Value="editingTask.AssigneeId" placeholder="User ID or email" />
+                            </div>
+
+                            <div class="d-flex justify-content-end gap-2">
+                                <button type="button" class="btn btn-secondary" @onclick="CloseModals">Cancel</button>
+                                <button type="submit" class="btn btn-primary" disabled="@isSaving">
+                                    @if (isSaving)
+                                    {
+                                        <span class="spinner-border spinner-border-sm me-2"></span>
+                                    }
+                                    Save Changes
+                                </button>
+                            </div>
+                        </EditForm>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Guid TeamId { get; set; }
+    [Parameter] public Guid SprintId { get; set; }
+
+    private SprintDetailsResponse? sprint;
+    private List<BacklogItemSummary>? availableBacklogItems;
+    private List<BacklogItemSummary> filteredBacklogItems = new();
+    private SprintBacklogItem? selectedItem;
+    
+    private bool isLoading = true;
+    private bool isSaving = false;
+    private bool showAddItemModal = false;
+    private bool showAddTaskModal = false;
+    private bool showEditTaskModal = false;
+    
+    private string searchTerm = string.Empty;
+    private AddSprintTaskRequest newTask = new();
+    private UpdateSprintTaskRequest? editingTask;
+    private string editingTaskId = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        try
+        {
+            isLoading = true;
+            
+            // Load sprint details
+            sprint = await SprintService.GetSprintAsync(TeamId, SprintId);
+            
+            // Load available backlog items (not in any sprint)
+            var backlogResponse = await BacklogService.GetBacklogItemsAsync();
+            availableBacklogItems = backlogResponse.Items?.Where(item => 
+                item.Id.HasValue && !sprint?.BacklogItems.Any(si => si.BacklogItemId == item.Id.ToString()) == true
+            ).ToList() ?? new();
+            
+            filteredBacklogItems = availableBacklogItems;
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to load sprint backlog data");
+            NotificationService.ShowError("Failed to load sprint data", "Error");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void ShowItemTasks(SprintBacklogItem item)
+    {
+        selectedItem = item;
+        StateHasChanged();
+    }
+
+    private void ClearSelectedItem()
+    {
+        selectedItem = null;
+        StateHasChanged();
+    }
+
+    private void ShowAddItemModal()
+    {
+        showAddItemModal = true;
+        FilterBacklogItems();
+    }
+
+    private void ShowAddTaskModal()
+    {
+        if (selectedItem != null)
+        {
+            newTask = new AddSprintTaskRequest();
+            showAddTaskModal = true;
+        }
+    }
+
+    private void EditTask(SprintTask task)
+    {
+        editingTaskId = task.Id;
+        editingTask = new UpdateSprintTaskRequest
+        {
+            Title = task.Title,
+            Description = task.Description,
+            EstimatedHours = task.EstimatedHours,
+            ActualHours = task.ActualHours,
+            Status = task.Status,
+            AssigneeId = task.AssigneeId
+        };
+        showEditTaskModal = true;
+    }
+
+    private void CloseModals()
+    {
+        showAddItemModal = false;
+        showAddTaskModal = false;
+        showEditTaskModal = false;
+        newTask = new AddSprintTaskRequest();
+        editingTask = null;
+        editingTaskId = string.Empty;
+    }
+
+    private void FilterBacklogItems()
+    {
+        if (availableBacklogItems == null) return;
+        
+        if (string.IsNullOrWhiteSpace(searchTerm))
+        {
+            filteredBacklogItems = availableBacklogItems;
+        }
+        else
+        {
+            filteredBacklogItems = availableBacklogItems
+                .Where(item => item.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                              item.Description.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+        StateHasChanged();
+    }
+
+    private async Task AddItemToSprint(Guid backlogItemId)
+    {
+        try
+        {
+            isSaving = true;
+            var success = await SprintService.AddBacklogItemToSprintAsync(TeamId, SprintId, backlogItemId);
+            
+            if (success)
+            {
+                NotificationService.ShowSuccess("Item added to sprint successfully!", "Success");
+                CloseModals();
+                await LoadData();
+            }
+            else
+            {
+                NotificationService.ShowError("Failed to add item to sprint", "Error");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to add item {ItemId} to sprint {SprintId}", backlogItemId, SprintId);
+            NotificationService.ShowError("Failed to add item to sprint", "Error");
+        }
+        finally
+        {
+            isSaving = false;
+        }
+    }
+
+    private async Task RemoveItem(SprintBacklogItem item)
+    {
+        try
+        {
+            var confirmed = await JSRuntime.InvokeAsync<bool>("confirm", 
+                $"Are you sure you want to remove '{item.Title}' from this sprint?");
+                
+            if (!confirmed) return;
+
+            var success = await SprintService.RemoveBacklogItemFromSprintAsync(TeamId, SprintId, Guid.Parse(item.BacklogItemId));
+            
+            if (success)
+            {
+                NotificationService.ShowSuccess("Item removed from sprint", "Success");
+                if (selectedItem?.Id == item.Id)
+                {
+                    selectedItem = null;
+                }
+                await LoadData();
+            }
+            else
+            {
+                NotificationService.ShowError("Failed to remove item from sprint", "Error");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to remove item {ItemId} from sprint", item.Id);
+            NotificationService.ShowError("Failed to remove item from sprint", "Error");
+        }
+    }
+
+    private async Task SaveNewTask()
+    {
+        if (selectedItem == null) return;
+        
+        try
+        {
+            isSaving = true;
+            var success = await SprintService.AddSprintTaskAsync(TeamId, SprintId, Guid.Parse(selectedItem.Id), newTask);
+            
+            if (success)
+            {
+                NotificationService.ShowSuccess("Task added successfully!", "Success");
+                CloseModals();
+                await LoadData();
+                // Reselect the item to maintain the task view
+                selectedItem = sprint?.BacklogItems.FirstOrDefault(i => i.Id == selectedItem.Id);
+            }
+            else
+            {
+                NotificationService.ShowError("Failed to add task", "Error");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to add task to item {ItemId}", selectedItem.Id);
+            NotificationService.ShowError("Failed to add task", "Error");
+        }
+        finally
+        {
+            isSaving = false;
+        }
+    }
+
+    private async Task SaveEditedTask()
+    {
+        if (editingTask == null || string.IsNullOrEmpty(editingTaskId)) return;
+        
+        try
+        {
+            isSaving = true;
+            var success = await SprintService.UpdateSprintTaskAsync(TeamId, SprintId, Guid.Parse(editingTaskId), editingTask);
+            
+            if (success)
+            {
+                NotificationService.ShowSuccess("Task updated successfully!", "Success");
+                CloseModals();
+                await LoadData();
+                // Reselect the item to maintain the task view
+                if (selectedItem != null)
+                {
+                    selectedItem = sprint?.BacklogItems.FirstOrDefault(i => i.Id == selectedItem.Id);
+                }
+            }
+            else
+            {
+                NotificationService.ShowError("Failed to update task", "Error");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to update task {TaskId}", editingTaskId);
+            NotificationService.ShowError("Failed to update task", "Error");
+        }
+        finally
+        {
+            isSaving = false;
+        }
+    }
+
+    private void EditItem(SprintBacklogItem item)
+    {
+        // Navigate to backlog item edit page
+        Navigation.NavigateTo($"/teams/{TeamId}/backlog/{item.BacklogItemId}/edit");
+    }
+
+    private void NavigateToDetails()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints/{SprintId}");
+    }
+
+    private void NavigateToBoard()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints/{SprintId}/board");
+    }
+
+    private void NavigateToBurndown()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints/{SprintId}/burndown");
+    }
+
+    private double CalculateTaskProgress(SprintBacklogItem item)
+    {
+        if (!item.Tasks.Any()) return 0;
+        return (double)item.Tasks.Count(t => t.Status == "Done") / item.Tasks.Count * 100;
+    }
+
+    private double CalculateOverallProgress()
+    {
+        if (sprint?.BacklogItems == null || !sprint.BacklogItems.Any()) return 0;
+        return (double)sprint.BacklogItems.Count(i => i.Status == "Done") / sprint.BacklogItems.Count * 100;
+    }
+
+    private static string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Active" => "bg-success",
+            "Planned" => "bg-warning",
+            "Completed" => "bg-primary",
+            _ => "bg-secondary"
+        };
+    }
+
+    private static string GetItemStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Done" => "bg-success",
+            "InProgress" => "bg-warning",
+            "Review" => "bg-info",
+            "Todo" => "bg-primary",
+            _ => "bg-secondary"
+        };
+    }
+
+    private static string GetTaskStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Done" => "bg-success text-white",
+            "InProgress" => "bg-warning text-dark",
+            "Review" => "bg-info text-white",
+            "Todo" => "bg-primary text-white",
+            _ => "bg-secondary text-white"
+        };
+    }
+
+    private static string TruncateText(string text, int maxLength)
+    {
+        if (string.IsNullOrEmpty(text) || text.Length <= maxLength)
+            return text;
+        return text[..maxLength] + "...";
+    }
+}

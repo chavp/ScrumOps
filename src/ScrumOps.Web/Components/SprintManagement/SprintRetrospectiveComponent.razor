@@ -1,0 +1,539 @@
+@page "/teams/{TeamId:guid}/sprints/{SprintId:guid}/retrospective"
+@using ScrumOps.Shared.Contracts.Sprints
+@using ScrumOps.Web.Services
+@inject ISprintService SprintService
+@inject NavigationManager Navigation
+@inject ILogger<SprintRetrospectiveComponent> Logger
+@inject INotificationService NotificationService
+
+<div class="container-fluid">
+    @if (isLoading)
+    {
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+    else if (sprint != null)
+    {
+        <!-- Header -->
+        <div class="row mb-3">
+            <div class="col">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/sprints">Sprints</a></li>
+                        <li class="breadcrumb-item"><a href="/teams/@TeamId/sprints/@SprintId">Sprint Details</a></li>
+                        <li class="breadcrumb-item active">Retrospective</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2>Sprint Retrospective</h2>
+                        <p class="text-muted mb-0">Reflect on what went well and what can be improved</p>
+                        @if (sprint.Status == "Completed")
+                        {
+                            <div class="mt-2">
+                                <span class="badge bg-success">
+                                    <i class="bi bi-check-circle"></i> Sprint Completed
+                                </span>
+                                <small class="text-muted ms-2">
+                                    Completed on @sprint.ActualEndDate?.ToString("MMM dd, yyyy")
+                                </small>
+                            </div>
+                        }
+                    </div>
+                    <div>
+                        <button class="btn btn-outline-primary btn-sm me-2" @onclick="NavigateToDetails">
+                            <i class="bi bi-arrow-left"></i> Back to Sprint
+                        </button>
+                        @if (sprint.Status == "Completed")
+                        {
+                            <button class="btn btn-outline-info btn-sm me-2" @onclick="NavigateToReports">
+                                <i class="bi bi-graph-up"></i> View Reports
+                            </button>
+                        }
+                        <button class="btn btn-success btn-sm" @onclick="SaveRetrospective" disabled="@isSaving">
+                            @if (isSaving)
+                            {
+                                <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                            }
+                            <i class="bi bi-check-circle"></i> Save Retrospective
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sprint Summary -->
+        <div class="row mb-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Sprint Summary</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <strong>Sprint Goal:</strong>
+                                <p class="text-muted">@sprint.Goal</p>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Duration:</strong>
+                                <p class="text-muted">@sprint.StartDate.ToString("MMM dd") - @sprint.EndDate.ToString("MMM dd, yyyy")</p>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Commitment:</strong>
+                                <p class="text-muted">@sprint.CommittedStoryPoints story points</p>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Completed:</strong>
+                                <p class="text-@(sprint.CompletedStoryPoints >= sprint.CommittedStoryPoints ? "success" : "warning")">
+                                    @sprint.CompletedStoryPoints story points (@CalculateVelocityPercentage()%)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Retrospective Categories -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <!-- What Went Well -->
+                <div class="card h-100">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-emoji-smile"></i> What Went Well
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Add Item Form -->
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control form-control-sm" 
+                                   @bind="newWentWell" 
+                                   @onkeypress="@(async (e) => { if (e.Key == "Enter") await AddWentWell(); })"
+                                   placeholder="Add something positive..." />
+                            <button class="btn btn-outline-success btn-sm" @onclick="AddWentWell">
+                                <i class="bi bi-plus"></i>
+                            </button>
+                        </div>
+
+                        <!-- Items List -->
+                        <div style="max-height: 400px; overflow-y: auto;">
+                            @if (wentWellItems.Any())
+                            {
+                                @foreach (var item in wentWellItems.Select((value, index) => new { value, index }))
+                                {
+                                    <div class="d-flex align-items-start mb-2 p-2 bg-light rounded">
+                                        <div class="flex-grow-1">
+                                            @item.value
+                                        </div>
+                                        <button class="btn btn-outline-danger btn-sm ms-2" 
+                                                @onclick="@(() => RemoveWentWell(item.index))">
+                                            <i class="bi bi-x"></i>
+                                        </button>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <p class="text-muted text-center py-3">
+                                    <i class="bi bi-lightbulb"></i><br />
+                                    What achievements and positive aspects should the team celebrate?
+                                </p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <!-- What Could Be Improved -->
+                <div class="card h-100">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0">
+                            <i class="bi bi-exclamation-triangle"></i> What Could Be Improved
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Add Item Form -->
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control form-control-sm" 
+                                   @bind="newCouldImprove" 
+                                   @onkeypress="@(async (e) => { if (e.Key == "Enter") await AddCouldImprove(); })"
+                                   placeholder="Add improvement area..." />
+                            <button class="btn btn-outline-warning btn-sm" @onclick="AddCouldImprove">
+                                <i class="bi bi-plus"></i>
+                            </button>
+                        </div>
+
+                        <!-- Items List -->
+                        <div style="max-height: 400px; overflow-y: auto;">
+                            @if (couldImproveItems.Any())
+                            {
+                                @foreach (var item in couldImproveItems.Select((value, index) => new { value, index }))
+                                {
+                                    <div class="d-flex align-items-start mb-2 p-2 bg-light rounded">
+                                        <div class="flex-grow-1">
+                                            @item.value
+                                        </div>
+                                        <button class="btn btn-outline-danger btn-sm ms-2" 
+                                                @onclick="@(() => RemoveCouldImprove(item.index))">
+                                            <i class="bi bi-x"></i>
+                                        </button>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <p class="text-muted text-center py-3">
+                                    <i class="bi bi-gear"></i><br />
+                                    What processes or practices could be improved?
+                                </p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <!-- Action Items -->
+                <div class="card h-100">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-lightning"></i> Action Items
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Add Item Form -->
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control form-control-sm" 
+                                   @bind="newActionItem" 
+                                   @onkeypress="@(async (e) => { if (e.Key == "Enter") await AddActionItem(); })"
+                                   placeholder="Add action item..." />
+                            <button class="btn btn-outline-primary btn-sm" @onclick="AddActionItem">
+                                <i class="bi bi-plus"></i>
+                            </button>
+                        </div>
+
+                        <!-- Items List -->
+                        <div style="max-height: 400px; overflow-y: auto;">
+                            @if (actionItems.Any())
+                            {
+                                @foreach (var item in actionItems.Select((value, index) => new { value, index }))
+                                {
+                                    <div class="d-flex align-items-start mb-2 p-2 bg-light rounded">
+                                        <div class="flex-grow-1">
+                                            @item.value
+                                        </div>
+                                        <button class="btn btn-outline-danger btn-sm ms-2" 
+                                                @onclick="@(() => RemoveActionItem(item.index))">
+                                            <i class="bi bi-x"></i>
+                                        </button>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <p class="text-muted text-center py-3">
+                                    <i class="bi bi-check-square"></i><br />
+                                    What specific actions will be taken to improve?
+                                </p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Mood & Feedback -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Team Mood</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            @for (int mood = 1; mood <= 5; mood++)
+                            {
+                                int currentMood = mood; // Capture for closure
+                                <div class="col">
+                                    <button class="btn @(teamMood == currentMood ? "btn-primary" : "btn-outline-secondary") btn-lg mb-2"
+                                            @onclick="@(() => SetTeamMood(currentMood))">
+                                        @GetMoodEmoji(currentMood)
+                                    </button>
+                                    <br />
+                                    <small class="text-muted">@GetMoodLabel(currentMood)</small>
+                                </div>
+                            }
+                        </div>
+                        @if (teamMood > 0)
+                        {
+                            <div class="text-center mt-3">
+                                <strong>Team Mood: @GetMoodLabel(teamMood)</strong>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Additional Feedback</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="additionalFeedback" class="form-label">General Comments</label>
+                            <textarea id="additionalFeedback" 
+                                      class="form-control" 
+                                      rows="5" 
+                                      @bind="additionalFeedback"
+                                      placeholder="Any additional thoughts, concerns, or suggestions..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sprint Metrics Summary -->
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Sprint Metrics</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3 text-center">
+                                <h3 class="text-info">@sprint.ActualVelocity.ToString("F1")</h3>
+                                <small class="text-muted">Actual Velocity</small>
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <h3 class="text-primary">@sprint.BacklogItems.Count()</h3>
+                                <small class="text-muted">Items Completed</small>
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <h3 class="text-success">@sprint.Tasks.Count(t => t.Status == "Done")</h3>
+                                <small class="text-muted">Tasks Completed</small>
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <h3 class="text-warning">@CalculateSprintDuration()</h3>
+                                <small class="text-muted">Days Duration</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <h4>Sprint not found</h4>
+            <p class="text-muted">The requested sprint could not be found.</p>
+            <button class="btn btn-primary" @onclick="NavigateToSprints">
+                <i class="bi bi-arrow-left"></i> Back to Sprints
+            </button>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public Guid TeamId { get; set; }
+    [Parameter] public Guid SprintId { get; set; }
+
+    private SprintDetailsResponse? sprint;
+    private bool isLoading = true;
+    private bool isSaving = false;
+
+    // Retrospective data
+    private List<string> wentWellItems = new();
+    private List<string> couldImproveItems = new();
+    private List<string> actionItems = new();
+    private int teamMood = 0;
+    private string additionalFeedback = string.Empty;
+
+    // Form inputs
+    private string newWentWell = string.Empty;
+    private string newCouldImprove = string.Empty;
+    private string newActionItem = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadSprint();
+    }
+
+    private async Task LoadSprint()
+    {
+        try
+        {
+            isLoading = true;
+            sprint = await SprintService.GetSprintAsync(TeamId, SprintId);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to load sprint {SprintId} for team {TeamId}", SprintId, TeamId);
+            sprint = null;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task AddWentWell()
+    {
+        if (!string.IsNullOrWhiteSpace(newWentWell))
+        {
+            wentWellItems.Add(newWentWell.Trim());
+            newWentWell = string.Empty;
+            StateHasChanged();
+        }
+    }
+
+    private async Task AddCouldImprove()
+    {
+        if (!string.IsNullOrWhiteSpace(newCouldImprove))
+        {
+            couldImproveItems.Add(newCouldImprove.Trim());
+            newCouldImprove = string.Empty;
+            StateHasChanged();
+        }
+    }
+
+    private async Task AddActionItem()
+    {
+        if (!string.IsNullOrWhiteSpace(newActionItem))
+        {
+            actionItems.Add(newActionItem.Trim());
+            newActionItem = string.Empty;
+            StateHasChanged();
+        }
+    }
+
+    private void RemoveWentWell(int index)
+    {
+        if (index >= 0 && index < wentWellItems.Count)
+        {
+            wentWellItems.RemoveAt(index);
+            StateHasChanged();
+        }
+    }
+
+    private void RemoveCouldImprove(int index)
+    {
+        if (index >= 0 && index < couldImproveItems.Count)
+        {
+            couldImproveItems.RemoveAt(index);
+            StateHasChanged();
+        }
+    }
+
+    private void RemoveActionItem(int index)
+    {
+        if (index >= 0 && index < actionItems.Count)
+        {
+            actionItems.RemoveAt(index);
+            StateHasChanged();
+        }
+    }
+
+    private void SetTeamMood(int mood)
+    {
+        teamMood = mood;
+        StateHasChanged();
+    }
+
+    private async Task SaveRetrospective()
+    {
+        try
+        {
+            isSaving = true;
+
+            // TODO: Implement API call to save retrospective data
+            // var retrospectiveData = new SprintRetrospectiveRequest
+            // {
+            //     WentWell = wentWellItems,
+            //     CouldImprove = couldImproveItems,
+            //     ActionItems = actionItems,
+            //     TeamMood = teamMood,
+            //     AdditionalFeedback = additionalFeedback
+            // };
+            // await SprintService.SaveRetrospectiveAsync(TeamId, SprintId, retrospectiveData);
+
+            NotificationService.ShowSuccess("Retrospective saved successfully", "Success");
+            Navigation.NavigateTo($"/teams/{TeamId}/sprints/{SprintId}");
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to save retrospective for sprint {SprintId}", SprintId);
+            NotificationService.ShowError("Failed to save retrospective", "Error");
+        }
+        finally
+        {
+            isSaving = false;
+        }
+    }
+
+    private void NavigateToDetails()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints/{SprintId}");
+    }
+
+    private void NavigateToReports()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints/{SprintId}/reports");
+    }
+
+    private void NavigateToSprints()
+    {
+        Navigation.NavigateTo("/sprints");
+    }
+
+    private int CalculateVelocityPercentage()
+    {
+        if (sprint == null || sprint.CommittedStoryPoints == 0) return 0;
+        return (int)((double)sprint.CompletedStoryPoints / sprint.CommittedStoryPoints * 100);
+    }
+
+    private int CalculateSprintDuration()
+    {
+        if (sprint == null) return 0;
+        return (sprint.EndDate - sprint.StartDate).Days;
+    }
+
+    private static string GetMoodEmoji(int mood)
+    {
+        return mood switch
+        {
+            1 => "😞",
+            2 => "😐",
+            3 => "🙂",
+            4 => "😊",
+            5 => "🚀",
+            _ => "❓"
+        };
+    }
+
+    private static string GetMoodLabel(int mood)
+    {
+        return mood switch
+        {
+            1 => "Poor",
+            2 => "Below Average",
+            3 => "Average",
+            4 => "Good",
+            5 => "Excellent",
+            _ => "Not Set"
+        };
+    }
+}

@@ -1,0 +1,432 @@
+@page "/teams/{TeamId:guid}/sprints/{SprintId:guid}/planning"
+@using ScrumOps.Shared.Contracts.Sprints
+@using ScrumOps.Shared.Contracts.ProductBacklog
+@using ScrumOps.Web.Services
+@inject ISprintService SprintService
+@inject IProductBacklogService BacklogService
+@inject NavigationManager Navigation
+@inject ILogger<SprintPlanningComponent> Logger
+@inject INotificationService NotificationService
+
+<div class="container-fluid">
+    @if (isLoading)
+    {
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- Header -->
+        <div class="row mb-3">
+            <div class="col">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/sprints">Sprints</a></li>
+                        <li class="breadcrumb-item"><a href="/teams/@TeamId/sprints/@SprintId">Sprint Details</a></li>
+                        <li class="breadcrumb-item active">Sprint Planning</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2>Sprint Planning</h2>
+                        <p class="text-muted mb-0">Select backlog items for the sprint</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-outline-primary btn-sm me-2" @onclick="NavigateToDetails">
+                            <i class="bi bi-arrow-left"></i> Back to Sprint
+                        </button>
+                        <button class="btn btn-success btn-sm" @onclick="SavePlanning" disabled="@isSaving">
+                            @if (isSaving)
+                            {
+                                <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                            }
+                            <i class="bi bi-check-circle"></i> Save Planning
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sprint Capacity Overview -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Sprint Capacity</h5>
+                        <h2 class="text-primary">@sprintCapacity</h2>
+                        <small class="text-muted">story points</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Selected Items</h5>
+                        <h2 class="@GetCommitmentClass()">@selectedStoryPoints</h2>
+                        <small class="text-muted">story points</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Remaining</h5>
+                        <h2 class="@GetRemainingClass()">@(sprintCapacity - selectedStoryPoints)</h2>
+                        <small class="text-muted">story points</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Commitment Progress -->
+        <div class="row mb-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Commitment Progress</h5>
+                        <div class="progress mb-2" style="height: 25px;">
+                            <div class="progress-bar @GetProgressBarClass()" 
+                                 role="progressbar" 
+                                 style="width: @CalculateCommitmentPercentage()%">
+                                @CalculateCommitmentPercentage().ToString("F0")% of Capacity
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <small class="text-muted">@selectedBacklogItems.Count() items selected</small>
+                            <small class="text-muted">@selectedStoryPoints / @sprintCapacity story points</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Product Backlog -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Product Backlog</h5>
+                            <small class="text-muted">@availableBacklogItems.Count() items available</small>
+                        </div>
+                    </div>
+                    <div class="card-body p-0" style="max-height: 600px; overflow-y: auto;">
+                        @if (availableBacklogItems.Any())
+                        {
+                            @foreach (var item in availableBacklogItems.OrderBy(i => i.Priority))
+                            {
+                                <div class="d-flex align-items-center p-3 border-bottom @(selectedBacklogItems.Contains(item) ? "bg-light" : "")">
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" 
+                                               type="checkbox" 
+                                               id="item-@item.Id"
+                                               @onchange="@(e => ToggleBacklogItem(item, (bool)e.Value!))"
+                                               checked="@selectedBacklogItems.Contains(item)" />
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <h6 class="mb-1">@item.Title</h6>
+                                                <p class="text-muted mb-1 small">@item.Description</p>
+                                                <div class="d-flex align-items-center">
+                                                    <span class="badge @GetPriorityBadgeClass(item.Priority) me-2">
+                                                        Priority @item.Priority
+                                                    </span>
+                                                    <span class="badge @GetTypeBadgeClass(item.Type) me-2">
+                                                        @item.Type
+                                                    </span>
+                                                    <small class="text-muted">
+                                                        <i class="bi bi-star"></i> @(item.StoryPoints?.ToString() ?? "?") pts
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="text-center py-5">
+                                <i class="bi bi-inbox display-4 text-muted"></i>
+                                <p class="text-muted mt-3">No backlog items available</p>
+                                <a href="/backlog" class="btn btn-outline-primary">
+                                    <i class="bi bi-plus-circle"></i> Create Backlog Items
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sprint Backlog -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Sprint Backlog</h5>
+                            <small class="text-muted">@selectedBacklogItems.Count() items selected</small>
+                        </div>
+                    </div>
+                    <div class="card-body p-0" style="max-height: 600px; overflow-y: auto;">
+                        @if (selectedBacklogItems.Any())
+                        {
+                            @foreach (var item in selectedBacklogItems.OrderBy(i => i.Priority))
+                            {
+                                <div class="d-flex align-items-center p-3 border-bottom bg-light">
+                                    <div class="me-3">
+                                        <button class="btn btn-outline-danger btn-sm" @onclick="@(() => RemoveFromSprint(item))">
+                                            <i class="bi bi-x"></i>
+                                        </button>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <h6 class="mb-1">@item.Title</h6>
+                                                <p class="text-muted mb-1 small">@item.Description</p>
+                                                <div class="d-flex align-items-center">
+                                                    <span class="badge @GetPriorityBadgeClass(item.Priority) me-2">
+                                                        Priority @item.Priority
+                                                    </span>
+                                                    <span class="badge @GetTypeBadgeClass(item.Type) me-2">
+                                                        @item.Type
+                                                    </span>
+                                                    <small class="text-muted">
+                                                        <i class="bi bi-star"></i> @(item.StoryPoints?.ToString() ?? "?") pts
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="text-center py-5">
+                                <i class="bi bi-list-check display-4 text-muted"></i>
+                                <p class="text-muted mt-3">No items selected for sprint</p>
+                                <small class="text-muted">Select items from the product backlog</small>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Planning Summary -->
+        @if (selectedBacklogItems.Any())
+        {
+            <div class="row mt-4">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Planning Summary</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>Selected Items by Type</h6>
+                                    @{
+                                        var itemsByType = selectedBacklogItems.GroupBy(i => i.Type);
+                                    }
+                                    @foreach (var group in itemsByType)
+                                    {
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span>@group.Key:</span>
+                                            <span>@group.Count() items (@group.Sum(i => i.StoryPoints ?? 0) pts)</span>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>Selected Items by Priority</h6>
+                                    @{
+                                        var itemsByPriority = selectedBacklogItems.GroupBy(i => GetPriorityName(i.Priority));
+                                    }
+                                    @foreach (var group in itemsByPriority.OrderBy(g => g.Key))
+                                    {
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span>@group.Key:</span>
+                                            <span>@group.Count() items (@group.Sum(i => i.StoryPoints ?? 0) pts)</span>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@code {
+    [Parameter] public Guid TeamId { get; set; }
+    [Parameter] public Guid SprintId { get; set; }
+
+    private List<BacklogItemSummary> availableBacklogItems = new();
+    private List<BacklogItemSummary> selectedBacklogItems = new();
+    private int sprintCapacity = 20; // Default capacity
+    private bool isLoading = true;
+    private bool isSaving = false;
+
+    private int selectedStoryPoints => selectedBacklogItems.Sum(i => i.StoryPoints ?? 0);
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        try
+        {
+            isLoading = true;
+
+            // Load product backlog items
+            var backlogResponse = await BacklogService.GetBacklogItemsAsync();
+            availableBacklogItems = backlogResponse.Items.ToList();
+
+            // Load current sprint to get capacity
+            try
+            {
+                var sprint = await SprintService.GetSprintAsync(TeamId, SprintId);
+                sprintCapacity = sprint.Capacity;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogWarning(ex, "Could not load sprint capacity, using default");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to load planning data");
+            NotificationService.ShowError("Failed to load planning data", "Error");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void ToggleBacklogItem(BacklogItemSummary item, bool isSelected)
+    {
+        if (isSelected)
+        {
+            if (!selectedBacklogItems.Contains(item))
+            {
+                selectedBacklogItems.Add(item);
+            }
+        }
+        else
+        {
+            selectedBacklogItems.Remove(item);
+        }
+        StateHasChanged();
+    }
+
+    private void RemoveFromSprint(BacklogItemSummary item)
+    {
+        selectedBacklogItems.Remove(item);
+        StateHasChanged();
+    }
+
+    private async Task SavePlanning()
+    {
+        try
+        {
+            isSaving = true;
+
+            // TODO: Implement API call to update sprint backlog
+            // await SprintService.UpdateSprintBacklogAsync(TeamId, SprintId, selectedBacklogItems.Select(i => i.Id));
+
+            NotificationService.ShowSuccess($"Sprint planning saved with {selectedBacklogItems.Count} items", "Success");
+            Navigation.NavigateTo($"/teams/{TeamId}/sprints/{SprintId}");
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to save sprint planning");
+            NotificationService.ShowError("Failed to save sprint planning", "Error");
+        }
+        finally
+        {
+            isSaving = false;
+        }
+    }
+
+    private void NavigateToDetails()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints/{SprintId}");
+    }
+
+    private double CalculateCommitmentPercentage()
+    {
+        return sprintCapacity > 0 ? (double)selectedStoryPoints / sprintCapacity * 100 : 0;
+    }
+
+    private string GetCommitmentClass()
+    {
+        var percentage = CalculateCommitmentPercentage();
+        if (percentage > 100) return "text-danger";
+        if (percentage > 80) return "text-warning";
+        return "text-success";
+    }
+
+    private string GetRemainingClass()
+    {
+        var remaining = sprintCapacity - selectedStoryPoints;
+        if (remaining < 0) return "text-danger";
+        if (remaining < 5) return "text-warning";
+        return "text-muted";
+    }
+
+    private string GetProgressBarClass()
+    {
+        var percentage = CalculateCommitmentPercentage();
+        if (percentage > 100) return "bg-danger";
+        if (percentage > 80) return "bg-warning";
+        return "bg-success";
+    }
+
+    private static string GetPriorityBadgeClass(int priority)
+    {
+        return priority switch
+        {
+            1 => "bg-danger",
+            2 => "bg-warning",
+            3 => "bg-info",
+            _ => "bg-secondary"
+        };
+    }
+
+    private static string GetTypeBadgeClass(string type)
+    {
+        return type switch
+        {
+            "Epic" => "bg-purple",
+            "UserStory" => "bg-primary",
+            "Bug" => "bg-danger",
+            "Task" => "bg-info",
+            _ => "bg-secondary"
+        };
+    }
+
+    private static string GetPriorityName(int priority)
+    {
+        return priority switch
+        {
+            1 => "High",
+            2 => "Medium",
+            3 => "Low",
+            _ => "Unknown"
+        };
+    }
+}

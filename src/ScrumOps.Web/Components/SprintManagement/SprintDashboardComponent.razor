@@ -2,8 +2,10 @@
 @using ScrumOps.Shared.Contracts.Sprints
 @using ScrumOps.Web.Services
 @inject ISprintService SprintService
+@inject INotificationService NotificationService
 @inject NavigationManager Navigation
 @inject ILogger<SprintDashboardComponent> Logger
+@rendermode InteractiveServer
 
 <div class="container-fluid">
     @if (isLoading)
@@ -47,19 +49,50 @@
                         <div class="btn-group d-block">
                             @if (sprint.Status == "Planned")
                             {
-                                <button class="btn btn-success btn-sm" @onclick="StartSprint">
+                                <button class="btn btn-success btn-sm me-1" @onclick="StartSprint">
                                     <i class="bi bi-play"></i> Start Sprint
+                                </button>
+                                <button class="btn btn-outline-primary btn-sm me-1" @onclick="NavigateToPlanning">
+                                    <i class="bi bi-list-task"></i> Planning
                                 </button>
                             }
                             else if (sprint.Status == "Active")
                             {
-                                <button class="btn btn-warning btn-sm" @onclick="CompleteSprint">
+                                <button class="btn btn-warning btn-sm me-1" @onclick="CompleteSprint">
                                     <i class="bi bi-check2-square"></i> Complete Sprint
                                 </button>
+                                <button class="btn btn-outline-info btn-sm me-1" @onclick="NavigateToBoard">
+                                    <i class="bi bi-kanban"></i> Board
+                                </button>
                             }
-                            <button class="btn btn-outline-secondary btn-sm" @onclick="NavigateToEdit">
+                            else if (sprint.Status == "Completed")
+                            {
+                                <button class="btn btn-outline-success btn-sm me-1" @onclick="NavigateToRetrospective">
+                                    <i class="bi bi-chat-quote"></i> Retrospective
+                                </button>
+                                <button class="btn btn-outline-info btn-sm me-1" @onclick="NavigateToReports">
+                                    <i class="bi bi-graph-up"></i> Reports
+                                </button>
+                                <span class="badge bg-success ms-2">
+                                    <i class="bi bi-check-circle"></i> Sprint Completed
+                                </span>
+                            }
+                            <button class="btn btn-outline-secondary btn-sm me-1" @onclick="NavigateToEdit">
                                 <i class="bi bi-pencil"></i> Edit
                             </button>
+                            <div class="btn-group ms-1" role="group">
+                                <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><button class="dropdown-item" @onclick="NavigateToBoard"><i class="bi bi-kanban"></i> Sprint Board</button></li>
+                                    <li><button class="dropdown-item" @onclick="NavigateToBurndown"><i class="bi bi-graph-down"></i> Burndown Chart</button></li>
+                                    <li><button class="dropdown-item" @onclick="NavigateToReports"><i class="bi bi-graph-up"></i> Reports</button></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><button class="dropdown-item" @onclick="NavigateToPlanning"><i class="bi bi-list-task"></i> Sprint Planning</button></li>
+                                    <li><button class="dropdown-item" @onclick="NavigateToRetrospective"><i class="bi bi-chat-quote"></i> Retrospective</button></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -119,7 +152,7 @@
                             <span>@sprint.CompletedStoryPoints / @sprint.CommittedStoryPoints</span>
                         </div>
                         <div class="progress mb-3" style="height: 20px;">
-                            <div class="progress-bar bg-success" 
+                            <div class="progress-bar @GetProgressBarClass()" 
                                  role="progressbar" 
                                  style="width: @CalculateProgressPercentage(sprint.CompletedStoryPoints, sprint.CommittedStoryPoints)%">
                                 @CalculateProgressPercentage(sprint.CompletedStoryPoints, sprint.CommittedStoryPoints).ToString("F0")%
@@ -131,12 +164,44 @@
                             <span>@sprint.Tasks.Count(t => t.Status == "Done") / @sprint.Tasks.Count()</span>
                         </div>
                         <div class="progress" style="height: 20px;">
-                            <div class="progress-bar bg-info" 
+                            <div class="progress-bar @GetTaskProgressBarClass()" 
                                  role="progressbar" 
                                  style="width: @CalculateProgressPercentage(sprint.Tasks.Count(t => t.Status == "Done"), sprint.Tasks.Count())%">
                                 @CalculateProgressPercentage(sprint.Tasks.Count(t => t.Status == "Done"), sprint.Tasks.Count()).ToString("F0")%
                             </div>
                         </div>
+
+                        @if (sprint.Status == "Completed")
+                        {
+                            <div class="mt-3 p-3 bg-success bg-opacity-10 border border-success rounded">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                    <div>
+                                        <strong class="text-success">Sprint Completed Successfully!</strong>
+                                        <br />
+                                        <small class="text-muted">
+                                            Final Velocity: @sprint.ActualVelocity.ToString("F1") story points
+                                            | Completion Rate: @CalculateCompletionRate()%
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else if (sprint.Status == "Active")
+                        {
+                            var daysRemaining = CalculateDaysRemaining();
+                            var progressRate = CalculateProgressPercentage(sprint.CompletedStoryPoints, sprint.CommittedStoryPoints);
+                            <div class="mt-3 p-3 @GetSprintHealthClass(progressRate, daysRemaining) rounded">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi @GetSprintHealthIcon(progressRate, daysRemaining) me-2"></i>
+                                    <div>
+                                        <strong>Sprint Health: @GetSprintHealthText(progressRate, daysRemaining)</strong>
+                                        <br />
+                                        <small class="text-muted">@daysRemaining days remaining</small>
+                                    </div>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -259,12 +324,18 @@
             var success = await SprintService.StartSprintAsync(TeamId, SprintId);
             if (success)
             {
+                NotificationService.ShowSuccess("Sprint started successfully!", "Success");
                 await LoadSprint(); // Refresh the sprint data
+            }
+            else
+            {
+                NotificationService.ShowError("Failed to start sprint", "Error");
             }
         }
         catch (Exception ex)
         {
             Logger.LogError(ex, "Failed to start sprint {SprintId} for team {TeamId}", SprintId, TeamId);
+            NotificationService.ShowError("Failed to start sprint", "Error");
         }
     }
 
@@ -275,18 +346,49 @@
             var success = await SprintService.CompleteSprintAsync(TeamId, SprintId);
             if (success)
             {
+                NotificationService.ShowSuccess("Sprint completed successfully!", "Success");
                 await LoadSprint(); // Refresh the sprint data
+            }
+            else
+            {
+                NotificationService.ShowError("Failed to complete sprint", "Error");
             }
         }
         catch (Exception ex)
         {
             Logger.LogError(ex, "Failed to complete sprint {SprintId} for team {TeamId}", SprintId, TeamId);
+            NotificationService.ShowError("Failed to complete sprint", "Error");
         }
     }
 
     private void NavigateToEdit()
     {
         Navigation.NavigateTo($"/teams/{TeamId}/sprints/{SprintId}/edit");
+    }
+
+    private void NavigateToBoard()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints/{SprintId}/board");
+    }
+
+    private void NavigateToBurndown()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints/{SprintId}/burndown");
+    }
+
+    private void NavigateToPlanning()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints/{SprintId}/planning");
+    }
+
+    private void NavigateToRetrospective()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints/{SprintId}/retrospective");
+    }
+
+    private void NavigateToReports()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints/{SprintId}/reports");
     }
 
     private void NavigateToSprints()
@@ -297,6 +399,81 @@
     private static double CalculateProgressPercentage(int completed, int total)
     {
         return total > 0 ? (completed * 100.0 / total) : 0;
+    }
+
+    private int CalculateCompletionRate()
+    {
+        if (sprint == null || sprint.CommittedStoryPoints == 0) return 0;
+        return (int)((double)sprint.CompletedStoryPoints / sprint.CommittedStoryPoints * 100);
+    }
+
+    private int CalculateDaysRemaining()
+    {
+        if (sprint == null) return 0;
+        var remaining = (sprint.EndDate - DateTime.Today).Days;
+        return Math.Max(0, remaining);
+    }
+
+    private string GetProgressBarClass()
+    {
+        if (sprint == null) return "bg-secondary";
+        var progressRate = CalculateProgressPercentage(sprint.CompletedStoryPoints, sprint.CommittedStoryPoints);
+        
+        return sprint.Status switch
+        {
+            "Completed" => "bg-success",
+            "Active" when progressRate >= 80 => "bg-success",
+            "Active" when progressRate >= 50 => "bg-info", 
+            "Active" when progressRate >= 25 => "bg-warning",
+            "Active" => "bg-danger",
+            _ => "bg-secondary"
+        };
+    }
+
+    private string GetTaskProgressBarClass()
+    {
+        if (sprint == null || !sprint.Tasks.Any()) return "bg-secondary";
+        var progressRate = CalculateProgressPercentage(sprint.Tasks.Count(t => t.Status == "Done"), sprint.Tasks.Count());
+        
+        return sprint.Status switch
+        {
+            "Completed" => "bg-success",
+            "Active" when progressRate >= 90 => "bg-success",
+            "Active" when progressRate >= 70 => "bg-info",
+            "Active" when progressRate >= 40 => "bg-warning",
+            "Active" => "bg-danger",
+            _ => "bg-secondary"
+        };
+    }
+
+    private string GetSprintHealthClass(double progressRate, int daysRemaining)
+    {
+        var totalDays = (sprint?.EndDate - sprint?.StartDate)?.Days ?? 14;
+        var expectedProgress = totalDays > 0 ? (totalDays - daysRemaining) * 100.0 / totalDays : 0;
+        
+        if (progressRate >= expectedProgress * 1.1) return "bg-success bg-opacity-10 border border-success";
+        if (progressRate >= expectedProgress * 0.8) return "bg-info bg-opacity-10 border border-info";
+        return "bg-warning bg-opacity-10 border border-warning";
+    }
+
+    private string GetSprintHealthIcon(double progressRate, int daysRemaining)
+    {
+        var totalDays = (sprint?.EndDate - sprint?.StartDate)?.Days ?? 14;
+        var expectedProgress = totalDays > 0 ? (totalDays - daysRemaining) * 100.0 / totalDays : 0;
+        
+        if (progressRate >= expectedProgress * 1.1) return "bi-check-circle-fill text-success";
+        if (progressRate >= expectedProgress * 0.8) return "bi-info-circle-fill text-info";
+        return "bi-exclamation-triangle-fill text-warning";
+    }
+
+    private string GetSprintHealthText(double progressRate, int daysRemaining)
+    {
+        var totalDays = (sprint?.EndDate - sprint?.StartDate)?.Days ?? 14;
+        var expectedProgress = totalDays > 0 ? (totalDays - daysRemaining) * 100.0 / totalDays : 0;
+        
+        if (progressRate >= expectedProgress * 1.1) return "Ahead of Schedule";
+        if (progressRate >= expectedProgress * 0.8) return "On Track";
+        return "Behind Schedule";
     }
 
     private static string GetStatusBadgeClass(string status)

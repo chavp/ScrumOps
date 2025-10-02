@@ -14,4 +14,5 @@ public interface IProductBacklogService
     Task<BacklogItemResponse> UpdateBacklogItemAsync(Guid teamId, Guid itemId, UpdateBacklogItemRequest request);
     Task<bool> DeleteBacklogItemAsync(Guid teamId, Guid itemId);
     Task<BacklogItemResponse> GetBacklogItemAsync(Guid teamId, Guid itemId);
+    Task<GetBacklogItemsResponse> GetBacklogItemsAsync();
 }

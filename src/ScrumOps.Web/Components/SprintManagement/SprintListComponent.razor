@@ -3,8 +3,10 @@
 @using ScrumOps.Web.Services
 @inject ISprintService SprintService
 @inject ITeamService TeamService
+@inject INotificationService NotificationService
 @inject NavigationManager Navigation
 @inject ILogger<SprintListComponent> Logger
+@rendermode InteractiveServer
 
 <div class="container-fluid">
     <div class="row mb-3">
@@ -147,6 +149,12 @@
                                         <i class="bi bi-check2-square"></i> Complete
                                     </button>
                                 }
+                                else if (sprint.Status == "Completed")
+                                {
+                                    <button class="btn btn-outline-info btn-sm" @onclick="() => NavigateToReports(sprint.TeamId, sprint.Id)">
+                                        <i class="bi bi-graph-up"></i> Reports
+                                    </button>
+                                }
                             </div>
                         </div>
                     </div>
@@ -270,12 +278,18 @@
             var success = await SprintService.StartSprintAsync(teamId, sprintId);
             if (success)
             {
+                NotificationService.ShowSuccess("Sprint started successfully!", "Success");
                 await LoadData(); // Refresh the list
+            }
+            else
+            {
+                NotificationService.ShowError("Failed to start sprint", "Error");
             }
         }
         catch (Exception ex)
         {
             Logger.LogError(ex, "Failed to start sprint {SprintId}", sprintId);
+            NotificationService.ShowError("Failed to start sprint", "Error");
         }
     }
 
@@ -286,18 +300,29 @@
             var success = await SprintService.CompleteSprintAsync(teamId, sprintId);
             if (success)
             {
+                NotificationService.ShowSuccess("Sprint completed successfully!", "Success");
                 await LoadData(); // Refresh the list
+            }
+            else
+            {
+                NotificationService.ShowError("Failed to complete sprint", "Error");
             }
         }
         catch (Exception ex)
         {
             Logger.LogError(ex, "Failed to complete sprint {SprintId}", sprintId);
+            NotificationService.ShowError("Failed to complete sprint", "Error");
         }
     }
 
 	private void NavigateToDetails(Guid teamId, Guid sprintId)
     {
         Navigation.NavigateTo($"/teams/{teamId}/sprints/{sprintId}");
+    }
+
+    private void NavigateToReports(Guid teamId, Guid sprintId)
+    {
+        Navigation.NavigateTo($"/teams/{teamId}/sprints/{sprintId}/reports");
     }
 
     private static string GetSprintCardClass(string status)
