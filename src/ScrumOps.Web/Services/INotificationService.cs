@@ -8,6 +8,7 @@ public interface INotificationService
     void ShowError(string message, string? title = null);
     void ShowWarning(string message, string? title = null);
     void ShowInfo(string message, string? title = null);
+    Task<bool> ShowConfirmation(string message, string? title = null);
 }
 
 public class NotificationMessage

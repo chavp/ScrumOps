@@ -3885,6 +3885,14 @@
             "type": "string",
             "format": "uuid"
           },
+          "teamId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "teamName": {
+            "type": "string",
+            "nullable": true
+          },
           "name": {
             "type": "string",
             "nullable": true

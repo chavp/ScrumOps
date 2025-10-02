@@ -8,7 +8,7 @@ namespace ScrumOps.Shared.Contracts.Sprints;
 public class CreateSprintRequest
 {
     [Required]
-    public int TeamId { get; set; }
+    public Guid TeamId { get; set; }
 
     [Required]
     [StringLength(200, MinimumLength = 5)]

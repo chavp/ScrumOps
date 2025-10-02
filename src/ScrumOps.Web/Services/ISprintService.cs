@@ -7,14 +7,14 @@ namespace ScrumOps.Web.Services;
 /// </summary>
 public interface ISprintService
 {
-    Task<GetSprintsResponse> GetSprintsAsync();
-    Task<SprintDetailsResponse> GetSprintAsync(string id);
-    Task<SprintDetailsResponse> CreateSprintAsync(CreateSprintRequest request);
-    Task<SprintDetailsResponse> UpdateSprintAsync(string id, UpdateSprintRequest request);
-    Task<bool> DeleteSprintAsync(string id);
-    Task<bool> StartSprintAsync(string id);
-    Task<bool> CompleteSprintAsync(string id);
-    Task<SprintBurndownResponse> GetSprintBurndownAsync(string id);
-    Task<bool> AddSprintTaskAsync(string sprintId, string itemId, AddSprintTaskRequest request);
-    Task<bool> UpdateSprintTaskAsync(string sprintId, string taskId, UpdateSprintTaskRequest request);
+    Task<ScrumOps.Shared.Contracts.Sprints.GetSprintsResponse> GetSprintsAsync(Guid teamId);
+    Task<SprintDetailsResponse> GetSprintAsync(Guid teamId, Guid sprintId);
+    Task<SprintDetailsResponse> CreateSprintAsync(Guid teamId, CreateSprintRequest request);
+    Task<SprintDetailsResponse> UpdateSprintAsync(Guid teamId, Guid sprintId, UpdateSprintRequest request);
+    Task<bool> DeleteSprintAsync(Guid teamId, Guid sprintId);
+    Task<bool> StartSprintAsync(Guid teamId, Guid sprintId);
+    Task<bool> CompleteSprintAsync(Guid teamId, Guid sprintId);
+    Task<SprintBurndownResponse> GetSprintBurndownAsync(Guid teamId, Guid sprintId);
+    Task<bool> AddSprintTaskAsync(Guid teamId, Guid sprintId, Guid itemId, AddSprintTaskRequest request);
+    Task<bool> UpdateSprintTaskAsync(Guid teamId, Guid sprintId, Guid taskId, UpdateSprintTaskRequest request);
 }

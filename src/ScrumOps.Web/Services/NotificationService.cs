@@ -47,4 +47,12 @@ public class NotificationService : INotificationService
         };
         OnNotification?.Invoke(notification);
     }
+
+    public async Task<bool> ShowConfirmation(string message, string? title = null)
+    {
+        // For now, just return true (would need a proper confirmation dialog implementation)
+        // In a real implementation, this would show a modal dialog and wait for user input
+        await Task.Delay(1); // Simulate async operation
+        return true;
+    }
 }

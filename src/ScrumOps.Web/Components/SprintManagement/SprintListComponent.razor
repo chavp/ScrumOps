@@ -1,18 +1,40 @@
 @using ScrumOps.Shared.Contracts.Sprints
+@using ScrumOps.Shared.Contracts.Teams
 @using ScrumOps.Web.Services
 @inject ISprintService SprintService
+@inject ITeamService TeamService
 @inject NavigationManager Navigation
 @inject ILogger<SprintListComponent> Logger
 
 <div class="container-fluid">
     <div class="row mb-3">
         <div class="col">
-            <h2>Sprints</h2>
+            <h2>Sprint Management</h2>
+            <p class="text-muted">Manage sprints across all teams</p>
         </div>
         <div class="col-auto">
-            <button class="btn btn-primary" @onclick="NavigateToCreate">
-                <i class="bi bi-plus-circle"></i> Create Sprint
-            </button>
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <i class="bi bi-plus-circle"></i> Create Sprint
+                </button>
+                <ul class="dropdown-menu">
+                    @if (teams?.Any() == true)
+                    {
+                        @foreach (var team in teams)
+                        {
+                            <li>
+                                <a class="dropdown-item" href="/teams/@team.Id/sprints/create">
+                                    <i class="bi bi-people"></i> @team.Name
+                                </a>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li><span class="dropdown-item-text">No teams available</span></li>
+                    }
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -24,10 +46,28 @@
             </div>
         </div>
     }
-    else if (sprints?.Any() == true)
+    else if (allSprints?.Any() == true)
     {
+        <!-- Team Filter -->
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <select class="form-select" @onchange="OnTeamFilterChanged">
+                    <option value="">All Teams</option>
+                    @if (teams != null)
+                    {
+                        @foreach (var team in teams)
+                        {
+                            <option value="@team.Id" selected="@(selectedTeamId == team.Id)">
+                                @team.Name
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
         <div class="row">
-            @foreach (var sprint in sprints)
+            @foreach (var sprint in filteredSprints)
             {
                 <div class="col-md-6 col-lg-4 mb-3">
                     <div class="card h-100 @GetSprintCardClass(sprint.Status)">
@@ -92,18 +132,18 @@
                         </div>
                         <div class="card-footer">
                             <div class="btn-group w-100" role="group">
-                                <button class="btn btn-outline-primary btn-sm" @onclick="() => NavigateToDetails(sprint.Id)">
+                                <button class="btn btn-outline-primary btn-sm" @onclick="() => NavigateToDetails(sprint.TeamId, sprint.Id)">
                                     <i class="bi bi-eye"></i> View
                                 </button>
                                 @if (sprint.Status == "Planned")
                                 {
-                                    <button class="btn btn-outline-success btn-sm" @onclick="() => StartSprint(sprint.Id)">
+                                    <button class="btn btn-outline-success btn-sm" @onclick="() => StartSprint(sprint.TeamId, sprint.Id)">
                                         <i class="bi bi-play"></i> Start
                                     </button>
                                 }
                                 else if (sprint.Status == "Active")
                                 {
-                                    <button class="btn btn-outline-warning btn-sm" @onclick="() => CompleteSprint(sprint.Id)">
+                                    <button class="btn btn-outline-warning btn-sm" @onclick="() => CompleteSprint(sprint.TeamId, sprint.Id)">
                                         <i class="bi bi-check2-square"></i> Complete
                                     </button>
                                 }
@@ -119,33 +159,76 @@
         <div class="text-center py-5">
             <h4>No sprints found</h4>
             <p class="text-muted">Create a sprint to start organizing your development work into time-boxed iterations.</p>
-            <button class="btn btn-primary" @onclick="NavigateToCreate">
-                <i class="bi bi-plus-circle"></i> Create First Sprint
-            </button>
+            @if (teams?.Any() == true)
+            {
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-plus-circle"></i> Create First Sprint
+                    </button>
+                    <ul class="dropdown-menu">
+                        @foreach (var team in teams)
+                        {
+                            <li>
+                                <a class="dropdown-item" href="/teams/@team.Id/sprints/create">
+                                    <i class="bi bi-people"></i> @team.Name
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
         </div>
     }
 </div>
 
 @code {
-    private IEnumerable<SprintSummary>? sprints;
+    private IEnumerable<TeamSummary>? teams;
+    private List<SprintSummary> allSprints = new();
+    private IEnumerable<SprintSummary> filteredSprints = new List<SprintSummary>();
     private bool isLoading = true;
+    private Guid? selectedTeamId;
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadSprints();
+        await LoadData();
     }
 
-    private async Task LoadSprints()
+    private async Task LoadData()
     {
         try
         {
             isLoading = true;
-            var response = await SprintService.GetSprintsAsync();
-            sprints = response.Sprints;
+            
+            // Load teams first
+            var teamsResponse = await TeamService.GetTeamsAsync();
+            teams = teamsResponse.Teams;
+
+            // Load sprints for all teams
+            allSprints.Clear();
+            if (teams != null)
+            {
+                foreach (var team in teams)
+                {
+                    try
+                    {
+                        var sprintsResponse = await SprintService.GetSprintsAsync(team.Id);
+                        if (sprintsResponse?.Sprints != null)
+                        {
+                            allSprints.AddRange(sprintsResponse.Sprints);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogWarning(ex, "Failed to load sprints for team {TeamId}", team.Id);
+                    }
+                }
+            }
+
+            ApplyFilter();
         }
         catch (Exception ex)
         {
-            Logger.LogError(ex, "Failed to load sprints");
+            Logger.LogError(ex, "Failed to load sprint data");
         }
         finally
         {
@@ -153,14 +236,41 @@
         }
     }
 
-    private async Task StartSprint(string sprintId)
+    private void ApplyFilter()
+    {
+        if (selectedTeamId.HasValue)
+        {
+            filteredSprints = allSprints.Where(s => s.TeamId == selectedTeamId.Value);
+        }
+        else
+        {
+            filteredSprints = allSprints;
+        }
+    }
+
+    private async Task OnTeamFilterChanged(ChangeEventArgs e)
+    {
+        if (Guid.TryParse(e.Value?.ToString(), out var teamId))
+        {
+            selectedTeamId = teamId;
+        }
+        else
+        {
+            selectedTeamId = null;
+        }
+        
+        ApplyFilter();
+        StateHasChanged();
+    }
+
+    private async Task StartSprint(Guid teamId, Guid sprintId)
     {
         try
         {
-            var success = await SprintService.StartSprintAsync(sprintId);
+            var success = await SprintService.StartSprintAsync(teamId, sprintId);
             if (success)
             {
-                await LoadSprints(); // Refresh the list
+                await LoadData(); // Refresh the list
             }
         }
         catch (Exception ex)
@@ -169,14 +279,14 @@
         }
     }
 
-    private async Task CompleteSprint(string sprintId)
+    private async Task CompleteSprint(Guid teamId, Guid sprintId)
     {
         try
         {
-            var success = await SprintService.CompleteSprintAsync(sprintId);
+            var success = await SprintService.CompleteSprintAsync(teamId, sprintId);
             if (success)
             {
-                await LoadSprints(); // Refresh the list
+                await LoadData(); // Refresh the list
             }
         }
         catch (Exception ex)
@@ -185,14 +295,9 @@
         }
     }
 
-    private void NavigateToCreate()
+	private void NavigateToDetails(Guid teamId, Guid sprintId)
     {
-        Navigation.NavigateTo("/sprints/create");
-    }
-
-    private void NavigateToDetails(string sprintId)
-    {
-        Navigation.NavigateTo($"/sprints/{sprintId}");
+        Navigation.NavigateTo($"/teams/{teamId}/sprints/{sprintId}");
     }
 
     private static string GetSprintCardClass(string status)

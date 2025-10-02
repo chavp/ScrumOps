@@ -1,4 +1,4 @@
-@page "/sprints/{SprintId}"
+@page "/teams/{TeamId:guid}/sprints/{SprintId:guid}"
 @using ScrumOps.Shared.Contracts.Sprints
 @using ScrumOps.Web.Services
 @inject ISprintService SprintService
@@ -21,7 +21,8 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/sprints">Sprints</a></li>
-                        <li class="breadcrumb-item active">@sprint.TeamName Sprint</li>
+                        <li class="breadcrumb-item"><a href="/teams/@TeamId/sprints">@sprint.TeamName</a></li>
+                        <li class="breadcrumb-item active">Sprint Details</li>
                     </ol>
                 </nav>
             </div>
@@ -177,6 +178,23 @@
                                                         <i class="bi bi-list-check"></i> @item.Tasks.Count() tasks
                                                     </small>
                                                 </div>
+
+                                                @if (item.Tasks.Any())
+                                                {
+                                                    <div class="mt-2">
+                                                        <small class="text-muted d-block mb-1">Tasks:</small>
+                                                        @foreach (var task in item.Tasks.Take(3))
+                                                        {
+                                                            <span class="badge badge-sm @GetTaskStatusBadgeClass(task.Status) me-1 mb-1">
+                                                                @task.Title
+                                                            </span>
+                                                        }
+                                                        @if (item.Tasks.Count() > 3)
+                                                        {
+                                                            <span class="badge bg-light text-dark">+@(item.Tasks.Count() - 3) more</span>
+                                                        }
+                                                    </div>
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -205,7 +223,8 @@
 </div>
 
 @code {
-    [Parameter] public string SprintId { get; set; } = string.Empty;
+    [Parameter] public Guid TeamId { get; set; }
+    [Parameter] public Guid SprintId { get; set; }
 
     private SprintDetailsResponse? sprint;
     private bool isLoading = true;
@@ -220,11 +239,11 @@
         try
         {
             isLoading = true;
-            sprint = await SprintService.GetSprintAsync(SprintId);
+            sprint = await SprintService.GetSprintAsync(TeamId, SprintId);
         }
         catch (Exception ex)
         {
-            Logger.LogError(ex, "Failed to load sprint {SprintId}", SprintId);
+            Logger.LogError(ex, "Failed to load sprint {SprintId} for team {TeamId}", SprintId, TeamId);
             sprint = null;
         }
         finally
@@ -237,7 +256,7 @@
     {
         try
         {
-            var success = await SprintService.StartSprintAsync(SprintId);
+            var success = await SprintService.StartSprintAsync(TeamId, SprintId);
             if (success)
             {
                 await LoadSprint(); // Refresh the sprint data
@@ -245,7 +264,7 @@
         }
         catch (Exception ex)
         {
-            Logger.LogError(ex, "Failed to start sprint {SprintId}", SprintId);
+            Logger.LogError(ex, "Failed to start sprint {SprintId} for team {TeamId}", SprintId, TeamId);
         }
     }
 
@@ -253,7 +272,7 @@
     {
         try
         {
-            var success = await SprintService.CompleteSprintAsync(SprintId);
+            var success = await SprintService.CompleteSprintAsync(TeamId, SprintId);
             if (success)
             {
                 await LoadSprint(); // Refresh the sprint data
@@ -261,13 +280,13 @@
         }
         catch (Exception ex)
         {
-            Logger.LogError(ex, "Failed to complete sprint {SprintId}", SprintId);
+            Logger.LogError(ex, "Failed to complete sprint {SprintId} for team {TeamId}", SprintId, TeamId);
         }
     }
 
     private void NavigateToEdit()
     {
-        Navigation.NavigateTo($"/sprints/{SprintId}/edit");
+        Navigation.NavigateTo($"/teams/{TeamId}/sprints/{SprintId}/edit");
     }
 
     private void NavigateToSprints()
@@ -321,6 +340,17 @@
             "InProgress" => "bg-warning",
             "Todo" => "bg-primary",
             _ => "bg-secondary"
+        };
+    }
+
+    private static string GetTaskStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Done" => "bg-success text-white",
+            "InProgress" => "bg-warning text-dark",
+            "Todo" => "bg-primary text-white",
+            _ => "bg-secondary text-white"
         };
     }
 }

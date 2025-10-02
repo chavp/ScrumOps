@@ -1,0 +1,319 @@
+@page "/teams/{TeamId:guid}/backlog/items/{ItemId:guid}"
+
+@using ScrumOps.Shared.Contracts.ProductBacklog
+@using ScrumOps.Web.Services
+@inject IProductBacklogService ProductBacklogService
+@inject INotificationService NotificationService
+@inject NavigationManager Navigation
+@inject ILogger<BacklogItemDetailsComponent> Logger
+@rendermode InteractiveServer
+
+<div class="container">
+    @if (isLoading)
+    {
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+    else if (backlogItem != null)
+    {
+        <div class="row mb-3">
+            <div class="col">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/backlog">Product Backlog</a></li>
+                        <li class="breadcrumb-item"><a href="/teams/@TeamId/backlog">Team Backlog</a></li>
+                        <li class="breadcrumb-item active">@backlogItem.Title</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4 class="mb-0">@backlogItem.Title</h4>
+                            <div class="btn-group">
+                                <button class="btn btn-outline-primary btn-sm" @onclick="NavigateToEdit">
+                                    <i class="bi bi-pencil"></i> Edit
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm" @onclick="DeleteItem">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h6>Description</h6>
+                                <p class="text-muted">@backlogItem.Description</p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <h6>Acceptance Criteria</h6>
+                                <div class="bg-light p-3 rounded">
+                                    @if (string.IsNullOrEmpty(backlogItem.AcceptanceCriteria))
+                                    {
+                                        <p class="text-muted mb-0">No acceptance criteria defined</p>
+                                    }
+                                    else
+                                    {
+                                        <pre class="mb-0">@backlogItem.AcceptanceCriteria</pre>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h6>Additional Details</h6>
+                                <ul class="list-unstyled">
+                                    <li><strong>Created By:</strong> @(string.IsNullOrEmpty(backlogItem.CreatedBy) ? "Unknown" : backlogItem.CreatedBy)</li>
+                                    <li><strong>Created Date:</strong> @backlogItem.CreatedDate.ToString("MMM dd, yyyy 'at' HH:mm")</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="mb-0">Item Properties</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <strong>Type</strong>
+                            <div>
+                                <span class="badge @GetTypeBadgeClass(backlogItem.Type)">
+                                    @GetTypeDisplayText(backlogItem.Type)
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <strong>Status</strong>
+                            <div>
+                                <span class="badge @GetStatusBadgeClass(backlogItem.Status)">
+                                    @backlogItem.Status
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <strong>Priority</strong>
+                            <div class="d-flex align-items-center">
+                                <span class="badge @GetPriorityBadgeClass(backlogItem.Priority) me-2">
+                                    @backlogItem.Priority
+                                </span>
+                                @GetPriorityIcon(backlogItem.Priority)
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <strong>Story Points</strong>
+                            <div>
+                                @if (backlogItem.StoryPoints.HasValue)
+                                {
+                                    <span class="badge bg-info">@backlogItem.StoryPoints pts</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Not estimated</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h6 class="mb-0">Actions</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary btn-sm" @onclick="NavigateToEdit">
+                                <i class="bi bi-pencil"></i> Edit Item
+                            </button>
+                            
+                            @if (backlogItem.Status != "Done")
+                            {
+                                <button class="btn btn-outline-success btn-sm">
+                                    <i class="bi bi-play-circle"></i> Add to Sprint
+                                </button>
+                            }
+
+                            @if (!backlogItem.StoryPoints.HasValue)
+                            {
+                                <button class="btn btn-outline-info btn-sm">
+                                    <i class="bi bi-calculator"></i> Estimate Points
+                                </button>
+                            }
+
+                            <button class="btn btn-outline-warning btn-sm">
+                                <i class="bi bi-clock-history"></i> View History
+                            </button>
+                            
+                            <hr>
+                            
+                            <button class="btn btn-outline-danger btn-sm" @onclick="DeleteItem">
+                                <i class="bi bi-trash"></i> Delete Item
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <h4>Backlog Item Not Found</h4>
+            <p class="text-muted">The requested backlog item could not be found.</p>
+            <button class="btn btn-primary" @onclick="NavigateBack">
+                <i class="bi bi-arrow-left"></i> Back to Backlog
+            </button>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public Guid TeamId { get; set; }
+    [Parameter] public Guid ItemId { get; set; }
+
+    private BacklogItemResponse? backlogItem;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadBacklogItem();
+    }
+
+    private async Task LoadBacklogItem()
+    {
+        try
+        {
+            isLoading = true;
+            backlogItem = await ProductBacklogService.GetBacklogItemAsync(TeamId, ItemId);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to load backlog item {ItemId} for team {TeamId}", ItemId, TeamId);
+            backlogItem = null;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void NavigateToEdit()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/backlog/items/{ItemId}/edit");
+    }
+
+    private async Task DeleteItem()
+    {
+        if (backlogItem == null) return;
+
+        try
+        {
+            var confirmed = await NotificationService.ShowConfirmation(
+                $"Are you sure you want to delete '{backlogItem.Title}'?",
+                "Confirm Deletion"
+            );
+
+            if (confirmed)
+            {
+                var success = await ProductBacklogService.DeleteBacklogItemAsync(TeamId, ItemId);
+                if (success)
+                {
+                    NotificationService.ShowSuccess("Backlog item deleted successfully", "Item Deleted");
+                    Navigation.NavigateTo($"/teams/{TeamId}/backlog");
+                }
+                else
+                {
+                    NotificationService.ShowError("Failed to delete backlog item", "Delete Failed");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error deleting backlog item {ItemId}", ItemId);
+            NotificationService.ShowError("An error occurred while deleting the item", "Error");
+        }
+    }
+
+    private void NavigateBack()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/backlog");
+    }
+
+    private static string GetTypeBadgeClass(string type)
+    {
+        return type.ToLower() switch
+        {
+            "userstory" => "bg-primary",
+            "epic" => "bg-purple",
+            "task" => "bg-info",
+            "bug" => "bg-danger",
+            "feature" => "bg-success",
+            _ => "bg-secondary"
+        };
+    }
+
+    private static string GetTypeDisplayText(string type)
+    {
+        return type.ToLower() switch
+        {
+            "userstory" => "User Story",
+            "epic" => "Epic",
+            "task" => "Task",
+            "bug" => "Bug",
+            "feature" => "Feature",
+            _ => type
+        };
+    }
+
+    private static string GetStatusBadgeClass(string status)
+    {
+        return status.ToLower() switch
+        {
+            "new" => "bg-secondary",
+            "ready" => "bg-primary",
+            "inprogress" => "bg-warning",
+            "done" => "bg-success",
+            _ => "bg-secondary"
+        };
+    }
+
+    private static string GetPriorityBadgeClass(int priority)
+    {
+        return priority switch
+        {
+            <= 10 => "bg-success",
+            <= 50 => "bg-warning",
+            <= 100 => "bg-danger",
+            _ => "bg-secondary"
+        };
+    }
+
+    private static string GetPriorityIcon(int priority)
+    {
+        return priority switch
+        {
+            <= 10 => "<i class='bi bi-arrow-down-circle text-success'></i>",
+            <= 50 => "<i class='bi bi-dash-circle text-warning'></i>",
+            <= 100 => "<i class='bi bi-arrow-up-circle text-danger'></i>",
+            _ => "<i class='bi bi-question-circle text-muted'></i>"
+        };
+    }
+}

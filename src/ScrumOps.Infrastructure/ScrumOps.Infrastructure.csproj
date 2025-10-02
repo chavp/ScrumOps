@@ -1,6 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <Compile Remove="Persistence\InMemoryProductBacklogRepository.cs" />
+    <Compile Remove="Persistence\InMemoryTeamRepository.cs" />
+    <Compile Remove="Persistence\InMemoryUnitOfWork.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ScrumOps.Domain\ScrumOps.Domain.csproj" />
     <ProjectReference Include="..\ScrumOps.Application\ScrumOps.Application.csproj" />
   </ItemGroup>

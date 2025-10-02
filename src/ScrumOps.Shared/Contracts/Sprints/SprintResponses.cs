@@ -36,8 +36,8 @@ public class GetSprintsResponse
 /// </summary>
 public class SprintSummary
 {
-    public string Id { get; set; } = string.Empty;
-    public int TeamId { get; set; }
+    public Guid Id { get; set; }
+    public Guid TeamId { get; set; }
     public string TeamName { get; set; } = string.Empty;
     public string Goal { get; set; } = string.Empty;
     public DateTime StartDate { get; set; }

@@ -1,0 +1,272 @@
+@page "/sprints/create"
+@page "/teams/{TeamId:guid}/sprints/create"
+@page "/teams/{TeamId:guid}/sprints/{SprintId:guid}/edit"
+
+@using System.ComponentModel.DataAnnotations
+@using ScrumOps.Shared.Contracts.Sprints
+@using ScrumOps.Shared.Contracts.Teams
+@using ScrumOps.Web.Services
+@inject ISprintService SprintService
+@inject ITeamService TeamService
+@inject INotificationService NotificationService
+@inject NavigationManager Navigation
+@inject ILogger<SprintFormComponent> Logger
+@rendermode InteractiveServer
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">@(IsEditMode ? "Edit Sprint" : "Create New Sprint")</h4>
+                </div>
+                <div class="card-body">
+                    @if (isLoading)
+                    {
+                        <div class="text-center">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <EditForm Model="formModel" OnValidSubmit="HandleSubmit">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary class="alert alert-danger" />
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="teamSelect" class="form-label">Team *</label>
+                                        <select id="teamSelect" class="form-select" @bind="formModel.TeamId" disabled="@IsEditMode">
+                                            <option value="">Select a team...</option>
+                                            @if (teams != null)
+                                            {
+                                                @foreach (var team in teams)
+                                                {
+                                                    <option value="@team.Id">@team.Name</option>
+                                                }
+                                            }
+                                        </select>
+                                        <ValidationMessage For="@(() => formModel.TeamId)" class="text-danger" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="sprintCapacity" class="form-label">Sprint Capacity *</label>
+                                        <InputNumber id="sprintCapacity" class="form-control" @bind-Value="formModel.Capacity" />
+                                        <ValidationMessage For="@(() => formModel.Capacity)" class="text-danger" />
+                                        <div class="form-text">Total story points the team can commit to</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="sprintGoal" class="form-label">Sprint Goal *</label>
+                                <InputTextArea id="sprintGoal" class="form-control" rows="3" @bind-Value="formModel.Goal" 
+                                               placeholder="What does the team want to achieve in this sprint?" />
+                                <ValidationMessage For="@(() => formModel.Goal)" class="text-danger" />
+                                <div class="form-text">A clear, concise statement of what the team plans to accomplish</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="startDate" class="form-label">Start Date *</label>
+                                        <InputDate id="startDate" class="form-control" @bind-Value="formModel.StartDate" />
+                                        <ValidationMessage For="@(() => formModel.StartDate)" class="text-danger" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="endDate" class="form-label">End Date *</label>
+                                        <InputDate id="endDate" class="form-control" @bind-Value="formModel.EndDate" />
+                                        <ValidationMessage For="@(() => formModel.EndDate)" class="text-danger" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Sprint Duration</label>
+                                        <div class="form-control-plaintext">
+                                            @CalculateSprintDuration() days
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <button type="button" class="btn btn-secondary" @onclick="Cancel">
+                                    <i class="bi bi-x-circle"></i> Cancel
+                                </button>
+                                <button type="submit" class="btn btn-primary" disabled="@isSubmitting">
+                                    @if (isSubmitting)
+                                    {
+                                        <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                                    }
+                                    <i class="bi bi-check-circle"></i> @(IsEditMode ? "Update Sprint" : "Create Sprint")
+                                </button>
+                            </div>
+                        </EditForm>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Guid? TeamId { get; set; }
+    [Parameter] public Guid? SprintId { get; set; }
+
+    private bool IsEditMode => SprintId.HasValue;
+    private SprintFormModel formModel = new();
+    private IEnumerable<TeamSummary>? teams;
+    private bool isLoading = true;
+    private bool isSubmitting = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Load teams for selection
+            var teamsResponse = await TeamService.GetTeamsAsync();
+            teams = teamsResponse.Teams;
+
+            // Set team if provided in URL
+            if (TeamId.HasValue)
+            {
+                formModel.TeamId = TeamId.Value;
+            }
+
+            // Load sprint data if editing
+            if (IsEditMode && TeamId.HasValue && SprintId.HasValue)
+            {
+                var sprint = await SprintService.GetSprintAsync(TeamId.Value, SprintId.Value);
+                formModel = new SprintFormModel
+                {
+                    TeamId = Guid.Parse(sprint.TeamId.ToString()),
+                    Goal = sprint.Goal,
+                    StartDate = sprint.StartDate,
+                    EndDate = sprint.EndDate,
+                    Capacity = sprint.Capacity
+                };
+            }
+            else
+            {
+                // Set default dates for new sprint
+                formModel.StartDate = DateTime.Today.AddDays(1);
+                formModel.EndDate = DateTime.Today.AddDays(15); // 2-week sprint
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error loading sprint form data");
+            NotificationService.ShowError("Failed to load form data", "Error");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task HandleSubmit()
+    {
+        if (!formModel.TeamId.HasValue)
+        {
+            NotificationService.ShowError("Please select a team", "Validation Error");
+            return;
+        }
+
+        try
+        {
+            isSubmitting = true;
+
+            if (IsEditMode && SprintId.HasValue)
+            {
+                var updateRequest = new UpdateSprintRequest
+                {
+                    Goal = formModel.Goal,
+                    StartDate = formModel.StartDate,
+                    EndDate = formModel.EndDate,
+                    Capacity = formModel.Capacity
+                };
+
+                await SprintService.UpdateSprintAsync(formModel.TeamId.Value, SprintId.Value, updateRequest);
+                NotificationService.ShowSuccess($"Successfully updated sprint", "Sprint Updated");
+                Navigation.NavigateTo($"/teams/{formModel.TeamId.Value}/sprints/{SprintId.Value}");
+            }
+            else
+            {
+                var createRequest = new CreateSprintRequest
+                {
+                    TeamId = formModel.TeamId.Value, // Already a Guid
+                    Goal = formModel.Goal,
+                    StartDate = formModel.StartDate,
+                    EndDate = formModel.EndDate,
+                    Capacity = formModel.Capacity,
+                    BacklogItemIds = new()
+                };
+
+                var result = await SprintService.CreateSprintAsync(formModel.TeamId.Value, createRequest);
+                NotificationService.ShowSuccess($"Successfully created sprint", "Sprint Created");
+                Navigation.NavigateTo($"/teams/{formModel.TeamId.Value}/sprints/{result.Id}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error {Action} sprint", IsEditMode ? "updating" : "creating");
+            NotificationService.ShowError($"Failed to {(IsEditMode ? "update" : "create")} sprint", "Error");
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+
+    private void Cancel()
+    {
+        if (IsEditMode && TeamId.HasValue && SprintId.HasValue)
+        {
+            Navigation.NavigateTo($"/teams/{TeamId.Value}/sprints/{SprintId.Value}");
+        }
+        else if (TeamId.HasValue)
+        {
+            Navigation.NavigateTo($"/teams/{TeamId.Value}/sprints");
+        }
+        else
+        {
+            Navigation.NavigateTo("/sprints");
+        }
+    }
+
+    private int CalculateSprintDuration()
+    {
+        return (formModel.EndDate - formModel.StartDate).Days;
+    }
+
+    private class SprintFormModel
+    {
+        [Required(ErrorMessage = "Team is required")]
+        public Guid? TeamId { get; set; }
+
+        [Required(ErrorMessage = "Sprint goal is required")]
+        [StringLength(200, MinimumLength = 5, ErrorMessage = "Sprint goal must be between 5 and 200 characters")]
+        public string Goal { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Start date is required")]
+        public DateTime StartDate { get; set; } = DateTime.Today;
+
+        [Required(ErrorMessage = "End date is required")]
+        public DateTime EndDate { get; set; } = DateTime.Today.AddDays(14);
+
+        [Required(ErrorMessage = "Capacity is required")]
+        [Range(1, 200, ErrorMessage = "Capacity must be between 1 and 200 story points")]
+        public int Capacity { get; set; } = 20;
+    }
+}

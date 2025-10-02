@@ -1,0 +1,476 @@
+@page "/teams/{TeamId:guid}/backlog"
+
+@using ScrumOps.Shared.Contracts.ProductBacklog
+@using ScrumOps.Shared.Contracts.Teams
+@using ScrumOps.Web.Services
+@inject IProductBacklogService ProductBacklogService
+@inject ITeamService TeamService
+@inject INotificationService NotificationService
+@inject NavigationManager Navigation
+@inject ILogger<BacklogItemListComponent> Logger
+@rendermode InteractiveServer
+
+<div class="container-fluid">
+    @if (isLoading)
+    {
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row mb-4">
+            <div class="col">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2>@teamName Product Backlog</h2>
+                        <p class="text-muted">Manage and prioritize your team's work items</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" @onclick="NavigateToAddItem">
+                            <i class="bi bi-plus-circle"></i> Add Item
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters and Controls -->
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <select class="form-select form-select-sm" @onchange="OnStatusFilterChanged">
+                    <option value="">All Statuses</option>
+                    <option value="New">New</option>
+                    <option value="Ready">Ready</option>
+                    <option value="InProgress">In Progress</option>
+                    <option value="Done">Done</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-select form-select-sm" @onchange="OnTypeFilterChanged">
+                    <option value="">All Types</option>
+                    <option value="UserStory">User Story</option>
+                    <option value="Epic">Epic</option>
+                    <option value="Task">Task</option>
+                    <option value="Bug">Bug</option>
+                    <option value="Feature">Feature</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" placeholder="Search items..." @bind="searchText" @oninput="OnSearchChanged">
+                    <span class="input-group-text">
+                        <i class="bi bi-search"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        @if (productBacklog?.Items?.Any() == true)
+        {
+            <!-- Backlog Summary -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body py-2">
+                            <h6 class="card-title mb-1">Total Items</h6>
+                            <h4 class="text-primary">@filteredItems.Count()</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body py-2">
+                            <h6 class="card-title mb-1">Story Points</h6>
+                            <h4 class="text-info">@filteredItems.Where(i => i.StoryPoints.HasValue).Sum(i => i.StoryPoints.Value)</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body py-2">
+                            <h6 class="card-title mb-1">Ready Items</h6>
+                            <h4 class="text-success">@filteredItems.Count(i => i.Status == "Ready")</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body py-2">
+                            <h6 class="card-title mb-1">Completed</h6>
+                            <h4 class="text-warning">@filteredItems.Count(i => i.Status == "Done")</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Backlog Items Table -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Backlog Items (@filteredItems.Count())</h5>
+                        <div class="btn-group btn-group-sm">
+                            <button type="button" class="btn @(viewMode == "table" ? "btn-primary" : "btn-outline-primary")" @onclick='() => SetViewMode("table")'>
+                                <i class="bi bi-table"></i> Table
+                            </button>
+                            <button type="button" class="btn @(viewMode == "cards" ? "btn-primary" : "btn-outline-primary")" @onclick='() => SetViewMode("cards")'>
+                                <i class="bi bi-grid-3x3-gap"></i> Cards
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    @if (viewMode == "table")
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th>Priority</th>
+                                        <th>Title</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>Story Points</th>
+                                        <th>Created</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in filteredItems.OrderBy(i => i.Priority).ThenByDescending(i => i.CreatedDate))
+                                    {
+                                        <tr class="@GetRowClass(item.Status)">
+                                            <td>
+                                                <span class="badge @GetPriorityBadgeClass(item.Priority)">
+                                                    @item.Priority
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <strong>@item.Title</strong>
+                                                    @if (!string.IsNullOrEmpty(item.Description) && item.Description.Length > 50)
+                                                    {
+                                                        <br><small class="text-muted">@(item.Description.Substring(0, 50))...</small>
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="badge @GetTypeBadgeClass(item.Type)">
+                                                    @GetTypeDisplayText(item.Type)
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="badge @GetStatusBadgeClass(item.Status)">
+                                                    @item.Status
+                                                </span>
+                                            </td>
+                                            <td>
+                                                @if (item.StoryPoints.HasValue)
+                                                {
+                                                    <span class="badge bg-info">@item.StoryPoints</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">-</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <small class="text-muted">@item.CreatedDate.ToString("MMM dd")</small>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group btn-group-sm">
+                                                    <button class="btn btn-outline-primary btn-sm" @onclick="() => NavigateToDetails(item.Id.Value)">
+                                                        <i class="bi bi-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-outline-secondary btn-sm" @onclick="() => NavigateToEdit(item.Id.Value)">
+                                                        <i class="bi bi-pencil"></i>
+                                                    </button>
+                                                    <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteItem(item.Id.Value, item.Title)">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="p-3">
+                            <div class="row">
+                                @foreach (var item in filteredItems.OrderBy(i => i.Priority).ThenByDescending(i => i.CreatedDate))
+                                {
+                                    <div class="col-md-6 col-lg-4 mb-3">
+                                        <div class="card h-100 border-start border-3 @GetItemBorderClass(item.Status)">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                                    <h6 class="card-title mb-0">@item.Title</h6>
+                                                    <span class="badge @GetStatusBadgeClass(item.Status)">
+                                                        @item.Status
+                                                    </span>
+                                                </div>
+                                                
+                                                <p class="card-text small text-muted">
+                                                    @(item.Description.Length > 100 ? item.Description.Substring(0, 100) + "..." : item.Description)
+                                                </p>
+
+                                                <div class="row text-sm mb-2">
+                                                    <div class="col">
+                                                        <span class="badge @GetTypeBadgeClass(item.Type) me-1">
+                                                            @GetTypeDisplayText(item.Type)
+                                                        </span>
+                                                        <span class="badge @GetPriorityBadgeClass(item.Priority)">
+                                                            P@item.Priority
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <small class="text-muted">
+                                                        @if (item.StoryPoints.HasValue)
+                                                        {
+                                                            <span><i class="bi bi-star-fill"></i> @item.StoryPoints pts</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span><i class="bi bi-star"></i> Not estimated</span>
+                                                        }
+                                                    </small>
+                                                    <small class="text-muted">
+                                                        @item.CreatedDate.ToString("MMM dd")
+                                                    </small>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer">
+                                                <div class="btn-group w-100">
+                                                    <button class="btn btn-outline-primary btn-sm" @onclick="() => NavigateToDetails(item.Id.Value)">
+                                                        <i class="bi bi-eye"></i> View
+                                                    </button>
+                                                    <button class="btn btn-outline-secondary btn-sm" @onclick="() => NavigateToEdit(item.Id.Value)">
+                                                        <i class="bi bi-pencil"></i> Edit
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <i class="bi bi-list-ul display-4 text-muted"></i>
+                <h4 class="mt-3">No Backlog Items</h4>
+                <p class="text-muted">Create your first backlog item to get started with planning.</p>
+                <button class="btn btn-primary" @onclick="NavigateToAddItem">
+                    <i class="bi bi-plus-circle"></i> Add First Item
+                </button>
+            </div>
+        }
+    }
+</div>
+
+@code {
+    [Parameter] public Guid TeamId { get; set; }
+
+    private ProductBacklogResponse? productBacklog;
+    private string teamName = "";
+    private bool isLoading = true;
+    private string viewMode = "table";
+    private string searchText = "";
+    private string selectedStatus = "";
+    private string selectedType = "";
+
+    private IEnumerable<BacklogItemSummary> filteredItems => 
+        productBacklog?.Items?.Where(FilterItem) ?? Enumerable.Empty<BacklogItemSummary>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        try
+        {
+            isLoading = true;
+            
+            // Load team info
+            var team = await TeamService.GetTeamAsync(TeamId);
+            teamName = team?.Name ?? "Unknown Team";
+            
+            // Load product backlog
+            productBacklog = await ProductBacklogService.GetProductBacklogAsync(TeamId);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to load backlog data for team {TeamId}", TeamId);
+            NotificationService.ShowError("Failed to load backlog data", "Error");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private bool FilterItem(BacklogItemSummary item)
+    {
+        if (!string.IsNullOrEmpty(selectedStatus) && item.Status != selectedStatus)
+            return false;
+
+        if (!string.IsNullOrEmpty(selectedType) && item.Type != selectedType)
+            return false;
+
+        if (!string.IsNullOrEmpty(searchText) && 
+            !item.Title.Contains(searchText, StringComparison.OrdinalIgnoreCase) &&
+            !item.Description.Contains(searchText, StringComparison.OrdinalIgnoreCase))
+            return false;
+
+        return true;
+    }
+
+    private void OnStatusFilterChanged(ChangeEventArgs e)
+    {
+        selectedStatus = e.Value?.ToString() ?? "";
+        StateHasChanged();
+    }
+
+    private void OnTypeFilterChanged(ChangeEventArgs e)
+    {
+        selectedType = e.Value?.ToString() ?? "";
+        StateHasChanged();
+    }
+
+    private void OnSearchChanged(ChangeEventArgs e)
+    {
+        searchText = e.Value?.ToString() ?? "";
+        StateHasChanged();
+    }
+
+    private void SetViewMode(string mode)
+    {
+        viewMode = mode;
+    }
+
+    private void NavigateToAddItem()
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/backlog/add-item");
+    }
+
+    private void NavigateToDetails(Guid itemId)
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/backlog/items/{itemId}");
+    }
+
+    private void NavigateToEdit(Guid itemId)
+    {
+        Navigation.NavigateTo($"/teams/{TeamId}/backlog/items/{itemId}/edit");
+    }
+
+    private async Task DeleteItem(Guid itemId, string title)
+    {
+        try
+        {
+            var confirmed = await NotificationService.ShowConfirmation(
+                $"Are you sure you want to delete '{title}'?",
+                "Confirm Deletion"
+            );
+
+            if (confirmed)
+            {
+                var success = await ProductBacklogService.DeleteBacklogItemAsync(TeamId, itemId);
+                if (success)
+                {
+                    NotificationService.ShowSuccess("Item deleted successfully", "Item Deleted");
+                    await LoadData(); // Refresh the list
+                }
+                else
+                {
+                    NotificationService.ShowError("Failed to delete item", "Delete Failed");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error deleting backlog item {ItemId}", itemId);
+            NotificationService.ShowError("An error occurred while deleting the item", "Error");
+        }
+    }
+
+    private static string GetRowClass(string status)
+    {
+        return status.ToLower() switch
+        {
+            "done" => "table-success",
+            "inprogress" => "table-warning",
+            _ => ""
+        };
+    }
+
+    private static string GetTypeBadgeClass(string type)
+    {
+        return type.ToLower() switch
+        {
+            "userstory" => "bg-primary",
+            "epic" => "bg-purple",
+            "task" => "bg-info",
+            "bug" => "bg-danger",
+            "feature" => "bg-success",
+            _ => "bg-secondary"
+        };
+    }
+
+    private static string GetTypeDisplayText(string type)
+    {
+        return type.ToLower() switch
+        {
+            "userstory" => "Story",
+            "epic" => "Epic",
+            "task" => "Task",
+            "bug" => "Bug",
+            "feature" => "Feature",
+            _ => type
+        };
+    }
+
+    private static string GetStatusBadgeClass(string status)
+    {
+        return status.ToLower() switch
+        {
+            "new" => "bg-secondary",
+            "ready" => "bg-primary",
+            "inprogress" => "bg-warning",
+            "done" => "bg-success",
+            _ => "bg-secondary"
+        };
+    }
+
+    private static string GetPriorityBadgeClass(int priority)
+    {
+        return priority switch
+        {
+            <= 10 => "bg-success",
+            <= 50 => "bg-warning",
+            <= 100 => "bg-danger",
+            _ => "bg-secondary"
+        };
+    }
+
+    private static string GetItemBorderClass(string status)
+    {
+        return status.ToLower() switch
+        {
+            "done" => "border-success",
+            "inprogress" => "border-warning",
+            "ready" => "border-primary",
+            _ => "border-secondary"
+        };
+    }
+}

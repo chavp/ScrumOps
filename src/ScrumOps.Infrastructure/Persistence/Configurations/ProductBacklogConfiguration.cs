@@ -54,9 +54,9 @@ public class ProductBacklogConfiguration : IEntityTypeConfiguration<ProductBackl
         builder.Ignore(pb => pb.DomainEvents);
 
         // Configure indexes
-        builder.HasIndex(pb => new { pb.Id, pb.TeamId })
+        builder.HasIndex(pb => pb.TeamId)
             .IsUnique()
-            .HasDatabaseName("IX_ProductBacklogs_Id_TeamId");
+            .HasDatabaseName("IX_ProductBacklogs_TeamId");
 
         builder.HasIndex(pb => pb.CreatedDate)
             .HasDatabaseName("IX_ProductBacklogs_CreatedDate");

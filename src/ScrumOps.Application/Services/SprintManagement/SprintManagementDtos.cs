@@ -19,6 +19,8 @@ public class GetSprintsResponse
 public class SprintDto
 {
     public Guid Id { get; set; }
+    public Guid TeamId { get; set; }
+    public string TeamName { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
     public string Goal { get; set; } = string.Empty;
     public DateTime StartDate { get; set; }

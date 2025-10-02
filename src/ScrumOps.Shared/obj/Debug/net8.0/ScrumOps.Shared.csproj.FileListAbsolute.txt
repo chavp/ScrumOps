@@ -22,3 +22,15 @@ D:\github\ScrumOps\src\ScrumOps.Shared\obj\Debug\net8.0\ScrumOps.Shared.dll
 D:\github\ScrumOps\src\ScrumOps.Shared\obj\Debug\net8.0\refint\ScrumOps.Shared.dll
 D:\github\ScrumOps\src\ScrumOps.Shared\obj\Debug\net8.0\ScrumOps.Shared.pdb
 D:\github\ScrumOps\src\ScrumOps.Shared\obj\Debug\net8.0\ref\ScrumOps.Shared.dll
+C:\data\ScrumOps\src\ScrumOps.Shared\bin\Debug\net8.0\ScrumOps.Shared.deps.json
+C:\data\ScrumOps\src\ScrumOps.Shared\bin\Debug\net8.0\ScrumOps.Shared.dll
+C:\data\ScrumOps\src\ScrumOps.Shared\bin\Debug\net8.0\ScrumOps.Shared.pdb
+C:\data\ScrumOps\src\ScrumOps.Shared\obj\Debug\net8.0\ScrumOps.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\data\ScrumOps\src\ScrumOps.Shared\obj\Debug\net8.0\ScrumOps.Shared.AssemblyInfoInputs.cache
+C:\data\ScrumOps\src\ScrumOps.Shared\obj\Debug\net8.0\ScrumOps.Shared.AssemblyInfo.cs
+C:\data\ScrumOps\src\ScrumOps.Shared\obj\Debug\net8.0\ScrumOps.Shared.csproj.CoreCompileInputs.cache
+C:\data\ScrumOps\src\ScrumOps.Shared\obj\Debug\net8.0\ScrumOps.Shared.sourcelink.json
+C:\data\ScrumOps\src\ScrumOps.Shared\obj\Debug\net8.0\ScrumOps.Shared.dll
+C:\data\ScrumOps\src\ScrumOps.Shared\obj\Debug\net8.0\refint\ScrumOps.Shared.dll
+C:\data\ScrumOps\src\ScrumOps.Shared\obj\Debug\net8.0\ScrumOps.Shared.pdb
+C:\data\ScrumOps\src\ScrumOps.Shared\obj\Debug\net8.0\ref\ScrumOps.Shared.dll
