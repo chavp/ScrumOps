@@ -58,7 +58,7 @@ public class TeamListComponentTests : TestContext
             {
                 new()
                 {
-                    Id = 1,
+                    Id = Guid.NewGuid(),
                     Name = "Alpha Team",
                     Description = "Frontend development team",
                     SprintLengthWeeks = 2,
@@ -69,7 +69,7 @@ public class TeamListComponentTests : TestContext
                 },
                 new()
                 {
-                    Id = 2,
+                    Id = Guid.NewGuid(),
                     Name = "Beta Team",
                     Description = "Backend development team",
                     SprintLengthWeeks = 3,
@@ -110,7 +110,7 @@ public class TeamListComponentTests : TestContext
             {
                 new()
                 {
-                    Id = 1,
+                    Id = Guid.NewGuid(),
                     Name = "Active Team",
                     Description = "Active team",
                     IsActive = true,
@@ -121,7 +121,7 @@ public class TeamListComponentTests : TestContext
                 },
                 new()
                 {
-                    Id = 2,
+                    Id = Guid.NewGuid(),
                     Name = "Inactive Team",
                     Description = "Inactive team",
                     IsActive = false,
@@ -181,7 +181,7 @@ public class TeamListComponentTests : TestContext
             {
                 new()
                 {
-                    Id = 1,
+                    Id = Guid.NewGuid(),
                     Name = "Test Team",
                     Description = "Test description",
                     IsActive = true,
@@ -250,7 +250,7 @@ public class TeamListComponentTests : TestContext
             {
                 new()
                 {
-                    Id = 1,
+                    Id = Guid.NewGuid(),
                     Name = "Test Team",
                     Description = "Test team",
                     SprintLengthWeeks = 4,

@@ -1,11 +1,13 @@
 @page "/teams/create"
-@page "/teams/{TeamId:int}/edit"
+@page "/teams/{TeamId:guid}/edit"
 @using System.ComponentModel.DataAnnotations
 @using ScrumOps.Shared.Contracts.Teams
 @using ScrumOps.Web.Services
 @inject ITeamService TeamService
+@inject INotificationService NotificationService
 @inject NavigationManager Navigation
 @inject ILogger<TeamFormComponent> Logger
+@rendermode InteractiveServer
 
 <div class="container">
     <div class="row justify-content-center">
@@ -39,7 +41,7 @@
                         </div>
 
                         <div class="d-flex justify-content-between">
-                            <button type="button" class="btn btn-secondary" @onclick="Cancel">
+                            <button type="button" class="btn btn-secondary" @onclick="Cancel" @onclick:preventDefault="true">
                                 <i class="bi bi-x-circle"></i> Cancel
                             </button>
                             <button type="submit" class="btn btn-primary" disabled="@isSubmitting">
@@ -59,7 +61,7 @@
 </div>
 
 @code {
-    [Parameter] public int? TeamId { get; set; }
+    [Parameter] public Guid? TeamId { get; set; }
 
     private TeamFormModel formModel = new();
     private bool isSubmitting = false;
@@ -108,6 +110,7 @@
                 };
 
                 await TeamService.UpdateTeamAsync(TeamId.Value, updateRequest);
+                NotificationService.ShowSuccess("Team updated successfully", "Success");
                 Navigation.NavigateTo($"/teams/{TeamId.Value}");
             }
             else
@@ -120,13 +123,14 @@
                 };
 
                 var result = await TeamService.CreateTeamAsync(createRequest);
+                NotificationService.ShowSuccess($"Team '{formModel.Name}' created successfully", "Success");
                 Navigation.NavigateTo($"/teams/{result.Id}");
             }
         }
         catch (Exception ex)
         {
             Logger.LogError(ex, "Failed to {Action} team", IsEditMode ? "update" : "create");
-            // Could show a toast notification here
+            NotificationService.ShowError($"Failed to {(IsEditMode ? "update" : "create")} team. Please try again.", "Error");
         }
         finally
         {

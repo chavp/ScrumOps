@@ -8,22 +8,24 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 // Add HTTP client services
+var baseAddress = new Uri("http://localhost:8080");
 builder.Services.AddHttpClient<ITeamService, TeamService>(client =>
 {
-    client.BaseAddress = new Uri("http://localhost:5225");
+    client.BaseAddress = baseAddress;
 });
 
 builder.Services.AddHttpClient<IProductBacklogService, ProductBacklogService>(client =>
 {
-    client.BaseAddress = new Uri("http://localhost:5225");
+    client.BaseAddress = baseAddress;
 });
 
 builder.Services.AddHttpClient<ISprintService, SprintService>(client =>
 {
-    client.BaseAddress = new Uri("http://localhost:5225");
+    client.BaseAddress = baseAddress;
 });
 
-// Add logging
+// Add application services
+builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddLogging();
 
 var app = builder.Build();

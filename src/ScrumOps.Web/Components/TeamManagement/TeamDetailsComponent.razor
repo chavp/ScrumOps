@@ -1,9 +1,11 @@
-@page "/teams/{TeamId:int}"
+@page "/teams/{TeamId:guid}"
 @using ScrumOps.Shared.Contracts.Teams
 @using ScrumOps.Web.Services
+@using ScrumOps.Web.Components.TeamManagement
 @inject ITeamService TeamService
 @inject NavigationManager Navigation
 @inject ILogger<TeamDetailsComponent> Logger
+@rendermode InteractiveServer
 
 <div class="container-fluid">
     @if (isLoading)
@@ -86,7 +88,12 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0">Team Members</h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Team Members</h5>
+                            <button type="button" class="btn btn-sm btn-success" @onclick="ShowAddMemberModal" @onclick:preventDefault="true">
+                                <i class="bi bi-person-plus"></i> Add Member
+                            </button>
+                        </div>
                     </div>
                     <div class="card-body">
                         @if (team.Members.Any())
@@ -99,6 +106,7 @@
                                             <th>Email</th>
                                             <th>Role</th>
                                             <th>Status</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -124,6 +132,14 @@
                                                         @(member.IsActive ? "Active" : "Inactive")
                                                     </span>
                                                 </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-sm btn-outline-danger" 
+                                                            @onclick="@(() => RemoveMember(member.Id))"
+                                                            @onclick:preventDefault="true"
+                                                            title="Remove Member">
+                                                        <i class="bi bi-person-dash"></i>
+                                                    </button>
+                                                </td>
                                             </tr>
                                         }
                                     </tbody>
@@ -132,7 +148,13 @@
                         }
                         else
                         {
-                            <p class="text-muted">No team members found.</p>
+                            <div class="text-center py-4">
+                                <i class="bi bi-people display-4 text-muted"></i>
+                                <p class="text-muted mt-2">No team members found.</p>
+                                <button type="button" class="btn btn-success" @onclick="ShowAddMemberModal" @onclick:preventDefault="true">
+                                    <i class="bi bi-person-plus"></i> Add First Member
+                                </button>
+                            </div>
                         }
                     </div>
                 </div>
@@ -144,20 +166,56 @@
                     </div>
                     <div class="card-body">
                         <div class="d-grid gap-2">
-                            <button class="btn btn-primary" @onclick="NavigateToEdit">
+                            <button type="button" class="btn btn-primary" @onclick="NavigateToEdit" @onclick:preventDefault="true">
                                 <i class="bi bi-pencil"></i> Edit Team
                             </button>
-                            <button class="btn btn-success">
+                            <button type="button" class="btn btn-success" @onclick="ShowAddMemberModal" @onclick:preventDefault="true">
                                 <i class="bi bi-person-plus"></i> Add Member
                             </button>
-                            <button class="btn btn-info">
+                            <button type="button" class="btn btn-info" @onclick:preventDefault="true">
                                 <i class="bi bi-calendar-plus"></i> Start Sprint
                             </button>
-                            <button class="btn btn-secondary">
+                            <button type="button" class="btn btn-secondary" @onclick:preventDefault="true">
                                 <i class="bi bi-list-check"></i> View Backlog
+                            </button>
+                            <button type="button" class="btn btn-outline-danger" @onclick="@(() => ConfirmDeleteTeam())" @onclick:preventDefault="true">
+                                <i class="bi bi-trash"></i> Delete Team
                             </button>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Metrics Section -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <ul class="nav nav-tabs" id="metricsTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button type="button" class="nav-link @(activeMetricsTab == "velocity" ? "active" : "")" 
+                                @onclick='@(() => SetActiveMetricsTab("velocity"))' 
+                                @onclick:preventDefault="true">
+                            <i class="bi bi-bar-chart"></i> Velocity
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button type="button" class="nav-link @(activeMetricsTab == "metrics" ? "active" : "")" 
+                                @onclick='@(() => SetActiveMetricsTab("metrics"))' 
+                                @onclick:preventDefault="true">
+                            <i class="bi bi-speedometer2"></i> Metrics
+                        </button>
+                    </li>
+                </ul>
+                
+                <div class="tab-content mt-3">
+                    @if (activeMetricsTab == "velocity")
+                    {
+                        <TeamVelocityComponent TeamId="TeamId" />
+                    }
+                    else if (activeMetricsTab == "metrics")
+                    {
+                        <TeamMetricsComponent TeamId="TeamId" />
+                    }
                 </div>
             </div>
         </div>
@@ -167,12 +225,19 @@
         <div class="text-center py-5">
             <h4>Team not found</h4>
             <p class="text-muted">The requested team could not be found.</p>
-            <button class="btn btn-primary" @onclick="NavigateToTeams">
+            <button type="button" class="btn btn-primary" @onclick="NavigateToTeams" @onclick:preventDefault="true">
                 <i class="bi bi-arrow-left"></i> Back to Teams
             </button>
         </div>
     }
 </div>
+
+@if (showAddMemberModal)
+{
+    <TeamMemberFormComponent TeamId="TeamId" 
+                           OnMemberAdded="OnMemberAdded" 
+                           OnCancel="HideAddMemberModal" />
+}
 
 <style>
     .avatar-circle {
@@ -190,10 +255,12 @@
 </style>
 
 @code {
-    [Parameter] public int TeamId { get; set; }
+    [Parameter] public Guid TeamId { get; set; }
 
     private TeamDetailsResponse? team;
     private bool isLoading = true;
+    private bool showAddMemberModal = false;
+    private string activeMetricsTab = "velocity";
 
     protected override async Task OnInitializedAsync()
     {
@@ -253,5 +320,62 @@
             "Developer" => "Developer",
             _ => role
         };
+    }
+
+    private void ShowAddMemberModal()
+    {
+        showAddMemberModal = true;
+    }
+
+    private void HideAddMemberModal()
+    {
+        showAddMemberModal = false;
+    }
+
+    private async Task OnMemberAdded()
+    {
+        showAddMemberModal = false;
+        await LoadTeam(); // Refresh team data
+    }
+
+    private async Task RemoveMember(Guid memberId)
+    {
+        try
+        {
+            var success = await TeamService.RemoveTeamMemberAsync(TeamId, memberId);
+            if (success)
+            {
+                await LoadTeam(); // Refresh team data
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to remove member {MemberId} from team {TeamId}", memberId, TeamId);
+        }
+    }
+
+    private async Task ConfirmDeleteTeam()
+    {
+        // In a real app, show a confirmation dialog
+        if (team != null)
+        {
+            try
+            {
+                var success = await TeamService.DeleteTeamAsync(TeamId);
+                if (success)
+                {
+                    Navigation.NavigateTo("/teams");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Failed to delete team {TeamId}", TeamId);
+            }
+        }
+    }
+
+    private void SetActiveMetricsTab(string tab)
+    {
+        activeMetricsTab = tab;
     }
 }

@@ -7,14 +7,17 @@ namespace ScrumOps.Api.DTOs;
 public record CreateTeamRequest(
     string Name,
     string? Description,
-    int SprintLengthWeeks,
-    string? ProductOwnerEmail,
-    string? ScrumMasterEmail);
+    int SprintLengthWeeks);
 
 public record UpdateTeamRequest(
     string Name,
     string? Description,
     int SprintLengthWeeks);
+
+public record AddTeamMemberRequest(
+    string Name,
+    string Email,
+    string Role);
 
 public record CreateSprintRequest(
     string Name,

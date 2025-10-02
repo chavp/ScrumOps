@@ -1,0 +1,254 @@
+@using ScrumOps.Shared.Contracts.Teams
+@using ScrumOps.Web.Services
+@inject ITeamService TeamService
+@inject NavigationManager Navigation
+@inject ILogger<TeamDashboardComponent> Logger
+@rendermode InteractiveServer
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h2>Team Management Dashboard</h2>
+            <p class="text-muted">Overview of all teams and their performance metrics</p>
+        </div>
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary" @onclick="NavigateToCreateTeam" @onclick:preventDefault="true">
+                <i class="bi bi-plus-circle"></i> Create New Team
+            </button>
+        </div>
+    </div>
+
+    @if (isLoading)
+    {
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+    else if (teams?.Any() == true)
+    {
+        <!-- Summary Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title mb-0">Total Teams</h6>
+                                <h2 class="mb-0">@teams.Count()</h2>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="bi bi-people-fill fs-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title mb-0">Active Teams</h6>
+                                <h2 class="mb-0">@teams.Count(t => t.IsActive)</h2>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="bi bi-check-circle-fill fs-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title mb-0">Total Members</h6>
+                                <h2 class="mb-0">@teams.Sum(t => t.MemberCount)</h2>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="bi bi-person-fill fs-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title mb-0">Avg Velocity</h6>
+                                <h2 class="mb-0">@(teams.Any() ? teams.Average(t => t.Velocity).ToString("F1") : "0.0")</h2>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="bi bi-speedometer2 fs-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Teams Table -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Team Performance Overview</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Team Name</th>
+                                <th>Members</th>
+                                <th>Sprint Length</th>
+                                <th>Velocity</th>
+                                <th>Status</th>
+                                <th>Current Sprint</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var team in teams.OrderByDescending(t => t.IsActive).ThenBy(t => t.Name))
+                            {
+                                <tr class="@(team.IsActive ? "" : "table-secondary")">
+                                    <td>
+                                        <div>
+                                            <strong>@team.Name</strong>
+                                            @if (!string.IsNullOrEmpty(team.Description))
+                                            {
+                                                <br />
+                                                <small class="text-muted">@team.Description</small>
+                                            }
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-light text-dark">
+                                            <i class="bi bi-people"></i> @team.MemberCount
+                                        </span>
+                                    </td>
+                                    <td>@team.SprintLengthWeeks weeks</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <span class="me-2">@team.Velocity.ToString("F1")</span>
+                                            @if (team.Velocity > 0)
+                                            {
+                                                <div class="progress" style="width: 50px; height: 8px;">
+                                                    <div class="progress-bar bg-@GetVelocityColor(team.Velocity)" 
+                                                         style="width: @Math.Min(team.Velocity * 10, 100)%"></div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="badge @(team.IsActive ? "bg-success" : "bg-secondary")">
+                                            @(team.IsActive ? "Active" : "Inactive")
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @if (team.CurrentSprintId.HasValue)
+                                        {
+                                            <span class="badge bg-primary">In Progress</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">No active sprint</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button type="button" class="btn btn-outline-primary" @onclick="@(() => NavigateToDetails(team.Id))" @onclick:preventDefault="true" title="View Details">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-outline-secondary" @onclick="@(() => NavigateToEdit(team.Id))" @onclick:preventDefault="true" title="Edit Team">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <div class="mb-3">
+                <i class="bi bi-people display-1 text-muted"></i>
+            </div>
+            <h4>No teams found</h4>
+            <p class="text-muted mb-4">Get started by creating your first Scrum team to manage your projects effectively.</p>
+            <button type="button" class="btn btn-primary btn-lg" @onclick="NavigateToCreateTeam" @onclick:preventDefault="true">
+                <i class="bi bi-plus-circle"></i> Create Your First Team
+            </button>
+        </div>
+    }
+</div>
+
+<style>
+    .progress {
+        border-radius: 4px;
+    }
+</style>
+
+@code {
+    [Parameter] public EventCallback<Guid> OnTeamSelected { get; set; }
+
+    private IEnumerable<TeamSummary>? teams;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadTeams();
+    }
+
+    private async Task LoadTeams()
+    {
+        try
+        {
+            isLoading = true;
+            var response = await TeamService.GetTeamsAsync();
+            teams = response.Teams;
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to load teams");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void NavigateToCreateTeam()
+    {
+        Navigation.NavigateTo("/teams/create");
+    }
+
+    private void NavigateToDetails(Guid teamId)
+    {
+        Navigation.NavigateTo($"/teams/{teamId}");
+    }
+
+    private void NavigateToEdit(Guid teamId)
+    {
+        Navigation.NavigateTo($"/teams/{teamId}/edit");
+    }
+
+    private string GetVelocityColor(decimal velocity)
+    {
+        return velocity switch
+        {
+            >= 8.0m => "success",
+            >= 5.0m => "info",
+            >= 2.0m => "warning",
+            _ => "danger"
+        };
+    }
+}

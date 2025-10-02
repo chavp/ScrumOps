@@ -8556,23 +8556,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mypar\\.nuget\\packages\\": {},
-    "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Parinya.c\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\github\\ScrumOps\\tests\\ScrumOps.Api.Tests\\ScrumOps.Api.Tests.csproj",
+      "projectUniqueName": "C:\\data\\ScrumOps\\tests\\ScrumOps.Api.Tests\\ScrumOps.Api.Tests.csproj",
       "projectName": "ScrumOps.Api.Tests",
-      "projectPath": "D:\\github\\ScrumOps\\tests\\ScrumOps.Api.Tests\\ScrumOps.Api.Tests.csproj",
-      "packagesPath": "C:\\Users\\mypar\\.nuget\\packages\\",
-      "outputPath": "D:\\github\\ScrumOps\\tests\\ScrumOps.Api.Tests\\obj\\",
+      "projectPath": "C:\\data\\ScrumOps\\tests\\ScrumOps.Api.Tests\\ScrumOps.Api.Tests.csproj",
+      "packagesPath": "C:\\Users\\Parinya.c\\.nuget\\packages\\",
+      "outputPath": "C:\\data\\ScrumOps\\tests\\ScrumOps.Api.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\mypar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Parinya.c\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -8588,11 +8588,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\github\\ScrumOps\\src\\ScrumOps.Api\\ScrumOps.Api.csproj": {
-              "projectPath": "D:\\github\\ScrumOps\\src\\ScrumOps.Api\\ScrumOps.Api.csproj"
+            "C:\\data\\ScrumOps\\src\\ScrumOps.Api\\ScrumOps.Api.csproj": {
+              "projectPath": "C:\\data\\ScrumOps\\src\\ScrumOps.Api\\ScrumOps.Api.csproj"
             },
-            "D:\\github\\ScrumOps\\src\\ScrumOps.Shared\\ScrumOps.Shared.csproj": {
-              "projectPath": "D:\\github\\ScrumOps\\src\\ScrumOps.Shared\\ScrumOps.Shared.csproj"
+            "C:\\data\\ScrumOps\\src\\ScrumOps.Shared\\ScrumOps.Shared.csproj": {
+              "projectPath": "C:\\data\\ScrumOps\\src\\ScrumOps.Shared\\ScrumOps.Shared.csproj"
             }
           }
         }

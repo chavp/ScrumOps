@@ -1,0 +1,115 @@
+@using ScrumOps.Shared.Contracts.Teams
+@using ScrumOps.Web.Services
+@using System.ComponentModel.DataAnnotations
+@inject ITeamService TeamService
+@inject INotificationService NotificationService
+@inject ILogger<TeamMemberFormComponent> Logger
+@rendermode InteractiveServer
+
+<div class="modal fade show" tabindex="-1" style="display: block; background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Team Member</h5>
+                <button type="button" class="btn-close" @onclick="OnCancel" @onclick:preventDefault="true"></button>
+            </div>
+            <div class="modal-body">
+                <EditForm Model="formModel" OnValidSubmit="HandleSubmit">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary class="alert alert-danger" />
+
+                    <div class="mb-3">
+                        <label for="memberName" class="form-label">Name *</label>
+                        <InputText id="memberName" class="form-control" @bind-Value="formModel.Name" placeholder="Enter member name" />
+                        <ValidationMessage For="@(() => formModel.Name)" class="text-danger" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="memberEmail" class="form-label">Email *</label>
+                        <InputText id="memberEmail" class="form-control" type="email" @bind-Value="formModel.Email" placeholder="Enter email address" />
+                        <ValidationMessage For="@(() => formModel.Email)" class="text-danger" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="memberRole" class="form-label">Role *</label>
+                        <InputSelect id="memberRole" class="form-select" @bind-Value="formModel.Role">
+                            <option value="">Select a role...</option>
+                            <option value="Developer">Developer</option>
+                            <option value="ScrumMaster">Scrum Master</option>
+                            <option value="ProductOwner">Product Owner</option>
+                        </InputSelect>
+                        <ValidationMessage For="@(() => formModel.Role)" class="text-danger" />
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-secondary" @onclick="OnCancel" @onclick:preventDefault="true" disabled="@isSubmitting">
+                            Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary" disabled="@isSubmitting">
+                            @if (isSubmitting)
+                            {
+                                <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                            }
+                            Add Member
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Guid TeamId { get; set; }
+    [Parameter] public EventCallback OnMemberAdded { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
+
+    private readonly TeamMemberFormModel formModel = new();
+    private bool isSubmitting = false;
+
+    private async Task HandleSubmit()
+    {
+        try
+        {
+            isSubmitting = true;
+
+            var request = new AddTeamMemberRequest
+            {
+                Name = formModel.Name,
+                Email = formModel.Email,
+                Role = formModel.Role
+            };
+
+            await TeamService.AddTeamMemberAsync(TeamId, request);
+            
+            Logger.LogInformation("Successfully added member {Name} ({Email}) to team {TeamId}", 
+                formModel.Name, formModel.Email, TeamId);
+
+            NotificationService.ShowSuccess($"Successfully added {formModel.Name} to the team", "Member Added");
+            await OnMemberAdded.InvokeAsync();
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to add member to team {TeamId}", TeamId);
+            NotificationService.ShowError("Failed to add team member. Please try again.", "Error");
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+
+    public class TeamMemberFormModel
+    {
+        [Required]
+        [StringLength(100, MinimumLength = 2)]
+        public string Name { get; set; } = string.Empty;
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } = string.Empty;
+
+        [Required]
+        public string Role { get; set; } = string.Empty;
+    }
+}

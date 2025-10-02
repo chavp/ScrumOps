@@ -70,9 +70,7 @@ public class TeamsController : ControllerBase
         var teamId = await _teamManagementService.CreateTeamAsync(
             request.Name,
             request.Description,
-            request.SprintLengthWeeks,
-            request.ProductOwnerEmail ?? string.Empty,
-            request.ScrumMasterEmail ?? string.Empty
+            request.SprintLengthWeeks
         );
         
         // Get the created team to return full details
@@ -191,5 +189,51 @@ public class TeamsController : ControllerBase
             return NotFound(this.NotFoundProblem("team", id));
 
         return Ok(result);
+    }
+
+    /// <summary>
+    /// Add a member to a team.
+    /// </summary>
+    /// <param name="id">Team ID</param>
+    /// <param name="request">Add member request</param>
+    /// <returns>Added team member</returns>
+    [HttpPost("{id:guid}/members")]
+    [ProducesResponseType(typeof(TeamMemberDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<TeamMemberDto>> AddTeamMember(Guid id, [FromBody] ScrumOps.Api.DTOs.AddTeamMemberRequest request)
+    {
+        var teamId = TeamId.From(id);
+        var memberId = await _teamManagementService.AddTeamMemberAsync(teamId, request.Name, request.Email, request.Role);
+        
+        // Get the added member to return
+        var teamMembers = await _teamManagementService.GetTeamMembersAsync(teamId);
+        var addedMember = teamMembers?.FirstOrDefault(m => m.Id == memberId.Value);
+
+        if (addedMember == null)
+            return NotFound(this.NotFoundProblem("team", id));
+
+        Response.Headers.Location = $"/api/teams/{id}/members/{memberId.Value}";
+        return StatusCode(201, addedMember);
+    }
+
+    /// <summary>
+    /// Remove a member from a team.
+    /// </summary>
+    /// <param name="id">Team ID</param>
+    /// <param name="memberId">Member ID</param>
+    /// <returns>No content on success</returns>
+    [HttpDelete("{id:guid}/members/{memberId:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> RemoveTeamMember(Guid id, Guid memberId)
+    {
+        var teamId = TeamId.From(id);
+        var userIdObj = UserId.From(memberId);
+        await _teamManagementService.RemoveTeamMemberAsync(teamId, userIdObj);
+        return NoContent();
     }
 }

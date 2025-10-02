@@ -65,4 +65,21 @@ public class ScrumRole : ValueObject
     /// </summary>
     /// <returns>The role name</returns>
     public override string ToString() => Name;
+
+    /// <summary>
+    /// Creates a ScrumRole from a string representation.
+    /// </summary>
+    /// <param name="roleName">The role name string</param>
+    /// <returns>The corresponding ScrumRole</returns>
+    /// <exception cref="ArgumentException">Thrown when the role name is not recognized</exception>
+    public static ScrumRole FromString(string roleName)
+    {
+        return roleName?.ToLowerInvariant() switch
+        {
+            "product owner" or "productowner" => ProductOwner,
+            "scrum master" or "scrummaster" => ScrumMaster,
+            "developer" => Developer,
+            _ => throw new ArgumentException($"Unknown role: {roleName}", nameof(roleName))
+        };
+    }
 }

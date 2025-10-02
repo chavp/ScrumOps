@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\github\\ScrumOps\\src\\ScrumOps.Domain\\ScrumOps.Domain.csproj": {}
+    "C:\\data\\ScrumOps\\src\\ScrumOps.Domain\\ScrumOps.Domain.csproj": {}
   },
   "projects": {
-    "D:\\github\\ScrumOps\\src\\ScrumOps.Domain\\ScrumOps.Domain.csproj": {
+    "C:\\data\\ScrumOps\\src\\ScrumOps.Domain\\ScrumOps.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\github\\ScrumOps\\src\\ScrumOps.Domain\\ScrumOps.Domain.csproj",
+        "projectUniqueName": "C:\\data\\ScrumOps\\src\\ScrumOps.Domain\\ScrumOps.Domain.csproj",
         "projectName": "ScrumOps.Domain",
-        "projectPath": "D:\\github\\ScrumOps\\src\\ScrumOps.Domain\\ScrumOps.Domain.csproj",
-        "packagesPath": "C:\\Users\\mypar\\.nuget\\packages\\",
-        "outputPath": "D:\\github\\ScrumOps\\src\\ScrumOps.Domain\\obj\\",
+        "projectPath": "C:\\data\\ScrumOps\\src\\ScrumOps.Domain\\ScrumOps.Domain.csproj",
+        "packagesPath": "C:\\Users\\Parinya.c\\.nuget\\packages\\",
+        "outputPath": "C:\\data\\ScrumOps\\src\\ScrumOps.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\mypar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Parinya.c\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

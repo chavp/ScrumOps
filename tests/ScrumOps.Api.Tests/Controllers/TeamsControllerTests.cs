@@ -40,7 +40,7 @@ public class TeamsControllerTests : IClassFixture<WebApplicationFactory<Program>
     public async Task GetTeam_WithValidId_ShouldReturnTeamDetails()
     {
         // Arrange
-        var teamId = 1;
+        var teamId = Guid.NewGuid();
 
         // Act
         var response = await _client.GetAsync($"/api/teams/{teamId}");

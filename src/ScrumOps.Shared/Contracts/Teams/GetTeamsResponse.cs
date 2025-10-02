@@ -14,13 +14,13 @@ public class GetTeamsResponse
 /// </summary>
 public class TeamSummary
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public int SprintLengthWeeks { get; set; }
     public decimal Velocity { get; set; }
     public int MemberCount { get; set; }
-    public int? CurrentSprintId { get; set; }
+    public Guid? CurrentSprintId { get; set; }
     public bool IsActive { get; set; }
     public DateTime CreatedDate { get; set; }
 }

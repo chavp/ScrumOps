@@ -42,7 +42,7 @@ public class TeamServiceTests : IDisposable
         {
             Teams = new List<TeamSummary>
             {
-                new() { Id = 1, Name = "Team Alpha", Description = "Test team", MemberCount = 5, IsActive = true }
+                new() { Id = Guid.NewGuid(), Name = "Team Alpha", Description = "Test team", MemberCount = 5, IsActive = true }
             },
             TotalCount = 1
         };
@@ -96,7 +96,7 @@ public class TeamServiceTests : IDisposable
     public async Task GetTeamAsync_WithValidId_ShouldReturnTeamDetails()
     {
         // Arrange
-        const int teamId = 1;
+        var teamId = Guid.NewGuid();
         var expectedTeam = new TeamDetailsResponse
         {
             Id = teamId,
@@ -107,7 +107,7 @@ public class TeamServiceTests : IDisposable
             IsActive = true,
             Members = new List<TeamMember>
             {
-                new() { Id = 1, Name = "John Doe", Email = "john@example.com", Role = "Developer" }
+                new() { Id = Guid.NewGuid(), Name = "John Doe", Email = "john@example.com", Role = "Developer" }
             }
         };
 
@@ -140,7 +140,7 @@ public class TeamServiceTests : IDisposable
     public async Task GetTeamAsync_WithNotFound_ShouldThrowException()
     {
         // Arrange
-        const int teamId = 999;
+        var teamId = Guid.NewGuid();
         var httpResponse = new HttpResponseMessage(HttpStatusCode.NotFound);
 
         _httpMessageHandlerMock
@@ -168,7 +168,7 @@ public class TeamServiceTests : IDisposable
 
         var expectedResponse = new TeamDetailsResponse
         {
-            Id = 2,
+            Id = Guid.NewGuid(),
             Name = createRequest.Name,
             Description = createRequest.Description,
             SprintLengthWeeks = createRequest.SprintLengthWeeks,
@@ -194,7 +194,7 @@ public class TeamServiceTests : IDisposable
 
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(2, result.Id);
+        Assert.Equal(expectedResponse.Id, result.Id);
         Assert.Equal("New Team", result.Name);
         Assert.Equal("Brand new team", result.Description);
         Assert.True(result.IsActive);
@@ -204,7 +204,7 @@ public class TeamServiceTests : IDisposable
     public async Task UpdateTeamAsync_WithValidRequest_ShouldReturnUpdatedTeam()
     {
         // Arrange
-        const int teamId = 1;
+        var teamId = Guid.NewGuid();
         var updateRequest = new UpdateTeamRequest
         {
             Name = "Updated Team",
@@ -250,7 +250,7 @@ public class TeamServiceTests : IDisposable
     public async Task DeleteTeamAsync_WithValidId_ShouldReturnTrue()
     {
         // Arrange
-        const int teamId = 1;
+        var teamId = Guid.NewGuid();
         var httpResponse = new HttpResponseMessage(HttpStatusCode.NoContent);
 
         _httpMessageHandlerMock
@@ -272,7 +272,7 @@ public class TeamServiceTests : IDisposable
     public async Task DeleteTeamAsync_WithError_ShouldReturnFalse()
     {
         // Arrange
-        const int teamId = 999;
+        var teamId = Guid.NewGuid();
         _httpMessageHandlerMock
             .Protected()
             .Setup<Task<HttpResponseMessage>>(

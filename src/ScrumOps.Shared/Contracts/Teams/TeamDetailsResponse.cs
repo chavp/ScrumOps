@@ -5,7 +5,7 @@ namespace ScrumOps.Shared.Contracts.Teams;
 /// </summary>
 public class TeamDetailsResponse
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public int SprintLengthWeeks { get; set; }
@@ -13,7 +13,7 @@ public class TeamDetailsResponse
     public bool IsActive { get; set; }
     public DateTime CreatedDate { get; set; }
     public IEnumerable<TeamMember> Members { get; set; } = Array.Empty<TeamMember>();
-    public int? CurrentSprintId { get; set; }
+    public Guid? CurrentSprintId { get; set; }
 }
 
 /// <summary>
@@ -21,7 +21,7 @@ public class TeamDetailsResponse
 /// </summary>
 public class TeamMember
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string Role { get; set; } = string.Empty;

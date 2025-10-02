@@ -1,0 +1,135 @@
+@using ScrumOps.Shared.Contracts.Teams
+@using ScrumOps.Web.Services
+@inject ITeamService TeamService
+@inject ILogger<TeamVelocityComponent> Logger
+@rendermode InteractiveServer
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Team Velocity Trends</h5>
+    </div>
+    <div class="card-body">
+        @if (isLoading)
+        {
+            <div class="text-center">
+                <div class="spinner-border spinner-border-sm" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        }
+        else if (velocityData != null && velocityData.VelocityHistory.Any())
+        {
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <h4 class="text-primary">@velocityData.CurrentVelocity.ToString("F1")</h4>
+                        <small class="text-muted">Current Velocity</small>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <h4 class="text-success">@velocityData.VelocityHistory.Average(v => v.Velocity).ToString("F1")</h4>
+                        <small class="text-muted">Average Velocity</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="velocity-chart">
+                <canvas id="velocityChart-@TeamId" width="400" height="200"></canvas>
+            </div>
+            
+            <div class="mt-3">
+                <h6>Recent Sprint Performance</h6>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Sprint</th>
+                                <th>Velocity</th>
+                                <th>Date</th>
+                                <th>Trend</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var point in velocityData.VelocityHistory.TakeLast(5).Reverse())
+                            {
+                                <tr>
+                                    <td>Sprint @point.SprintNumber</td>
+                                    <td>@point.Velocity.ToString("F1")</td>
+                                    <td>@point.SprintEndDate.ToString("MMM dd")</td>
+                                    <td>
+                                        @{
+                                            var trend = GetVelocityTrend(point);
+                                        }
+                                        <i class="bi bi-@trend.Icon text-@trend.Color"></i>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-4">
+                <i class="bi bi-bar-chart display-4 text-muted"></i>
+                <h6 class="mt-2">No velocity data available</h6>
+                <p class="text-muted">Complete some sprints to see velocity trends.</p>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter] public Guid TeamId { get; set; }
+    
+    private TeamVelocityResponse? velocityData;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadVelocityData();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (TeamId != Guid.Empty)
+        {
+            await LoadVelocityData();
+        }
+    }
+
+    private async Task LoadVelocityData()
+    {
+        try
+        {
+            isLoading = true;
+            velocityData = await TeamService.GetTeamVelocityAsync(TeamId);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to load velocity data for team {TeamId}", TeamId);
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private (string Icon, string Color) GetVelocityTrend(VelocityDataPoint point)
+    {
+        var history = velocityData?.VelocityHistory.ToList();
+        if (history == null || history.Count < 2) return ("dash", "secondary");
+        
+        var index = history.FindIndex(v => v.SprintNumber == point.SprintNumber);
+        if (index <= 0) return ("dash", "secondary");
+        
+        var previousVelocity = history[index - 1].Velocity;
+        var currentVelocity = point.Velocity;
+        
+        if (currentVelocity > previousVelocity * 1.1m) return ("arrow-up", "success");
+        if (currentVelocity < previousVelocity * 0.9m) return ("arrow-down", "danger");
+        return ("dash", "warning");
+    }
+}

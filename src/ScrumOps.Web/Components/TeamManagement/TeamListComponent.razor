@@ -3,6 +3,7 @@
 @inject ITeamService TeamService
 @inject NavigationManager Navigation
 @inject ILogger<TeamListComponent> Logger
+@rendermode InteractiveServer
 
 <div class="container-fluid">
     <div class="row mb-3">
@@ -10,7 +11,7 @@
             <h2>Teams</h2>
         </div>
         <div class="col-auto">
-            <button class="btn btn-primary" @onclick="NavigateToCreate">
+            <button type="button" class="btn btn-primary" @onclick="NavigateToCreate" @onclick:preventDefault="true">
                 <i class="bi bi-plus-circle"></i> Create Team
             </button>
         </div>
@@ -55,10 +56,10 @@
                         </div>
                         <div class="card-footer">
                             <div class="btn-group w-100" role="group">
-                                <button class="btn btn-outline-primary btn-sm" @onclick="() => NavigateToDetails(team.Id)">
+                                <button type="button" class="btn btn-outline-primary btn-sm" @onclick="@(() => NavigateToDetails(team.Id))" @onclick:preventDefault="true">
                                     <i class="bi bi-eye"></i> View
                                 </button>
-                                <button class="btn btn-outline-secondary btn-sm" @onclick="() => NavigateToEdit(team.Id)">
+                                <button type="button" class="btn btn-outline-secondary btn-sm" @onclick="@(() => NavigateToEdit(team.Id))" @onclick:preventDefault="true">
                                     <i class="bi bi-pencil"></i> Edit
                                 </button>
                             </div>
@@ -73,7 +74,7 @@
         <div class="text-center py-5">
             <h4>No teams found</h4>
             <p class="text-muted">Get started by creating your first Scrum team.</p>
-            <button class="btn btn-primary" @onclick="NavigateToCreate">
+            <button type="button" class="btn btn-primary" @onclick="NavigateToCreate" @onclick:preventDefault="true">
                 <i class="bi bi-plus-circle"></i> Create First Team
             </button>
         </div>
@@ -113,12 +114,12 @@
         Navigation.NavigateTo("/teams/create");
     }
 
-    private void NavigateToDetails(int teamId)
+    private void NavigateToDetails(Guid teamId)
     {
         Navigation.NavigateTo($"/teams/{teamId}");
     }
 
-    private void NavigateToEdit(int teamId)
+    private void NavigateToEdit(Guid teamId)
     {
         Navigation.NavigateTo($"/teams/{teamId}/edit");
     }

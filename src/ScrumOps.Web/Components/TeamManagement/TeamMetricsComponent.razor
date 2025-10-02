@@ -1,0 +1,282 @@
+@using ScrumOps.Shared.Contracts.Teams
+@using ScrumOps.Web.Services
+@inject ITeamService TeamService
+@inject ILogger<TeamMetricsComponent> Logger
+@rendermode InteractiveServer
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">Sprint Performance</h6>
+            </div>
+            <div class="card-body">
+                @if (isLoading)
+                {
+                    <div class="text-center">
+                        <div class="spinner-border spinner-border-sm" role="status"></div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row text-center">
+                        <div class="col-6">
+                            <h4 class="text-success">@completedSprints</h4>
+                            <small class="text-muted">Completed Sprints</small>
+                        </div>
+                        <div class="col-6">
+                            <h4 class="text-primary">@totalStoryPoints</h4>
+                            <small class="text-muted">Story Points Delivered</small>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row text-center">
+                        <div class="col-6">
+                            <h5 class="text-info">@averageVelocity.ToString("F1")</h5>
+                            <small class="text-muted">Avg Velocity</small>
+                        </div>
+                        <div class="col-6">
+                            <h5 class="text-warning">@velocityTrend</h5>
+                            <small class="text-muted">Trend</small>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">Team Health</h6>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>Team Capacity</span>
+                        <span class="badge bg-@GetCapacityColor(teamCapacity)">@teamCapacity%</span>
+                    </div>
+                    <div class="progress mt-1" style="height: 8px;">
+                        <div class="progress-bar bg-@GetCapacityColor(teamCapacity)" 
+                             style="width: @teamCapacity%"></div>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>Sprint Commitment</span>
+                        <span class="badge bg-@GetCommitmentColor(sprintCommitment)">@sprintCommitment%</span>
+                    </div>
+                    <div class="progress mt-1" style="height: 8px;">
+                        <div class="progress-bar bg-@GetCommitmentColor(sprintCommitment)" 
+                             style="width: @sprintCommitment%"></div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="d-flex justify-content-around">
+                        <div class="text-center">
+                            <i class="bi bi-people-fill fs-4 text-primary"></i>
+                            <br />
+                            <small>@activeMembers Active Members</small>
+                        </div>
+                        <div class="text-center">
+                            <i class="bi bi-trophy-fill fs-4 text-success"></i>
+                            <br />
+                            <small>@successRate% Success Rate</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">Recent Activity</h6>
+            </div>
+            <div class="card-body">
+                <div class="timeline">
+                    @foreach (var activity in recentActivities.Take(5))
+                    {
+                        <div class="timeline-item">
+                            <div class="timeline-marker">
+                                <i class="bi bi-@activity.Icon"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h6 class="mb-1">@activity.Title</h6>
+                                <p class="mb-1 text-muted">@activity.Description</p>
+                                <small class="text-muted">@activity.Timestamp.ToString("MMM dd, HH:mm")</small>
+                            </div>
+                        </div>
+                    }
+                </div>
+                
+                @if (!recentActivities.Any())
+                {
+                    <div class="text-center py-3">
+                        <i class="bi bi-clock-history display-4 text-muted"></i>
+                        <p class="text-muted mt-2">No recent activity</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .timeline {
+        position: relative;
+        padding-left: 30px;
+    }
+    
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 15px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #dee2e6;
+    }
+    
+    .timeline-item {
+        position: relative;
+        margin-bottom: 20px;
+    }
+    
+    .timeline-marker {
+        position: absolute;
+        left: -22px;
+        top: 0;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #007bff;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+    }
+    
+    .timeline-content {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 3px solid #007bff;
+    }
+</style>
+
+@code {
+    [Parameter] public Guid TeamId { get; set; }
+    
+    private bool isLoading = true;
+    private int completedSprints = 0;
+    private int totalStoryPoints = 0;
+    private decimal averageVelocity = 0;
+    private string velocityTrend = "Stable";
+    private int teamCapacity = 85;
+    private int sprintCommitment = 92;
+    private int activeMembers = 0;
+    private int successRate = 88;
+    
+    private List<ActivityItem> recentActivities = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadMetrics();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (TeamId != Guid.Empty)
+        {
+            await LoadMetrics();
+        }
+    }
+
+    private async Task LoadMetrics()
+    {
+        try
+        {
+            isLoading = true;
+            
+            // Load team details to get member count
+            var team = await TeamService.GetTeamAsync(TeamId);
+            activeMembers = team.Members.Count(m => m.IsActive);
+            
+            // Load velocity data for trends
+            var velocityData = await TeamService.GetTeamVelocityAsync(TeamId);
+            if (velocityData.VelocityHistory.Any())
+            {
+                averageVelocity = velocityData.VelocityHistory.Average(v => v.Velocity);
+                completedSprints = velocityData.VelocityHistory.Count();
+                totalStoryPoints = (int)velocityData.VelocityHistory.Sum(v => v.Velocity);
+                
+                // Calculate trend
+                var recent = velocityData.VelocityHistory.TakeLast(3).Average(v => v.Velocity);
+                var older = velocityData.VelocityHistory.Take(velocityData.VelocityHistory.Count() - 3).Average(v => v.Velocity);
+                
+                if (recent > older * 1.1m) velocityTrend = "↗ Improving";
+                else if (recent < older * 0.9m) velocityTrend = "↘ Declining";
+                else velocityTrend = "→ Stable";
+            }
+            
+            // Generate sample activities (in a real app, this would come from an API)
+            recentActivities = GenerateSampleActivities();
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to load metrics for team {TeamId}", TeamId);
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private string GetCapacityColor(int capacity)
+    {
+        return capacity switch
+        {
+            >= 90 => "success",
+            >= 70 => "warning",
+            _ => "danger"
+        };
+    }
+
+    private string GetCommitmentColor(int commitment)
+    {
+        return commitment switch
+        {
+            >= 95 => "success",
+            >= 80 => "info",
+            >= 60 => "warning",
+            _ => "danger"
+        };
+    }
+
+    private List<ActivityItem> GenerateSampleActivities()
+    {
+        return new List<ActivityItem>
+        {
+            new() { Title = "Sprint Planning", Description = "Sprint 12 planning completed", Icon = "calendar-check", Timestamp = DateTime.Now.AddHours(-2) },
+            new() { Title = "Story Completed", Description = "User authentication story moved to Done", Icon = "check-circle", Timestamp = DateTime.Now.AddHours(-6) },
+            new() { Title = "Member Added", Description = "John Doe joined the team as Developer", Icon = "person-plus", Timestamp = DateTime.Now.AddDays(-1) },
+            new() { Title = "Sprint Review", Description = "Sprint 11 review conducted", Icon = "eye", Timestamp = DateTime.Now.AddDays(-3) },
+            new() { Title = "Retrospective", Description = "Team retrospective - identified improvements", Icon = "arrow-repeat", Timestamp = DateTime.Now.AddDays(-3) }
+        };
+    }
+
+    public class ActivityItem
+    {
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public string Icon { get; set; } = string.Empty;
+        public DateTime Timestamp { get; set; }
+    }
+}

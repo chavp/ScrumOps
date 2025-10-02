@@ -123,8 +123,6 @@ public class TeamManagementService : ITeamManagementService
         string name,
         string? description,
         int sprintLengthWeeks,
-        string productOwnerEmail,
-        string scrumMasterEmail,
         CancellationToken cancellationToken = default)
     {
         // Check if team with same name already exists
@@ -189,6 +187,57 @@ public class TeamManagementService : ITeamManagementService
         }
 
         team.Deactivate();
+
+        await _teamRepository.UpdateAsync(team, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<UserId> AddTeamMemberAsync(
+        TeamId teamId,
+        string name,
+        string email,
+        string role,
+        CancellationToken cancellationToken = default)
+    {
+        var team = await _teamRepository.GetByIdAsync(teamId, cancellationToken);
+        if (team == null)
+        {
+            throw new InvalidOperationException($"Team with ID {teamId.Value} not found.");
+        }
+
+        // Create new user ID for the member
+        var memberId = UserId.From(Guid.NewGuid());
+        
+        // Create User entity with proper value objects
+        var user = new User(
+            memberId, 
+            teamId, 
+            UserName.Create(name), 
+            Email.Create(email), 
+            ScrumRole.FromString(role)
+        );
+        
+        // Add member to team
+        team.AddMember(user);
+
+        await _teamRepository.UpdateAsync(team, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return memberId;
+    }
+
+    public async Task RemoveTeamMemberAsync(
+        TeamId teamId,
+        UserId memberId,
+        CancellationToken cancellationToken = default)
+    {
+        var team = await _teamRepository.GetByIdAsync(teamId, cancellationToken);
+        if (team == null)
+        {
+            throw new InvalidOperationException($"Team with ID {teamId.Value} not found.");
+        }
+
+        team.RemoveMember(memberId);
 
         await _teamRepository.UpdateAsync(team, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);

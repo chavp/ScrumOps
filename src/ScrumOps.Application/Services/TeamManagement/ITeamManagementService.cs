@@ -27,8 +27,6 @@ public interface ITeamManagementService
         string name,
         string? description,
         int sprintLengthWeeks,
-        string productOwnerEmail,
-        string scrumMasterEmail,
         CancellationToken cancellationToken = default);
 
     Task UpdateTeamAsync(
@@ -41,4 +39,17 @@ public interface ITeamManagementService
         CancellationToken cancellationToken = default);
 
     Task DeactivateTeamAsync(TeamId teamId, CancellationToken cancellationToken = default);
+
+    // Member operations
+    Task<UserId> AddTeamMemberAsync(
+        TeamId teamId,
+        string name,
+        string email,
+        string role,
+        CancellationToken cancellationToken = default);
+
+    Task RemoveTeamMemberAsync(
+        TeamId teamId,
+        UserId memberId,
+        CancellationToken cancellationToken = default);
 }

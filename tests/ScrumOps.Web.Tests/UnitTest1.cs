@@ -109,8 +109,11 @@ public class WebComponentValidationTests
     private static List<ValidationResult> ValidateModel<T>(T model)
     {
         var validationResults = new List<ValidationResult>();
-        var validationContext = new ValidationContext(model);
-        Validator.TryValidateObject(model, validationContext, validationResults, true);
+        if (model != null)
+        {
+            var validationContext = new ValidationContext(model);
+            Validator.TryValidateObject(model, validationContext, validationResults, true);
+        }
         return validationResults;
     }
 }
