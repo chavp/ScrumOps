@@ -12,7 +12,6 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data/pgdata
-      
     networks:
       - scrumops-network
     restart: unless-stopped
@@ -22,7 +21,7 @@ services:
       timeout: 5s
       retries: 5
 
-  # ScrumOps API
+  # ScrumOps API with Observability
   api:
     build:
       context: .
@@ -37,6 +36,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      jaeger:
+        condition: service_healthy
     networks:
       - scrumops-network
     restart: unless-stopped
@@ -45,6 +46,72 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+    volumes:
+      - api_logs:/app/logs
+
+  # Jaeger for Distributed Tracing
+  jaeger:
+    image: jaegertracing/all-in-one:1.60
+    container_name: scrumops-jaeger
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    ports:
+      - "16686:16686"  # Jaeger UI
+      - "14268:14268"  # Jaeger collector
+      - "4317:4317"    # OTLP gRPC receiver
+      - "4318:4318"    # OTLP HTTP receiver
+    networks:
+      - scrumops-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:16686/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Prometheus for Metrics Collection
+  prometheus:
+    image: prom/prometheus:v2.48.0
+    container_name: scrumops-prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=15d'
+      - '--web.enable-lifecycle'
+      - '--web.enable-admin-api'
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./observability/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    depends_on:
+      - api
+    networks:
+      - scrumops-network
+    restart: unless-stopped
+
+  # Grafana for Observability Dashboards
+  grafana:
+    image: grafana/grafana:10.2.0
+    container_name: scrumops-grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+      - GF_USERS_ALLOW_SIGN_UP=false
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./observability/grafana/provisioning:/etc/grafana/provisioning
+      - ./observability/grafana/dashboards:/var/lib/grafana/dashboards
+    depends_on:
+      - prometheus
+      - jaeger
+    networks:
+      - scrumops-network
+    restart: unless-stopped
 
   # pgAdmin for database management (optional)
   pgadmin:
@@ -68,6 +135,12 @@ volumes:
   postgres_data:
     driver: local
   pgadmin_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+  api_logs:
     driver: local
 
 networks:

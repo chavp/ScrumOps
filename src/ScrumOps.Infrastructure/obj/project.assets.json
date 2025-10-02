@@ -971,7 +971,8 @@
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
-          "ScrumOps.Domain": "1.0.0"
+          "ScrumOps.Domain": "1.0.0",
+          "System.Diagnostics.DiagnosticSource": "9.0.9"
         },
         "compile": {
           "bin/placeholder/ScrumOps.Application.dll": {}

@@ -2237,7 +2237,9 @@
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
-          "ScrumOps.Domain": "1.0.0"
+          "ScrumOps.Domain": "1.0.0",
+          "System.Diagnostics.Activity": "8.0.0",
+          "System.Diagnostics.DiagnosticSource": "8.0.1"
         },
         "compile": {
           "bin/placeholder/ScrumOps.Application.dll": {}
@@ -7145,5 +7147,16 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100-rc.1.25451.107/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package System.Diagnostics.Activity. No packages exist with this id in source(s): C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org",
+      "libraryId": "System.Diagnostics.Activity",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }

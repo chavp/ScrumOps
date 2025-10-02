@@ -45,6 +45,14 @@ ScrumOps is a comprehensive Scrum framework management system designed to help t
 - Exportable reports for stakeholder communication
 - Performance insights for continuous improvement
 
+### 🔍 Observability & Monitoring
+- **Structured Logging**: JSON-formatted logs with correlation IDs, log rotation, and sensitive data masking
+- **Metrics Collection**: Application, system, and business metrics via OpenTelemetry and Prometheus
+- **Distributed Tracing**: Request tracing across services with W3C Trace Context standards
+- **Health Monitoring**: Comprehensive health checks for application readiness and liveness
+- **Performance Tracking**: Real-time monitoring of API response times, error rates, and system resources
+- **Business Intelligence**: Custom metrics for sprint completion rates, team velocity, and backlog progress
+
 ### 👥 Team Collaboration
 - Real-time sprint progress visibility
 - Comments and discussions on backlog items
@@ -61,6 +69,12 @@ ScrumOps is a comprehensive Scrum framework management system designed to help t
 - Modern web browser (Chrome, Firefox, Edge)
 - Git
 
+### Observability Stack (Included in Docker Compose)
+- **Prometheus**: Metrics collection and storage
+- **Grafana**: Visualization dashboards and alerting
+- **Jaeger**: Distributed tracing and performance monitoring
+- **Serilog**: Structured logging with JSON output
+
 ### Quick Setup
 
 #### Option 1: Docker (Recommended)
@@ -75,14 +89,18 @@ cd ScrumOps
 # Test Docker setup
 .\test-docker.ps1
 
-# Run with Docker Compose (includes PostgreSQL database)
+# Run with Docker Compose (includes PostgreSQL database + observability stack)
 docker-compose up -d
 
 # View logs
 docker-compose logs -f
 
 # The API will be available at http://localhost:8080
-# pgAdmin will be available at http://localhost:8081 (admin@scrumops.com / admin123)
+# Complete observability stack:
+# - Grafana dashboards: http://localhost:3000 (admin/admin123)
+# - Prometheus metrics: http://localhost:9090
+# - Jaeger tracing: http://localhost:16686
+# - pgAdmin: http://localhost:8081 (admin@scrumops.com / admin123)
 ```
 
 #### Option 2: Local Development with EF Migrations
@@ -106,7 +124,11 @@ dotnet run --project src/ScrumOps.Api
 ### Service URLs
 - **API**: http://localhost:8080
 - **Health Check**: http://localhost:8080/health  
+- **Metrics Endpoint**: http://localhost:8080/metrics
 - **Swagger Documentation**: http://localhost:8080/swagger
+- **Grafana Dashboards**: http://localhost:3000 (admin/admin123)
+- **Prometheus**: http://localhost:9090
+- **Jaeger Tracing**: http://localhost:16686
 - **pgAdmin**: http://localhost:8081 (admin@scrumops.com / admin123)
 - **PostgreSQL**: localhost:5433 (scrumops / scrumops123)
 
@@ -133,6 +155,10 @@ dotnet run --project src/ScrumOps.Api
 ### 📋 Development Tasks
 - **[Implementation Tasks](./specs/001-scrum-framework/tasks.md)** - Detailed development roadmap
 
+### 🔍 Observability Documentation
+- **[Observability Guide](./docs/OBSERVABILITY.md)** - Comprehensive monitoring and observability documentation
+- **[Implementation Summary](./OBSERVABILITY_IMPLEMENTATION_SUMMARY.md)** - Observability features implementation details
+
 ### ⚙️ Development Tools
 - **[Copilot Instructions](./specs/001-scrum-framework/.github/copilot-instructions.md)** - AI coding assistant configuration
 
@@ -155,6 +181,50 @@ dotnet run --project src/ScrumOps.Api
 - ✅ Data integrity across all operations
 - ✅ Integration with existing development tools
 - ✅ <200ms API response times (95th percentile)
+- ✅ Comprehensive observability (logs, metrics, traces)
+- ✅ Production-ready monitoring and alerting
+- ✅ <5% performance overhead from observability features
+
+## 🔍 Observability & Monitoring
+
+ScrumOps includes enterprise-grade observability features for production monitoring, debugging, and performance analysis:
+
+### Three Pillars of Observability
+
+#### 📊 Structured Logging
+- **JSON Format**: Machine-readable logs with contextual information
+- **Correlation IDs**: Link logs with traces and requests
+- **Log Levels**: DEBUG, INFO, WARN, ERROR, FATAL with environment-specific filtering
+- **Rotation & Retention**: Automatic log rotation with configurable retention policies
+- **Sensitive Data Protection**: Automatic masking of PII and credentials in production
+
+#### 📈 Metrics Collection
+- **Application Metrics**: Request rates, error rates, response times (p50, p95, p99)
+- **Business Metrics**: Sprint completion rates, team velocity, backlog progress
+- **System Metrics**: CPU, memory, and runtime performance via OpenTelemetry
+- **Prometheus Format**: Industry-standard metrics export for monitoring systems
+
+#### 🔗 Distributed Tracing
+- **Request Tracing**: End-to-end request flow across services
+- **Database Instrumentation**: Entity Framework Core query tracing
+- **W3C Standards**: Trace context propagation following industry standards
+- **Sampling**: Intelligent sampling (100% dev, 10% prod) for performance
+
+### Monitoring Dashboards
+
+Access comprehensive monitoring through Grafana dashboards:
+- **ScrumOps Overview**: Key performance indicators and system health
+- **HTTP Metrics**: Request rates, error rates, and latency percentiles
+- **Business Intelligence**: Team performance and sprint analytics
+- **Custom Alerts**: Configurable alerts for critical system events
+
+### Performance Targets
+- **< 5% Overhead**: Minimal performance impact from observability
+- **< 200ms API Response**: 95th percentile response time target
+- **99.9% Uptime**: High availability monitoring and alerting
+- **Real-time Insights**: Live dashboards for immediate issue detection
+
+For detailed setup and configuration, see the [Observability Documentation](./docs/OBSERVABILITY.md).
 
 ## 🏛️ Architecture
 
@@ -164,6 +234,7 @@ dotnet run --project src/ScrumOps.Api
 - **Database**: PostgreSQL 16 with Entity Framework Core (Code First approach)
 - **Containerization**: Docker & Docker Compose for all services
 - **Architecture**: Domain Driven Design with Clean Architecture principles
+- **Observability**: OpenTelemetry, Serilog, Prometheus, Grafana, Jaeger
 - **Additional Services**: pgAdmin for database management
 
 **Key Principles**:

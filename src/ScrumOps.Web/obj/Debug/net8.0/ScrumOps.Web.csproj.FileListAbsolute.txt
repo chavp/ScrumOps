@@ -129,4 +129,3 @@ C:\data\ScrumOps\src\ScrumOps.Web\obj\Debug\net8.0\ScrumOps.Web.pdb
 C:\data\ScrumOps\src\ScrumOps.Web\obj\Debug\net8.0\ScrumOps.Web.genruntimeconfig.cache
 C:\data\ScrumOps\src\ScrumOps.Web\obj\Debug\net8.0\ref\ScrumOps.Web.dll
 C:\data\ScrumOps\src\ScrumOps.Web\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
-D:\github\ScrumOps\src\ScrumOps.Web\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
