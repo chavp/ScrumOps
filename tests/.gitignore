@@ -1,0 +1,112 @@
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# NUnit
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+
+# xUnit
+xunit-test-results.xml
+
+# MSTest test Results
+*.vsmdi
+*.testrunconfig
+*.testsettings
+
+# Visual Studio 2015/2017 cache/options directory
+.vs/
+
+# Visual Studio Code
+.vscode/
+
+# Files built by Visual Studio
+*.obj
+*.pdb
+*.log
+*.tmp
+*.tmp_proj
+
+# Code Coverage Results
+coverage*.json
+coverage*.xml
+coverage*.info
+*.coverage
+*.coveragexml
+
+# AxoCover is a Code Coverage Tool
+.axoCover/*
+!.axoCover/settings.json
+
+# Coverlet is a free, cross platform Code Coverage Tool
+coverage/
+
+# OpenCover UI analysis results
+OpenCover/
+
+# dotCover
+*.dotCover
+
+# NCrunch
+_NCrunch_*
+.*crunch*.local.xml
+nCrunchTemp_*
+
+# ReSharper is a .NET coding add-in
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# NuGet Packages used in tests
+packages/
+*.nupkg
+*.snupkg
+
+# Test databases and temp files
+*.mdf
+*.ldf
+*.ndf
+testdb*
+tempdb*
+
+# Benchmark Results
+BenchmarkDotNet.Artifacts/
+
+# Temporary test files
+*.tmp
+temp/
+tmp/
+
+# Integration test outputs
+IntegrationTestResults/
+
+# Performance test results
+PerfResults/
+LoadTestResults/
