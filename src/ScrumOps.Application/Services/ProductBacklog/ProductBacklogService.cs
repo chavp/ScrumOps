@@ -269,20 +269,22 @@ public class ProductBacklogService : IProductBacklogService
         }
 
         // Update fields
-        productBacklogItem.UpdateTitle(ItemTitle.Create(title));
-        productBacklogItem.UpdateDescription(ItemDescription.Create(description));
-        productBacklogItem.SetAcceptanceCriteria(AcceptanceCriteria.Create(acceptanceCriteria));
+        productBacklogItem
+            .UpdateTitle(ItemTitle.Create(title))
+            .UpdateDescription(ItemDescription.Create(description))
+            .SetAcceptanceCriteria(AcceptanceCriteria.Create(acceptanceCriteria));
 
-        productBacklog.SetPriority(productBacklogItem, priority);
+        productBacklog.ApplyItemPriority(productBacklogItem, priority);
 
         
         if (storyPoints.HasValue)
         {
             productBacklogItem.EstimateStoryPoints(StoryPoints.Create(storyPoints.Value));
         }
+
         if (Enum.TryParse<BacklogItemType>(backlogItemType, true, out var itemType))
         {
-            productBacklog.SetType(productBacklogItem, itemType);
+            productBacklog.ApplyItemType(productBacklogItem, itemType);
         }
         else
         {

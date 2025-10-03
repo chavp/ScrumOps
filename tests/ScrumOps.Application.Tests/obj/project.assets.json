@@ -5508,23 +5508,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mypar\\.nuget\\packages\\": {},
-    "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Parinya.c\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\github\\ScrumOps\\tests\\ScrumOps.Application.Tests\\ScrumOps.Application.Tests.csproj",
+      "projectUniqueName": "C:\\data\\ScrumOps\\tests\\ScrumOps.Application.Tests\\ScrumOps.Application.Tests.csproj",
       "projectName": "ScrumOps.Application.Tests",
-      "projectPath": "D:\\github\\ScrumOps\\tests\\ScrumOps.Application.Tests\\ScrumOps.Application.Tests.csproj",
-      "packagesPath": "C:\\Users\\mypar\\.nuget\\packages\\",
-      "outputPath": "D:\\github\\ScrumOps\\tests\\ScrumOps.Application.Tests\\obj\\",
+      "projectPath": "C:\\data\\ScrumOps\\tests\\ScrumOps.Application.Tests\\ScrumOps.Application.Tests.csproj",
+      "packagesPath": "C:\\Users\\Parinya.c\\.nuget\\packages\\",
+      "outputPath": "C:\\data\\ScrumOps\\tests\\ScrumOps.Application.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\mypar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Parinya.c\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

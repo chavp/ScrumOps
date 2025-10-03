@@ -91,14 +91,16 @@ public class ProductBacklog : Entity<ProductBacklogId>, IAggregateRoot
         RaiseDomainEvent(new BacklogItemAddedEvent(Id, item.Id, item.Title.Value, nextPriority));
     }
 
-    public void SetPriority(ProductBacklogItem item, int priority)
+    public ProductBacklog ApplyItemPriority(ProductBacklogItem item, int priority)
     {
         item.SetPriority(Priority.Create(priority));
+        return this;
     }
 
-    public void SetType(ProductBacklogItem item, BacklogItemType type)
+    public ProductBacklog ApplyItemType(ProductBacklogItem item, BacklogItemType type)
     {
         item.SetType(type);
+        return this;
     }
 
     /// <summary>

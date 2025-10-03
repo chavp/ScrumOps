@@ -524,3 +524,17 @@ D:\github\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\OpenTelemetry.Instrumentati
 D:\github\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\Serilog.Enrichers.Environment.dll
 D:\github\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\Serilog.Enrichers.Process.dll
 D:\github\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\Serilog.Enrichers.Thread.dll
+C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\appsettings.Production.json
+C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\OpenTelemetry.dll
+C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\OpenTelemetry.Api.dll
+C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\OpenTelemetry.Api.ProviderBuilderExtensions.dll
+C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\OpenTelemetry.Exporter.Console.dll
+C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\OpenTelemetry.Exporter.Prometheus.AspNetCore.dll
+C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\OpenTelemetry.Extensions.Hosting.dll
+C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\OpenTelemetry.Instrumentation.AspNetCore.dll
+C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\OpenTelemetry.Instrumentation.EntityFrameworkCore.dll
+C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\OpenTelemetry.Instrumentation.Http.dll
+C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\OpenTelemetry.Instrumentation.Runtime.dll
+C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\Serilog.Enrichers.Environment.dll
+C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\Serilog.Enrichers.Process.dll
+C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\Serilog.Enrichers.Thread.dll

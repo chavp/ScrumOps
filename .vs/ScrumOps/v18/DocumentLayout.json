@@ -3,56 +3,12 @@
   "WorkspaceRootPath": "C:\\data\\ScrumOps\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|c:\\data\\scrumops\\src\\scrumops.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|solutionrelative:src\\scrumops.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E39344A1-E192-45DB-88E8-83685BF1F5DB}|src\\ScrumOps.Application\\ScrumOps.Application.csproj|c:\\data\\scrumops\\src\\scrumops.application\\services\\productbacklog\\productbacklogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E39344A1-E192-45DB-88E8-83685BF1F5DB}|src\\ScrumOps.Application\\ScrumOps.Application.csproj|solutionrelative:src\\scrumops.application\\services\\productbacklog\\productbacklogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|c:\\data\\scrumops\\src\\scrumops.web\\components\\sprintmanagement\\sprintdashboardcomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|solutionrelative:src\\scrumops.web\\components\\sprintmanagement\\sprintdashboardcomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|c:\\data\\scrumops\\src\\scrumops.web\\components\\sprintmanagement\\sprintburndowncomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|solutionrelative:src\\scrumops.web\\components\\sprintmanagement\\sprintburndowncomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|c:\\data\\scrumops\\src\\scrumops.web\\components\\sprintmanagement\\sprintboardcomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|solutionrelative:src\\scrumops.web\\components\\sprintmanagement\\sprintboardcomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|c:\\data\\scrumops\\src\\scrumops.web\\components\\sprintmanagement\\sprintbacklogmanagementcomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|solutionrelative:src\\scrumops.web\\components\\sprintmanagement\\sprintbacklogmanagementcomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|c:\\data\\scrumops\\src\\scrumops.web\\components\\sprintmanagement\\sprintlistcomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|solutionrelative:src\\scrumops.web\\components\\sprintmanagement\\sprintlistcomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|c:\\data\\scrumops\\src\\scrumops.web\\components\\pages\\sprintmanagement.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|solutionrelative:src\\scrumops.web\\components\\pages\\sprintmanagement.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E39344A1-E192-45DB-88E8-83685BF1F5DB}|src\\ScrumOps.Application\\ScrumOps.Application.csproj|c:\\data\\scrumops\\src\\scrumops.application\\services\\sprintmanagement\\sprintmanagementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E39344A1-E192-45DB-88E8-83685BF1F5DB}|src\\ScrumOps.Application\\ScrumOps.Application.csproj|solutionrelative:src\\scrumops.application\\services\\sprintmanagement\\sprintmanagementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|c:\\data\\scrumops\\src\\scrumops.web\\components\\sprintmanagement\\sprintplanningcomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|solutionrelative:src\\scrumops.web\\components\\sprintmanagement\\sprintplanningcomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|c:\\data\\scrumops\\src\\scrumops.web\\components\\sprintmanagement\\sprintformcomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|solutionrelative:src\\scrumops.web\\components\\sprintmanagement\\sprintformcomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|c:\\data\\scrumops\\src\\scrumops.web\\components\\sprintmanagement\\sprinttaskmanagementcomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|solutionrelative:src\\scrumops.web\\components\\sprintmanagement\\sprinttaskmanagementcomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|c:\\data\\scrumops\\src\\scrumops.web\\components\\sprintmanagement\\sprintreportscomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|solutionrelative:src\\scrumops.web\\components\\sprintmanagement\\sprintreportscomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|c:\\data\\scrumops\\src\\scrumops.web\\components\\sprintmanagement\\sprintretrospectivecomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{27674126-A63A-4D4B-9791-880C2C6A649D}|src\\ScrumOps.Web\\ScrumOps.Web.csproj|solutionrelative:src\\scrumops.web\\components\\sprintmanagement\\sprintretrospectivecomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{30421968-0CAF-4F74-AFC7-23045824D9E6}|src\\ScrumOps.Domain\\ScrumOps.Domain.csproj|c:\\data\\scrumops\\src\\scrumops.domain\\productbacklog\\entities\\productbacklog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30421968-0CAF-4F74-AFC7-23045824D9E6}|src\\ScrumOps.Domain\\ScrumOps.Domain.csproj|solutionrelative:src\\scrumops.domain\\productbacklog\\entities\\productbacklog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -67,160 +23,28 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Program.cs",
-              "RelativeDocumentMoniker": "src\\ScrumOps.Web\\Program.cs",
-              "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Program.cs",
-              "RelativeToolTip": "src\\ScrumOps.Web\\Program.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAAAwAAAA8AAAAAAAAAA==",
+              "Title": "ProductBacklogService.cs",
+              "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Application\\Services\\ProductBacklog\\ProductBacklogService.cs",
+              "RelativeDocumentMoniker": "src\\ScrumOps.Application\\Services\\ProductBacklog\\ProductBacklogService.cs",
+              "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Application\\Services\\ProductBacklog\\ProductBacklogService.cs",
+              "RelativeToolTip": "src\\ScrumOps.Application\\Services\\ProductBacklog\\ProductBacklogService.cs",
+              "ViewState": "AgIAAAcBAAAAAAAAAAAAAEIBAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T02:01:59.879Z",
+              "WhenOpened": "2025-10-03T06:24:57.935Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "SprintBoardComponent.razor",
-              "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\SprintManagement\\SprintBoardComponent.razor",
-              "RelativeDocumentMoniker": "src\\ScrumOps.Web\\Components\\SprintManagement\\SprintBoardComponent.razor",
-              "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\SprintManagement\\SprintBoardComponent.razor",
-              "RelativeToolTip": "src\\ScrumOps.Web\\Components\\SprintManagement\\SprintBoardComponent.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-02T12:56:17.881Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "SprintBurndownComponent.razor",
-              "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\SprintManagement\\SprintBurndownComponent.razor",
-              "RelativeDocumentMoniker": "src\\ScrumOps.Web\\Components\\SprintManagement\\SprintBurndownComponent.razor",
-              "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\SprintManagement\\SprintBurndownComponent.razor",
-              "RelativeToolTip": "src\\ScrumOps.Web\\Components\\SprintManagement\\SprintBurndownComponent.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-02T12:56:14.065Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "SprintDashboardComponent.razor",
-              "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\SprintManagement\\SprintDashboardComponent.razor",
-              "RelativeDocumentMoniker": "src\\ScrumOps.Web\\Components\\SprintManagement\\SprintDashboardComponent.razor",
-              "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\SprintManagement\\SprintDashboardComponent.razor",
-              "RelativeToolTip": "src\\ScrumOps.Web\\Components\\SprintManagement\\SprintDashboardComponent.razor",
-              "ViewState": "AgIAAAUBAAAAAAAAAAAAAAkBAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-02T12:55:58.495Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "SprintBacklogManagementComponent.razor",
-              "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\SprintManagement\\SprintBacklogManagementComponent.razor",
-              "RelativeDocumentMoniker": "src\\ScrumOps.Web\\Components\\SprintManagement\\SprintBacklogManagementComponent.razor",
-              "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\SprintManagement\\SprintBacklogManagementComponent.razor",
-              "RelativeToolTip": "src\\ScrumOps.Web\\Components\\SprintManagement\\SprintBacklogManagementComponent.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-02T13:22:12.837Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "SprintListComponent.razor",
-              "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\SprintManagement\\SprintListComponent.razor",
-              "RelativeDocumentMoniker": "src\\ScrumOps.Web\\Components\\SprintManagement\\SprintListComponent.razor",
-              "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\SprintManagement\\SprintListComponent.razor",
-              "RelativeToolTip": "src\\ScrumOps.Web\\Components\\SprintManagement\\SprintListComponent.razor",
-              "ViewState": "AgIAAPkAAAAAAAAAAAAAAAQBAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-02T13:16:49.456Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "SprintPlanningComponent.razor",
-              "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\SprintManagement\\SprintPlanningComponent.razor",
-              "RelativeDocumentMoniker": "src\\ScrumOps.Web\\Components\\SprintManagement\\SprintPlanningComponent.razor",
-              "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\SprintManagement\\SprintPlanningComponent.razor",
-              "RelativeToolTip": "src\\ScrumOps.Web\\Components\\SprintManagement\\SprintPlanningComponent.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-02T13:22:24.926Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "SprintManagement.razor",
-              "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\Pages\\SprintManagement.razor",
-              "RelativeDocumentMoniker": "src\\ScrumOps.Web\\Components\\Pages\\SprintManagement.razor",
-              "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\Pages\\SprintManagement.razor",
-              "RelativeToolTip": "src\\ScrumOps.Web\\Components\\Pages\\SprintManagement.razor",
-              "ViewState": "AgIAAI8BAAAAAAAAAAD4v5kBAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-02T13:22:29.984Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "SprintManagementService.cs",
-              "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Application\\Services\\SprintManagement\\SprintManagementService.cs",
-              "RelativeDocumentMoniker": "src\\ScrumOps.Application\\Services\\SprintManagement\\SprintManagementService.cs",
-              "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Application\\Services\\SprintManagement\\SprintManagementService.cs",
-              "RelativeToolTip": "src\\ScrumOps.Application\\Services\\SprintManagement\\SprintManagementService.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAYwB0AAAA7AAAAAAAAAA==",
+              "Title": "ProductBacklog.cs",
+              "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Domain\\ProductBacklog\\Entities\\ProductBacklog.cs",
+              "RelativeDocumentMoniker": "src\\ScrumOps.Domain\\ProductBacklog\\Entities\\ProductBacklog.cs",
+              "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Domain\\ProductBacklog\\Entities\\ProductBacklog.cs",
+              "RelativeToolTip": "src\\ScrumOps.Domain\\ProductBacklog\\Entities\\ProductBacklog.cs",
+              "ViewState": "AgIAAFUAAAAAAAAAAAAAwF0AAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-02T13:25:46.586Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "SprintFormComponent.razor",
-              "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\SprintManagement\\SprintFormComponent.razor",
-              "RelativeDocumentMoniker": "src\\ScrumOps.Web\\Components\\SprintManagement\\SprintFormComponent.razor",
-              "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\SprintManagement\\SprintFormComponent.razor",
-              "RelativeToolTip": "src\\ScrumOps.Web\\Components\\SprintManagement\\SprintFormComponent.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-02T12:56:11.176Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "SprintTaskManagementComponent.razor",
-              "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\SprintManagement\\SprintTaskManagementComponent.razor",
-              "RelativeDocumentMoniker": "src\\ScrumOps.Web\\Components\\SprintManagement\\SprintTaskManagementComponent.razor",
-              "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\SprintManagement\\SprintTaskManagementComponent.razor",
-              "RelativeToolTip": "src\\ScrumOps.Web\\Components\\SprintManagement\\SprintTaskManagementComponent.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-02T13:16:13.956Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "SprintReportsComponent.razor",
-              "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\SprintManagement\\SprintReportsComponent.razor",
-              "RelativeDocumentMoniker": "src\\ScrumOps.Web\\Components\\SprintManagement\\SprintReportsComponent.razor",
-              "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\SprintManagement\\SprintReportsComponent.razor",
-              "RelativeToolTip": "src\\ScrumOps.Web\\Components\\SprintManagement\\SprintReportsComponent.razor",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-02T13:16:40.462Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "SprintRetrospectiveComponent.razor",
-              "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\SprintManagement\\SprintRetrospectiveComponent.razor",
-              "RelativeDocumentMoniker": "src\\ScrumOps.Web\\Components\\SprintManagement\\SprintRetrospectiveComponent.razor",
-              "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Web\\Components\\SprintManagement\\SprintRetrospectiveComponent.razor",
-              "RelativeToolTip": "src\\ScrumOps.Web\\Components\\SprintManagement\\SprintRetrospectiveComponent.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-02T12:56:54.037Z"
+              "WhenOpened": "2025-10-03T06:23:16.272Z",
+              "EditorCaption": ""
             }
           ]
         }

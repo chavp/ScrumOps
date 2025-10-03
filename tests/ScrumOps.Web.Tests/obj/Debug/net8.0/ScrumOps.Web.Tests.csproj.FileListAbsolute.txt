@@ -385,3 +385,4 @@ C:\data\ScrumOps\tests\ScrumOps.Web.Tests\obj\Debug\net8.0\refint\ScrumOps.Web.T
 C:\data\ScrumOps\tests\ScrumOps.Web.Tests\obj\Debug\net8.0\ScrumOps.Web.Tests.pdb
 C:\data\ScrumOps\tests\ScrumOps.Web.Tests\obj\Debug\net8.0\ScrumOps.Web.Tests.genruntimeconfig.cache
 C:\data\ScrumOps\tests\ScrumOps.Web.Tests\obj\Debug\net8.0\ref\ScrumOps.Web.Tests.dll
+C:\data\ScrumOps\tests\ScrumOps.Web.Tests\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll

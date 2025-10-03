@@ -110,23 +110,25 @@ public class ProductBacklogItem : Entity<ProductBacklogItemId>
     /// This should only be called by the ProductBacklog aggregate.
     /// </summary>
     /// <param name="priority">The new priority</param>
-    internal void SetPriority(Priority priority)
+    internal ProductBacklogItem SetPriority(Priority priority)
     {
         Priority = priority ?? throw new ArgumentNullException(nameof(priority));
         LastModifiedDate = DateTime.UtcNow;
+        return this;
     }
 
-    internal void SetType(BacklogItemType backlogItemType)
+    internal ProductBacklogItem SetType(BacklogItemType backlogItemType)
     {
         Type = backlogItemType;
         LastModifiedDate = DateTime.UtcNow;
+        return this;
     }
 
     /// <summary>
     /// Estimates the story points for this backlog item.
     /// </summary>
     /// <param name="storyPoints">The story points estimate</param>
-    public void EstimateStoryPoints(StoryPoints storyPoints)
+    public ProductBacklogItem EstimateStoryPoints(StoryPoints storyPoints)
     {
         StoryPoints = storyPoints ?? throw new ArgumentNullException(nameof(storyPoints));
         
@@ -137,16 +139,18 @@ public class ProductBacklogItem : Entity<ProductBacklogItemId>
         }
         
         LastModifiedDate = DateTime.UtcNow;
+        return this;
     }
 
     /// <summary>
     /// Adds or updates the acceptance criteria for this backlog item.
     /// </summary>
     /// <param name="acceptanceCriteria">The acceptance criteria</param>
-    public void SetAcceptanceCriteria(AcceptanceCriteria acceptanceCriteria)
+    public ProductBacklogItem SetAcceptanceCriteria(AcceptanceCriteria acceptanceCriteria)
     {
         AcceptanceCriteria = acceptanceCriteria ?? throw new ArgumentNullException(nameof(acceptanceCriteria));
         LastModifiedDate = DateTime.UtcNow;
+        return this;
     }
 
     /// <summary>
@@ -154,13 +158,14 @@ public class ProductBacklogItem : Entity<ProductBacklogItemId>
     /// </summary>
     /// <param name="title">The new title</param>
     /// <exception cref="DomainException">Thrown when trying to modify a completed item</exception>
-    public void UpdateTitle(ItemTitle title)
+    public ProductBacklogItem UpdateTitle(ItemTitle title)
     {
         if (Status == BacklogItemStatus.Done)
             throw new DomainException("Cannot modify a completed backlog item");
 
         Title = title ?? throw new ArgumentNullException(nameof(title));
         LastModifiedDate = DateTime.UtcNow;
+        return this;
     }
 
     /// <summary>
@@ -168,46 +173,49 @@ public class ProductBacklogItem : Entity<ProductBacklogItemId>
     /// </summary>
     /// <param name="description">The new description</param>
     /// <exception cref="DomainException">Thrown when trying to modify a completed item</exception>
-    public void UpdateDescription(ItemDescription description)
+    public ProductBacklogItem UpdateDescription(ItemDescription description)
     {
         if (Status == BacklogItemStatus.Done)
             throw new DomainException("Cannot modify a completed backlog item");
 
         Description = description ?? throw new ArgumentNullException(nameof(description));
         LastModifiedDate = DateTime.UtcNow;
+        return this;
     }
 
     /// <summary>
     /// Marks this backlog item as in progress.
     /// </summary>
     /// <exception cref="DomainException">Thrown when the item is not ready to be started</exception>
-    public void MarkAsInProgress()
+    public ProductBacklogItem MarkAsInProgress()
     {
         if (Status != BacklogItemStatus.Ready)
             throw new DomainException("Only ready items can be marked as in progress");
 
         Status = BacklogItemStatus.InProgress;
         LastModifiedDate = DateTime.UtcNow;
+        return this;
     }
 
     /// <summary>
     /// Marks this backlog item as done.
     /// </summary>
     /// <exception cref="DomainException">Thrown when the item is not in progress</exception>
-    public void MarkAsDone()
+    public ProductBacklogItem MarkAsDone()
     {
         if (Status != BacklogItemStatus.InProgress)
             throw new DomainException("Only items in progress can be marked as done");
 
         Status = BacklogItemStatus.Done;
         LastModifiedDate = DateTime.UtcNow;
+        return this;
     }
 
     /// <summary>
     /// Resets the backlog item status back to ready.
     /// </summary>
     /// <exception cref="DomainException">Thrown when the item cannot be reset</exception>
-    public void ResetToReady()
+    public ProductBacklogItem ResetToReady()
     {
         if (Status == BacklogItemStatus.Done)
             throw new DomainException("Cannot reset a completed item");
@@ -217,6 +225,7 @@ public class ProductBacklogItem : Entity<ProductBacklogItemId>
 
         Status = BacklogItemStatus.Ready;
         LastModifiedDate = DateTime.UtcNow;
+        return this;
     }
 
     /// <summary>
