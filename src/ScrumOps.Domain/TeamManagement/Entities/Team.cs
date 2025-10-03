@@ -93,7 +93,7 @@ public class Team : Entity<TeamId>, IAggregateRoot
     /// </summary>
     /// <param name="user">The user to add to the team</param>
     /// <exception cref="DomainException">Thrown when business rules are violated</exception>
-    public void AddMember(User user)
+    public Team AddMember(User user)
     {
         if (!IsActive)
         {
@@ -112,6 +112,7 @@ public class Team : Entity<TeamId>, IAggregateRoot
 
         _members.Add(user);
         _domainEvents.Add(new MemberAddedToTeamEvent(Id, user.Id, user.Role));
+        return this;
     }
 
     /// <summary>
@@ -119,7 +120,7 @@ public class Team : Entity<TeamId>, IAggregateRoot
     /// </summary>
     /// <param name="userId">The ID of the user to remove</param>
     /// <exception cref="DomainException">Thrown when the user is not found</exception>
-    public void RemoveMember(UserId userId)
+    public Team RemoveMember(UserId userId)
     {
         var user = _members.FirstOrDefault(m => m.Id.Equals(userId));
         if (user == null)
@@ -128,18 +129,22 @@ public class Team : Entity<TeamId>, IAggregateRoot
         }
 
         _members.Remove(user);
+
+        return this;
     }
 
     /// <summary>
     /// Updates the team's velocity based on completed sprints.
     /// </summary>
     /// <param name="newVelocity">The new velocity to set</param>
-    public void UpdateVelocity(Velocity newVelocity)
+    public Team UpdateVelocity(Velocity newVelocity)
     {
         var previousVelocity = CurrentVelocity;
         CurrentVelocity = newVelocity;
 
         _domainEvents.Add(new TeamVelocityUpdatedEvent(Id, previousVelocity, newVelocity));
+
+        return this;
     }
 
     /// <summary>
@@ -148,34 +153,40 @@ public class Team : Entity<TeamId>, IAggregateRoot
     /// <param name="name">The new team name</param>
     /// <param name="description">The new team description</param>
     /// <param name="sprintLength">The new sprint length</param>
-    public void UpdateTeamInfo(TeamName name, TeamDescription description, SprintLength sprintLength)
+    public Team UpdateTeamInfo(TeamName name, TeamDescription description, SprintLength sprintLength)
     {
         Name = name;
         Description = description;
         SprintLength = sprintLength;
+
+        return this;
     }
 
     /// <summary>
     /// Deactivates the team.
     /// </summary>
     /// <param name="reason">The reason for deactivation</param>
-    public void Deactivate(string reason = "")
+    public Team Deactivate(string reason = "")
     {
         if (!IsActive)
         {
-            return;
+            return this;
         }
 
         IsActive = false;
         _domainEvents.Add(new TeamDeactivatedEvent(Id, DateTime.UtcNow, reason));
+
+        return this;
     }
 
     /// <summary>
     /// Reactivates the team.
     /// </summary>
-    public void Reactivate()
+    public Team Reactivate()
     {
         IsActive = true;
+
+        return this;
     }
 
     /// <summary>

@@ -3,12 +3,28 @@
   "WorkspaceRootPath": "C:\\data\\ScrumOps\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E39344A1-E192-45DB-88E8-83685BF1F5DB}|src\\ScrumOps.Application\\ScrumOps.Application.csproj|c:\\data\\scrumops\\src\\scrumops.application\\services\\productbacklog\\productbacklogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E39344A1-E192-45DB-88E8-83685BF1F5DB}|src\\ScrumOps.Application\\ScrumOps.Application.csproj|solutionrelative:src\\scrumops.application\\services\\productbacklog\\productbacklogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E39344A1-E192-45DB-88E8-83685BF1F5DB}|src\\ScrumOps.Application\\ScrumOps.Application.csproj|c:\\data\\scrumops\\src\\scrumops.application\\services\\teammanagement\\teammanagementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E39344A1-E192-45DB-88E8-83685BF1F5DB}|src\\ScrumOps.Application\\ScrumOps.Application.csproj|solutionrelative:src\\scrumops.application\\services\\teammanagement\\teammanagementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30421968-0CAF-4F74-AFC7-23045824D9E6}|src\\ScrumOps.Domain\\ScrumOps.Domain.csproj|c:\\data\\scrumops\\src\\scrumops.domain\\teammanagement\\entities\\team.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30421968-0CAF-4F74-AFC7-23045824D9E6}|src\\ScrumOps.Domain\\ScrumOps.Domain.csproj|solutionrelative:src\\scrumops.domain\\teammanagement\\entities\\team.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E275ADE-64A1-47E2-9C10-525705125D98}|tests\\ScrumOps.Domain.Tests\\ScrumOps.Domain.Tests.csproj|c:\\data\\scrumops\\tests\\scrumops.domain.tests\\teammanagement\\teamtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E275ADE-64A1-47E2-9C10-525705125D98}|tests\\ScrumOps.Domain.Tests\\ScrumOps.Domain.Tests.csproj|solutionrelative:tests\\scrumops.domain.tests\\teammanagement\\teamtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E275ADE-64A1-47E2-9C10-525705125D98}|tests\\ScrumOps.Domain.Tests\\ScrumOps.Domain.Tests.csproj|c:\\data\\scrumops\\tests\\scrumops.domain.tests\\teammanagement\\teammanagementonlytests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E275ADE-64A1-47E2-9C10-525705125D98}|tests\\ScrumOps.Domain.Tests\\ScrumOps.Domain.Tests.csproj|solutionrelative:tests\\scrumops.domain.tests\\teammanagement\\teammanagementonlytests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{30421968-0CAF-4F74-AFC7-23045824D9E6}|src\\ScrumOps.Domain\\ScrumOps.Domain.csproj|c:\\data\\scrumops\\src\\scrumops.domain\\productbacklog\\entities\\productbacklog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{30421968-0CAF-4F74-AFC7-23045824D9E6}|src\\ScrumOps.Domain\\ScrumOps.Domain.csproj|solutionrelative:src\\scrumops.domain\\productbacklog\\entities\\productbacklog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E39344A1-E192-45DB-88E8-83685BF1F5DB}|src\\ScrumOps.Application\\ScrumOps.Application.csproj|c:\\data\\scrumops\\src\\scrumops.application\\services\\productbacklog\\productbacklogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E39344A1-E192-45DB-88E8-83685BF1F5DB}|src\\ScrumOps.Application\\ScrumOps.Application.csproj|solutionrelative:src\\scrumops.application\\services\\productbacklog\\productbacklogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,6 +39,58 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "TeamManagementService.cs",
+              "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Application\\Services\\TeamManagement\\TeamManagementService.cs",
+              "RelativeDocumentMoniker": "src\\ScrumOps.Application\\Services\\TeamManagement\\TeamManagementService.cs",
+              "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Application\\Services\\TeamManagement\\TeamManagementService.cs",
+              "RelativeToolTip": "src\\ScrumOps.Application\\Services\\TeamManagement\\TeamManagementService.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAqwBIAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-03T07:52:11.675Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TeamTests.cs",
+              "DocumentMoniker": "C:\\data\\ScrumOps\\tests\\ScrumOps.Domain.Tests\\TeamManagement\\TeamTests.cs",
+              "RelativeDocumentMoniker": "tests\\ScrumOps.Domain.Tests\\TeamManagement\\TeamTests.cs",
+              "ToolTip": "C:\\data\\ScrumOps\\tests\\ScrumOps.Domain.Tests\\TeamManagement\\TeamTests.cs",
+              "RelativeToolTip": "tests\\ScrumOps.Domain.Tests\\TeamManagement\\TeamTests.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAmwFoAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-03T07:51:59.943Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "TeamManagementOnlyTests.cs",
+              "DocumentMoniker": "C:\\data\\ScrumOps\\tests\\ScrumOps.Domain.Tests\\TeamManagement\\TeamManagementOnlyTests.cs",
+              "RelativeDocumentMoniker": "tests\\ScrumOps.Domain.Tests\\TeamManagement\\TeamManagementOnlyTests.cs",
+              "ToolTip": "C:\\data\\ScrumOps\\tests\\ScrumOps.Domain.Tests\\TeamManagement\\TeamManagementOnlyTests.cs",
+              "RelativeToolTip": "tests\\ScrumOps.Domain.Tests\\TeamManagement\\TeamManagementOnlyTests.cs",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAqwGMAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-03T07:51:35.161Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Team.cs",
+              "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Domain\\TeamManagement\\Entities\\Team.cs",
+              "RelativeDocumentMoniker": "src\\ScrumOps.Domain\\TeamManagement\\Entities\\Team.cs",
+              "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Domain\\TeamManagement\\Entities\\Team.cs",
+              "RelativeToolTip": "src\\ScrumOps.Domain\\TeamManagement\\Entities\\Team.cs",
+              "ViewState": "AgIAAHQAAAAAAAAAAAAEwHoAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-03T07:49:19.453Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "ProductBacklogService.cs",
               "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Application\\Services\\ProductBacklog\\ProductBacklogService.cs",
               "RelativeDocumentMoniker": "src\\ScrumOps.Application\\Services\\ProductBacklog\\ProductBacklogService.cs",
@@ -35,13 +103,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "ProductBacklog.cs",
               "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Domain\\ProductBacklog\\Entities\\ProductBacklog.cs",
               "RelativeDocumentMoniker": "src\\ScrumOps.Domain\\ProductBacklog\\Entities\\ProductBacklog.cs",
               "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Domain\\ProductBacklog\\Entities\\ProductBacklog.cs",
               "RelativeToolTip": "src\\ScrumOps.Domain\\ProductBacklog\\Entities\\ProductBacklog.cs",
-              "ViewState": "AgIAAFUAAAAAAAAAAAAAwF0AAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAIwAAAAAAAAAAAAAAF0AAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-03T06:23:16.272Z",
               "EditorCaption": ""
