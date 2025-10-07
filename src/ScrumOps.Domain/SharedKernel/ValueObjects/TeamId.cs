@@ -19,6 +19,16 @@ public record TeamId(Guid Value)
     /// <returns>A new TeamId with the specified value</returns>
     public static TeamId From(Guid value) => new(value);
 
+    public static Result<TeamId> Create(Guid value)
+    {
+        if (value == Guid.Empty)
+            return Result<TeamId>.Failure(Error.Validation("Team ID cannot be empty"));
+
+        return Result<TeamId>.Success(new TeamId(value));
+    }
+
+    public static Maybe<TeamId> MaybeFrom(Guid value) => value != Guid.Empty ? Maybe<TeamId>.From(new(value)) : Maybe<TeamId>.None;
+
     /// <summary>
     /// Implicitly converts TeamId to GUID for convenience.
     /// </summary>

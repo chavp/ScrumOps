@@ -1371,3 +1371,4 @@ C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\OpenTelemetry.Instrum
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Serilog.Enrichers.Environment.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Serilog.Enrichers.Process.dll
 C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\Serilog.Enrichers.Thread.dll
+C:\data\ScrumOps\tests\ScrumOps.Api.Tests\bin\Debug\net8.0\logs\scrumops-20251006.json

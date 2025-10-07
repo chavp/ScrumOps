@@ -12,15 +12,15 @@ namespace ScrumOps.Application.Services.TeamManagement;
 public interface ITeamManagementService
 {
     // Query operations
-    Task<GetTeamsResponse> GetTeamsAsync(CancellationToken cancellationToken = default);
+    Task<Result<GetTeamsResponse>> GetTeamsAsync(CancellationToken cancellationToken = default);
     
-    Task<TeamDetailDto?> GetTeamByIdAsync(TeamId teamId, CancellationToken cancellationToken = default);
+    Task<Maybe<TeamDetailDto>> GetTeamByIdAsync(TeamId teamId, CancellationToken cancellationToken = default);
     
-    Task<List<TeamMemberDto>?> GetTeamMembersAsync(TeamId teamId, CancellationToken cancellationToken = default);
+    Task<List<TeamMemberDto>> GetTeamMembersAsync(TeamId teamId, CancellationToken cancellationToken = default);
     
-    Task<TeamVelocityDto?> GetTeamVelocityAsync(TeamId teamId, CancellationToken cancellationToken = default);
+    Task<Maybe<TeamVelocityDto>> GetTeamVelocityAsync(TeamId teamId, CancellationToken cancellationToken = default);
     
-    Task<TeamMetricsDto?> GetTeamMetricsAsync(TeamId teamId, CancellationToken cancellationToken = default);
+    Task<Maybe<TeamMetricsDto>> GetTeamMetricsAsync(TeamId teamId, CancellationToken cancellationToken = default);
 
     // Command operations
     Task<TeamId> CreateTeamAsync(
@@ -29,7 +29,7 @@ public interface ITeamManagementService
         int sprintLengthWeeks,
         CancellationToken cancellationToken = default);
 
-    Task UpdateTeamAsync(
+    Task<Result<TeamId>> UpdateTeamAsync(
         TeamId teamId,
         string name,
         string? description,
@@ -38,7 +38,7 @@ public interface ITeamManagementService
         string scrumMasterEmail,
         CancellationToken cancellationToken = default);
 
-    Task DeactivateTeamAsync(TeamId teamId, CancellationToken cancellationToken = default);
+    Task<Result<int>> DeactivateTeamAsync(TeamId teamId, CancellationToken cancellationToken = default);
 
     // Member operations
     Task<UserId> AddTeamMemberAsync(

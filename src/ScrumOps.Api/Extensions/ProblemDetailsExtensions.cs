@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using ScrumOps.Domain.SharedKernel.ValueObjects;
 
 namespace ScrumOps.Api.Extensions;
 
@@ -187,4 +188,43 @@ public static class ProblemDetailsExtensions
         500 => "https://tools.ietf.org/html/rfc7231#section-6.6.1",
         _ => "about:blank"
     };
+
+    /// <summary>
+    /// Converts a Result to an ActionResult, mapping success to Ok and failure to BadRequest.
+    /// </summary>
+    public static IActionResult ToActionResult<T>(this Result<T> result, ControllerBase controller)
+    {
+        return result.IsSuccess
+            ? controller.Ok(result.Value)
+            : controller.BadRequest(result.Error);
+    }
+
+    /// <summary>
+    /// Converts a Maybe to an ActionResult, mapping Some to Ok and None to NotFound.
+    /// </summary>
+    public static IActionResult ToActionResult<T>(this Maybe<T> maybe, ControllerBase controller, string resourceType, object resourceId)
+    {
+        return maybe.Match<IActionResult>(
+            value => controller.Ok(value),
+            () => controller.NotFound(controller.NotFoundProblem(resourceType, resourceId))
+        );
+    }
+
+    /// <summary>
+    /// Converts a Task Result to an ActionResult asynchronously.
+    /// </summary>
+    public static async Task<IActionResult> ToActionResultAsync<T>(this Task<Result<T>> resultTask, ControllerBase controller)
+    {
+        var result = await resultTask;
+        return result.ToActionResult(controller);
+    }
+
+    /// <summary>
+    /// Converts a Task Maybe to an ActionResult asynchronously.
+    /// </summary>
+    public static async Task<IActionResult> ToActionResultAsync<T>(this Task<Maybe<T>> maybeTask, ControllerBase controller, string resourceType, object resourceId)
+    {
+        var maybe = await maybeTask;
+        return maybe.ToActionResult(controller, resourceType, resourceId);
+    }
 }

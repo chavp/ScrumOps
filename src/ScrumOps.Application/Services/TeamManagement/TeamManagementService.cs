@@ -25,7 +25,7 @@ public class TeamManagementService : ITeamManagementService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<GetTeamsResponse> GetTeamsAsync(CancellationToken cancellationToken = default)
+    public async Task<Result<GetTeamsResponse>> GetTeamsAsync(CancellationToken cancellationToken = default)
     {
         var teams = await _teamRepository.GetActiveTeamsAsync(cancellationToken);
         var teamDtos = teams.Select(team => new TeamDto
@@ -40,17 +40,17 @@ public class TeamManagementService : ITeamManagementService
             MemberCount = team.Members.Count
         }).ToList();
 
-        return new GetTeamsResponse
+        return Result<GetTeamsResponse>.Success(new GetTeamsResponse
         {
             Teams = teamDtos,
             TotalCount = teamDtos.Count
-        };
+        });
     }
 
-    public async Task<TeamDetailDto?> GetTeamByIdAsync(TeamId teamId, CancellationToken cancellationToken = default)
+    public async Task<Maybe<TeamDetailDto>> GetTeamByIdAsync(TeamId teamId, CancellationToken cancellationToken = default)
     {
         var team = await _teamRepository.GetByIdAsync(teamId, cancellationToken);
-        if (team == null) return null;
+        if (team == null) return Maybe<TeamDetailDto>.None;
 
         var members = team.Members.Select(member => new TeamMemberDto
         {
@@ -75,10 +75,9 @@ public class TeamManagementService : ITeamManagementService
         };
     }
 
-    public async Task<List<TeamMemberDto>?> GetTeamMembersAsync(TeamId teamId, CancellationToken cancellationToken = default)
+    public async Task<List<TeamMemberDto>> GetTeamMembersAsync(TeamId teamId, CancellationToken cancellationToken = default)
     {
         var team = await _teamRepository.GetByIdAsync(teamId, cancellationToken);
-        if (team == null) return null;
 
         return team.Members.Select(member => new TeamMemberDto
         {
@@ -90,7 +89,7 @@ public class TeamManagementService : ITeamManagementService
         }).ToList();
     }
 
-    public async Task<TeamVelocityDto?> GetTeamVelocityAsync(TeamId teamId, CancellationToken cancellationToken = default)
+    public async Task<Maybe<TeamVelocityDto>> GetTeamVelocityAsync(TeamId teamId, CancellationToken cancellationToken = default)
     {
         // TODO: Implement actual logic
         return new TeamVelocityDto
@@ -104,7 +103,7 @@ public class TeamManagementService : ITeamManagementService
         };
     }
 
-    public async Task<TeamMetricsDto?> GetTeamMetricsAsync(TeamId teamId, CancellationToken cancellationToken = default)
+    public async Task<Maybe<TeamMetricsDto>> GetTeamMetricsAsync(TeamId teamId, CancellationToken cancellationToken = default)
     {
         // TODO: Implement actual logic
         return new TeamMetricsDto
@@ -146,7 +145,7 @@ public class TeamManagementService : ITeamManagementService
         return team.Id;
     }
 
-    public async Task UpdateTeamAsync(
+    public async Task<Result<TeamId>> UpdateTeamAsync(
         TeamId teamId,
         string name,
         string? description,
@@ -158,14 +157,14 @@ public class TeamManagementService : ITeamManagementService
         var team = await _teamRepository.GetByIdAsync(teamId, cancellationToken);
         if (team == null)
         {
-            throw new InvalidOperationException($"Team with ID {teamId.Value} not found.");
+            return Result<TeamId>.Failure(new Error("Team not found", $"Team with ID {teamId.Value} not found."));
         }
 
         // Check if name conflicts with another team
         var existingTeam = await _teamRepository.ExistsWithNameAsync(name, teamId, cancellationToken);
         if (existingTeam)
         {
-            throw new InvalidOperationException($"A team with the name '{name}' already exists.");
+            return Result<TeamId>.Failure(new Error("Team not found", $"A team with the name '{name}' already exists."));
         }
 
         team.UpdateTeamInfo(
@@ -176,9 +175,11 @@ public class TeamManagementService : ITeamManagementService
 
         await _teamRepository.UpdateAsync(team, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return Result<TeamId>.Success(teamId);
     }
 
-    public async Task DeactivateTeamAsync(TeamId teamId, CancellationToken cancellationToken = default)
+    public async Task<Result<int>> DeactivateTeamAsync(TeamId teamId, CancellationToken cancellationToken = default)
     {
         var team = await _teamRepository.GetByIdAsync(teamId, cancellationToken);
         if (team == null)
@@ -189,7 +190,8 @@ public class TeamManagementService : ITeamManagementService
         team.Deactivate();
 
         await _teamRepository.UpdateAsync(team, cancellationToken);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        var effect = await _unitOfWork.SaveChangesAsync(cancellationToken);
+        return Result<int>.Success(effect);
     }
 
     public async Task<UserId> AddTeamMemberAsync(

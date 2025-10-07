@@ -3,6 +3,8 @@ using ScrumOps.Application.Services.TeamManagement;
 using ScrumOps.Domain.SharedKernel.ValueObjects;
 using ScrumOps.Api.Extensions;
 
+using ScrumOps.Domain.SharedKernel.Extensions;
+
 namespace ScrumOps.Api.Controllers;
 
 /// <summary>
@@ -11,7 +13,7 @@ namespace ScrumOps.Api.Controllers;
 [ApiController]
 [Route("api/teams")]
 [Produces("application/json")]
-public class TeamsController : ControllerBase
+public class TeamsController : ApiBase
 {
     private readonly ITeamManagementService _teamManagementService;
     private readonly ILogger<TeamsController> _logger;
@@ -29,10 +31,10 @@ public class TeamsController : ControllerBase
     [HttpGet]
     [ProducesResponseType(typeof(GetTeamsResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<GetTeamsResponse>> GetTeams()
+    public async Task<IActionResult> GetTeams()
     {
         var result = await _teamManagementService.GetTeamsAsync();
-        return Ok(result);
+        return result.Match(Ok, BadRequest);
     }
 
     /// <summary>
@@ -42,18 +44,12 @@ public class TeamsController : ControllerBase
     /// <returns>Team details including members and current sprint</returns>
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(TeamDetailDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<TeamDetailDto>> GetTeam(Guid id)
-    {
-        var teamId = TeamId.From(id);
-        var result = await _teamManagementService.GetTeamByIdAsync(teamId);
-
-        if (result == null)
-            return NotFound(this.NotFoundProblem("team", id));
-
-        return Ok(result);
-    }
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetTeam(Guid id)
+        => await TeamId.Create(id)
+            .ToMaybe()
+            .BindAsync(req => _teamManagementService.GetTeamByIdAsync(req))
+            .MatchAsync(Ok, NotFound);
 
     /// <summary>
     /// Create a new team.
@@ -93,25 +89,49 @@ public class TeamsController : ControllerBase
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<TeamDto>> UpdateTeam(Guid id, [FromBody] ScrumOps.Api.DTOs.UpdateTeamRequest request)
+    public async Task<IActionResult> UpdateTeam(Guid id, [FromBody] ScrumOps.Api.DTOs.UpdateTeamRequest request)
     {
-        var teamId = TeamId.From(id);
-        await _teamManagementService.UpdateTeamAsync(
-            teamId,
-            request.Name,
-            request.Description,
-            request.SprintLengthWeeks,
-            string.Empty, // TODO: Add these fields to request DTO
-            string.Empty  // TODO: Add these fields to request DTO
-        );
-        
-        // Get the updated team to return full details
-        var updatedTeam = await _teamManagementService.GetTeamByIdAsync(teamId);
+        // Explicit approach with clear error handling for each step
+        //var teamIdResult = TeamId.Create(id);
+        //if (teamIdResult.IsFailure)
+        //    return BadRequest(teamIdResult.Error);
 
-        if (updatedTeam == null)
-            return NotFound(this.NotFoundProblem("team", id));
+        //var updateResult = await _teamManagementService.UpdateTeamAsync(
+        //    teamIdResult.Value,
+        //    request.Name,
+        //    request.Description,
+        //    request.SprintLengthWeeks,
+        //    string.Empty, // TODO: Add these fields to request DTO
+        //    string.Empty  // TODO: Add these fields to request DTO
+        //);
 
-        return Ok(updatedTeam);
+        //if (updateResult.IsFailure)
+        //    return BadRequest(updateResult.Error);
+
+        //var updatedTeam = await _teamManagementService.GetTeamByIdAsync(updateResult.Value);
+
+        //return updatedTeam.Match(
+        //    team => Ok(team),
+        //    () => NotFound(this.NotFoundProblem("team", id))
+        //);
+
+        // Alternative functional approach using extension methods:
+        return await TeamId.Create(id)
+            .BindAsync(teamId => _teamManagementService.UpdateTeamAsync(
+                teamId,
+                request.Name,
+                request.Description,
+                request.SprintLengthWeeks,
+                string.Empty,
+                string.Empty))
+            .MatchAsync(
+                async updatedTeamId =>
+                {
+                    var team = await _teamManagementService.GetTeamByIdAsync(updatedTeamId);
+                    return team.Match(Ok, NotFound);
+                },
+                error => Task.FromResult<IActionResult>(BadRequest(error))
+            );
     }
 
     /// <summary>
@@ -140,12 +160,12 @@ public class TeamsController : ControllerBase
     [ProducesResponseType(typeof(List<TeamMemberDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<List<TeamMemberDto>>> GetTeamMembers(Guid id)
+    public async Task<IActionResult> GetTeamMembers(Guid id)
     {
         var teamId = TeamId.From(id);
         var result = await _teamManagementService.GetTeamMembersAsync(teamId);
 
-        if (result == null)
+        if (!result.Any())
             return NotFound(this.NotFoundProblem("team", id));
 
         return Ok(result);
@@ -158,18 +178,13 @@ public class TeamsController : ControllerBase
     /// <returns>Team velocity data</returns>
     [HttpGet("{id:guid}/velocity")]
     [ProducesResponseType(typeof(TeamVelocityDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<TeamVelocityDto>> GetTeamVelocity(Guid id)
-    {
-        var teamId = TeamId.From(id);
-        var result = await _teamManagementService.GetTeamVelocityAsync(teamId);
-
-        if (result == null)
-            return NotFound(this.NotFoundProblem("team", id));
-
-        return Ok(result);
-    }
+    public async Task<IActionResult> GetTeamVelocity(Guid id)
+        => await Maybe<TeamId>
+            .Some(TeamId.From(id))
+            .BindAsync(req => _teamManagementService.GetTeamVelocityAsync(req))
+            .MatchAsync(Ok, NotFound);
 
     /// <summary>
     /// Get team performance metrics.
@@ -180,16 +195,11 @@ public class TeamsController : ControllerBase
     [ProducesResponseType(typeof(TeamMetricsDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<TeamMetricsDto>> GetTeamMetrics(Guid id)
-    {
-        var teamId = TeamId.From(id);
-        var result = await _teamManagementService.GetTeamMetricsAsync(teamId);
-
-        if (result == null)
-            return NotFound(this.NotFoundProblem("team", id));
-
-        return Ok(result);
-    }
+    public async Task<IActionResult> GetTeamMetrics(Guid id)
+    => await Maybe<TeamId>
+            .Some(TeamId.From(id))
+            .BindAsync(req => _teamManagementService.GetTeamMetricsAsync(req))
+            .MatchAsync(Ok, NotFound);
 
     /// <summary>
     /// Add a member to a team.

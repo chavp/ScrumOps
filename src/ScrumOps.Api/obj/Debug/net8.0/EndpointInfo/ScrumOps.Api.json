@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "ScrumOps API",
-    "description": "Scrum Framework Management System API",
+    "description": "Scrum Framework Management System API with comprehensive observability",
     "contact": {
       "name": "ScrumOps Team"
     },
@@ -925,6 +925,30 @@
       }
     },
     "/health": {
+      "get": {
+        "tags": [
+          "ScrumOps.Api"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "tags": [
+          "ScrumOps.Api"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/health/live": {
       "get": {
         "tags": [
           "ScrumOps.Api"
@@ -2013,43 +2037,6 @@
                 }
               }
             }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "format": "uri"
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "detail": {
-                      "type": "string"
-                    },
-                    "instance": {
-                      "type": "string",
-                      "format": "uri"
-                    },
-                    "traceId": {
-                      "type": "string"
-                    },
-                    "timestamp": {
-                      "type": "string",
-                      "format": "date-time"
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       },
@@ -2629,214 +2616,6 @@
         }
       }
     },
-    "/api/teams/{id}/velocity": {
-      "get": {
-        "tags": [
-          "Teams"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TeamVelocityDto"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "format": "uri"
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "detail": {
-                      "type": "string"
-                    },
-                    "instance": {
-                      "type": "string",
-                      "format": "uri"
-                    },
-                    "traceId": {
-                      "type": "string"
-                    },
-                    "timestamp": {
-                      "type": "string",
-                      "format": "date-time"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "format": "uri"
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "detail": {
-                      "type": "string"
-                    },
-                    "instance": {
-                      "type": "string",
-                      "format": "uri"
-                    },
-                    "traceId": {
-                      "type": "string"
-                    },
-                    "timestamp": {
-                      "type": "string",
-                      "format": "date-time"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/teams/{id}/metrics": {
-      "get": {
-        "tags": [
-          "Teams"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TeamMetricsDto"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "format": "uri"
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "detail": {
-                      "type": "string"
-                    },
-                    "instance": {
-                      "type": "string",
-                      "format": "uri"
-                    },
-                    "traceId": {
-                      "type": "string"
-                    },
-                    "timestamp": {
-                      "type": "string",
-                      "format": "date-time"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "format": "uri"
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "detail": {
-                      "type": "string"
-                    },
-                    "instance": {
-                      "type": "string",
-                      "format": "uri"
-                    },
-                    "traceId": {
-                      "type": "string"
-                    },
-                    "timestamp": {
-                      "type": "string",
-                      "format": "date-time"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/teams/{id}/members/{memberId}": {
       "delete": {
         "tags": [
@@ -3299,28 +3078,6 @@
         },
         "additionalProperties": false
       },
-      "EngagementMetrics": {
-        "type": "object",
-        "properties": {
-          "teamSatisfaction": {
-            "type": "number",
-            "format": "double"
-          },
-          "retroActionItems": {
-            "type": "number",
-            "format": "double"
-          },
-          "impedimentResolutionTime": {
-            "type": "number",
-            "format": "double"
-          },
-          "totalImpediments": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
       "EstimateItemRequest": {
         "type": "object",
         "properties": {
@@ -3546,50 +3303,6 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ProductivityMetrics": {
-        "type": "object",
-        "properties": {
-          "throughput": {
-            "type": "number",
-            "format": "double"
-          },
-          "leadTime": {
-            "type": "number",
-            "format": "double"
-          },
-          "cycleTime": {
-            "type": "number",
-            "format": "double"
-          },
-          "storiesCompleted": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "QualityMetrics": {
-        "type": "object",
-        "properties": {
-          "defectRate": {
-            "type": "number",
-            "format": "double"
-          },
-          "codeCoverage": {
-            "type": "number",
-            "format": "double"
-          },
-          "bugsReported": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "bugsResolved": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -4135,69 +3848,6 @@
         },
         "additionalProperties": false
       },
-      "TeamMetricsDto": {
-        "type": "object",
-        "properties": {
-          "teamId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "teamName": {
-            "type": "string",
-            "nullable": true
-          },
-          "velocity": {
-            "$ref": "#/components/schemas/VelocityMetrics"
-          },
-          "quality": {
-            "$ref": "#/components/schemas/QualityMetrics"
-          },
-          "productivity": {
-            "$ref": "#/components/schemas/ProductivityMetrics"
-          },
-          "engagement": {
-            "$ref": "#/components/schemas/EngagementMetrics"
-          },
-          "lastUpdated": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "additionalProperties": false
-      },
-      "TeamVelocityDto": {
-        "type": "object",
-        "properties": {
-          "teamId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "currentVelocity": {
-            "type": "number",
-            "format": "double"
-          },
-          "averageVelocity": {
-            "type": "number",
-            "format": "double"
-          },
-          "velocityTrend": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/VelocityDataPoint"
-            },
-            "nullable": true
-          },
-          "totalSprints": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "lastUpdated": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "additionalProperties": false
-      },
       "ThroughputDto": {
         "type": "object",
         "properties": {
@@ -4319,54 +3969,6 @@
           }
         },
         "additionalProperties": { }
-      },
-      "VelocityDataPoint": {
-        "type": "object",
-        "properties": {
-          "sprintNumber": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "sprintName": {
-            "type": "string",
-            "nullable": true
-          },
-          "plannedVelocity": {
-            "type": "number",
-            "format": "double"
-          },
-          "actualVelocity": {
-            "type": "number",
-            "format": "double"
-          },
-          "sprintEndDate": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "additionalProperties": false
-      },
-      "VelocityMetrics": {
-        "type": "object",
-        "properties": {
-          "currentVelocity": {
-            "type": "number",
-            "format": "double"
-          },
-          "averageVelocity": {
-            "type": "number",
-            "format": "double"
-          },
-          "velocityTrend": {
-            "type": "number",
-            "format": "double"
-          },
-          "completedSprints": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
       }
     }
   }

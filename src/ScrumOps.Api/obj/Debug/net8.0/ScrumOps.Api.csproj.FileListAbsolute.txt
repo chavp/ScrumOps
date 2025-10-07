@@ -502,14 +502,12 @@ C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\staticwebassets.build.json
 C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\staticwebassets.development.json
 C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\swae.build.ex.cache
 C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\ScrumOps.0BDC8BE4.Up2Date
 C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\ScrumOps.Api.dll
 C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\refint\ScrumOps.Api.dll
 C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\ScrumOps.Api.pdb
 C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\ScrumOps.Api.genruntimeconfig.cache
 C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\ref\ScrumOps.Api.dll
-C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 D:\github\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\appsettings.Production.json
 D:\github\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\OpenTelemetry.dll
 D:\github\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\OpenTelemetry.Api.dll
@@ -538,3 +536,6 @@ C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\OpenTelemetry.Instrumentation
 C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\Serilog.Enrichers.Environment.dll
 C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\Serilog.Enrichers.Process.dll
 C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\Serilog.Enrichers.Thread.dll
+C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\swae.build.ex.cache
+C:\data\ScrumOps\src\ScrumOps.Api\bin\Debug\net8.0\logs\scrumops-20251006.json
+C:\data\ScrumOps\src\ScrumOps.Api\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\data\\ScrumOps\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{E39344A1-E192-45DB-88E8-83685BF1F5DB}|src\\ScrumOps.Application\\ScrumOps.Application.csproj|c:\\data\\scrumops\\src\\scrumops.application\\services\\teammanagement\\iteammanagementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E39344A1-E192-45DB-88E8-83685BF1F5DB}|src\\ScrumOps.Application\\ScrumOps.Application.csproj|solutionrelative:src\\scrumops.application\\services\\teammanagement\\iteammanagementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E39344A1-E192-45DB-88E8-83685BF1F5DB}|src\\ScrumOps.Application\\ScrumOps.Application.csproj|c:\\data\\scrumops\\src\\scrumops.application\\services\\teammanagement\\teammanagementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E39344A1-E192-45DB-88E8-83685BF1F5DB}|src\\ScrumOps.Application\\ScrumOps.Application.csproj|solutionrelative:src\\scrumops.application\\services\\teammanagement\\teammanagementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B614FE70-FB84-48C0-8DED-7CB96431E78F}|src\\ScrumOps.Infrastructure\\ScrumOps.Infrastructure.csproj|c:\\data\\scrumops\\src\\scrumops.infrastructure\\persistence\\inmemoryproductbacklogrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B614FE70-FB84-48C0-8DED-7CB96431E78F}|src\\ScrumOps.Infrastructure\\ScrumOps.Infrastructure.csproj|solutionrelative:src\\scrumops.infrastructure\\persistence\\inmemoryproductbacklogrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -25,11 +33,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TeamManagementService.cs",
+              "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Application\\Services\\TeamManagement\\TeamManagementService.cs",
+              "RelativeDocumentMoniker": "src\\ScrumOps.Application\\Services\\TeamManagement\\TeamManagementService.cs",
+              "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Application\\Services\\TeamManagement\\TeamManagementService.cs",
+              "RelativeToolTip": "src\\ScrumOps.Application\\Services\\TeamManagement\\TeamManagementService.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAD4vxUAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T04:47:56.104Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "ITeamManagementService.cs",
+              "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Application\\Services\\TeamManagement\\ITeamManagementService.cs",
+              "RelativeDocumentMoniker": "src\\ScrumOps.Application\\Services\\TeamManagement\\ITeamManagementService.cs",
+              "ToolTip": "C:\\data\\ScrumOps\\src\\ScrumOps.Application\\Services\\TeamManagement\\ITeamManagementService.cs",
+              "RelativeToolTip": "src\\ScrumOps.Application\\Services\\TeamManagement\\ITeamManagementService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T04:38:39.691Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "InMemoryProductBacklogRepository.cs",
               "DocumentMoniker": "C:\\data\\ScrumOps\\src\\ScrumOps.Infrastructure\\Persistence\\InMemoryProductBacklogRepository.cs",
               "RelativeDocumentMoniker": "src\\ScrumOps.Infrastructure\\Persistence\\InMemoryProductBacklogRepository.cs",
@@ -42,7 +76,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "TeamServiceTests.cs",
               "DocumentMoniker": "C:\\data\\ScrumOps\\tests\\ScrumOps.Web.Tests\\Services\\TeamServiceTests.cs",
               "RelativeDocumentMoniker": "tests\\ScrumOps.Web.Tests\\Services\\TeamServiceTests.cs",
@@ -54,7 +88,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "UnitTest1.cs",
               "DocumentMoniker": "C:\\data\\ScrumOps\\tests\\ScrumOps.Domain.Tests\\UnitTest1.cs",
               "RelativeDocumentMoniker": "tests\\ScrumOps.Domain.Tests\\UnitTest1.cs",
@@ -66,7 +100,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Microsoft.NET.Sdk.StaticWebAssets.targets",
               "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\9.0.301\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.targets",
               "RelativeDocumentMoniker": "..\\..\\Program Files\\dotnet\\sdk\\9.0.301\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.targets",
